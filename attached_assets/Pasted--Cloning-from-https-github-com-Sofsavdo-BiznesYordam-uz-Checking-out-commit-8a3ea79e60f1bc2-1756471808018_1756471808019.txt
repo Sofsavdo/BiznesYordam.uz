@@ -1,0 +1,54 @@
+=> Cloning from https://github.com/Sofsavdo/BiznesYordam.uz
+==> Checking out commit 8a3ea79e60f1bc29f3fae44bdd8534880107881e in branch main
+==> Downloading cache...
+==> Transferred 182MB in 7s. Extraction took 4s.
+==> Requesting Node.js version >=18.x
+==> Using Node.js version 24.7.0 via /opt/render/project/src/package.json
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Running build command 'npm install && npm run build'...
+up to date, audited 546 packages in 1s
+72 packages are looking for funding
+  run `npm fund` for details
+7 vulnerabilities (3 low, 4 moderate)
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+> rest-express@1.0.0 build
+> npm run build:client && npm run build:server
+> rest-express@1.0.0 build:client
+> cd client && npm install && npx vite build --config ../vite.config.js
+up to date, audited 546 packages in 991ms
+72 packages are looking for funding
+  run `npm fund` for details
+7 vulnerabilities (3 low, 4 moderate)
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+vite v5.4.19 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3 modules transformed.
+x Build failed in 307ms
+error during build:
+[vite:css] [postcss] Cannot find module '@tailwindcss/typography'
+Require stack:
+- /opt/render/project/src/client/tailwind.config.ts
+file: /opt/render/project/src/client/src/index.css:undefined:NaN
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1410:15)
+    at require.resolve (node:internal/modules/helpers:163:19)
+    at _resolve (/opt/render/project/src/node_modules/jiti/dist/jiti.js:1:241814)
+    at jiti (/opt/render/project/src/node_modules/jiti/dist/jiti.js:1:244531)
+    at /opt/render/project/src/client/tailwind.config.ts:71:5
+    at evalModule (/opt/render/project/src/node_modules/jiti/dist/jiti.js:1:247313)
+    at jiti (/opt/render/project/src/node_modules/jiti/dist/jiti.js:1:245241)
+    at /opt/render/project/src/node_modules/tailwindcss/lib/lib/load-config.js:52:26
+    at loadConfig (/opt/render/project/src/node_modules/tailwindcss/lib/lib/load-config.js:62:6)
+    at getTailwindConfig (/opt/render/project/src/node_modules/tailwindcss/lib/lib/setupTrackingContext.js:71:116)
+==> Build failed 😞
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys

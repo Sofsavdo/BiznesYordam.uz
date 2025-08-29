@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: biznesyordam-backend
+    env: node
+    plan: starter   # Render'ning bepul plani
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        sync: false  # Render ichida qo‘lda qo‘shiladi
+    domains:
+      - biznesyordam.uz
+      - www.biznesyordam.uz

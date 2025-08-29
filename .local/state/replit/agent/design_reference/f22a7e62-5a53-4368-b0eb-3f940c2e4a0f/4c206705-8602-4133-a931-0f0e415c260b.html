@@ -1,0 +1,741 @@
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPro - Professional Marketplace Management Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#7c3aed', 
+                        accent: '#059669',
+                        muted: '#64748b'
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .currency-format { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+
+<body class="min-h-screen bg-slate-50">
+    <!-- @COMPONENT: Navigation -->
+    <nav class="bg-white shadow-sm border-b border-slate-200 fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">MP</span>
+                        </div>
+                        <h1 class="text-2xl font-bold text-slate-900">MarketPro</h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#services" class="text-slate-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
+                            Xizmatlar
+                        </a>
+                        <a href="#calculator" class="text-slate-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
+                            Kalkulyator
+                        </a>
+                        <a href="#pricing" class="text-slate-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">
+                            Narxlar
+                        </a>
+                        <button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors mr-2">
+                            Partner Kirish
+                        </button>
+                        <button class="border border-primary text-primary hover:bg-primary hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Hamkor Bo'lish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- @COMPONENT: Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-primary/5 via-white to-accent/5 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent/10 to-primary/10 rounded-full blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center bg-white/80 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-6">
+                        <span class="text-sm font-medium text-primary">🚀 #1 Marketplace Management Platform</span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+                        Professional
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary block">
+                            Marketplace Management
+                        </span>
+                        <span class="text-slate-700">Services</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0">
+                        Marketplace savdolaringizni professional darajada boshqaring.
+                        <strong>Uzum Market, Wildberries, Yandex Market</strong> va <strong>MySklad</strong> bilan to'liq integratsiya.
+                        Mahsulot tayyorlashdan logistikagacha to'liq xizmat kompleksi.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                        <button class="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-8 py-4 rounded-xl font-semibold transform hover:scale-105 transition-all shadow-lg hover:shadow-xl">
+                            🚀 Boshlab Berish
+                        </button>
+                        <button class="border-2 border-accent text-accent hover:bg-accent hover:text-white px-8 py-4 rounded-xl font-semibold transform hover:scale-105 transition-all bg-white/80 backdrop-blur-sm">
+                            👥 Hamkor Bo'lish
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="relative">
+                    <div class="relative bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-2xl border border-white/30">
+                        <!-- Modern marketplace dashboard mockup -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6 min-h-[400px]">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-slate-900">Dashboard Overview</h3>
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Stats Cards -->
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-primary/10 rounded-lg p-4">
+                                    <div class="text-sm text-slate-600 mb-1">Oylik Aylanma</div>
+                                    <div class="text-2xl font-bold text-primary currency-format">45,750,000 so'm</div>
+                                </div>
+                                <div class="bg-accent/10 rounded-lg p-4">
+                                    <div class="text-sm text-slate-600 mb-1">Foyda</div>
+                                    <div class="text-2xl font-bold text-accent currency-format">12,450,000 so'm</div>
+                                </div>
+                            </div>
+
+                            <!-- Chart mockup -->
+                            <div class="bg-slate-50 rounded-lg p-4">
+                                <div class="flex items-end space-x-2 h-24">
+                                    <div class="bg-primary/60 w-4 h-16 rounded-t"></div>
+                                    <div class="bg-primary/80 w-4 h-20 rounded-t"></div>
+                                    <div class="bg-primary w-4 h-24 rounded-t"></div>
+                                    <div class="bg-primary/70 w-4 h-18 rounded-t"></div>
+                                    <div class="bg-primary/90 w-4 h-22 rounded-t"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating elements -->
+                        <div class="absolute -top-4 -right-4 bg-accent text-white p-3 rounded-xl shadow-lg animate-bounce">
+                            📈
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 bg-primary text-white p-3 rounded-xl shadow-lg animate-pulse">
+                            🎯
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Hero Section -->
+
+    <!-- @COMPONENT: Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-primary mb-2 currency-format">150M+</div>
+                    <div class="text-slate-600">Oylik Aylanma (so'm)</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-accent mb-2">25%</div>
+                    <div class="text-slate-600">Foyda Ulushi</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-primary mb-2">500+</div>
+                    <div class="text-slate-600">Mahsulot Turi</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-accent mb-2">99.8%</div>
+                    <div class="text-slate-600">Mijoz Qoniqishi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Stats Section -->
+
+    <!-- @COMPONENT: FulfillmentCalculator Section -->
+    <section id="calculator" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Fulfillment Kalkulyator</h2>
+                <p class="text-xl text-slate-600">Qaysi tarif rejasi sizga mos kelishini aniqlang</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <!-- @FUNCTIONALITY: Interactive calculator with real-time calculations -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Calculator Inputs -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-4">Mahsulot Ma'lumotlari</h3>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Mahsulot narxi (so'm)</label>
+                            <input type="number" id="productPrice" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="100,000" value="100000">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Mahsulot kategoriyasi</label>
+                            <select id="productCategory" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="electronics">Elektronika</option>
+                                <option value="clothing">Kiyim-kechak</option>
+                                <option value="home">Uy jihozlari</option>
+                                <option value="sports">Sport tovarlari</option>
+                                <option value="beauty">Go'zallik</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Oylik savdo hajmi (dona)</label>
+                            <input type="number" id="monthlyVolume" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="100" value="100">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Marketplace</label>
+                            <select id="marketplace" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="uzum">Uzum Market</option>
+                                <option value="wildberries">Wildberries</option>
+                                <option value="yandex">Yandex Market</option>
+                            </select>
+                        </div>
+
+                        <button onclick="calculateProfits()" class="w-full bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+                            Hisoblash
+                        </button>
+                    </div>
+
+                    <!-- Results Display -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-semibold text-slate-900 mb-4">Tavsiya Etilgan Tarif</h3>
+                        
+                        <div id="calculatorResults" class="space-y-4">
+                            <!-- Results will be populated here -->
+                            <div class="bg-primary/10 border border-primary/20 rounded-lg p-6">
+                                <div class="text-center">
+                                    <div class="text-lg font-semibold text-primary mb-2">Professional Plus</div>
+                                    <div class="text-3xl font-bold text-slate-900 mb-2 currency-format">6,000,000 so'm</div>
+                                    <div class="text-sm text-slate-600">Oylik to'lov</div>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-slate-600">Komissiya:</span>
+                                        <span class="text-sm font-medium text-slate-900">15-20%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-slate-600">Oylik foyda:</span>
+                                        <span class="text-sm font-medium text-accent currency-format">12,450,000 so'm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cost Breakdown -->
+                        <div class="bg-slate-50 rounded-lg p-6">
+                            <h4 class="font-semibold text-slate-900 mb-4">Harajatlar Taqsimoti</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-slate-600">SPT cost:</span>
+                                    <span class="text-sm font-medium currency-format" id="sptCost">450,000 so'm</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-slate-600">Marketplace komissiya:</span>
+                                    <span class="text-sm font-medium currency-format" id="marketplaceCommission">1,200,000 so'm</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-slate-600">Logistika:</span>
+                                    <span class="text-sm font-medium currency-format" id="logisticsCost">800,000 so'm</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-slate-600">Soliq (3%):</span>
+                                    <span class="text-sm font-medium currency-format" id="taxCost">300,000 so'm</span>
+                                </div>
+                                <div class="border-t pt-2">
+                                    <div class="flex justify-between font-semibold">
+                                        <span class="text-slate-900">Umumiy harajat:</span>
+                                        <span class="text-slate-900 currency-format" id="totalCost">2,750,000 so'm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: FulfillmentCalculator Section -->
+
+    <!-- @COMPONENT: Pricing Tiers Section -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Tarif Rejalari</h2>
+                <p class="text-xl text-slate-600">Biznes hajmingizga mos tarif rejasini tanlang</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Starter Pro -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Starter Pro</h3>
+                        <div class="text-4xl font-bold text-primary mb-2 currency-format">0 so'm</div>
+                        <div class="text-sm text-slate-600">Oylik to'lov</div>
+                    </div>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">45-30% komissiya</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Asosiy fulfillment</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">1 marketplace</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Email qo'llab-quvvatlash</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-slate-100 hover:bg-slate-200 text-slate-900 py-3 px-6 rounded-lg font-semibold transition-colors">
+                        Boshlash
+                    </button>
+                </div>
+
+                <!-- Business Standard -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Business Standard</h3>
+                        <div class="text-4xl font-bold text-primary mb-2 currency-format">3,500,000 so'm</div>
+                        <div class="text-sm text-slate-600">Oylik to'lov</div>
+                    </div>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">25-18% komissiya</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Professional fulfillment</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">3 marketplace</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Telefon qo'llab-quvvatlash</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+                        Tanlash
+                    </button>
+                </div>
+
+                <!-- Professional Plus (Recommended) -->
+                <div class="bg-gradient-to-br from-primary/5 to-secondary/5 border-2 border-primary rounded-2xl p-8 hover:shadow-xl transition-all duration-300 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-primary text-white px-4 py-1 rounded-full text-sm font-semibold">Tavsiya etiladi</span>
+                    </div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Professional Plus</h3>
+                        <div class="text-4xl font-bold text-primary mb-2 currency-format">6,000,000 so'm</div>
+                        <div class="text-sm text-slate-600">Oylik to'lov</div>
+                    </div>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">20-15% komissiya</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Premium fulfillment</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Barcha marketplace</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">24/7 qo'llab-quvvatlash</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+                        Tanlash
+                    </button>
+                </div>
+
+                <!-- Enterprise Elite -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Enterprise Elite</h3>
+                        <div class="text-4xl font-bold text-primary mb-2 currency-format">10,000,000 so'm</div>
+                        <div class="text-sm text-slate-600">Oylik to'lov</div>
+                    </div>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">18-12% komissiya</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">VIP fulfillment</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Custom integrations</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 bg-accent rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✓</span>
+                            </div>
+                            <span class="text-sm text-slate-700">Dedicated manager</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-secondary hover:bg-secondary/90 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+                        Bog'lanish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Pricing Tiers Section -->
+
+    <!-- @COMPONENT: Partner Registration Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Hamkor Bo'ling</h2>
+                <p class="text-xl text-slate-600">Professional marketplace xizmatlaridan foydalaning</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Ism</label>
+                            <input type="text" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Ismingizni kiriting">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Familiya</label>
+                            <input type="text" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Familiyangizni kiriting">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="email@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Telefon</label>
+                            <input type="tel" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="+998 90 123 45 67">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Biznes kategoriyasi</label>
+                        <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option>Kategoriyani tanlang</option>
+                            <option>Elektronika</option>
+                            <option>Kiyim-kechak</option>
+                            <option>Uy jihozlari</option>
+                            <option>Sport tovarlari</option>
+                            <option>Go'zallik va salomatlik</option>
+                            <option>Boshqa</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Oylik savdo hajmi (so'm)</label>
+                        <select class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option>Hajmni tanlang</option>
+                            <option>1-10 million so'm</option>
+                            <option>10-50 million so'm</option>
+                            <option>50-100 million so'm</option>
+                            <option>100+ million so'm</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Qo'shimcha ma'lumot</label>
+                        <textarea rows="4" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Biznes haqida qo'shimcha ma'lumot..."></textarea>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary" required>
+                        <label class="ml-2 text-sm text-slate-700">
+                            Men <a href="#" class="text-primary hover:underline">foydalanish shartlari</a> va <a href="#" class="text-primary hover:underline">maxfiylik siyosati</a>ga roziman
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white py-4 px-6 rounded-lg font-semibold transition-all transform hover:scale-105">
+                        Ariza Yuborish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Partner Registration Section -->
+
+    <!-- @COMPONENT: Footer -->
+    <footer class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">MP</span>
+                        </div>
+                        <h3 class="text-xl font-bold">MarketPro</h3>
+                    </div>
+                    <p class="text-slate-400 mb-6">
+                        Professional marketplace management platformasi. 
+                        Biznes o'sishingiz uchun to'liq yechim.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors cursor-pointer">
+                            <span class="text-lg">📧</span>
+                        </div>
+                        <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors cursor-pointer">
+                            <span class="text-lg">📞</span>
+                        </div>
+                        <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-primary transition-colors cursor-pointer">
+                            <span class="text-lg">💬</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Xizmatlar</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Marketplace Management</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Fulfillment</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Logistika</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Analytics</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Integratsiyalar</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Uzum Market</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Wildberries</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Yandex Market</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">MySklad</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">Bog'lanish</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 text-primary mr-3">📧</div>
+                            <span class="text-slate-400">info@marketpro.uz</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 text-primary mr-3">📞</div>
+                            <span class="text-slate-400">+998 90 123 45 67</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-5 h-5 text-primary mr-3">📍</div>
+                            <span class="text-slate-400">Toshkent, O'zbekiston</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center">
+                <p class="text-slate-400">
+                    © 2024 MarketPro. Barcha huquqlar himoyalangan.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        // Fulfillment Calculator Logic
+        (function() {
+            // Calculator data
+            const commissionRates = {
+                uzum: { electronics: 12, clothing: 8, home: 15, sports: 10, beauty: 18 },
+                wildberries: { electronics: 15, clothing: 12, home: 18, sports: 13, beauty: 20 },
+                yandex: { electronics: 10, clothing: 6, home: 12, sports: 8, beauty: 15 }
+            };
+
+            const sptCosts = {
+                electronics: 5000, clothing: 3000, home: 4500, sports: 3500, beauty: 2500
+            };
+
+            const logisticsCosts = { uzum: 8000, wildberries: 12000, yandex: 6000 };
+
+            const pricingTiers = [
+                { name: 'Starter Pro', fixed: 0, commission: [0.30, 0.45], min: 0, max: 10000000 },
+                { name: 'Business Standard', fixed: 3500000, commission: [0.18, 0.25], min: 10000000, max: 50000000 },
+                { name: 'Professional Plus', fixed: 6000000, commission: [0.15, 0.20], min: 50000000, max: 150000000 },
+                { name: 'Enterprise Elite', fixed: 10000000, commission: [0.12, 0.18], min: 150000000, max: Infinity }
+            ];
+
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('uz-UZ', {
+                    style: 'decimal',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount) + ' so\'m';
+            }
+
+            function calculateProfits() {
+                const productPrice = parseFloat(document.getElementById('productPrice').value) || 100000;
+                const category = document.getElementById('productCategory').value;
+                const monthlyVolume = parseFloat(document.getElementById('monthlyVolume').value) || 100;
+                const marketplace = document.getElementById('marketplace').value;
+
+                const monthlyRevenue = productPrice * monthlyVolume;
+
+                // Calculate costs
+                const sptCost = sptCosts[category] * monthlyVolume;
+                const marketplaceCommissionRate = commissionRates[marketplace][category] / 100;
+                const marketplaceCommission = monthlyRevenue * marketplaceCommissionRate;
+                const logisticsCost = logisticsCosts[marketplace] * monthlyVolume;
+                const taxRate = 0.03;
+                const taxCost = monthlyRevenue * taxRate;
+
+                // Find optimal tier
+                const optimalTier = pricingTiers.find(tier => monthlyRevenue >= tier.min && monthlyRevenue <= tier.max);
+                
+                if (!optimalTier) return;
+
+                const tierCommission = monthlyRevenue * optimalTier.commission[0]; // Use lower commission
+                const totalCosts = optimalTier.fixed + tierCommission + sptCost + marketplaceCommission + logisticsCost + taxCost;
+                const netProfit = monthlyRevenue - totalCosts;
+
+                // Update results display
+                document.getElementById('calculatorResults').innerHTML = `
+                    <div class="bg-primary/10 border border-primary/20 rounded-lg p-6">
+                        <div class="text-center">
+                            <div class="text-lg font-semibold text-primary mb-2">${optimalTier.name}</div>
+                            <div class="text-3xl font-bold text-slate-900 mb-2 currency-format">${formatCurrency(optimalTier.fixed)}</div>
+                            <div class="text-sm text-slate-600">Oylik to'lov</div>
+                        </div>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-slate-600">Komissiya:</span>
+                                <span class="text-sm font-medium text-slate-900">${(optimalTier.commission[0] * 100).toFixed(0)}-${(optimalTier.commission[1] * 100).toFixed(0)}%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-slate-600">Oylik foyda:</span>
+                                <span class="text-sm font-medium text-accent currency-format">${formatCurrency(netProfit)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-slate-600">Aylanma:</span>
+                                <span class="text-sm font-medium text-slate-900 currency-format">${formatCurrency(monthlyRevenue)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Update cost breakdown
+                document.getElementById('sptCost').textContent = formatCurrency(sptCost);
+                document.getElementById('marketplaceCommission').textContent = formatCurrency(marketplaceCommission);
+                document.getElementById('logisticsCost').textContent = formatCurrency(logisticsCost);
+                document.getElementById('taxCost').textContent = formatCurrency(taxCost);
+                document.getElementById('totalCost').textContent = formatCurrency(totalCosts);
+            }
+
+            // Make function globally available
+            window.calculateProfits = calculateProfits;
+
+            // Auto-calculate on input change
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputs = ['productPrice', 'productCategory', 'monthlyVolume', 'marketplace'];
+                inputs.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('change', calculateProfits);
+                        element.addEventListener('input', calculateProfits);
+                    }
+                });
+                
+                // Initial calculation
+                calculateProfits();
+            });
+        })();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // TODO: Implement form submission logic
+                    alert('Arizangiz qabul qilindi! Tez orada siz bilan bog\'lanamiz.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
