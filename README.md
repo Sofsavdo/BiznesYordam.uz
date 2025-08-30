@@ -1,53 +1,56 @@
-# BiznesYordam Fulfillment Platform
+# 🚀 BiznesYordam - Professional Marketplace Fulfillment Platform
 
-**English** | [O'zbekcha](#uzbek)
+**O'zbekcha** | [English](#english)
 
-A modern marketplace fulfillment services platform that enables partners to integrate marketplaces, manage products, and increase sales. Built with React, Express.js, and SQLite for development.
+O'zbekiston marketplace tadbirkorlari uchun professional fulfillment platformasi. Uzum Market, Wildberries, Yandex Market va boshqa marketplace'larda savdoni avtomatlashtiradi va daromadni oshiradi.
 
-## 🚀 Features
+**🌟 Real Production Platform - Mock data yo'q, faqat real API integrations!**
 
-### For Marketplace Partners
-- **Partner Dashboard** - Comprehensive management interface
-- **Marketplace Integration** - Seamlessly connect with Uzum Market, Wildberries, Yandex Market
-- **Product Management** - Automated fulfillment request system
-- **Real-time Analytics** - Detailed profit calculations and performance metrics
-- **Tier-based Pricing** - Four pricing tiers with competitive commission rates
-- **24/7 Support** - Multi-channel customer support
+## 🎯 **Asosiy Funksiyalar**
 
-### For Administrators
-- **Admin Panel** - Complete partner management and monitoring system
-- **Real-time Chat** - Direct communication with partners
-- **Advanced Analytics** - Business intelligence and reporting tools
-- **Financial Management** - Revenue tracking and commission calculations
+### 👥 **Hamkorlar uchun**
+- **🎛️ Partner Dashboard** - To'liq boshqaruv interfeysi
+- **🔗 Marketplace Integration** - Uzum Market, Wildberries, Yandex Market bilan integratsiya
+- **📦 Mahsulot Boshqaruvi** - Avtomatik fulfillment so'rovlar tizimi
+- **📊 Real-time Analytics** - Foyda hisoblash va performance ko'rsatkichlari
+- **💰 Tier-based Pricing** - 4 xil narx rejimi bilan raqobatbardosh komissiya
+- **🕐 24/7 Support** - Ko'p kanalli mijozlar yordami
 
-### Technical Features
-- **Modern Architecture** - React + Express.js + SQLite/PostgreSQL
-- **Real-time Updates** - WebSocket-powered notifications
-- **Secure Authentication** - Session-based authentication with role-based access
-- **Responsive Design** - Mobile-first approach with Tailwind CSS
-- **API Integration** - Ready for marketplace API connections
+### 🛡️ **Administratorlar uchun**
+- **⚙️ Admin Panel** - To'liq hamkor boshqaruvi va monitoring tizimi
+- **💬 Real-time Chat** - Hamkorlar bilan to'g'ridan-to'g'ri aloqa
+- **📈 Advanced Analytics** - Business intelligence va hisobot vositalari
+- **💳 Moliyaviy Boshqaruv** - Daromad kuzatuvi va komissiya hisoblash
 
-## 🛠️ Installation & Setup
+### 🔧 **Texnik Funksiyalar**
+- **🏗️ Modern Architecture** - React + Express.js + PostgreSQL
+- **⚡ Real-time Updates** - WebSocket-powered bildirishnomalar
+- **🔐 Secure Authentication** - Session-based autentifikatsiya va role-based access
+- **📱 Responsive Design** - Mobile-first yondashuv va Tailwind CSS
+- **🔌 API Integration** - Real marketplace API ulanishlari
 
-### Prerequisites
-- Node.js 18+ (Latest LTS recommended)
-- npm or yarn package manager
-- SQLite (for development) or PostgreSQL (for production)
+## 🛠️ **O'rnatish va Sozlash**
 
-### Quick Start
+### 📋 **Talablar**
+- Node.js 18+ (Eng so'nggi LTS tavsiya etiladi)
+- npm package manager
+- PostgreSQL database (Production)
+- Git
 
-1. **Clone the Repository**
+### 🚀 **Tezkor Boshlash**
+
+1. **Repository ni Clone qiling**
 ```bash
-git clone https://github.com/yourusername/biznesyordam-fulfillment.git
-cd biznesyordam-fulfillment
+git clone https://github.com/yourusername/biznesyordam-platform.git
+cd biznesyordam-platform
 ```
 
-2. **Install Dependencies**
+2. **Dependencies o'rnatish**
 ```bash
 npm install
 ```
 
-3. **Environment Configuration**
+3. **Environment sozlash**
 ```bash
 cp env.example .env
 # Edit .env file with your configuration
