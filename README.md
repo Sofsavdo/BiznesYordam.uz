@@ -1,205 +1,237 @@
-# 🚀 BiznesYordam - Professional Marketplace Fulfillment Platform
+# 🚀 BiznesYordam - O'zbekiston Marketplace Fulfillment Platform
 
-**O'zbekcha** | [English](#english)
+**Professional marketplace fulfillment platform for Uzbekistan businesses**
 
-O'zbekiston marketplace tadbirkorlari uchun professional fulfillment platformasi. Uzum Market, Wildberries, Yandex Market va boshqa marketplace'larda savdoni avtomatlashtiradi va daromadni oshiradi.
+[![Production Status](https://img.shields.io/badge/Status-Production%20Ready-green)](https://biznes-yordam.onrender.com)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-blue)](https://www.postgresql.org/)
+[![Framework](https://img.shields.io/badge/Framework-React%20%2B%20Express-orange)](https://reactjs.org/)
 
-**🌟 Real Production Platform - Mock data yo'q, faqat real API integrations!**
+## 🌟 **Platform Overview**
 
-## 🎯 **Asosiy Funksiyalar**
+BiznesYordam is a comprehensive fulfillment platform designed specifically for Uzbekistan's growing e-commerce ecosystem. It connects businesses with marketplace opportunities across Uzum, Wildberries, Yandex Market, and Ozon.
 
-### 👥 **Hamkorlar uchun**
-- **🎛️ Partner Dashboard** - To'liq boshqaruv interfeysi
-- **🔗 Marketplace Integration** - Uzum Market, Wildberries, Yandex Market bilan integratsiya
-- **📦 Mahsulot Boshqaruvi** - Avtomatik fulfillment so'rovlar tizimi
-- **📊 Real-time Analytics** - Foyda hisoblash va performance ko'rsatkichlari
-- **💰 Tier-based Pricing** - 4 xil narx rejimi bilan raqobatbardosh komissiya
-- **🕐 24/7 Support** - Ko'p kanalli mijozlar yordami
+### ✨ **Key Features**
 
-### 🛡️ **Administratorlar uchun**
-- **⚙️ Admin Panel** - To'liq hamkor boshqaruvi va monitoring tizimi
-- **💬 Real-time Chat** - Hamkorlar bilan to'g'ridan-to'g'ri aloqa
-- **📈 Advanced Analytics** - Business intelligence va hisobot vositalari
-- **💳 Moliyaviy Boshqaruv** - Daromad kuzatuvi va komissiya hisoblash
+- 🛒 **Multi-Marketplace Integration** - Uzum, Wildberries, Yandex, Ozon
+- 📊 **Real-time Analytics** - Profit tracking, trend analysis
+- 💬 **Live Chat System** - WebSocket-powered communication
+- 🎯 **Tier-based Access** - Starter Pro to Enterprise Elite
+- 🔐 **Secure Authentication** - Role-based access control
+- 📱 **Responsive Design** - Mobile-first approach
+- 🚀 **Production Ready** - Real PostgreSQL database
 
-### 🔧 **Texnik Funksiyalar**
-- **🏗️ Modern Architecture** - React + Express.js + PostgreSQL
-- **⚡ Real-time Updates** - WebSocket-powered bildirishnomalar
-- **🔐 Secure Authentication** - Session-based autentifikatsiya va role-based access
-- **📱 Responsive Design** - Mobile-first yondashuv va Tailwind CSS
-- **🔌 API Integration** - Real marketplace API ulanishlari
+## 🔑 **Default Credentials**
 
-## 🛠️ **O'rnatish va Sozlash**
-
-### 📋 **Talablar**
-- Node.js 18+ (Eng so'nggi LTS tavsiya etiladi)
-- npm package manager
-- PostgreSQL database (Production)
-- Git
-
-### 🚀 **Tezkor Boshlash**
-
-1. **Repository ni Clone qiling**
-```bash
-git clone https://github.com/yourusername/biznesyordam-platform.git
-cd biznesyordam-platform
+### Admin Access
 ```
-
-2. **Dependencies o'rnatish**
-```bash
-npm install
-```
-
-3. **Environment sozlash**
-```bash
-cp env.example .env
-# Edit .env file with your configuration
-```
-
-4. **Database Setup**
-```bash
-npm run db:push  # Setup database schema
-npm run seed     # Seed with sample data
-```
-
-5. **Start Development Server**
-```bash
-npm run dev      # Starts both client and server
-```
-
-The application will be available at `http://localhost:5000`
-
-## 🚀 Production Deployment
-
-### Build for Production
-```bash
-npm run build:full  # Builds both client and server
-```
-
-### Start Production Server
-```bash
-npm start
-```
-
-### Docker Support (Coming Soon)
-```bash
-docker build -t biznesyordam-fulfillment .
-docker run -p 5000:5000 biznesyordam-fulfillment
-```
-
-## 📁 Loyiha tuzilishi
-
-```
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # UI komponentlar
-│   │   ├── pages/         # Sahifalar
-│   │   ├── hooks/         # Custom hooks
-│   │   └── lib/           # Utility funksiyalar
-├── server/                # Express backend
-│   ├── routes.ts          # API routes
-│   ├── storage.ts         # Database operations
-│   └── seedData.ts        # Test data
-├── shared/                # Shared types va schema
-└── dist/                  # Production build
-```
-
-## 🔧 API Documentation
-
-### Authentication Endpoints
-- `POST /api/auth/login` - User authentication
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/me` - Get current user info
-
-### Partner Management
-- `GET /api/partners` - List all partners (Admin)
-- `POST /api/partners/register` - Partner registration
-- `POST /api/partners/:id/approve` - Approve partner (Admin)
-- `GET /api/partners/me` - Get current partner info
-- `PUT /api/partners/:id` - Update partner information
-
-### Marketplace Integration
-- `POST /api/partners/:id/marketplace/connect` - Connect marketplace
-- `GET /api/marketplace-integrations` - List integrations
-- `POST /api/fulfillment-requests` - Create fulfillment request
-- `GET /api/fulfillment-requests` - List fulfillment requests
-
-### Analytics & Reporting
-- `GET /api/analytics/dashboard` - Dashboard statistics
-- `GET /api/analytics/profit` - Profit calculations
-- `POST /api/analytics/calculate` - Custom calculations
-
-### Communication
-- `GET /api/admin/chats/:partnerId/messages` - Get chat messages
-- `POST /api/chat/partners/:partnerId/message` - Send message
-- `GET /api/notifications` - Get notifications
-
-### Tier Management
-- `GET /api/pricing-tiers` - Get available pricing tiers
-- `POST /api/tier-upgrade-requests` - Request tier upgrade
-
-## 👥 Foydalanish
-
-## 🔑 **Login Ma'lumotlari**
-
-### 👨‍💼 **Admin Panel**
-```
+URL: /admin-panel
 Username: admin
 Password: BiznesYordam2024!
 Email: admin@biznesyordam.uz
 ```
 
-### 👥 **Partner Dashboard**
+### Test Partner
 ```
+URL: /partner-dashboard  
 Username: testpartner
 Password: Partner2024!
 Email: partner@biznesyordam.uz
 ```
 
-## 📊 **Test Data**
+## 🏗️ **Architecture**
 
-Platformada quyidagi test ma'lumotlar mavjud:
+```
+BiznesYordam/
+├── client/                 # React Frontend (Vite + TypeScript)
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── hooks/         # Custom React hooks
+│   │   ├── lib/           # Utilities and API client
+│   │   └── pages/         # Application pages
+│   └── package.json
+├── server/                # Express Backend (TypeScript)
+│   ├── routes.ts          # API routes
+│   ├── storage.ts         # Database layer
+│   ├── websocket.ts       # WebSocket manager
+│   └── index.ts           # Server entry point
+├── shared/                # Shared types and schemas
+│   └── schema.ts          # Drizzle ORM schemas
+└── package.json           # Root package configuration
+```
 
-### **Hamkor Ma'lumotlari:**
-- **Biznes nomi:** Test Biznes
-- **Kategoriya:** Electronics
-- **Oylik daromad:** 25,000,000 so'm
-- **Komissiya:** 20%
+## 🚀 **Quick Start**
 
-### **Mahsulotlar:**
-- Samsung Galaxy S24 (15,000,000 so'm)
-- Lenovo ThinkPad (8,500,000 so'm)
-- Apple Watch (3,500,000 so'm)
+### Prerequisites
+- Node.js 18+
+- PostgreSQL database
+- npm or yarn
 
-### **Fulfillment Requests:**
-- Pending: Samsung Galaxy S24
-- Approved: Lenovo ThinkPad
-- Completed: Apple Watch
+### Installation
 
-### **Analytics:**
-- Uzum: 54,400,000 so'm (96 buyurtma)
-- Wildberries: 32,000,000 so'm (45 buyurtma)
-- Yandex: 28,000,000 so'm (38 buyurtma)
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/BiznesYordam.uz.git
+cd BiznesYordam.uz
+```
 
-## 🛡️ Xavfsizlik
+2. **Install dependencies**
+```bash
+npm install
+cd client && npm install && cd ..
+```
 
-- Session-based authentication
-- Role-based access control
-- API rate limiting
-- Input validation
-- SQL injection protection
+3. **Environment Setup**
+```bash
+# Copy environment file
+cp .env.example .env
 
-## 📊 Monitoring
+# Configure your database and settings
+DATABASE_URL=postgresql://username:password@host:port/database
+SESSION_SECRET=your-ultra-secure-session-key
+NODE_ENV=production
+```
 
-- Real-time analytics
-- Error logging
-- Performance monitoring
-- Database health checks
+4. **Database Setup**
+```bash
+# Push schema to database
+npm run db:push
 
-## 🤝 Yordam
+# Seed initial data
+npm run seed
+```
 
-Muammolar yoki savollar uchun issue oching yoki admin bilan bog'laning.
+5. **Start Development Server**
+```bash
+npm run dev
+```
 
-## 📄 Litsenziya
+6. **Build for Production**
+```bash
+npm run build
+npm start
+```
 
-MIT License
+## 📋 **Available Scripts**
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development servers (client + server) |
+| `npm run build` | Build for production |
+| `npm start` | Start production server |
+| `npm run db:push` | Push schema to database |
+| `npm run db:generate` | Generate migrations |
+| `npm run seed` | Seed database with initial data |
+| `npm run db:studio` | Open Drizzle Studio |
+
+## 🌐 **Production Deployment**
+
+### Render.com (Current)
+```yaml
+services:
+  - type: web
+    name: biznes-yordam
+    env: node
+    plan: starter
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+```
+
+### Environment Variables
+```bash
+# Required
+DATABASE_URL=postgresql://...
+SESSION_SECRET=your-secret-key
+NODE_ENV=production
+
+# Optional
+FRONTEND_ORIGIN=https://yourdomain.com
+CORS_ORIGIN=https://yourdomain.com
+PORT=5000
+```
+
+## 📊 **Tech Stack**
+
+### Frontend
+- **React 18** - Modern UI library
+- **TypeScript** - Type safety
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first styling
+- **Radix UI** - Headless components
+- **TanStack Query** - Data fetching
+- **Lucide React** - Icon library
+
+### Backend
+- **Express.js** - Web framework
+- **TypeScript** - Type safety
+- **Drizzle ORM** - Type-safe database queries
+- **PostgreSQL** - Production database
+- **WebSocket** - Real-time communication
+- **bcryptjs** - Password hashing
+- **Zod** - Schema validation
+
+### Infrastructure
+- **PostgreSQL** - Primary database
+- **Express Session** - Authentication
+- **CORS** - Cross-origin requests
+- **Rate Limiting** - API protection
+- **WebSocket** - Real-time features
+
+## 🎯 **Business Tiers**
+
+| Tier | Features | Commission |
+|------|----------|------------|
+| **Starter Pro** | Basic dashboard, product management | 30% |
+| **Business Standard** | + Profit analytics, full reports | 25% |
+| **Professional Plus** | + Trend hunter, advanced analytics | 20% |
+| **Enterprise Elite** | + Premium features, priority support | 15% |
+
+## 🛡️ **Security Features**
+
+- ✅ Session-based authentication
+- ✅ Role-based access control
+- ✅ CORS protection
+- ✅ Rate limiting
+- ✅ Input validation & sanitization
+- ✅ SQL injection prevention
+- ✅ XSS protection
+
+## 📈 **Performance Optimizations**
+
+- ✅ Database connection pooling
+- ✅ Query optimization with indexes
+- ✅ Frontend code splitting
+- ✅ Image lazy loading
+- ✅ Caching strategies
+- ✅ Gzip compression
+
+## 🤝 **Contributing**
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 **Support & Contact**
+
+- **Email:** admin@biznes-yordam.uz
+- **Telegram:** @biznes_yordam_support
+- **Website:** [BiznesYordam.uz](https://biznes-yordam.onrender.com)
+
+## 📄 **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**⚡ Built with ❤️ for Uzbekistan's entrepreneurial ecosystem**
+
+*Empowering businesses to thrive in the digital marketplace*
