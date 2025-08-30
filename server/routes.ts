@@ -1475,6 +1475,88 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Messaging routes
+  app.get('/api/messages', requireAuth, async (req, res) => {
+    try {
+      const userId = getAuthUser(req).id;
+      const messages = await storage.getMessages(userId);
+      res.json(messages);
+    } catch (error) {
+      console.error('Get messages error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
+  app.post('/api/messages', requireAuth, async (req, res) => {
+    try {
+      const userId = getAuthUser(req).id;
+      const { toUserId, content } = req.body;
+      
+      if (!toUserId || !content) {
+        return res.status(400).json({ message: "Barcha maydonlar to'ldirilishi shart" });
+      }
+
+      const message = await storage.createMessage({
+        fromUserId: userId,
+        toUserId,
+        content,
+        isRead: false
+      });
+
+      // Send real-time notification if WebSocket is available
+      if (global.wsManager) {
+        global.wsManager.sendToUser(toUserId, {
+          type: 'message',
+          data: message
+        });
+      }
+
+      res.json({ 
+        message: "Xabar yuborildi", 
+        messageData: message 
+      });
+    } catch (error) {
+      console.error('Create message error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
+  app.put('/api/messages/:id/read', requireAuth, async (req, res) => {
+    try {
+      const messageId = req.params.id;
+      const updatedMessage = await storage.markMessageAsRead(messageId);
+      res.json({ 
+        message: "Xabar o'qildi deb belgilandi", 
+        message: updatedMessage 
+      });
+    } catch (error) {
+      console.error('Mark message as read error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
+  app.get('/api/messages/unread-count', requireAuth, async (req, res) => {
+    try {
+      const userId = getAuthUser(req).id;
+      const count = await storage.getUnreadMessageCount(userId);
+      res.json({ count });
+    } catch (error) {
+      console.error('Get unread message count error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
+  // Get all users (for admin chat)
+  app.get('/api/users', requireAuth, requireRole(['admin']), async (req, res) => {
+    try {
+      const users = await storage.getUsers();
+      res.json(users);
+    } catch (error) {
+      console.error('Get users error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
   // Calculator endpoint
   // Contact forms - Landing page integration  
   app.post('/api/contact-forms', async (req, res) => {

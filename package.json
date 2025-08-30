@@ -102,7 +102,8 @@
     "zod": "^3.24.2",
     "zod-validation-error": "^3.4.0",
     "@tailwindcss/typography": "^0.5.16",
-    "cross-env": "^10.0.0"
+    "cross-env": "^10.0.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.3",

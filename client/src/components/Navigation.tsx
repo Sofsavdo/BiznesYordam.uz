@@ -3,13 +3,15 @@ import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/context/LanguageContext';
+import { ChatSystem } from './ChatSystem';
 
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, MessageCircle } from 'lucide-react';
 
 export function Navigation() {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [, setLocation] = useLocation();
 
   const handleLogout = async () => {
@@ -110,6 +112,15 @@ export function Navigation() {
                 <span className="text-sm text-slate-600">
                   {t('nav.hello')}, {user.firstName || user.username}
                 </span>
+                <Button
+                  onClick={() => setIsChatOpen(true)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-slate-600 hover:text-slate-900"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Chat
+                </Button>
                 {user.role === 'admin' && (
                   <Button
                     onClick={() => setLocation('/admin-panel')}
@@ -253,6 +264,9 @@ export function Navigation() {
           </div>
         )}
       </div>
+      
+      {/* Chat System */}
+      <ChatSystem isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </nav>
   );
 }

@@ -5,6 +5,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { errorHandler, notFound } from "./errorHandler";
 import { initMockDatabase, seedMockData } from "./mockDb";
+import { initializeWebSocket } from "./websocket";
 
 const app = express();
 
@@ -62,6 +63,10 @@ app.use((req, res, next) => {
   }
 
   const server = await registerRoutes(app);
+
+  // Initialize WebSocket server
+  const wsManager = initializeWebSocket(server);
+  (global as any).wsManager = wsManager;
 
   // ✅ Vite faqat developmentda ishlaydi
   if (app.get("env") === "development") {

@@ -745,43 +745,221 @@ class MemStorage implements IStorage {
     return [
       {
         id: 'starter_pro',
-        name: 'Starter Pro',
+        tier: 'starter_pro',
+        nameUz: 'Starter Pro',
         description: 'Yangi boshlovchilar uchun',
-        price: '0',
-        currency: 'UZS',
-        features: ['Asosiy funksiyalar', '24/7 qo\'llab-quvvatlash']
+        fixedCost: '0',
+        commissionMin: '0.15',
+        commissionMax: '0.30',
+        minRevenue: '0',
+        maxRevenue: '10000000',
+        features: {
+          maxProducts: 50,
+          analytics: false,
+          prioritySupport: false,
+          marketplaceIntegrations: ['uzum'],
+          fulfillmentTypes: ['basic'],
+          commission: '15-30%',
+          specialFeatures: ['Asosiy funksiyalar', '24/7 qo\'llab-quvvatlash']
+        },
+        isActive: true
       },
       {
-        id: 'business',
-        name: 'Business',
+        id: 'business_standard',
+        tier: 'business_standard',
+        nameUz: 'Business Standard',
         description: 'Kichik biznes uchun',
-        price: '500000',
-        currency: 'UZS',
-        features: ['Barcha funksiyalar', 'Prioritet qo\'llab-quvvatlash']
+        fixedCost: '4500000',
+        commissionMin: '0.12',
+        commissionMax: '0.25',
+        minRevenue: '10000000',
+        maxRevenue: '50000000',
+        features: {
+          maxProducts: 200,
+          analytics: true,
+          prioritySupport: false,
+          marketplaceIntegrations: ['uzum', 'wildberries'],
+          fulfillmentTypes: ['basic', 'premium'],
+          commission: '12-25%',
+          specialFeatures: ['Kengaytirilgan tahlillar', 'Marketplace integratsiyasi']
+        },
+        isActive: true
+      },
+      {
+        id: 'professional_plus',
+        tier: 'professional_plus',
+        nameUz: 'Professional Plus',
+        description: 'Professional biznes uchun',
+        fixedCost: '8500000',
+        commissionMin: '0.10',
+        commissionMax: '0.20',
+        minRevenue: '50000000',
+        maxRevenue: '200000000',
+        features: {
+          maxProducts: 500,
+          analytics: true,
+          prioritySupport: true,
+          marketplaceIntegrations: ['uzum', 'wildberries', 'yandex'],
+          fulfillmentTypes: ['basic', 'premium', 'express'],
+          commission: '10-20%',
+          specialFeatures: ['Ustuvor qo\'llab-quvvatlash', 'Barcha marketplace\'lar', 'Express logistika']
+        },
+        isActive: true
+      },
+      {
+        id: 'enterprise_elite',
+        tier: 'enterprise_elite',
+        nameUz: 'Enterprise Elite',
+        description: 'Yirik korporatsiyalar uchun',
+        fixedCost: '0',
+        commissionMin: '0.08',
+        commissionMax: '0.15',
+        minRevenue: '200000000',
+        maxRevenue: null,
+        features: {
+          maxProducts: -1,
+          analytics: true,
+          prioritySupport: true,
+          marketplaceIntegrations: ['uzum', 'wildberries', 'yandex', 'ozon'],
+          fulfillmentTypes: ['basic', 'premium', 'express', 'custom'],
+          commission: '8-15%',
+          specialFeatures: ['Individual shartnoma', 'Maxsus integratsiya', '24/7 qo\'llab-quvvatlash', 'Cheksiz mahsulotlar']
+        },
+        isActive: true
       }
     ];
   }
   
   async createTierUpgradeRequest(data: any): Promise<any> {
-    return { id: Math.random().toString(36).substr(2, 9), ...data, createdAt: new Date(), status: 'pending' };
+    const request = {
+      id: Math.random().toString(36).substr(2, 9),
+      partnerId: data.partnerId,
+      requestedTier: data.requestedTier,
+      reason: data.reason,
+      status: 'pending',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    
+    // Store in memory for now (in real app, save to database)
+    if (!this.tierUpgradeRequests) this.tierUpgradeRequests = [];
+    this.tierUpgradeRequests.push(request);
+    
+    return request;
   }
   
   async getTierUpgradeRequests(): Promise<any[]> {
-    return [];
+    return this.tierUpgradeRequests || [];
   }
   
   async getPendingTierUpgradeRequests(): Promise<any[]> {
-    return [];
+    return (this.tierUpgradeRequests || []).filter(req => req.status === 'pending');
   }
   
   async approveTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
-    return { id: requestId, status: 'approved', adminId, notes, approvedAt: new Date() };
+    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    if (!request) throw new Error('So\'rov topilmadi');
+    
+    request.status = 'approved';
+    request.adminId = adminId;
+    request.adminNotes = notes;
+    request.approvedAt = new Date();
+    request.updatedAt = new Date();
+    
+    // Update partner tier
+    const partner = await this.getPartner(request.partnerId);
+    if (partner) {
+      await this.updatePartner(request.partnerId, {
+        pricingTier: request.requestedTier,
+        updatedAt: new Date()
+      });
+    }
+    
+    return request;
   }
   
   async rejectTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
-    return { id: requestId, status: 'rejected', adminId, notes, rejectedAt: new Date() };
+    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    if (!request) throw new Error('So\'rov topilmadi');
+    
+    request.status = 'rejected';
+    request.adminId = adminId;
+    request.adminNotes = notes;
+    request.rejectedAt = new Date();
+    request.updatedAt = new Date();
+    
+    return request;
   }
   
+  // Messaging
+  async createMessage(data: any): Promise<any> {
+    const message = {
+      id: Math.random().toString(36).substr(2, 9),
+      fromUserId: data.fromUserId,
+      toUserId: data.toUserId,
+      content: data.content,
+      isRead: data.isRead || false,
+      createdAt: new Date()
+    };
+    
+    // Store in memory for now (in real app, save to database)
+    if (!this.messages) this.messages = [];
+    this.messages.push(message);
+    
+    return message;
+  }
+
+  async getMessages(userId: string): Promise<any[]> {
+    return (this.messages || []).filter(msg => 
+      msg.fromUserId === userId || msg.toUserId === userId
+    ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async markMessageAsRead(messageId: string): Promise<any> {
+    const message = (this.messages || []).find(msg => msg.id === messageId);
+    if (message) {
+      message.isRead = true;
+      message.readAt = new Date();
+    }
+    return message;
+  }
+
+  async getUnreadMessageCount(userId: string): Promise<number> {
+    return (this.messages || []).filter(msg => 
+      msg.toUserId === userId && !msg.isRead
+    ).length;
+  }
+
+  async getUsers(): Promise<any[]> {
+    // Return all users for admin chat
+    return [
+      {
+        id: 'admin',
+        username: 'admin',
+        firstName: 'Admin',
+        lastName: 'User',
+        role: 'admin',
+        email: 'admin@biznesyordam.uz'
+      },
+      {
+        id: 'partner1',
+        username: 'partner1',
+        firstName: 'Hamkor',
+        lastName: 'Bir',
+        role: 'partner',
+        email: 'partner1@example.com'
+      },
+      {
+        id: 'partner2',
+        username: 'partner2',
+        firstName: 'Hamkor',
+        lastName: 'Ikki',
+        role: 'partner',
+        email: 'partner2@example.com'
+      }
+    ];
+  }
+
   // Excel Management
   async getExcelImports(partnerId: string): Promise<any[]> {
     return [];
