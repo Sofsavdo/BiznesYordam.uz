@@ -1,14 +1,16 @@
 import { z } from 'zod';
 import * as bcrypt from 'bcryptjs';
 import { db } from "./db";
-import { 
+import {
   users, 
   partners, 
   products, 
   fulfillmentRequests, 
   messages, 
   marketplaceIntegrations,
-  systemSettings 
+  systemSettings,
+  adminPermissions,
+  contactForms
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
@@ -1828,45 +1830,117 @@ class DatabaseStorage implements IStorage {
 
   // Admin permissions
   async getAdminPermissions(userId: string): Promise<any> {
-    // This would need a separate table in the schema
-    return {
-      canManageAdmins: true,
-      canManageContent: true,
-      canManageChat: true,
-      canViewReports: true,
-      canReceiveProducts: true,
-      canActivatePartners: true,
-      canManageIntegrations: true,
-      viewPartners: true,
-      managePartners: true,
-      viewAnalytics: true,
-      manageSettings: true,
-      viewRequests: true,
-      manageRequests: true,
-      allPermissions: true
-    };
+    try {
+      const result = await db.select().from(adminPermissions)
+        .where(eq(adminPermissions.userId, userId));
+      
+      if (result.length === 0) {
+        // Create default permissions for admin if not exists
+        const defaultPermissions = {
+          userId,
+          canManageAdmins: true,
+          canManageContent: true,
+          canManageChat: true,
+          canViewReports: true,
+          canReceiveProducts: true,
+          canActivatePartners: true,
+          canManageIntegrations: true,
+        };
+        
+        await db.insert(adminPermissions).values(defaultPermissions);
+        return {
+          ...defaultPermissions,
+          viewPartners: true,
+          managePartners: true,
+          viewAnalytics: true,
+          manageSettings: true,
+          viewRequests: true,
+          manageRequests: true,
+          allPermissions: true
+        };
+      }
+      
+      const perms = result[0];
+      return {
+        canManageAdmins: perms.canManageAdmins,
+        canManageContent: perms.canManageContent,
+        canManageChat: perms.canManageChat,
+        canViewReports: perms.canViewReports,
+        canReceiveProducts: perms.canReceiveProducts,
+        canActivatePartners: perms.canActivatePartners,
+        canManageIntegrations: perms.canManageIntegrations,
+        viewPartners: true,
+        managePartners: true,
+        viewAnalytics: true,
+        manageSettings: true,
+        viewRequests: true,
+        manageRequests: true,
+        allPermissions: true
+      };
+    } catch (error) {
+      console.error('Error getting admin permissions:', error);
+      // Return default permissions on error
+      return {
+        canManageAdmins: true,
+        canManageContent: true,
+        canManageChat: true,
+        canViewReports: true,
+        canReceiveProducts: true,
+        canActivatePartners: true,
+        canManageIntegrations: true,
+        viewPartners: true,
+        managePartners: true,
+        viewAnalytics: true,
+        manageSettings: true,
+        viewRequests: true,
+        manageRequests: true,
+        allPermissions: true
+      };
+    }
   }
 
   async upsertAdminPermissions(userId: string, permissions: any): Promise<any> {
-    // This would need a separate table in the schema
-    return permissions;
+    try {
+      const existing = await db.select().from(adminPermissions)
+        .where(eq(adminPermissions.userId, userId));
+      
+      if (existing.length === 0) {
+        const result = await db.insert(adminPermissions).values({
+          userId,
+          ...permissions
+        }).returning();
+        return result[0];
+      } else {
+        const result = await db.update(adminPermissions)
+          .set({
+            ...permissions,
+            updatedAt: new Date()
+          })
+          .where(eq(adminPermissions.userId, userId))
+          .returning();
+        return result[0];
+      }
+    } catch (error) {
+      console.error('Error upserting admin permissions:', error);
+      return permissions;
+    }
   }
 
   // Contact forms
   async createContactForm(data: any): Promise<any> {
     try {
-      // For now, store in memory. In production, this would be a database table
-      const contactForm = {
-        id: Math.random().toString(36).substr(2, 9),
-        ...data,
-        createdAt: new Date()
-      };
+      const result = await db.insert(contactForms).values({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        businessCategory: data.businessCategory,
+        monthlyRevenue: data.monthlyRevenue,
+        notes: data.notes,
+        status: 'new'
+      }).returning();
       
-      // Store in memory for now (in real app, save to database)
-      if (!this.contactForms) this.contactForms = [];
-      this.contactForms.push(contactForm);
-      
-      return contactForm;
+      return result[0];
     } catch (error) {
       console.error('Error creating contact form:', error);
       throw error;
@@ -1874,23 +1948,40 @@ class DatabaseStorage implements IStorage {
   }
 
   async getContactForms(): Promise<any[]> {
-    return this.contactForms || [];
+    try {
+      return await db.select().from(contactForms).orderBy(contactForms.createdAt);
+    } catch (error) {
+      console.error('Error getting contact forms:', error);
+      return [];
+    }
   }
 
   async updateContactFormStatus(id: string, status: string): Promise<any> {
-    const contactForm = (this.contactForms || []).find(cf => cf.id === id);
-    if (contactForm) {
-      contactForm.status = status;
-      contactForm.updatedAt = new Date();
+    try {
+      const result = await db.update(contactForms)
+        .set({ status })
+        .where(eq(contactForms.id, id))
+        .returning();
+      return result[0];
+    } catch (error) {
+      console.error('Error updating contact form status:', error);
+      return null;
     }
-    return contactForm;
   }
 }
 
 export const storage = new DatabaseStorage();
 
 // Seed system settings
-export async function seedSystemSettings() {
+export async function seedSystemSettings(adminUserId?: string) {
+  // Get admin user if not provided
+  const adminUser = adminUserId || await db.select().from(users).where(eq(users.role, 'admin')).then(rows => rows[0]?.id);
+  
+  if (!adminUser) {
+    console.log('No admin user found, skipping system settings');
+    return;
+  }
+
   const defaultSettings = [
     {
       settingKey: 'default_commission_rate',
@@ -1898,7 +1989,7 @@ export async function seedSystemSettings() {
       settingType: 'number',
       category: 'commission',
       description: 'Default commission rate for new partners',
-      updatedBy: 'system'
+      updatedBy: adminUser
     },
     {
       settingKey: 'max_commission_rate',
@@ -1906,7 +1997,7 @@ export async function seedSystemSettings() {
       settingType: 'number',
       category: 'commission',
       description: 'Maximum commission rate allowed',
-      updatedBy: 'system'
+      updatedBy: adminUser
     },
     {
       settingKey: 'min_commission_rate',
@@ -1914,7 +2005,7 @@ export async function seedSystemSettings() {
       settingType: 'number',
       category: 'commission',
       description: 'Minimum commission rate allowed',
-      updatedBy: 'system'
+      updatedBy: adminUser
     }
   ];
 

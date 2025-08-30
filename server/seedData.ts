@@ -270,7 +270,7 @@ async function seedData() {
     }
 
     // Seed system settings
-    await seedSystemSettings();
+    await seedSystemSettings(admin.id);
 
     console.log("Data seeding completed successfully!");
   } catch (error) {

@@ -1720,32 +1720,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Marketplace integrations endpoint
   app.get('/api/marketplace-integrations', requireAuth, requireRole(['admin']), async (req, res) => {
     try {
-      const integrations = [
-        {
-          id: '1',
-          name: 'Uzum Market',
-          status: 'connected',
-          partnersCount: 45,
-          lastSync: new Date().toISOString(),
-          apiHealth: 'healthy'
-        },
-        {
-          id: '2',
-          name: 'Wildberries',
-          status: 'connected',
-          partnersCount: 32,
-          lastSync: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-          apiHealth: 'warning'
-        },
-        {
-          id: '3',
-          name: 'Yandex Market',
-          status: 'disconnected',
-          partnersCount: 18,
-          lastSync: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-          apiHealth: 'error'
-        }
-      ];
+      // Get real marketplace integrations from database
+      const integrations = await storage.getMarketplaceIntegrations();
       res.json(integrations);
     } catch (error) {
       console.error('Get marketplace integrations error:', error);
@@ -1756,37 +1732,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Detailed analytics endpoint
   app.get('/api/analytics/detailed', requireAuth, requireRole(['admin']), async (req, res) => {
     try {
-      const partners = await storage.getAllPartners();
-      
-      const analyticsData = {
-        revenue: {
-          daily: [
-            { date: '2024-01-01', amount: 125000 },
-            { date: '2024-01-02', amount: 145000 },
-            { date: '2024-01-03', amount: 165000 },
-            { date: '2024-01-04', amount: 185000 },
-            { date: '2024-01-05', amount: 205000 }
-          ],
-          monthly: [
-            { month: '2023-12', amount: 3800000 },
-            { month: '2024-01', amount: 4200000 },
-            { month: '2024-02', amount: 4650000 },
-            { month: '2024-03', amount: 5100000 }
-          ]
-        },
-        partnerPerformance: partners.slice(0, 10).map((partner, index) => ({
-          partnerId: partner.id,
-          businessName: partner.businessName || 'Unknown Business',
-          revenue: 150000 + (index * 25000),
-          profitMargin: 25 + (index % 15),
-          ordersCount: 45 + (index * 8),
-          tier: partner.pricingTier === 'starter_pro' ? 'Starter Pro' :
-                partner.pricingTier === 'business_standard' ? 'Business Standard' :
-                partner.pricingTier === 'professional_plus' ? 'Professional Plus' :
-                'Enterprise Elite'
-        }))
-      };
-      
+      // Get real analytics data from database
+      const analyticsData = await storage.getAnalytics();
       res.json(analyticsData);
     } catch (error) {
       console.error('Get detailed analytics error:', error);
@@ -1797,18 +1744,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Chat and messaging endpoints
   app.get('/api/admin/chats', requireAuth, requireRole(['admin']), async (req, res) => {
     try {
-      // Mock chat data for admin
-      const chats = [
-        {
-          id: '1',
-          partnerId: '0bcffe97-180b-4c6e-93a9-30f08b7b964c',
-          partnerName: 'TechnoMarket',
-          lastMessage: 'Salom, yangi mahsulotlar haqida so\'roqim bor',
-          lastMessageTime: new Date().toISOString(),
-          unreadCount: 2,
-          status: 'active'
+      // Get real chat data from database
+      const messages = await storage.getAllMessages();
+      const partners = await storage.getAllPartners();
+      
+      // Group messages by partner and get latest message for each
+      const chatsMap = new Map();
+      
+      for (const message of messages) {
+        const partnerId = message.fromUserId;
+        const partner = partners.find(p => p.userId === partnerId);
+        
+        if (partner) {
+          const existingChat = chatsMap.get(partnerId);
+          if (!existingChat || new Date(message.createdAt) > new Date(existingChat.lastMessageTime)) {
+            chatsMap.set(partnerId, {
+              id: partnerId,
+              partnerId: partner.id,
+              partnerName: partner.businessName || 'Unknown Business',
+              lastMessage: message.content,
+              lastMessageTime: message.createdAt,
+              unreadCount: messages.filter(m => m.fromUserId === partnerId && !m.isRead).length,
+              status: 'active'
+            });
+          }
         }
-      ];
+      }
+      
+      const chats = Array.from(chatsMap.values());
       res.json(chats);
     } catch (error) {
       console.error('Get admin chats error:', error);
