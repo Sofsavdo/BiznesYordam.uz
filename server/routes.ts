@@ -1504,8 +1504,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Send real-time notification if WebSocket is available
-      if (global.wsManager) {
-        global.wsManager.sendToUser(toUserId, {
+      if ((global as any).wsManager) {
+        (global as any).wsManager.sendToUser(toUserId, {
           type: 'message',
           data: message
         });
@@ -1613,8 +1613,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Send notification to admin via WebSocket
-      if (global.wsManager) {
-        global.wsManager.notifyAdmins({
+      if ((global as any).wsManager) {
+        (global as any).wsManager.notifyAdmins({
           type: 'notification',
           data: {
             type: 'new_contact_form',

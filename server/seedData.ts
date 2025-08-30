@@ -9,7 +9,7 @@ async function seedData() {
     console.log("Seeding data...");
 
     // Check if admin user already exists
-    let admin = await db.select().from(users).where(eq(users.username, "admin")).then(rows => rows[0]);
+    let admin = await db.select().from(users).where(eq(users.username, "admin")).then((rows: any[]) => rows[0]);
     
     if (!admin) {
       // Create admin user with secure credentials
@@ -38,7 +38,7 @@ async function seedData() {
     }
 
     // Check if partner user already exists
-    let partnerUser = await db.select().from(users).where(eq(users.username, "testpartner")).then(rows => rows[0]);
+    let partnerUser = await db.select().from(users).where(eq(users.username, "testpartner")).then((rows: any[]) => rows[0]);
     
     if (!partnerUser) {
       // Create test partner user
@@ -67,7 +67,7 @@ async function seedData() {
     }
 
     // Check if partner profile already exists
-    let partner = await db.select().from(partners).where(eq(partners.userId, partnerUser.id)).then(rows => rows[0]);
+    let partner = await db.select().from(partners).where(eq(partners.userId, partnerUser.id)).then((rows: any[]) => rows[0]);
     
     if (!partner) {
       // Create partner profile

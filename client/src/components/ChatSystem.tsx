@@ -76,15 +76,15 @@ export function ChatSystem({ isOpen, onClose }: ChatSystemProps) {
   });
 
   // Filter messages for selected user
-  const filteredMessages = messages.filter((msg: Message) => 
+  const filteredMessages = Array.isArray(messages) ? messages.filter((msg: Message) => 
     (msg.fromUserId === user?.id && msg.toUserId === selectedUserId) ||
     (msg.fromUserId === selectedUserId && msg.toUserId === user?.id)
-  );
+  ) : [];
 
   // Get unread message count
-  const unreadCount = messages.filter((msg: Message) => 
+  const unreadCount = Array.isArray(messages) ? messages.filter((msg: Message) => 
     msg.toUserId === user?.id && !msg.isRead
-  ).length;
+  ).length : 0;
 
   const handleSendMessage = () => {
     if (!newMessage.trim() || !selectedUserId) return;
@@ -154,7 +154,7 @@ export function ChatSystem({ isOpen, onClose }: ChatSystemProps) {
               </div>
               <ScrollArea className="flex-1">
                 <div className="p-2 space-y-1">
-                  {users.map((userItem: any) => (
+                  {Array.isArray(users) && users.map((userItem: any) => (
                     <button
                       key={userItem.id}
                       onClick={() => setSelectedUserId(userItem.id)}

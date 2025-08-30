@@ -26,7 +26,7 @@ export function useWebSocket(): UseWebSocketReturn {
       // Get WebSocket URL from current location
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const host = window.location.host;
-      const wsUrl = `${protocol}//${host}?userId=${user.id}&role=${user.role}${user.partnerId ? `&partnerId=${user.partnerId}` : ''}`;
+      const wsUrl = `${protocol}//${host}?userId=${user.id}&role=${user.role}`;
 
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
@@ -81,7 +81,7 @@ export function useWebSocket(): UseWebSocketReturn {
     } catch (error) {
       console.error('Error creating WebSocket connection:', error);
     }
-  }, [user?.id, user?.role, user?.partnerId]);
+  }, [user?.id, user?.role]);
 
   const disconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {

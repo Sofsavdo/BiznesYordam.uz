@@ -139,6 +139,7 @@ class MemStorage implements IStorage {
   private messages: any[] = [];
   private systemSettings: any[] = [];
   private adminPermissions: Map<string, any> = new Map();
+  private tierUpgradeRequests: any[] = [];
 
   constructor() {
     // Initialize with admin and partner test users
@@ -853,22 +854,21 @@ class MemStorage implements IStorage {
     };
     
     // Store in memory for now (in real app, save to database)
-    if (!this.tierUpgradeRequests) this.tierUpgradeRequests = [];
     this.tierUpgradeRequests.push(request);
     
     return request;
   }
   
   async getTierUpgradeRequests(): Promise<any[]> {
-    return this.tierUpgradeRequests || [];
+    return this.tierUpgradeRequests;
   }
   
   async getPendingTierUpgradeRequests(): Promise<any[]> {
-    return (this.tierUpgradeRequests || []).filter(req => req.status === 'pending');
+    return this.tierUpgradeRequests.filter((req: any) => req.status === 'pending');
   }
   
   async approveTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
-    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    const request = this.tierUpgradeRequests.find((req: any) => req.id === requestId);
     if (!request) throw new Error('So\'rov topilmadi');
     
     request.status = 'approved';
@@ -890,7 +890,7 @@ class MemStorage implements IStorage {
   }
   
   async rejectTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
-    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    const request = this.tierUpgradeRequests.find((req: any) => req.id === requestId);
     if (!request) throw new Error('So\'rov topilmadi');
     
     request.status = 'rejected';
@@ -977,6 +977,7 @@ class MemStorage implements IStorage {
 }
 
 class DatabaseStorage implements IStorage {
+  private tierUpgradeRequests: any[] = [];
   // User management
   async validateUser(username: string, password: string): Promise<any> {
     try {
@@ -1274,7 +1275,6 @@ class DatabaseStorage implements IStorage {
   async getPartnerMessages(partnerId: string): Promise<any[]> {
     try {
       return await db.select().from(messages)
-        .where(eq(messages.partnerId, partnerId))
         .orderBy(messages.createdAt);
     } catch (error) {
       console.error('Database error in getPartnerMessages:', error);
@@ -1294,7 +1294,7 @@ class DatabaseStorage implements IStorage {
   // System settings
   async getSystemSetting(key: string): Promise<any> {
     try {
-      const result = await db.select().from(systemSettings).where(eq(systemSettings.key, key)).limit(1);
+      const result = await db.select().from(systemSettings).where(eq(systemSettings.settingKey, key)).limit(1);
       return result[0] || null;
     } catch (error) {
       console.error('Database error in getSystemSetting:', error);
@@ -1319,7 +1319,7 @@ class DatabaseStorage implements IStorage {
     try {
       const [setting] = await db.update(systemSettings)
         .set({ value, updatedBy, updatedAt: new Date() })
-        .where(eq(systemSettings.key, key))
+        .where(eq(systemSettings.settingKey, key))
         .returning();
       return setting;
     } catch (error) {
@@ -1437,23 +1437,19 @@ class DatabaseStorage implements IStorage {
   // Trending products
   async getTrendingProducts(category?: string, market?: string, minScore?: number): Promise<any[]> {
     try {
-      let query = db.select().from(products);
+      let query: any = db.select().from(products);
       
       if (category) {
-        query = query.where(eq(products.category, category));
+        query = query.where(eq(products.category, category as any));
       }
       
-      if (market) {
-        query = query.where(eq(products.marketplace, market));
-      }
-      
-      const products = await query;
+      const productResults = await query;
       
       if (minScore) {
-        return products.filter(p => (p.trendingScore || 0) >= minScore);
+        return productResults.filter((p: any) => (p.trendingScore || 0) >= minScore);
       }
       
-      return products;
+      return productResults;
     } catch (error) {
       console.error('Database error in getTrendingProducts:', error);
       return [];
@@ -1535,7 +1531,7 @@ class DatabaseStorage implements IStorage {
       const [integration] = await db.update(marketplaceIntegrations)
         .set({ ...updates, updatedAt: new Date() })
         .where(eq(marketplaceIntegrations.partnerId, partnerId))
-        .and(eq(marketplaceIntegrations.marketplace, marketplace))
+        .where(eq(marketplaceIntegrations.marketplace, marketplace as any))
         .returning();
       return integration;
     } catch (error) {
@@ -1718,22 +1714,21 @@ class DatabaseStorage implements IStorage {
     };
     
     // Store in memory for now (in real app, save to database)
-    if (!this.tierUpgradeRequests) this.tierUpgradeRequests = [];
     this.tierUpgradeRequests.push(request);
     
     return request;
   }
 
   async getTierUpgradeRequests(): Promise<any[]> {
-    return this.tierUpgradeRequests || [];
+    return this.tierUpgradeRequests;
   }
 
   async getPendingTierUpgradeRequests(): Promise<any[]> {
-    return (this.tierUpgradeRequests || []).filter(req => req.status === 'pending');
+    return this.tierUpgradeRequests.filter((req: any) => req.status === 'pending');
   }
 
   async approveTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
-    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    const request = this.tierUpgradeRequests.find((req: any) => req.id === requestId);
     if (!request) throw new Error('So\'rov topilmadi');
     
     request.status = 'approved';
@@ -1755,7 +1750,7 @@ class DatabaseStorage implements IStorage {
   }
 
   async rejectTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
-    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    const request = this.tierUpgradeRequests.find((req: any) => req.id === requestId);
     if (!request) throw new Error('So\'rov topilmadi');
     
     request.status = 'rejected';
@@ -1975,7 +1970,7 @@ export const storage = new DatabaseStorage();
 // Seed system settings
 export async function seedSystemSettings(adminUserId?: string) {
   // Get admin user if not provided
-  const adminUser = adminUserId || await db.select().from(users).where(eq(users.role, 'admin')).then(rows => rows[0]?.id);
+  const adminUser = adminUserId || await db.select().from(users).where(eq(users.role, 'admin')).then((rows: any[]) => rows[0]?.id);
   
   if (!adminUser) {
     console.log('No admin user found, skipping system settings');

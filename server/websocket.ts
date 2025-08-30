@@ -41,7 +41,7 @@ export class WebSocketManager {
       }
 
       // Store client connection
-      this.clients.set(userId, { ws, userId, userRole, partnerId });
+      this.clients.set(userId, { ws, userId, userRole, partnerId: partnerId || undefined });
 
       // Send welcome message
       this.sendToUser(userId, {
