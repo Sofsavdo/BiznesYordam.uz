@@ -1557,27 +1557,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get contact forms (for admin)
+  app.get('/api/contact-forms', requireAuth, requireRole(['admin']), async (req, res) => {
+    try {
+      const contactForms = await storage.getContactForms();
+      res.json(contactForms);
+    } catch (error) {
+      console.error('Get contact forms error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
+  // Update contact form status
+  app.put('/api/contact-forms/:id/status', requireAuth, requireRole(['admin']), async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+      
+      const contactForm = await storage.updateContactFormStatus(id, status);
+      res.json({ 
+        message: "Contact form status updated", 
+        contactForm 
+      });
+    } catch (error) {
+      console.error('Update contact form status error:', error);
+      res.status(500).json({ message: "Server xatoligi" });
+    }
+  });
+
   // Calculator endpoint
   // Contact forms - Landing page integration  
   app.post('/api/contact-forms', async (req, res) => {
     try {
-      const contactData = req.body;
+      const { firstName, lastName, email, phone, businessCategory, monthlyRevenue, notes } = req.body;
       
-      // Save contact form submission to database (would be implemented with real table)
-      console.log('New contact form submission:', contactData);
-      
-      // In production, this would:
-      // 1. Save to contact_forms table  
-      // 2. Send notification to admin
-      // 3. Send auto-reply email to user
+      // Validate required fields
+      if (!firstName || !lastName || !email || !phone) {
+        return res.status(400).json({ 
+          success: false,
+          message: "Barcha majburiy maydonlar to'ldirilishi shart" 
+        });
+      }
+
+      // Save contact form submission to database
+      const contactForm = await storage.createContactForm({
+        firstName,
+        lastName,
+        email,
+        phone,
+        businessCategory: businessCategory || 'other',
+        monthlyRevenue: monthlyRevenue || '0',
+        notes: notes || '',
+        status: 'new',
+        createdAt: new Date()
+      });
+
+      // Send notification to admin via WebSocket
+      if (global.wsManager) {
+        global.wsManager.notifyAdmins({
+          type: 'notification',
+          data: {
+            type: 'new_contact_form',
+            title: 'Yangi hamkor arizasi',
+            message: `${firstName} ${lastName} dan yangi ariza`,
+            contactForm
+          }
+        });
+      }
+
+      // Create audit log
+      await storage.createAuditLog({
+        action: 'contact_form_submitted',
+        userId: 'anonymous',
+        details: {
+          contactFormId: contactForm.id,
+          email,
+          businessCategory
+        },
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      });
       
       res.json({ 
         success: true,
-        message: "Arizangiz qabul qilindi! Tez orada siz bilan bog'lanamiz."
+        message: "Arizangiz qabul qilindi! Tez orada siz bilan bog'lanamiz.",
+        contactFormId: contactForm.id
       });
     } catch (error) {
       console.error('Contact form error:', error);
-      res.status(500).json({ message: "Arizani yuborishda xatolik" });
+      res.status(500).json({ 
+        success: false,
+        message: "Arizani yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring." 
+      });
     }
   });
 

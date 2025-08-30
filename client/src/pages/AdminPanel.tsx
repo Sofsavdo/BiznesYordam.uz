@@ -351,6 +351,11 @@ export default function AdminPanel() {
     enabled: !!user && user.role === 'admin',
   });
 
+  const { data: contactForms = [] } = useQuery<any[]>({
+    queryKey: ['/api/contact-forms'],
+    enabled: !!user && user.role === 'admin',
+  });
+
   // All useMutation hooks together
   const approvePartnerMutation = useMutation({
     mutationFn: async (partnerId: string) => {
@@ -478,6 +483,28 @@ export default function AdminPanel() {
     onError: (error: Error) => {
       toast({
         title: "Eksport xatoligi",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Contact form action mutation
+  const contactFormActionMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const response = await apiRequest('PUT', `/api/contact-forms/${id}/status`, { status });
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Status yangilandi",
+        description: "Ariza statusi muvaffaqiyatli yangilandi",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/contact-forms'] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Xatolik",
         description: error.message,
         variant: "destructive",
       });
@@ -687,6 +714,14 @@ export default function AdminPanel() {
   const handleMarketplaceSettings = (partner: any) => {
     setSelectedPartner(partner);
     setShowMarketplaceSettings(true);
+  };
+
+  const handleContactFormAction = async (id: string, status: string) => {
+    try {
+      await contactFormActionMutation.mutateAsync({ id, status });
+    } catch (error) {
+      console.error('Contact form action error:', error);
+    }
   };
 
   // Filter partners based on search
@@ -919,6 +954,14 @@ export default function AdminPanel() {
               >
                 <MessageCircle className="w-4 h-4" />
                 Chat
+              </TabsTrigger>
+              <TabsTrigger 
+                value="contact-forms" 
+                className="flex items-center gap-2 text-xs data-[state=active]:bg-green-100 data-[state=active]:text-green-900"
+                data-testid="tab-contact-forms"
+              >
+                <FileText className="w-4 h-4" />
+                Hamkor Arizalari
               </TabsTrigger>
               <TabsTrigger 
                 value="system" 
@@ -2777,6 +2820,103 @@ export default function AdminPanel() {
                 </Card>
               </div>
 
+            </TabsContent>
+
+            {/* Contact Forms Tab */}
+            <TabsContent value="contact-forms" className="space-y-6" data-testid="content-contact-forms">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-slate-900">Hamkor Arizalari</h2>
+                <div className="flex gap-3">
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      queryClient.invalidateQueries({ queryKey: ['/api/contact-forms'] });
+                    }}
+                  >
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Yangilash
+                  </Button>
+                </div>
+              </div>
+
+              {/* Contact Forms List */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="w-5 h-5" />
+                    Yangi Hamkor Arizalari ({contactForms.length})
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {contactForms.length > 0 ? (
+                      contactForms.map((form) => (
+                        <div key={form.id} className="border rounded-lg p-4 hover:bg-slate-50">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-2">
+                                <h3 className="font-semibold text-lg">
+                                  {form.firstName} {form.lastName}
+                                </h3>
+                                <Badge variant={form.status === 'new' ? 'default' : 'secondary'}>
+                                  {form.status === 'new' ? 'Yangi' : form.status}
+                                </Badge>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                  <p><strong>Email:</strong> {form.email}</p>
+                                  <p><strong>Telefon:</strong> {form.phone}</p>
+                                  <p><strong>Biznes turi:</strong> {form.businessCategory}</p>
+                                </div>
+                                <div>
+                                  <p><strong>Oylik aylanma:</strong> {formatCurrency(parseFloat(form.monthlyRevenue))}</p>
+                                  <p><strong>Sana:</strong> {new Date(form.createdAt).toLocaleDateString('uz-UZ')}</p>
+                                  {form.notes && (
+                                    <p><strong>Izoh:</strong> {form.notes}</p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex gap-2 ml-4">
+                              <Button
+                                size="sm"
+                                onClick={() => handleContactFormAction(form.id, 'contacted')}
+                                disabled={form.status !== 'new'}
+                              >
+                                <Phone className="w-4 h-4 mr-1" />
+                                Bog'lanish
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleContactFormAction(form.id, 'approved')}
+                                disabled={form.status !== 'new'}
+                              >
+                                <CheckCircle className="w-4 h-4 mr-1" />
+                                Tasdiqlash
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleContactFormAction(form.id, 'rejected')}
+                                disabled={form.status !== 'new'}
+                              >
+                                <XCircle className="w-4 h-4 mr-1" />
+                                Rad etish
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8 text-slate-500">
+                        <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                        <p>Hozircha yangi arizalar yo'q</p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* Enhanced Marketplace Tab */}

@@ -86,6 +86,23 @@ export const partners = pgTable("partners", {
   updatedAt: timestamp("updated_at").default(sql`now()`),
 });
 
+// Contact forms table
+export const contactForms = pgTable("contact_forms", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  firstName: varchar("first_name").notNull(),
+  lastName: varchar("last_name").notNull(),
+  email: varchar("email").notNull(),
+  phone: varchar("phone").notNull(),
+  businessCategory: varchar("business_category"),
+  monthlyRevenue: decimal("monthly_revenue"),
+  notes: text("notes"),
+  status: varchar("status").notNull().default('new'),
+  processedBy: varchar("processed_by").references(() => users.id),
+  processedAt: timestamp("processed_at"),
+  createdAt: timestamp("created_at").default(sql`now()`),
+  updatedAt: timestamp("updated_at").default(sql`now()`),
+});
+
 // Pricing tiers configuration
 export const pricingTiers = pgTable("pricing_tiers", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),

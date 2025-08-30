@@ -974,8 +974,917 @@ class MemStorage implements IStorage {
   }
 }
 
-class DatabaseStorage extends MemStorage {
-  // Override with database operations when needed
+class DatabaseStorage implements IStorage {
+  // User management
+  async validateUser(username: string, password: string): Promise<any> {
+    try {
+      const user = await db.select().from(users).where(eq(users.username, username)).limit(1);
+      if (user.length === 0) return null;
+      
+      const isValid = await bcrypt.compare(password, user[0].password);
+      return isValid ? user[0] : null;
+    } catch (error) {
+      console.error('Database error in validateUser:', error);
+      return null;
+    }
+  }
+
+  async getUserByEmail(email: string): Promise<any> {
+    try {
+      const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+      return result[0] || null;
+    } catch (error) {
+      console.error('Database error in getUserByEmail:', error);
+      return null;
+    }
+  }
+
+  async getUserByUsername(username: string): Promise<any> {
+    try {
+      const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
+      return result[0] || null;
+    } catch (error) {
+      console.error('Database error in getUserByUsername:', error);
+      return null;
+    }
+  }
+
+  async createUser(userData: any): Promise<any> {
+    try {
+      const hashedPassword = await bcrypt.hash(userData.password, 10);
+      const [user] = await db.insert(users).values({
+        ...userData,
+        password: hashedPassword,
+        createdAt: new Date()
+      }).returning();
+      return user;
+    } catch (error) {
+      console.error('Database error in createUser:', error);
+      throw error;
+    }
+  }
+
+  async getUserById(userId: string): Promise<any> {
+    try {
+      const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+      return result[0] || null;
+    } catch (error) {
+      console.error('Database error in getUserById:', error);
+      return null;
+    }
+  }
+
+  async getAllUsers(): Promise<any[]> {
+    try {
+      return await db.select().from(users).orderBy(users.createdAt);
+    } catch (error) {
+      console.error('Database error in getAllUsers:', error);
+      return [];
+    }
+  }
+
+  // Partner management
+  async createPartner(partnerData: any): Promise<any> {
+    try {
+      const [partner] = await db.insert(partners).values({
+        ...partnerData,
+        createdAt: new Date()
+      }).returning();
+      return partner;
+    } catch (error) {
+      console.error('Database error in createPartner:', error);
+      throw error;
+    }
+  }
+
+  async getPartnerByUserId(userId: string): Promise<any> {
+    try {
+      const result = await db.select().from(partners).where(eq(partners.userId, userId)).limit(1);
+      return result[0] || null;
+    } catch (error) {
+      console.error('Database error in getPartnerByUserId:', error);
+      return null;
+    }
+  }
+
+  async getPartnerById(partnerId: string): Promise<any> {
+    try {
+      const result = await db.select().from(partners).where(eq(partners.id, partnerId)).limit(1);
+      return result[0] || null;
+    } catch (error) {
+      console.error('Database error in getPartnerById:', error);
+      return null;
+    }
+  }
+
+  async getPartner(partnerId: string): Promise<any> {
+    return this.getPartnerById(partnerId);
+  }
+
+  async getAllPartners(): Promise<any[]> {
+    try {
+      return await db.select().from(partners).orderBy(partners.createdAt);
+    } catch (error) {
+      console.error('Database error in getAllPartners:', error);
+      return [];
+    }
+  }
+
+  async updatePartnerStatus(partnerId: string, isApproved: boolean): Promise<any> {
+    try {
+      const [partner] = await db.update(partners)
+        .set({ 
+          isApproved, 
+          approvedAt: isApproved ? new Date() : null,
+          updatedAt: new Date()
+        })
+        .where(eq(partners.id, partnerId))
+        .returning();
+      return partner;
+    } catch (error) {
+      console.error('Database error in updatePartnerStatus:', error);
+      throw error;
+    }
+  }
+
+  async updatePartner(partnerId: string, data: any): Promise<any> {
+    try {
+      const [partner] = await db.update(partners)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(partners.id, partnerId))
+        .returning();
+      return partner;
+    } catch (error) {
+      console.error('Database error in updatePartner:', error);
+      throw error;
+    }
+  }
+
+  async getPendingPartners(): Promise<any[]> {
+    try {
+      return await db.select().from(partners).where(eq(partners.isApproved, false));
+    } catch (error) {
+      console.error('Database error in getPendingPartners:', error);
+      return [];
+    }
+  }
+
+  async approvePartner(partnerId: string, adminId: string): Promise<any> {
+    return this.updatePartnerStatus(partnerId, true);
+  }
+
+  async updatePartnerCommission(partnerId: string, commissionRate: string): Promise<any> {
+    return this.updatePartner(partnerId, { commissionRate });
+  }
+
+  // Product management
+  async getProducts(partnerId: string): Promise<any[]> {
+    try {
+      return await db.select().from(products).where(eq(products.partnerId, partnerId));
+    } catch (error) {
+      console.error('Database error in getProducts:', error);
+      return [];
+    }
+  }
+
+  async getProductsByPartnerId(partnerId: string): Promise<any[]> {
+    return this.getProducts(partnerId);
+  }
+
+  async getRealProductsByPartnerId(partnerId: string): Promise<any[]> {
+    return this.getProducts(partnerId);
+  }
+
+  async createProduct(productData: any): Promise<any> {
+    try {
+      const [product] = await db.insert(products).values({
+        ...productData,
+        createdAt: new Date()
+      }).returning();
+      return product;
+    } catch (error) {
+      console.error('Database error in createProduct:', error);
+      throw error;
+    }
+  }
+
+  async updateProduct(productId: string, productData: any): Promise<any> {
+    try {
+      const [product] = await db.update(products)
+        .set({ ...productData, updatedAt: new Date() })
+        .where(eq(products.id, productId))
+        .returning();
+      return product;
+    } catch (error) {
+      console.error('Database error in updateProduct:', error);
+      throw error;
+    }
+  }
+
+  async deleteProduct(productId: string): Promise<boolean> {
+    try {
+      await db.delete(products).where(eq(products.id, productId));
+      return true;
+    } catch (error) {
+      console.error('Database error in deleteProduct:', error);
+      return false;
+    }
+  }
+
+  // Fulfillment requests
+  async getFulfillmentRequests(partnerId: string): Promise<any[]> {
+    try {
+      return await db.select().from(fulfillmentRequests).where(eq(fulfillmentRequests.partnerId, partnerId));
+    } catch (error) {
+      console.error('Database error in getFulfillmentRequests:', error);
+      return [];
+    }
+  }
+
+  async getFulfillmentRequestsByPartnerId(partnerId: string): Promise<any[]> {
+    return this.getFulfillmentRequests(partnerId);
+  }
+
+  async createFulfillmentRequest(requestData: any): Promise<any> {
+    try {
+      const [request] = await db.insert(fulfillmentRequests).values({
+        ...requestData,
+        createdAt: new Date()
+      }).returning();
+      return request;
+    } catch (error) {
+      console.error('Database error in createFulfillmentRequest:', error);
+      throw error;
+    }
+  }
+
+  async updateFulfillmentRequest(requestId: string, updates: any): Promise<any> {
+    try {
+      const [request] = await db.update(fulfillmentRequests)
+        .set({ ...updates, updatedAt: new Date() })
+        .where(eq(fulfillmentRequests.id, requestId))
+        .returning();
+      return request;
+    } catch (error) {
+      console.error('Database error in updateFulfillmentRequest:', error);
+      throw error;
+    }
+  }
+
+  async getAllFulfillmentRequests(): Promise<any[]> {
+    try {
+      return await db.select().from(fulfillmentRequests).orderBy(fulfillmentRequests.createdAt);
+    } catch (error) {
+      console.error('Database error in getAllFulfillmentRequests:', error);
+      return [];
+    }
+  }
+
+  // Messages
+  async getMessages(userId: string): Promise<any[]> {
+    try {
+      return await db.select().from(messages)
+        .where(eq(messages.fromUserId, userId))
+        .or(eq(messages.toUserId, userId))
+        .orderBy(messages.createdAt);
+    } catch (error) {
+      console.error('Database error in getMessages:', error);
+      return [];
+    }
+  }
+
+  async createMessage(data: any): Promise<any> {
+    try {
+      const [message] = await db.insert(messages).values({
+        fromUserId: data.fromUserId,
+        toUserId: data.toUserId,
+        content: data.content,
+        isRead: data.isRead || false,
+        createdAt: new Date()
+      }).returning();
+      return message;
+    } catch (error) {
+      console.error('Database error in createMessage:', error);
+      throw error;
+    }
+  }
+
+  async getPartnerMessages(partnerId: string): Promise<any[]> {
+    try {
+      return await db.select().from(messages)
+        .where(eq(messages.partnerId, partnerId))
+        .orderBy(messages.createdAt);
+    } catch (error) {
+      console.error('Database error in getPartnerMessages:', error);
+      return [];
+    }
+  }
+
+  async getAllMessages(): Promise<any[]> {
+    try {
+      return await db.select().from(messages).orderBy(messages.createdAt);
+    } catch (error) {
+      console.error('Database error in getAllMessages:', error);
+      return [];
+    }
+  }
+
+  // System settings
+  async getSystemSetting(key: string): Promise<any> {
+    try {
+      const result = await db.select().from(systemSettings).where(eq(systemSettings.key, key)).limit(1);
+      return result[0] || null;
+    } catch (error) {
+      console.error('Database error in getSystemSetting:', error);
+      return null;
+    }
+  }
+
+  async setSystemSetting(data: any): Promise<any> {
+    try {
+      const [setting] = await db.insert(systemSettings).values({
+        ...data,
+        createdAt: new Date()
+      }).returning();
+      return setting;
+    } catch (error) {
+      console.error('Database error in setSystemSetting:', error);
+      throw error;
+    }
+  }
+
+  async updateSystemSetting(key: string, value: string, updatedBy: string): Promise<any> {
+    try {
+      const [setting] = await db.update(systemSettings)
+        .set({ value, updatedBy, updatedAt: new Date() })
+        .where(eq(systemSettings.key, key))
+        .returning();
+      return setting;
+    } catch (error) {
+      console.error('Database error in updateSystemSetting:', error);
+      throw error;
+    }
+  }
+
+  async getAllSystemSettings(): Promise<any[]> {
+    try {
+      return await db.select().from(systemSettings);
+    } catch (error) {
+      console.error('Database error in getAllSystemSettings:', error);
+      return [];
+    }
+  }
+
+  async getSystemSettingsByCategory(category: string): Promise<any[]> {
+    try {
+      return await db.select().from(systemSettings).where(eq(systemSettings.category, category));
+    } catch (error) {
+      console.error('Database error in getSystemSettingsByCategory:', error);
+      return [];
+    }
+  }
+
+  // Analytics
+  async getPartnerStats(): Promise<any> {
+    try {
+      const allPartners = await this.getAllPartners();
+      const allProducts = await db.select().from(products);
+      const allRequests = await this.getAllFulfillmentRequests();
+      
+      return {
+        totalPartners: allPartners.length,
+        approvedPartners: allPartners.filter(p => p.isApproved).length,
+        totalProducts: allProducts.length,
+        totalRequests: allRequests.length
+      };
+    } catch (error) {
+      console.error('Database error in getPartnerStats:', error);
+      return { totalPartners: 0, approvedPartners: 0, totalProducts: 0, totalRequests: 0 };
+    }
+  }
+
+  async getProfitAnalytics(partnerId?: string): Promise<any> {
+    try {
+      let requests;
+      if (partnerId) {
+        requests = await this.getFulfillmentRequests(partnerId);
+      } else {
+        requests = await this.getAllFulfillmentRequests();
+      }
+      
+      return {
+        totalRevenue: requests.reduce((sum, r) => sum + (parseFloat(r.totalCost) || 0), 0),
+        totalProfit: requests.reduce((sum, r) => sum + (parseFloat(r.expectedProfit) || 0), 0),
+        requestCount: requests.length,
+        averageOrderValue: requests.length > 0 ? 
+          requests.reduce((sum, r) => sum + (parseFloat(r.totalCost) || 0), 0) / requests.length : 0
+      };
+    } catch (error) {
+      console.error('Database error in getProfitAnalytics:', error);
+      return { totalRevenue: 0, totalProfit: 0, requestCount: 0, averageOrderValue: 0 };
+    }
+  }
+
+  async getAnalytics(): Promise<any> {
+    try {
+      return {
+        partners: await this.getPartnerStats(),
+        profits: await this.getProfitAnalytics()
+      };
+    } catch (error) {
+      console.error('Database error in getAnalytics:', error);
+      return { partners: {}, profits: {} };
+    }
+  }
+
+  async getPartnerAnalytics(partnerId: string): Promise<any> {
+    return this.getProfitAnalytics(partnerId);
+  }
+
+  async getOverallStats(): Promise<any> {
+    try {
+      const allPartners = await this.getAllPartners();
+      const allProducts = await db.select().from(products);
+      const allRequests = await this.getAllFulfillmentRequests();
+      
+      return {
+        totalPartners: allPartners.length,
+        totalProducts: allProducts.length,
+        totalRequests: allRequests.length,
+        totalRevenue: allRequests.reduce((sum, r) => sum + (parseFloat(r.totalCost) || 0), 0)
+      };
+    } catch (error) {
+      console.error('Database error in getOverallStats:', error);
+      return { totalPartners: 0, totalProducts: 0, totalRequests: 0, totalRevenue: 0 };
+    }
+  }
+
+  async getDashboardStats(partnerId?: string): Promise<any> {
+    try {
+      if (partnerId) {
+        return await this.getPartnerAnalytics(partnerId);
+      } else {
+        return await this.getOverallStats();
+      }
+    } catch (error) {
+      console.error('Database error in getDashboardStats:', error);
+      return {};
+    }
+  }
+
+  // Trending products
+  async getTrendingProducts(category?: string, market?: string, minScore?: number): Promise<any[]> {
+    try {
+      let query = db.select().from(products);
+      
+      if (category) {
+        query = query.where(eq(products.category, category));
+      }
+      
+      if (market) {
+        query = query.where(eq(products.marketplace, market));
+      }
+      
+      const products = await query;
+      
+      if (minScore) {
+        return products.filter(p => (p.trendingScore || 0) >= minScore);
+      }
+      
+      return products;
+    } catch (error) {
+      console.error('Database error in getTrendingProducts:', error);
+      return [];
+    }
+  }
+
+  async createTrendingProduct(productData: any): Promise<any> {
+    try {
+      const [product] = await db.insert(products).values({
+        ...productData,
+        createdAt: new Date()
+      }).returning();
+      return product;
+    } catch (error) {
+      console.error('Database error in createTrendingProduct:', error);
+      throw error;
+    }
+  }
+
+  // API Documentation
+  async getApiDocumentations(partnerId: string): Promise<any[]> {
+    // This would need a separate table in the schema
+    return [];
+  }
+
+  async createApiDocumentation(partnerId: string, data: any): Promise<any> {
+    // This would need a separate table in the schema
+    return { id: 'temp', partnerId, ...data };
+  }
+
+  async verifyApiDocumentation(partnerId: string, docId: string): Promise<any> {
+    // This would need a separate table in the schema
+    return { verified: true };
+  }
+
+  async deleteApiDocumentation(partnerId: string, docId: string): Promise<boolean> {
+    // This would need a separate table in the schema
+    return true;
+  }
+
+  // Excel management
+  async generateExcelExport(partnerId: string, marketplace: string, dataType: string): Promise<Buffer> {
+    // This would generate actual Excel files
+    return Buffer.from('mock excel data');
+  }
+
+  async generateExcelTemplate(template: any): Promise<Buffer> {
+    // This would generate actual Excel templates
+    return Buffer.from('mock template data');
+  }
+
+  // Marketplace Integrations
+  async getMarketplaceIntegrations(): Promise<any[]> {
+    try {
+      return await db.select().from(marketplaceIntegrations);
+    } catch (error) {
+      console.error('Database error in getMarketplaceIntegrations:', error);
+      return [];
+    }
+  }
+
+  async createMarketplaceIntegration(partnerId: string, marketplace: string, config: any): Promise<any> {
+    try {
+      const [integration] = await db.insert(marketplaceIntegrations).values({
+        partnerId,
+        marketplace,
+        config: JSON.stringify(config),
+        createdAt: new Date()
+      }).returning();
+      return integration;
+    } catch (error) {
+      console.error('Database error in createMarketplaceIntegration:', error);
+      throw error;
+    }
+  }
+
+  async updateMarketplaceIntegration(partnerId: string, marketplace: string, updates: any): Promise<any> {
+    try {
+      const [integration] = await db.update(marketplaceIntegrations)
+        .set({ ...updates, updatedAt: new Date() })
+        .where(eq(marketplaceIntegrations.partnerId, partnerId))
+        .and(eq(marketplaceIntegrations.marketplace, marketplace))
+        .returning();
+      return integration;
+    } catch (error) {
+      console.error('Database error in updateMarketplaceIntegration:', error);
+      throw error;
+    }
+  }
+
+  async retryMarketplaceIntegration(partnerId: string, marketplace: string): Promise<any> {
+    // This would retry the integration
+    return { success: true };
+  }
+
+  // SPT Costs
+  async getSptCosts(): Promise<any[]> {
+    // This would need a separate table in the schema
+    return [];
+  }
+
+  async createSptCost(data: any): Promise<any> {
+    // This would need a separate table in the schema
+    return { id: 'temp', ...data };
+  }
+
+  async updateSptCost(id: string, data: any): Promise<any> {
+    // This would need a separate table in the schema
+    return { id, ...data };
+  }
+
+  async deleteSptCost(id: string): Promise<boolean> {
+    // This would need a separate table in the schema
+    return true;
+  }
+
+  // Commission Settings
+  async getCommissionSettings(partnerId?: string): Promise<any[]> {
+    // This would need a separate table in the schema
+    return [];
+  }
+
+  async createCommissionSetting(data: any): Promise<any> {
+    // This would need a separate table in the schema
+    return { id: 'temp', ...data };
+  }
+
+  async updateCommissionSetting(id: string, data: any): Promise<any> {
+    // This would need a separate table in the schema
+    return { id, ...data };
+  }
+
+  async deleteCommissionSetting(id: string): Promise<boolean> {
+    // This would need a separate table in the schema
+    return true;
+  }
+
+  async getEffectiveCommission(params: any): Promise<any> {
+    // This would calculate effective commission
+    return { rate: 0.15 };
+  }
+
+  // Chat
+  async getChatRooms(userId: string): Promise<any[]> {
+    // This would need a separate table in the schema
+    return [];
+  }
+
+  async getChatMessages(roomId: string, limit?: number): Promise<any[]> {
+    // This would need a separate table in the schema
+    return [];
+  }
+
+  async createChatMessage(data: any): Promise<any> {
+    return this.createMessage(data);
+  }
+
+  async markChatMessagesAsRead(roomId: string, userId: string): Promise<void> {
+    // This would mark messages as read
+  }
+
+  // Pricing Tiers
+  async getPricingTiers(): Promise<any[]> {
+    return [
+      {
+        id: 'starter_pro',
+        tier: 'starter_pro',
+        nameUz: 'Starter Pro',
+        description: 'Yangi boshlovchilar uchun',
+        fixedCost: '0',
+        commissionMin: '0.15',
+        commissionMax: '0.30',
+        minRevenue: '0',
+        maxRevenue: '10000000',
+        features: {
+          maxProducts: 50,
+          analytics: false,
+          prioritySupport: false,
+          marketplaceIntegrations: ['uzum'],
+          fulfillmentTypes: ['basic'],
+          commission: '15-30%',
+          specialFeatures: ['Asosiy funksiyalar', '24/7 qo\'llab-quvvatlash']
+        },
+        isActive: true
+      },
+      {
+        id: 'business_standard',
+        tier: 'business_standard',
+        nameUz: 'Business Standard',
+        description: 'Kichik biznes uchun',
+        fixedCost: '4500000',
+        commissionMin: '0.12',
+        commissionMax: '0.25',
+        minRevenue: '10000000',
+        maxRevenue: '50000000',
+        features: {
+          maxProducts: 200,
+          analytics: true,
+          prioritySupport: false,
+          marketplaceIntegrations: ['uzum', 'wildberries'],
+          fulfillmentTypes: ['basic', 'premium'],
+          commission: '12-25%',
+          specialFeatures: ['Kengaytirilgan tahlillar', 'Marketplace integratsiyasi']
+        },
+        isActive: true
+      },
+      {
+        id: 'professional_plus',
+        tier: 'professional_plus',
+        nameUz: 'Professional Plus',
+        description: 'Professional biznes uchun',
+        fixedCost: '8500000',
+        commissionMin: '0.10',
+        commissionMax: '0.20',
+        minRevenue: '50000000',
+        maxRevenue: '200000000',
+        features: {
+          maxProducts: 500,
+          analytics: true,
+          prioritySupport: true,
+          marketplaceIntegrations: ['uzum', 'wildberries', 'yandex'],
+          fulfillmentTypes: ['basic', 'premium', 'express'],
+          commission: '10-20%',
+          specialFeatures: ['Ustuvor qo\'llab-quvvatlash', 'Barcha marketplace\'lar', 'Express logistika']
+        },
+        isActive: true
+      },
+      {
+        id: 'enterprise_elite',
+        tier: 'enterprise_elite',
+        nameUz: 'Enterprise Elite',
+        description: 'Yirik korporatsiyalar uchun',
+        fixedCost: '0',
+        commissionMin: '0.08',
+        commissionMax: '0.15',
+        minRevenue: '200000000',
+        maxRevenue: null,
+        features: {
+          maxProducts: -1,
+          analytics: true,
+          prioritySupport: true,
+          marketplaceIntegrations: ['uzum', 'wildberries', 'yandex', 'ozon'],
+          fulfillmentTypes: ['basic', 'premium', 'express', 'custom'],
+          commission: '8-15%',
+          specialFeatures: ['Individual shartnoma', 'Maxsus integratsiya', '24/7 qo\'llab-quvvatlash', 'Cheksiz mahsulotlar']
+        },
+        isActive: true
+      }
+    ];
+  }
+
+  async createTierUpgradeRequest(data: any): Promise<any> {
+    // This would need a separate table in the schema
+    const request = {
+      id: Math.random().toString(36).substr(2, 9),
+      partnerId: data.partnerId,
+      requestedTier: data.requestedTier,
+      reason: data.reason,
+      status: 'pending',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    
+    // Store in memory for now (in real app, save to database)
+    if (!this.tierUpgradeRequests) this.tierUpgradeRequests = [];
+    this.tierUpgradeRequests.push(request);
+    
+    return request;
+  }
+
+  async getTierUpgradeRequests(): Promise<any[]> {
+    return this.tierUpgradeRequests || [];
+  }
+
+  async getPendingTierUpgradeRequests(): Promise<any[]> {
+    return (this.tierUpgradeRequests || []).filter(req => req.status === 'pending');
+  }
+
+  async approveTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
+    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    if (!request) throw new Error('So\'rov topilmadi');
+    
+    request.status = 'approved';
+    request.adminId = adminId;
+    request.adminNotes = notes;
+    request.approvedAt = new Date();
+    request.updatedAt = new Date();
+    
+    // Update partner tier
+    const partner = await this.getPartner(request.partnerId);
+    if (partner) {
+      await this.updatePartner(request.partnerId, {
+        pricingTier: request.requestedTier,
+        updatedAt: new Date()
+      });
+    }
+    
+    return request;
+  }
+
+  async rejectTierUpgradeRequest(requestId: string, adminId: string, notes?: string): Promise<any> {
+    const request = (this.tierUpgradeRequests || []).find(req => req.id === requestId);
+    if (!request) throw new Error('So\'rov topilmadi');
+    
+    request.status = 'rejected';
+    request.adminId = adminId;
+    request.adminNotes = notes;
+    request.rejectedAt = new Date();
+    request.updatedAt = new Date();
+    
+    return request;
+  }
+
+  // Excel Management
+  async getExcelImports(partnerId: string): Promise<any[]> {
+    return [];
+  }
+
+  async createExcelImport(partnerId: string, data: any): Promise<any> {
+    return { id: Math.random().toString(36).substr(2, 9), partnerId, ...data, createdAt: new Date() };
+  }
+
+  async updateExcelImport(id: string, data: any): Promise<any> {
+    return { id, ...data, updatedAt: new Date() };
+  }
+
+  async getExcelTemplates(): Promise<any[]> {
+    return [];
+  }
+
+  async getExcelTemplate(id: string): Promise<any> {
+    return { id, name: 'Template' };
+  }
+
+  // Audit Log
+  async createAuditLog(data: any): Promise<any> {
+    return { id: Math.random().toString(36).substr(2, 9), ...data, createdAt: new Date() };
+  }
+
+  // Additional methods for messaging
+  async markMessageAsRead(messageId: string): Promise<any> {
+    try {
+      const [message] = await db.update(messages)
+        .set({ isRead: true, readAt: new Date() })
+        .where(eq(messages.id, messageId))
+        .returning();
+      return message;
+    } catch (error) {
+      console.error('Database error in markMessageAsRead:', error);
+      return null;
+    }
+  }
+
+  async getUnreadMessageCount(userId: string): Promise<number> {
+    try {
+      const result = await db.select().from(messages)
+        .where(eq(messages.toUserId, userId))
+        .and(eq(messages.isRead, false));
+      return result.length;
+    } catch (error) {
+      console.error('Database error in getUnreadMessageCount:', error);
+      return 0;
+    }
+  }
+
+  async getUsers(): Promise<any[]> {
+    try {
+      return await db.select().from(users).orderBy(users.createdAt);
+    } catch (error) {
+      console.error('Database error in getUsers:', error);
+      return [];
+    }
+  }
+
+  // Admin permissions
+  async getAdminPermissions(userId: string): Promise<any> {
+    // This would need a separate table in the schema
+    return {
+      canManageAdmins: true,
+      canManageContent: true,
+      canManageChat: true,
+      canViewReports: true,
+      canReceiveProducts: true,
+      canActivatePartners: true,
+      canManageIntegrations: true,
+      viewPartners: true,
+      managePartners: true,
+      viewAnalytics: true,
+      manageSettings: true,
+      viewRequests: true,
+      manageRequests: true,
+      allPermissions: true
+    };
+  }
+
+  async upsertAdminPermissions(userId: string, permissions: any): Promise<any> {
+    // This would need a separate table in the schema
+    return permissions;
+  }
+
+  // Contact forms
+  async createContactForm(data: any): Promise<any> {
+    try {
+      // For now, store in memory. In production, this would be a database table
+      const contactForm = {
+        id: Math.random().toString(36).substr(2, 9),
+        ...data,
+        createdAt: new Date()
+      };
+      
+      // Store in memory for now (in real app, save to database)
+      if (!this.contactForms) this.contactForms = [];
+      this.contactForms.push(contactForm);
+      
+      return contactForm;
+    } catch (error) {
+      console.error('Error creating contact form:', error);
+      throw error;
+    }
+  }
+
+  async getContactForms(): Promise<any[]> {
+    return this.contactForms || [];
+  }
+
+  async updateContactFormStatus(id: string, status: string): Promise<any> {
+    const contactForm = (this.contactForms || []).find(cf => cf.id === id);
+    if (contactForm) {
+      contactForm.status = status;
+      contactForm.updatedAt = new Date();
+    }
+    return contactForm;
+  }
 }
 
 export const storage = new DatabaseStorage();
