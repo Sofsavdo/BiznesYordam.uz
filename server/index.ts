@@ -4,7 +4,7 @@ import { Server } from "http";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { errorHandler, notFound } from "./errorHandler";
-import { initMockDatabase, seedMockData } from "./mockDb";
+// Mock database removed - using real database
 import { initializeWebSocket } from "./websocket";
 
 const app = express();
@@ -53,14 +53,8 @@ app.use((req, res, next) => {
 (async () => {
   log("🚀 Starting BiznesYordam Fulfillment Platform...");
 
-  // ✅ Mock DB faqat developmentda ishlasin
-  if (app.get("env") === "development") {
-    const dbInitialized = initMockDatabase();
-    if (dbInitialized) {
-      await seedMockData();
-    }
-    log("✅ Mock database ready with test data");
-  }
+  // ✅ Real database setup
+  log("✅ Real database connection initialized");
 
   const server = await registerRoutes(app);
 

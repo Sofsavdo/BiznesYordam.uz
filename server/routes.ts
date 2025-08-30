@@ -6,7 +6,7 @@ import MemoryStore from "memorystore";
 import cors from "cors";
 import "./types"; // Import session types
 import { storage } from "./storage";
-import { db } from "./mockDb";
+import { db } from "./db";
 import {
   loginSchema,
   partnerRegistrationSchema,

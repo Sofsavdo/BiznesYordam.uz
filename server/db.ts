@@ -9,16 +9,27 @@ let db: any;
 // Check if we have a DATABASE_URL (production) or use SQLite (development/fallback)
 const connectionString = process.env.DATABASE_URL;
 
-if (connectionString) {
-  // Use PostgreSQL in production
-  const sql = neon(connectionString);
-  db = drizzle(sql, { schema });
-  console.log('✅ PostgreSQL database connection established');
+if (connectionString && connectionString !== 'postgresql://memory:memory@localhost:5432/memory') {
+  try {
+    // Use PostgreSQL in production
+    const sql = neon(connectionString);
+    db = drizzle(sql, { schema });
+    console.log('✅ PostgreSQL database connection established');
+  } catch (error) {
+    console.error('PostgreSQL connection failed, falling back to SQLite:', error);
+    // Fallback to SQLite if PostgreSQL fails
+    const sqlite = new Database(':memory:');
+    db = drizzleSQLite(sqlite, { schema });
+    initializeSQLiteTables(sqlite);
+  }
 } else {
   // Use SQLite as fallback (for development or when no DATABASE_URL is provided)
   const sqlite = new Database(':memory:');
   db = drizzleSQLite(sqlite, { schema });
-  
+  initializeSQLiteTables(sqlite);
+}
+
+function initializeSQLiteTables(sqlite: Database.Database) {
   // Initialize SQLite tables
   sqlite.exec(`
     CREATE TABLE IF NOT EXISTS users (
