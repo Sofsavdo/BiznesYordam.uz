@@ -423,17 +423,26 @@ class MemStorage implements IStorage {
   }
 
   // Messages
-  async getMessages(partnerId: string): Promise<any[]> {
-    return this.messages.filter(msg => msg.partnerId === partnerId);
+  async getMessages(userId: string): Promise<any[]> {
+    return (this.messages || []).filter(msg => 
+      msg.fromUserId === userId || msg.toUserId === userId
+    ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
-  async createMessage(messageData: any): Promise<any> {
+  async createMessage(data: any): Promise<any> {
     const message = {
       id: Math.random().toString(36).substr(2, 9),
-      ...messageData,
+      fromUserId: data.fromUserId,
+      toUserId: data.toUserId,
+      content: data.content,
+      isRead: data.isRead || false,
       createdAt: new Date()
     };
+    
+    // Store in memory for now (in real app, save to database)
+    if (!this.messages) this.messages = [];
     this.messages.push(message);
+    
     return message;
   }
 
@@ -891,29 +900,7 @@ class MemStorage implements IStorage {
     return request;
   }
   
-  // Messaging
-  async createMessage(data: any): Promise<any> {
-    const message = {
-      id: Math.random().toString(36).substr(2, 9),
-      fromUserId: data.fromUserId,
-      toUserId: data.toUserId,
-      content: data.content,
-      isRead: data.isRead || false,
-      createdAt: new Date()
-    };
-    
-    // Store in memory for now (in real app, save to database)
-    if (!this.messages) this.messages = [];
-    this.messages.push(message);
-    
-    return message;
-  }
 
-  async getMessages(userId: string): Promise<any[]> {
-    return (this.messages || []).filter(msg => 
-      msg.fromUserId === userId || msg.toUserId === userId
-    ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  }
 
   async markMessageAsRead(messageId: string): Promise<any> {
     const message = (this.messages || []).find(msg => msg.id === messageId);

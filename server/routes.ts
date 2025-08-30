@@ -1527,7 +1527,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const updatedMessage = await storage.markMessageAsRead(messageId);
       res.json({ 
         message: "Xabar o'qildi deb belgilandi", 
-        message: updatedMessage 
+        messageData: updatedMessage 
       });
     } catch (error) {
       console.error('Mark message as read error:', error);
