@@ -49,16 +49,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queryFn: async () => {
       try {
         const response = await apiRequest('GET', '/api/auth/me');
-        return await response.json() as AuthResponse;
+        const data = await response.json() as AuthResponse;
+        console.log('✅ Auth data received:', data);
+        return data;
       } catch (error: any) {
+        console.log('🔍 Auth check error:', error.message);
         // 401 errors are expected when user is not authenticated
-        if (error.message?.includes('401')) {
+        if (error.message?.includes('401') || error.message?.includes('Avtorizatsiya')) {
           return null;
         }
-        throw error;
+        // Don't throw other errors, just return null for now
+        console.warn('Auth error (returning null):', error.message);
+        return null;
       }
     },
-    retry: false,
+    retry: (failureCount, error: any) => {
+      // Don't retry on auth errors
+      if (error?.message?.includes('401') || error?.message?.includes('Avtorizatsiya')) {
+        return false;
+      }
+      return failureCount < 2; // Retry up to 2 times for other errors
+    },
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 

@@ -46,23 +46,28 @@ export default function PartnerRegistration() {
 
   const registrationMutation = useMutation({
     mutationFn: async (data: RegistrationForm) => {
+      console.log('🚀 Registering partner with data:', data);
       const response = await apiRequest('POST', '/api/partners/register', data);
-      return response.json();
+      const result = await response.json();
+      console.log('✅ Registration response:', result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('🎉 Registration successful:', data);
       toast({
         title: "Muvaffaqiyatli ro'yxatdan o'tdi!",
         description: "Tez orada admin tomonidan tasdiqlash kutilmoqda.",
       });
-      // Redirect to dashboard after successful registration
+      // Redirect to login page instead of dashboard
       setTimeout(() => {
-        setLocation('/partner-dashboard');
+        setLocation('/');
       }, 2000);
     },
     onError: (error: Error) => {
+      console.error('❌ Registration error:', error);
       toast({
         title: "Xatolik yuz berdi",
-        description: error.message,
+        description: error.message || "Ro'yxatdan o'tishda xatolik",
         variant: "destructive",
       });
     },

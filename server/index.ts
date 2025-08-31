@@ -10,11 +10,27 @@ import { initializeWebSocket } from "./websocket";
 const app = express();
 
 // ✅ CORS ni faqat ruxsat berilgan domenlar bilan ishlatamiz
-const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",");
+const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",").filter(origin => origin.trim());
+console.log("🔧 Allowed CORS Origins:", allowedOrigins);
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function(origin, callback) {
+      // Development uchun origin bo'lmasligi mumkin
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+        callback(null, true);
+      } else {
+        console.log("❌ CORS blocked for origin:", origin);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    exposedHeaders: ['Set-Cookie'],
+    optionsSuccessStatus: 200
   })
 );
 

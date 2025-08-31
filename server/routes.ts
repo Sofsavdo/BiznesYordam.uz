@@ -100,13 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   }));
 
-  // CORS configuration
-  app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? process.env.FRONTEND_ORIGIN 
-      : 'http://localhost:5000',
-    credentials: true,
-  }));
+  // CORS allaqachon index.ts da konfiguratsiya qilingan
 
   // Auth routes
   app.post('/api/auth/login', rateLimit(10, 60_000), async (req, res) => {

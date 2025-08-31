@@ -20,9 +20,12 @@ export async function apiRequest(
     method,
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
       ...options?.headers,
     },
     credentials: 'include',
+    mode: 'cors',
     ...options,
   };
 
@@ -30,20 +33,36 @@ export async function apiRequest(
     config.body = JSON.stringify(data);
   }
 
+  console.log(`🌐 API Request: ${method} ${fullUrl}`, { data, headers: config.headers });
+
   try {
     const response = await fetch(fullUrl, config);
     
+    console.log(`📡 API Response: ${response.status} ${response.statusText}`, {
+      url: fullUrl,
+      ok: response.ok,
+      headers: Object.fromEntries(response.headers.entries())
+    });
+    
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      let errorData;
+      try {
+        errorData = await response.json();
+      } catch {
+        errorData = { message: `HTTP ${response.status}: ${response.statusText}` };
+      }
+      
+      console.error('❌ API Error:', errorData);
       throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
     }
     
     return response;
   } catch (error) {
+    console.error('🚨 Network Error:', error);
     if (error instanceof Error) {
       throw error;
     }
-    throw new Error('Network error occurred');
+    throw new Error('Network connection failed');
   }
 }
 
