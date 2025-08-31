@@ -678,7 +678,8 @@ export default function AdminPanel() {
     );
   }
 
-  if (!user || user.role !== 'admin') {
+  // Check if user is authenticated and is admin
+  if (!user) {
     return (
       <div className="min-h-screen bg-slate-50">
         <Navigation />
@@ -690,6 +691,29 @@ export default function AdminPanel() {
             }}
             isAdmin={true}
           />
+        </div>
+      </div>
+    );
+  }
+
+  // Check if user is admin
+  if (user.role !== 'admin') {
+    return (
+      <div className="min-h-screen bg-slate-50">
+        <Navigation />
+        <div className="pt-20 pb-16 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-red-600 text-2xl">⚠️</span>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Ruxsat yo'q</h2>
+            <p className="text-slate-600 mb-4">
+              Bu sahifaga kirish uchun admin huquqlari kerak.
+            </p>
+            <Button onClick={() => window.history.back()}>
+              Orqaga qaytish
+            </Button>
+          </div>
         </div>
       </div>
     );

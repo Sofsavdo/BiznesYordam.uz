@@ -761,18 +761,18 @@ class MemStorage implements IStorage {
         nameUz: 'Starter Pro',
         description: 'Yangi boshlovchilar uchun',
         fixedCost: '0',
-        commissionMin: '0.15',
-        commissionMax: '0.30',
+        commissionMin: '0.30',
+        commissionMax: '0.45',
         minRevenue: '0',
-        maxRevenue: '10000000',
+        maxRevenue: '50000000',
         features: {
           maxProducts: 50,
           analytics: false,
           prioritySupport: false,
           marketplaceIntegrations: ['uzum'],
           fulfillmentTypes: ['basic'],
-          commission: '15-30%',
-          specialFeatures: ['Asosiy funksiyalar', '24/7 qo\'llab-quvvatlash']
+          commission: '30-45%',
+          specialFeatures: ['45-30% komissiya', '50 mahsulotgacha', 'Asosiy analytics', 'Email qo\'llab-quvvatlash', 'Risksiz tarif']
         },
         isActive: true
       },
@@ -782,18 +782,18 @@ class MemStorage implements IStorage {
         nameUz: 'Business Standard',
         description: 'Kichik biznes uchun',
         fixedCost: '4500000',
-        commissionMin: '0.12',
+        commissionMin: '0.18',
         commissionMax: '0.25',
         minRevenue: '10000000',
-        maxRevenue: '50000000',
+        maxRevenue: '200000000',
         features: {
           maxProducts: 200,
           analytics: true,
           prioritySupport: false,
           marketplaceIntegrations: ['uzum', 'wildberries'],
           fulfillmentTypes: ['basic', 'premium'],
-          commission: '12-25%',
-          specialFeatures: ['Kengaytirilgan tahlillar', 'Marketplace integratsiyasi']
+          commission: '18-25%',
+          specialFeatures: ['25-18% komissiya', 'Cheksiz mahsulot', 'Kengaytirilgan analytics', 'Dedicated manager', 'Sof Foyda Dashboard', 'Trend Hunter']
         },
         isActive: true
       },
@@ -803,18 +803,18 @@ class MemStorage implements IStorage {
         nameUz: 'Professional Plus',
         description: 'Professional biznes uchun',
         fixedCost: '8500000',
-        commissionMin: '0.10',
+        commissionMin: '0.15',
         commissionMax: '0.20',
         minRevenue: '50000000',
-        maxRevenue: '200000000',
+        maxRevenue: '500000000',
         features: {
           maxProducts: 500,
           analytics: true,
           prioritySupport: true,
           marketplaceIntegrations: ['uzum', 'wildberries', 'yandex'],
           fulfillmentTypes: ['basic', 'premium', 'express'],
-          commission: '10-20%',
-          specialFeatures: ['Ustuvor qo\'llab-quvvatlash', 'Barcha marketplace\'lar', 'Express logistika']
+          commission: '15-20%',
+          specialFeatures: ['20-15% komissiya', 'Premium fulfillment', 'Barcha marketplace', '24/7 qo\'llab-quvvatlash', 'Custom analytics', 'Marketing va PR qo\'llab-quvvatlash', 'Fotosurat va video xizmatlari']
         },
         isActive: true
       },
@@ -824,9 +824,9 @@ class MemStorage implements IStorage {
         nameUz: 'Enterprise Elite',
         description: 'Yirik korporatsiyalar uchun',
         fixedCost: '0',
-        commissionMin: '0.08',
-        commissionMax: '0.15',
-        minRevenue: '200000000',
+        commissionMin: '0.12',
+        commissionMax: '0.18',
+        minRevenue: '100000000',
         maxRevenue: null,
         features: {
           maxProducts: -1,
@@ -834,8 +834,8 @@ class MemStorage implements IStorage {
           prioritySupport: true,
           marketplaceIntegrations: ['uzum', 'wildberries', 'yandex', 'ozon'],
           fulfillmentTypes: ['basic', 'premium', 'express', 'custom'],
-          commission: '8-15%',
-          specialFeatures: ['Individual shartnoma', 'Maxsus integratsiya', '24/7 qo\'llab-quvvatlash', 'Cheksiz mahsulotlar']
+          commission: '12-18%',
+          specialFeatures: ['18-12% komissiya', 'VIP fulfillment xizmat', 'Maxsus integratsiyalar', 'Shaxsiy manager', 'Kelishuv asosida narx', 'Cheksiz aylanma', 'Custom solutions', 'API integratsiyalar', 'Yuridik maslahatlar']
         },
         isActive: true
       }
@@ -1620,18 +1620,18 @@ class DatabaseStorage implements IStorage {
         nameUz: 'Starter Pro',
         description: 'Yangi boshlovchilar uchun',
         fixedCost: '0',
-        commissionMin: '0.15',
-        commissionMax: '0.30',
+        commissionMin: '0.30',
+        commissionMax: '0.45',
         minRevenue: '0',
-        maxRevenue: '10000000',
+        maxRevenue: '50000000',
         features: {
           maxProducts: 50,
           analytics: false,
           prioritySupport: false,
           marketplaceIntegrations: ['uzum'],
           fulfillmentTypes: ['basic'],
-          commission: '15-30%',
-          specialFeatures: ['Asosiy funksiyalar', '24/7 qo\'llab-quvvatlash']
+          commission: '30-45%',
+          specialFeatures: ['45-30% komissiya', '50 mahsulotgacha', 'Asosiy analytics', 'Email qo\'llab-quvvatlash', 'Risksiz tarif']
         },
         isActive: true
       },
@@ -1641,18 +1641,18 @@ class DatabaseStorage implements IStorage {
         nameUz: 'Business Standard',
         description: 'Kichik biznes uchun',
         fixedCost: '4500000',
-        commissionMin: '0.12',
+        commissionMin: '0.18',
         commissionMax: '0.25',
         minRevenue: '10000000',
-        maxRevenue: '50000000',
+        maxRevenue: '200000000',
         features: {
           maxProducts: 200,
           analytics: true,
           prioritySupport: false,
           marketplaceIntegrations: ['uzum', 'wildberries'],
           fulfillmentTypes: ['basic', 'premium'],
-          commission: '12-25%',
-          specialFeatures: ['Kengaytirilgan tahlillar', 'Marketplace integratsiyasi']
+          commission: '18-25%',
+          specialFeatures: ['25-18% komissiya', 'Cheksiz mahsulot', 'Kengaytirilgan analytics', 'Dedicated manager', 'Sof Foyda Dashboard', 'Trend Hunter']
         },
         isActive: true
       },
@@ -1662,18 +1662,18 @@ class DatabaseStorage implements IStorage {
         nameUz: 'Professional Plus',
         description: 'Professional biznes uchun',
         fixedCost: '8500000',
-        commissionMin: '0.10',
+        commissionMin: '0.15',
         commissionMax: '0.20',
         minRevenue: '50000000',
-        maxRevenue: '200000000',
+        maxRevenue: '500000000',
         features: {
           maxProducts: 500,
           analytics: true,
           prioritySupport: true,
           marketplaceIntegrations: ['uzum', 'wildberries', 'yandex'],
           fulfillmentTypes: ['basic', 'premium', 'express'],
-          commission: '10-20%',
-          specialFeatures: ['Ustuvor qo\'llab-quvvatlash', 'Barcha marketplace\'lar', 'Express logistika']
+          commission: '15-20%',
+          specialFeatures: ['20-15% komissiya', 'Premium fulfillment', 'Barcha marketplace', '24/7 qo\'llab-quvvatlash', 'Custom analytics', 'Marketing va PR qo\'llab-quvvatlash', 'Fotosurat va video xizmatlari']
         },
         isActive: true
       },
@@ -1683,9 +1683,9 @@ class DatabaseStorage implements IStorage {
         nameUz: 'Enterprise Elite',
         description: 'Yirik korporatsiyalar uchun',
         fixedCost: '0',
-        commissionMin: '0.08',
-        commissionMax: '0.15',
-        minRevenue: '200000000',
+        commissionMin: '0.12',
+        commissionMax: '0.18',
+        minRevenue: '100000000',
         maxRevenue: null,
         features: {
           maxProducts: -1,
@@ -1693,8 +1693,8 @@ class DatabaseStorage implements IStorage {
           prioritySupport: true,
           marketplaceIntegrations: ['uzum', 'wildberries', 'yandex', 'ozon'],
           fulfillmentTypes: ['basic', 'premium', 'express', 'custom'],
-          commission: '8-15%',
-          specialFeatures: ['Individual shartnoma', 'Maxsus integratsiya', '24/7 qo\'llab-quvvatlash', 'Cheksiz mahsulotlar']
+          commission: '12-18%',
+          specialFeatures: ['18-12% komissiya', 'VIP fulfillment xizmat', 'Maxsus integratsiyalar', 'Shaxsiy manager', 'Kelishuv asosida narx', 'Cheksiz aylanma', 'Custom solutions', 'API integratsiyalar', 'Yuridik maslahatlar']
         },
         isActive: true
       }
