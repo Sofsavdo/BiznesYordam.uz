@@ -123,6 +123,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       httpOnly: true,
       sameSite: 'lax', // Use 'lax' for better compatibility
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/', // Ensure cookie is available for all paths
     },
     name: 'biznesyordam.sid', // Custom session name
   }));
@@ -160,14 +161,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Set session data
-              req.session.user = {
-          id: user.id,
-          username: user.username,
-          email: user.email || undefined,
-          firstName: user.firstName || undefined,
-          lastName: user.lastName || undefined,
-          role: user.role
-        };
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+        email: user.email || undefined,
+        firstName: user.firstName || undefined,
+        lastName: user.lastName || undefined,
+        role: user.role
+      };
+      
+      // Save session explicitly
+      req.session.save((err) => {
+        if (err) {
+          console.error('Session save error:', err);
+          return res.status(500).json({ 
+            message: "Session saqlashda xatolik",
+            code: "SESSION_ERROR"
+          });
+        }
+        
+        console.log('✅ Session saved successfully for user:', user.username);
+      });
       
       // Get partner info if user is a partner
       let partner = null;
@@ -188,6 +202,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         entityType: 'user', 
         entityId: user.id 
       });
+
+      console.log('✅ Login successful for user:', user.username, 'Session ID:', req.sessionID);
 
       res.json({ 
         user, 
@@ -248,8 +264,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/auth/me', async (req, res) => {
     try {
       console.log('🔍 Auth check - Session:', req.session?.user ? 'exists' : 'not found');
+      console.log('🔍 Session ID:', req.sessionID);
+      console.log('🔍 Session data:', req.session);
       
       if (!req.session?.user) {
+        console.log('❌ No user in session');
         return res.status(401).json({ 
           message: "Avtorizatsiya yo'q",
           code: "AUTH_REQUIRED"

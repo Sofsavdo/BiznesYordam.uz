@@ -136,17 +136,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(authData.user);
       setPartner(authData.partner || null);
       setPermissions((authData as any).permissions || null);
-    } else if (authData === null) {
-      console.log('🔄 Clearing user data (authData is null)');
+    } else if (authData === null && !isLoading) {
+      // Only clear user data if we're not loading and authData is explicitly null
+      console.log('🔄 Clearing user data (authData is null and not loading)');
       setUser(null);
       setPartner(null);
       setPermissions(null);
     }
-  }, [authData]);
+    // Don't clear user data if authData is undefined (still loading)
+  }, [authData, isLoading]);
 
   // Handle authentication errors
   useEffect(() => {
-    if (error) {
+    if (error && !isLoading) {
       console.error('❌ Authentication error:', error);
       // Don't clear user data on network errors, only on auth errors
       if (error instanceof Error && (
@@ -154,12 +156,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         error.message.includes('Avtorizatsiya') ||
         error.message.includes('CORS')
       )) {
+        console.log('🔄 Clearing user data due to auth error');
         setUser(null);
         setPartner(null);
         setPermissions(null);
       }
     }
-  }, [error]);
+  }, [error, isLoading]);
 
   const contextValue: AuthContextType = {
     user,
