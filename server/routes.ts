@@ -124,8 +124,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       sameSite: 'lax', // Use 'lax' for better compatibility
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/', // Ensure cookie is available for all paths
+      domain: undefined, // Let browser set domain automatically
     },
     name: 'biznesyordam.sid', // Custom session name
+    rolling: true, // Extend session on each request
   }));
 
   // CORS allaqachon index.ts da konfiguratsiya qilingan

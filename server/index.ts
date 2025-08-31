@@ -57,6 +57,19 @@ app.use((req, res, next) => {
   const path = req.path;
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
+  // Log session information for auth endpoints
+  if (path.startsWith('/api/auth')) {
+    console.log('🔍 Auth Request:', {
+      method: req.method,
+      path: path,
+      sessionID: req.sessionID,
+      hasSession: !!req.session,
+      hasUser: !!req.session?.user,
+      cookies: req.headers.cookie,
+      origin: req.headers.origin
+    });
+  }
+
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
     capturedJsonResponse = bodyJson;

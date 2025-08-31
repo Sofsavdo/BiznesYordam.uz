@@ -75,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refetchOnMount: true,
     refetchOnReconnect: true,
     gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
   });
 
   const loginMutation = useMutation({
@@ -90,12 +91,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Invalidate and refetch auth data
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
       queryClient.setQueryData(['/api/auth/me'], data);
+      // Clear any error state
+      queryClient.setQueryData(['/api/auth/me'], data);
     },
     onError: (error) => {
       console.error('❌ Login failed:', error);
-      setUser(null);
-      setPartner(null);
-      setPermissions(null);
+      // Don't clear user data on login error, let the user try again
     },
   });
 
@@ -136,15 +137,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(authData.user);
       setPartner(authData.partner || null);
       setPermissions((authData as any).permissions || null);
-    } else if (authData === null && !isLoading) {
-      // Only clear user data if we're not loading and authData is explicitly null
-      console.log('🔄 Clearing user data (authData is null and not loading)');
+    } else if (authData === null && !isLoading && !user) {
+      // Only clear user data if we're not loading, authData is explicitly null, and no user exists
+      console.log('🔄 Clearing user data (authData is null, not loading, no existing user)');
       setUser(null);
       setPartner(null);
       setPermissions(null);
     }
-    // Don't clear user data if authData is undefined (still loading)
-  }, [authData, isLoading]);
+    // Don't clear user data if authData is undefined (still loading) or if user already exists
+  }, [authData, isLoading, user]);
 
   // Handle authentication errors
   useEffect(() => {
