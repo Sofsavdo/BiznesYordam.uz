@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Check, Crown, Star, Zap } from 'lucide-react';
+import { Check, Crown, Star, Zap, Sparkles } from 'lucide-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
 
 interface TierSelectionModalProps {
   isOpen: boolean;
@@ -76,29 +77,29 @@ export function TierSelectionModal({ isOpen, onClose, onSuccess, currentTier }: 
   });
 
   const submitUpgradeRequest = useMutation({
-    mutationFn: async (data: { requestedTier: string; reason: string }) => {
-      const response = await fetch('/api/tier-upgrade-requests', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error('So\'rov yuborishda xatolik');
-      return response.json();
+    mutationFn: async (data: { requestedTier: string; reason: string; partnerCurrentTier: string }) => {
+      console.log('🚀 Submitting tier upgrade request:', data);
+      const response = await apiRequest('POST', '/api/tier-upgrade-requests', data);
+      const result = await response.json();
+      console.log('✅ Tier upgrade request response:', result);
+      return result;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('🎉 Tier upgrade request successful:', data);
       toast({
-        title: "So'rov yuborildi",
-        description: "Tarif yaxshilash so'rovingiz admin tomonidan ko'rib chiqiladi.",
+        title: "So'rov yuborildi!",
+        description: "Tarif yangilash so'rovingiz admin ko'rib chiqishi uchun yuborildi.",
       });
       setReason('');
       setSelectedTier('');
       onClose();
       onSuccess?.();
     },
-    onError: () => {
+    onError: (error: Error) => {
+      console.error('❌ Tier upgrade request error:', error);
       toast({
         title: "Xatolik",
-        description: "So'rov yuborishda xatolik yuz berdi. Qayta urinib ko'ring.",
+        description: error.message || "So'rov yuborishda xatolik yuz berdi.",
         variant: "destructive",
       });
     },
@@ -115,61 +116,80 @@ export function TierSelectionModal({ isOpen, onClose, onSuccess, currentTier }: 
     submitUpgradeRequest.mutate({
       requestedTier: selectedTier,
       reason: reason.trim(),
+      partnerCurrentTier: currentTier,
     });
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Crown className="h-6 w-6 text-amber-500" />
-            Tarif yaxshilash so'rovi
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto shadow-business">
+        <DialogHeader className="text-center pb-6">
+          <DialogTitle className="flex items-center justify-center gap-3 text-2xl">
+            <div className="p-3 gradient-business rounded-full">
+              <Crown className="h-8 w-8 text-white" />
+            </div>
+            <span className="text-gradient-business">Premium Tarif Tanlash</span>
           </DialogTitle>
+          <p className="text-muted-foreground mt-2">
+            Biznesingizni yangi bosqichga olib chiqish uchun mos tarifni tanlang
+          </p>
         </DialogHeader>
 
         <div className="space-y-6">
-          <div className="text-sm text-muted-foreground">
-            Sizning hozirgi tarifingiz: <Badge variant="outline">{getTierDisplayName(currentTier)}</Badge>
-          </div>
+            <div className="text-center p-4 bg-muted/50 rounded-xl">
+              <p className="text-sm text-muted-foreground mb-2">Hozirgi tarifingiz:</p>
+              <Badge variant="secondary" className="text-lg px-4 py-2">{getTierDisplayName(currentTier)}</Badge>
+            </div>
 
           {isLoading ? (
             <div className="text-center py-8">Ma'lumotlar yuklanmoqda...</div>
           ) : (
             <>
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Mavjud tariflar:</h3>
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-6">
+                <h3 className="text-xl font-bold text-center text-gradient-business">Premium Tariflar</h3>
+                <div className="grid gap-6 md:grid-cols-2">
                   {availableTiers.map((tier) => (
                     <Card 
                       key={tier.id} 
-                      className={`cursor-pointer transition-all ${
+                      className={`cursor-pointer transition-smooth hover-lift group ${
                         selectedTier === tier.tier 
-                          ? 'ring-2 ring-blue-500 border-blue-500' 
-                          : 'hover:border-blue-300'
+                          ? 'ring-2 ring-primary border-primary shadow-business gradient-primary/5' 
+                          : 'hover:border-primary/50 hover:shadow-elegant'
                       }`}
                       onClick={() => setSelectedTier(tier.tier)}
                     >
-                      <CardHeader className="pb-4">
+                      <CardHeader className="pb-4 relative">
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-xl">{tier.nameUz}</CardTitle>
+                          <CardTitle className="text-xl font-bold group-hover:text-gradient-business transition-smooth">
+                            {tier.nameUz}
+                          </CardTitle>
                           {selectedTier === tier.tier && (
-                            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                              <Check className="w-4 h-4 text-white" />
+                            <div className="w-8 h-8 gradient-business rounded-full flex items-center justify-center shadow-glow animate-scale-in">
+                              <Check className="w-5 h-5 text-white" />
                             </div>
                           )}
                         </div>
-                        <div className="space-y-2">
-                          <div className="text-2xl font-bold text-slate-900">
+                        <div className="absolute top-2 right-2">
+                          <Sparkles className="h-5 w-5 text-primary opacity-60 animate-float" />
+                        </div>
+                        <div className="space-y-3">
+                          <div className="text-3xl font-bold text-gradient-business">
                             {tier.fixedCost === '0' || parseFloat(tier.fixedCost) === 0 ? 
-                              tier.tier === 'enterprise_elite' ? 'Individual' : '0 so\'m' 
-                              : formatCurrency(parseFloat(tier.fixedCost))} / oy
+                              tier.tier === 'enterprise_elite' ? 'Individual' : 'Bepul' 
+                              : formatCurrency(parseFloat(tier.fixedCost))} 
+                            <span className="text-lg text-muted-foreground font-normal">/ oy</span>
                           </div>
-                          <div className="text-sm text-slate-700 font-medium">
-                            Komissiya: {(parseFloat(tier.commissionMin) * 100).toFixed(1)}% - {(parseFloat(tier.commissionMax) * 100).toFixed(1)}%
+                          <div className="flex items-center gap-2 p-2 bg-accent/10 rounded-lg">
+                            <Star className="h-4 w-4 text-accent" />
+                            <span className="text-sm font-medium">
+                              Komissiya: {(parseFloat(tier.commissionMin) * 100).toFixed(1)}% - {(parseFloat(tier.commissionMax) * 100).toFixed(1)}%
+                            </span>
                           </div>
-                          <div className="text-sm text-slate-700 font-medium">
-                            Min. aylanma: {formatCurrency(parseFloat(tier.minRevenue))}
+                          <div className="flex items-center gap-2 p-2 bg-primary/10 rounded-lg">
+                            <Zap className="h-4 w-4 text-primary" />
+                            <span className="text-sm font-medium">
+                              Min. aylanma: {formatCurrency(parseFloat(tier.minRevenue))}
+                            </span>
                           </div>
                         </div>
                       </CardHeader>
@@ -221,36 +241,53 @@ export function TierSelectionModal({ isOpen, onClose, onSuccess, currentTier }: 
               </div>
 
               {selectedTier && (
-                <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <h3 className="font-semibold text-blue-900">
-                    {getTierDisplayName(selectedTier)} tarifini tanladingiz
-                  </h3>
+                <div className="space-y-4 p-6 gradient-business/5 rounded-xl border border-primary/20 shadow-elegant animate-slide-up">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 gradient-business rounded-lg">
+                      <Crown className="h-5 w-5 text-white" />
+                    </div>
+                    <h3 className="font-bold text-lg text-gradient-business">
+                      {getTierDisplayName(selectedTier)} tarifini tanladingiz
+                    </h3>
+                  </div>
                   <div>
-                    <Label htmlFor="reason" className="text-sm font-medium">
+                    <Label htmlFor="reason" className="text-sm font-semibold text-foreground">
                       Nima sababdan bu tarifga o'tmoqchisiz? *
                     </Label>
                     <Textarea
                       id="reason"
-                      placeholder="Biznesingiz ehtiyojlari, qo'shimcha imkoniyatlar kerakligi va boshqa sabablarni yozing..."
+                      placeholder="Biznesingiz ehtiyojlari, qo'shimcha imkoniyatlar kerakligi va boshqa sabablarni batafsil yozing..."
                       value={reason}
                       onChange={(e) => setReason(e.target.value)}
-                      className="mt-2"
-                      rows={3}
+                      className="mt-2 min-h-[100px] resize-none"
+                      rows={4}
                     />
                   </div>
                 </div>
               )}
 
-              <div className="flex justify-end gap-3 pt-4 border-t">
-                <Button variant="outline" onClick={onClose}>
+              <div className="flex justify-between gap-4 pt-6 border-t">
+                <Button variant="outline" onClick={onClose} size="lg">
                   Bekor qilish
                 </Button>
                 <Button 
                   onClick={handleSubmit}
                   disabled={!selectedTier || !reason.trim() || submitUpgradeRequest.isPending}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  variant="premium"
+                  size="lg"
+                  className="min-w-[200px]"
                 >
-                  {submitUpgradeRequest.isPending ? "Yuborilmoqda..." : "So'rov yuborish"}
+                  {submitUpgradeRequest.isPending ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                      Yuborilmoqda...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Crown className="h-4 w-4" />
+                      So'rov yuborish
+                    </div>
+                  )}
                 </Button>
               </div>
             </>

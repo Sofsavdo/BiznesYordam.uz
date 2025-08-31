@@ -58,9 +58,9 @@ export default function PartnerRegistration() {
         title: "Muvaffaqiyatli ro'yxatdan o'tdi!",
         description: "Tez orada admin tomonidan tasdiqlash kutilmoqda.",
       });
-      // Redirect to login page instead of dashboard
+      // Redirect to activation page to show submitted data
       setTimeout(() => {
-        setLocation('/');
+        setLocation('/partner-activation');
       }, 2000);
     },
     onError: (error: Error) => {
