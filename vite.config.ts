@@ -54,4 +54,8 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
+  define: {
+    // Environment variable'larni client'ga o'tkazamiz
+    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || 'https://biznesyordam-backend.onrender.com'),
+  },
 })

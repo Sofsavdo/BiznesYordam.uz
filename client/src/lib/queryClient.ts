@@ -13,7 +13,14 @@ export async function apiRequest(
   data?: any,
   options?: RequestInit
 ): Promise<Response> {
-  const baseUrl = import.meta.env.VITE_API_URL || '';
+  // Production uchun to'g'ri backend URL manzilini ishlatamiz
+  let baseUrl = import.meta.env.VITE_API_URL || '';
+  
+  // Agar environment'da URL yo'q bo'lsa, production URL manzilini ishlatamiz
+  if (!baseUrl || baseUrl === 'http://localhost:5000') {
+    baseUrl = 'https://biznesyordam-backend.onrender.com';
+  }
+  
   const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
 
   const config: RequestInit = {
