@@ -233,6 +233,11 @@ export default function PartnerDashboard() {
     refetchInterval: 30000, // Refresh every 30 seconds
   });
 
+  // Ensure arrays are never null
+  const safeFulfillmentRequests = fulfillmentRequests || [];
+  const safeChatMessages = chatMessages || [];
+  const safeProducts = products || [];
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
@@ -263,7 +268,7 @@ export default function PartnerDashboard() {
     totalRevenue: analytics?.totalRevenue || 0,
     totalOrders: analytics?.requestCount || 0,
     totalProfit: analytics?.totalProfit || 0,
-    activeProducts: products.filter((p: Product) => p.isActive).length,
+    activeProducts: safeProducts.filter((p: Product) => p.isActive).length,
   };
 
   const getStatusBadge = (status: string) => {
@@ -656,7 +661,7 @@ export default function PartnerDashboard() {
             <TabsContent value="requests" className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <h2 className="text-2xl font-bold text-slate-900">Fulfillment So'rovlari</h2>
-                <FulfillmentRequestForm products={products as { id: string; name: string }[]} />
+                <FulfillmentRequestForm products={safeProducts as { id: string; name: string }[]} />
               </div>
               
               <Card>
@@ -665,7 +670,7 @@ export default function PartnerDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {fulfillmentRequests.map((request: FulfillmentRequest) => (
+                    {safeFulfillmentRequests.map((request: FulfillmentRequest) => (
                       <div key={request.id} className="p-4 border border-slate-200 rounded-lg">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -682,7 +687,7 @@ export default function PartnerDashboard() {
                         </div>
                       </div>
                     ))}
-                    {fulfillmentRequests.length === 0 && (
+                    {safeFulfillmentRequests.length === 0 && (
                       <p className="text-center text-slate-500 py-8">
                         Hozircha fulfillment so'rovlari yo'q. Yangi so'rov yarating.
                       </p>
@@ -1319,7 +1324,7 @@ export default function PartnerDashboard() {
                           <span className="text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded">● Ulanmoqda...</span>
                         </div>
                       )}
-                      {chatMessages.map((msg) => (
+                      {safeChatMessages.map((msg) => (
                         <div key={msg.id} className={`flex items-start gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                             msg.sender === 'admin' ? 'bg-blue-500' : 'bg-green-500'
@@ -1346,7 +1351,7 @@ export default function PartnerDashboard() {
                           </div>
                         </div>
                       ))}
-                      {chatMessages.length === 0 && (
+                      {safeChatMessages.length === 0 && (
                         <div className="text-center py-8 text-slate-500">
                           <MessageCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
                           <p>Hozircha xabarlar yo'q. Birinchi xabaringizni yozing!</p>
