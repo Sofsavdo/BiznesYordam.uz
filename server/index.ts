@@ -44,7 +44,8 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Cookie'],
     exposedHeaders: ['Set-Cookie', 'Access-Control-Allow-Credentials'],
     optionsSuccessStatus: 200,
-    preflightContinue: false
+    preflightContinue: false,
+    maxAge: 86400 // Cache preflight for 24 hours
   })
 );
 

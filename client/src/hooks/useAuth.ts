@@ -136,7 +136,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setPartner(authData.partner || null);
       setPermissions((authData as any).permissions || null);
     }
-    // Don't clear user data when authData is null - let it persist
+    // NEVER clear user data when authData is null - let it persist
+    // This prevents unnecessary logouts
   }, [authData]);
 
   // Handle authentication errors - only clear on actual auth errors
