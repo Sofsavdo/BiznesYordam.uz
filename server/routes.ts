@@ -116,14 +116,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       checkPeriod: 86400000, // prune expired entries every 24h
     }),
     secret: process.env.SESSION_SECRET || 'your-secret-key-dev-only',
-    resave: false,
+    resave: true, // Enable resave for better session persistence
     saveUninitialized: false,
     cookie: {
-      secure: false, // false for development
+      secure: process.env.NODE_ENV === 'production', // true for production
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site in production
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined, // Allow subdomain sharing
     },
+    name: 'biznesyordam.sid', // Custom session name
   }));
 
   // CORS allaqachon index.ts da konfiguratsiya qilingan
@@ -245,19 +247,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get('/api/auth/me', async (req, res) => {
-    if (!req.session?.user) {
-      return res.status(401).json({ message: "Avtorizatsiya yo'q" });
+    try {
+      console.log('🔍 Auth check - Session:', req.session?.user ? 'exists' : 'not found');
+      
+      if (!req.session?.user) {
+        return res.status(401).json({ 
+          message: "Avtorizatsiya yo'q",
+          code: "AUTH_REQUIRED"
+        });
+      }
+      
+      const user = req.session.user;
+      console.log('✅ User authenticated:', user.username, user.role);
+      
+      let partner = null;
+      let permissions = null;
+      
+      if (user.role === 'partner') {
+        partner = await storage.getPartnerByUserId(user.id);
+        console.log('📋 Partner data:', partner ? 'found' : 'not found');
+      }
+      
+      if (user.role === 'admin') {
+        permissions = await storage.getAdminPermissions(user.id);
+        console.log('🔐 Admin permissions:', permissions ? 'found' : 'not found');
+      }
+      
+      const response = { user, partner, permissions };
+      console.log('✅ Auth response sent');
+      res.json(response);
+    } catch (error) {
+      console.error('❌ Auth check error:', error);
+      res.status(500).json({ 
+        message: "Server xatoligi",
+        code: "SERVER_ERROR"
+      });
     }
-    const user = req.session.user;
-    let partner = null;
-    let permissions = null;
-    if (user.role === 'partner') {
-      partner = await storage.getPartnerByUserId(user.id);
-    }
-    if (user.role === 'admin') {
-      permissions = await storage.getAdminPermissions(user.id);
-    }
-    res.json({ user, partner, permissions });
   });
 
   // Partner registration

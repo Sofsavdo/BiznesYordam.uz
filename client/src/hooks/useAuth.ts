@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [permissions, setPermissions] = useState<Record<string, boolean> | null>(null);
   const queryClient = useQueryClient();
 
-  const { data: authData, isLoading, refetch } = useQuery<AuthResponse | null>({
+  const { data: authData, isLoading, refetch, error } = useQuery<AuthResponse | null>({
     queryKey: ['/api/auth/me'],
     queryFn: async () => {
       try {
@@ -71,6 +71,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return failureCount < 2; // Retry up to 2 times for other errors
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false, // Prevent unnecessary refetches
+    refetchOnMount: true,
+    refetchOnReconnect: true,
   });
 
   const loginMutation = useMutation({
@@ -79,10 +82,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return response.json() as Promise<AuthResponse>;
     },
     onSuccess: (data) => {
+      console.log('✅ Login successful:', data);
       setUser(data.user);
       setPartner(data.partner || null);
       setPermissions((data as any).permissions || null);
+      // Invalidate and refetch auth data
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
+      queryClient.setQueryData(['/api/auth/me'], data);
+    },
+    onError: (error) => {
+      console.error('❌ Login failed:', error);
+      setUser(null);
+      setPartner(null);
+      setPermissions(null);
     },
   });
 
@@ -91,8 +103,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiRequest('POST', '/api/auth/logout');
     },
     onSuccess: () => {
+      console.log('✅ Logout successful');
       setUser(null);
       setPartner(null);
+      setPermissions(null);
+      queryClient.clear();
+    },
+    onError: (error) => {
+      console.error('❌ Logout failed:', error);
+      // Even if logout fails, clear local state
+      setUser(null);
+      setPartner(null);
+      setPermissions(null);
       queryClient.clear();
     },
   });
@@ -106,17 +128,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await logoutMutation.mutateAsync();
   };
 
+  // Handle auth data changes
   useEffect(() => {
     if (authData?.user) {
+      console.log('🔄 Setting user data:', authData.user);
       setUser(authData.user);
       setPartner(authData.partner || null);
       setPermissions((authData as any).permissions || null);
-    } else {
+    } else if (authData === null) {
+      console.log('🔄 Clearing user data (authData is null)');
       setUser(null);
       setPartner(null);
       setPermissions(null);
     }
   }, [authData]);
+
+  // Handle authentication errors
+  useEffect(() => {
+    if (error) {
+      console.error('❌ Authentication error:', error);
+      // Don't clear user data on network errors, only on auth errors
+      if (error instanceof Error && (
+        error.message.includes('401') || 
+        error.message.includes('Avtorizatsiya') ||
+        error.message.includes('CORS')
+      )) {
+        setUser(null);
+        setPartner(null);
+        setPermissions(null);
+      }
+    }
+  }, [error]);
 
   const contextValue: AuthContextType = {
     user,
