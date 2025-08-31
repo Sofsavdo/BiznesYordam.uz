@@ -31,6 +31,7 @@ app.use(
       // Development uchun origin bo'lmasligi mumkin
       if (!origin) return callback(null, true);
       
+      // Allow all known origins
       if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
         callback(null, true);
       } else {
@@ -40,9 +41,10 @@ app.use(
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    exposedHeaders: ['Set-Cookie'],
-    optionsSuccessStatus: 200
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Cookie'],
+    exposedHeaders: ['Set-Cookie', 'Access-Control-Allow-Credentials'],
+    optionsSuccessStatus: 200,
+    preflightContinue: false
   })
 );
 

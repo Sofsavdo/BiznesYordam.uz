@@ -31,7 +31,7 @@ export async function apiRequest(
       'X-Requested-With': 'XMLHttpRequest',
       ...options?.headers,
     },
-    credentials: 'include',
+    credentials: 'include', // Important for session cookies
     mode: 'cors',
     ...options,
   };
@@ -40,7 +40,11 @@ export async function apiRequest(
     config.body = JSON.stringify(data);
   }
 
-  console.log(`🌐 API Request: ${method} ${fullUrl}`, { data, headers: config.headers });
+  console.log(`🌐 API Request: ${method} ${fullUrl}`, { 
+    data, 
+    headers: config.headers,
+    credentials: config.credentials 
+  });
 
   try {
     const response = await fetch(fullUrl, config);
@@ -48,7 +52,8 @@ export async function apiRequest(
     console.log(`📡 API Response: ${response.status} ${response.statusText}`, {
       url: fullUrl,
       ok: response.ok,
-      headers: Object.fromEntries(response.headers.entries())
+      headers: Object.fromEntries(response.headers.entries()),
+      cookies: document.cookie
     });
     
     if (!response.ok) {

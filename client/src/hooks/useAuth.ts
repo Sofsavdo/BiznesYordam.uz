@@ -74,6 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refetchOnWindowFocus: false, // Prevent unnecessary refetches
     refetchOnMount: true,
     refetchOnReconnect: true,
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
   });
 
   const loginMutation = useMutation({

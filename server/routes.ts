@@ -119,11 +119,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     resave: true, // Enable resave for better session persistence
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === 'production', // true for production
+      secure: false, // Set to false for now to debug
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site in production
+      sameSite: 'lax', // Use 'lax' for better compatibility
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined, // Allow subdomain sharing
     },
     name: 'biznesyordam.sid', // Custom session name
   }));
