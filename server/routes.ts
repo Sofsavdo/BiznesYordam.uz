@@ -130,6 +130,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     rolling: true, // Extend session on each request
   }));
 
+  // Session middleware to ensure sessions are saved
+  app.use((req, res, next) => {
+    const originalEnd = res.end;
+    res.end = function(chunk?: any, encoding?: any) {
+      if (req.session && req.session.user) {
+        req.session.save((err) => {
+          if (err) {
+            console.error('Session save error:', err);
+          }
+          originalEnd.call(this, chunk, encoding);
+        });
+      } else {
+        originalEnd.call(this, chunk, encoding);
+      }
+    };
+    next();
+  });
+
   // CORS allaqachon index.ts da konfiguratsiya qilingan
 
   // Auth routes
@@ -172,17 +190,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         role: user.role
       };
       
-      // Save session explicitly
-      req.session.save((err) => {
-        if (err) {
-          console.error('Session save error:', err);
-          return res.status(500).json({ 
-            message: "Session saqlashda xatolik",
-            code: "SESSION_ERROR"
-          });
-        }
-        
-        console.log('✅ Session saved successfully for user:', user.username);
+      // Save session explicitly and wait for it
+      await new Promise<void>((resolve, reject) => {
+        req.session.save((err) => {
+          if (err) {
+            console.error('Session save error:', err);
+            reject(err);
+          } else {
+            console.log('✅ Session saved successfully for user:', user.username);
+            resolve();
+          }
+        });
       });
       
       // Get partner info if user is a partner

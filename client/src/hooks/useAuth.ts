@@ -70,11 +70,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       return failureCount < 2; // Retry up to 2 times for other errors
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false, // Prevent unnecessary refetches
     refetchOnMount: true,
     refetchOnReconnect: true,
-    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+    gcTime: 15 * 60 * 1000, // Keep in cache for 15 minutes
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
   });
 
@@ -91,12 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Invalidate and refetch auth data
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
       queryClient.setQueryData(['/api/auth/me'], data);
-      // Clear any error state
-      queryClient.setQueryData(['/api/auth/me'], data);
     },
     onError: (error) => {
       console.error('❌ Login failed:', error);
-      // Don't clear user data on login error, let the user try again
+      // Don't clear user data on login error
     },
   });
 
@@ -130,32 +128,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await logoutMutation.mutateAsync();
   };
 
-  // Handle auth data changes
+  // Handle auth data changes - ONLY set user data, don't clear it unnecessarily
   useEffect(() => {
     if (authData?.user) {
       console.log('🔄 Setting user data:', authData.user);
       setUser(authData.user);
       setPartner(authData.partner || null);
       setPermissions((authData as any).permissions || null);
-    } else if (authData === null && !isLoading && !user) {
-      // Only clear user data if we're not loading, authData is explicitly null, and no user exists
-      console.log('🔄 Clearing user data (authData is null, not loading, no existing user)');
-      setUser(null);
-      setPartner(null);
-      setPermissions(null);
     }
-    // Don't clear user data if authData is undefined (still loading) or if user already exists
-  }, [authData, isLoading, user]);
+    // Don't clear user data when authData is null - let it persist
+  }, [authData]);
 
-  // Handle authentication errors
+  // Handle authentication errors - only clear on actual auth errors
   useEffect(() => {
     if (error && !isLoading) {
       console.error('❌ Authentication error:', error);
-      // Don't clear user data on network errors, only on auth errors
+      // Only clear user data on actual auth errors, not network errors
       if (error instanceof Error && (
         error.message.includes('401') || 
-        error.message.includes('Avtorizatsiya') ||
-        error.message.includes('CORS')
+        error.message.includes('Avtorizatsiya')
       )) {
         console.log('🔄 Clearing user data due to auth error');
         setUser(null);
