@@ -16,8 +16,11 @@ export async function apiRequest(
   // Production uchun to'g'ri backend URL manzilini ishlatamiz
   let baseUrl = import.meta.env.VITE_API_URL || '';
   
-  // Agar environment'da URL yo'q bo'lsa, production URL manzilini ishlatamiz
-  if (!baseUrl || baseUrl === 'http://localhost:5000') {
+  // Agar environment'da URL yo'q bo'lsa yoki noto'g'ri bo'lsa, production URL manzilini ishlatamiz
+  if (!baseUrl || 
+      baseUrl === 'http://localhost:5000' || 
+      baseUrl.includes('biznes-yordam.onrender.com') ||
+      baseUrl.includes('biznesyordam.uz')) {
     baseUrl = 'https://biznesyordam-backend.onrender.com';
   }
   
@@ -43,7 +46,8 @@ export async function apiRequest(
   console.log(`🌐 API Request: ${method} ${fullUrl}`, { 
     data, 
     headers: config.headers,
-    credentials: config.credentials 
+    credentials: config.credentials,
+    baseUrl: baseUrl
   });
 
   try {
