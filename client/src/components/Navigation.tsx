@@ -266,7 +266,7 @@ export function Navigation() {
       </div>
       
       {/* Chat System */}
-      <ChatSystem isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <ChatSystem isAdmin={user?.role === 'admin'} />
     </nav>
   );
 }

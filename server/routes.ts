@@ -35,10 +35,28 @@ function broadcastToUser(userId: string, message: any) {
 
 // Authentication middleware
 const requireAuth = (req: any, res: any, next: any) => {
-  if (!req.session?.user) {
-    return res.status(401).json({ message: "Avtorizatsiya talab qilinadi" });
+  try {
+    if (!req.session?.user) {
+      return res.status(401).json({ 
+        message: "Avtorizatsiya talab qilinadi",
+        code: "AUTH_REQUIRED"
+      });
+    }
+    
+    // Check if user is still active
+    if (!req.session.user.isActive) {
+      req.session.destroy(() => {});
+      return res.status(401).json({ 
+        message: "Foydalanuvchi faol emas",
+        code: "USER_INACTIVE"
+      });
+    }
+    
+    next();
+  } catch (error) {
+    console.error('Auth middleware error:', error);
+    res.status(500).json({ message: "Server xatoligi" });
   }
-  next();
 };
 
 // Helper function to get authenticated user
@@ -47,10 +65,18 @@ const getAuthUser = (req: any) => {
 };
 
 const requireRole = (roles: string[]) => (req: any, res: any, next: any) => {
-  if (!req.session?.user || !roles.includes(req.session.user.role)) {
-    return res.status(403).json({ message: "Ruxsat yo'q" });
+  try {
+    if (!req.session?.user || !roles.includes(req.session.user.role)) {
+      return res.status(403).json({ 
+        message: "Ruxsat yo'q",
+        code: "INSUFFICIENT_PERMISSIONS"
+      });
+    }
+    next();
+  } catch (error) {
+    console.error('Role middleware error:', error);
+    res.status(500).json({ message: "Server xatoligi" });
   }
-  next();
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -106,20 +132,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/auth/login', rateLimit(10, 60_000), async (req, res) => {
     try {
       const { username, password } = loginSchema.parse(req.body);
+      
+      // Additional validation
+      if (!username || !password) {
+        return res.status(400).json({ 
+          message: "Username va parol kiritilishi shart",
+          code: "MISSING_CREDENTIALS"
+        });
+      }
+
       const user = await storage.validateUser(username, password);
       
       if (!user) {
-        return res.status(401).json({ message: "Username yoki parol noto'g'ri" });
+        return res.status(401).json({ 
+          message: "Username yoki parol noto'g'ri",
+          code: "INVALID_CREDENTIALS"
+        });
       }
 
-      req.session.user = {
-        id: user.id,
-        username: user.username,
-        email: user.email || undefined,
-        firstName: user.firstName || undefined,
-        lastName: user.lastName || undefined,
-        role: user.role
-      };
+      // Check if user is active
+      if (!user.isActive) {
+        return res.status(401).json({ 
+          message: "Foydalanuvchi faol emas",
+          code: "USER_INACTIVE"
+        });
+      }
+
+      // Set session data
+              req.session.user = {
+          id: user.id,
+          username: user.username,
+          email: user.email || undefined,
+          firstName: user.firstName || undefined,
+          lastName: user.lastName || undefined,
+          role: user.role
+        };
       
       // Get partner info if user is a partner
       let partner = null;
@@ -133,20 +180,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
         permissions = await storage.getAdminPermissions(user.id);
       }
 
-      res.json({ user, partner, permissions });
+      // Log successful login
+      await storage.createAuditLog({ 
+        userId: user.id, 
+        action: 'login', 
+        entityType: 'user', 
+        entityId: user.id 
+      });
+
+      res.json({ 
+        user, 
+        partner, 
+        permissions,
+        message: "Muvaffaqiyatli kirildi"
+      });
     } catch (error) {
       console.error('Login error:', error);
-      res.status(400).json({ message: "Ma'lumotlar noto'g'ri" });
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: "Ma'lumotlar noto'g'ri",
+          code: "VALIDATION_ERROR",
+          errors: error.errors 
+        });
+      }
+      res.status(500).json({ 
+        message: "Server xatoligi",
+        code: "SERVER_ERROR"
+      });
     }
   });
 
-  app.post('/api/auth/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ message: "Chiqishda xatolik" });
-      }
-      res.json({ message: "Muvaffaqiyatli chiqildi" });
-    });
+  app.post('/api/auth/logout', requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.user!.id;
+      
+      // Log logout action
+      await storage.createAuditLog({ 
+        userId, 
+        action: 'logout', 
+        entityType: 'user', 
+        entityId: userId 
+      });
+
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Session destroy error:', err);
+          return res.status(500).json({ 
+            message: "Chiqishda xatolik",
+            code: "SESSION_ERROR"
+          });
+        }
+        res.json({ 
+          message: "Muvaffaqiyatli chiqildi",
+          code: "LOGOUT_SUCCESS"
+        });
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+      res.status(500).json({ 
+        message: "Server xatoligi",
+        code: "SERVER_ERROR"
+      });
+    }
   });
 
   app.get('/api/auth/me', async (req, res) => {
@@ -173,7 +268,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check if username or email already exists
       const existingUser = await storage.getUserByUsername(data.username);
       if (existingUser) {
-        return res.status(400).json({ message: "Username band" });
+        return res.status(400).json({ 
+          message: "Username band",
+          code: "USERNAME_EXISTS"
+        });
+      }
+
+      // Check if email already exists
+      if (data.email) {
+        const existingEmail = await storage.getUserByEmail(data.email);
+        if (existingEmail) {
+          return res.status(400).json({ 
+            message: "Email band",
+            code: "EMAIL_EXISTS"
+          });
+        }
       }
 
       // Create user
@@ -197,19 +306,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         commissionRate: '0.30',
       });
 
+      // Log registration
+      await storage.createAuditLog({ 
+        userId: user.id, 
+        action: 'partner_registration', 
+        entityType: 'partner', 
+        entityId: partner.id 
+      });
+
       res.json({ 
         message: "Hamkor muvaffaqiyatli ro'yxatdan o'tdi. Tasdiq kutilmoqda.",
-        partner 
+        partner,
+        code: "REGISTRATION_SUCCESS"
       });
     } catch (error) {
       console.error('Registration error:', error);
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           message: "Ma'lumotlar noto'g'ri",
+          code: "VALIDATION_ERROR",
           errors: error.errors 
         });
       }
-      res.status(500).json({ message: "Server xatoligi" });
+      res.status(500).json({ 
+        message: "Server xatoligi",
+        code: "SERVER_ERROR"
+      });
     }
   });
 

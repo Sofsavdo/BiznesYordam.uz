@@ -3,10 +3,11 @@ import { Server } from 'http';
 import { storage } from './storage';
 
 interface WebSocketMessage {
-  type: 'message' | 'notification' | 'tier_upgrade' | 'system';
+  type: 'message' | 'notification' | 'tier_upgrade' | 'system' | 'ping' | 'pong';
   data: any;
   userId?: string;
   partnerId?: string;
+  timestamp?: number;
 }
 
 interface ConnectedClient {
@@ -14,15 +15,21 @@ interface ConnectedClient {
   userId: string;
   userRole: string;
   partnerId?: string;
+  lastPing?: number;
+  isAlive: boolean;
 }
 
 export class WebSocketManager {
   private wss: WebSocketServer;
   private clients: Map<string, ConnectedClient> = new Map();
+  private heartbeatInterval!: NodeJS.Timeout;
+  private readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
+  private readonly PING_TIMEOUT = 60000; // 60 seconds
 
   constructor(server: Server) {
     this.wss = new WebSocketServer({ server });
     this.setupWebSocketServer();
+    this.startHeartbeat();
   }
 
   private setupWebSocketServer() {
@@ -41,12 +48,31 @@ export class WebSocketManager {
       }
 
       // Store client connection
-      this.clients.set(userId, { ws, userId, userRole, partnerId: partnerId || undefined });
+      this.clients.set(userId, { 
+        ws, 
+        userId, 
+        userRole, 
+        partnerId: partnerId || undefined,
+        isAlive: true,
+        lastPing: Date.now()
+      });
 
       // Send welcome message
       this.sendToUser(userId, {
         type: 'system',
-        data: { message: 'WebSocket ulanishi muvaffaqiyatli' }
+        data: { 
+          message: 'WebSocket ulanishi muvaffaqiyatli',
+          timestamp: Date.now()
+        }
+      });
+
+      // Set up ping/pong for connection health
+      ws.on('pong', () => {
+        const client = this.clients.get(userId);
+        if (client) {
+          client.isAlive = true;
+          client.lastPing = Date.now();
+        }
       });
 
       ws.on('message', (data: Buffer) => {
@@ -55,11 +81,18 @@ export class WebSocketManager {
           this.handleMessage(userId, message);
         } catch (error) {
           console.error('WebSocket message parsing error:', error);
+          this.sendToUser(userId, {
+            type: 'system',
+            data: { 
+              error: 'Xabar formatida xatolik',
+              timestamp: Date.now()
+            }
+          });
         }
       });
 
-      ws.on('close', () => {
-        console.log(`🔌 WebSocket connection closed for user: ${userId}`);
+      ws.on('close', (code, reason) => {
+        console.log(`🔌 WebSocket connection closed for user: ${userId} (${code}: ${reason})`);
         this.clients.delete(userId);
       });
 
@@ -68,6 +101,22 @@ export class WebSocketManager {
         this.clients.delete(userId);
       });
     });
+  }
+
+  private startHeartbeat() {
+    this.heartbeatInterval = setInterval(() => {
+      this.clients.forEach((client, userId) => {
+        if (!client.isAlive) {
+          console.log(`Terminating connection for user: ${userId} (no heartbeat)`);
+          client.ws.terminate();
+          this.clients.delete(userId);
+          return;
+        }
+
+        client.isAlive = false;
+        client.ws.ping();
+      });
+    }, this.HEARTBEAT_INTERVAL);
   }
 
   private async handleMessage(userId: string, message: WebSocketMessage) {
@@ -79,11 +128,24 @@ export class WebSocketManager {
         case 'tier_upgrade':
           await this.handleTierUpgradeRequest(userId, message);
           break;
+        case 'ping':
+          this.sendToUser(userId, {
+            type: 'pong',
+            data: { timestamp: Date.now() }
+          });
+          break;
         default:
           console.log('Unknown message type:', message.type);
       }
     } catch (error) {
       console.error('Error handling WebSocket message:', error);
+      this.sendToUser(userId, {
+        type: 'system',
+        data: { 
+          error: 'Xabar qayta ishlashda xatolik',
+          timestamp: Date.now()
+        }
+      });
     }
   }
 
@@ -93,7 +155,22 @@ export class WebSocketManager {
     if (!toUserId || !content) {
       this.sendToUser(userId, {
         type: 'system',
-        data: { error: 'Xabar ma\'lumotlari to\'liq emas' }
+        data: { 
+          error: 'Xabar ma\'lumotlari to\'liq emas',
+          timestamp: Date.now()
+        }
+      });
+      return;
+    }
+
+    // Validate content length
+    if (content.length > 1000) {
+      this.sendToUser(userId, {
+        type: 'system',
+        data: { 
+          error: 'Xabar juda uzun (maksimal 1000 belgi)',
+          timestamp: Date.now()
+        }
       });
       return;
     }
@@ -109,13 +186,20 @@ export class WebSocketManager {
     // Send to recipient if online
     this.sendToUser(toUserId, {
       type: 'message',
-      data: savedMessage
+      data: {
+        ...savedMessage,
+        timestamp: Date.now()
+      }
     });
 
     // Send confirmation to sender
     this.sendToUser(userId, {
       type: 'message',
-      data: { ...savedMessage, status: 'sent' }
+      data: { 
+        ...savedMessage, 
+        status: 'sent',
+        timestamp: Date.now()
+      }
     });
   }
 
@@ -127,7 +211,10 @@ export class WebSocketManager {
     if (!partner) {
       this.sendToUser(userId, {
         type: 'system',
-        data: { error: 'Hamkor ma\'lumotlari topilmadi' }
+        data: { 
+          error: 'Hamkor ma\'lumotlari topilmadi',
+          timestamp: Date.now()
+        }
       });
       return;
     }
@@ -148,7 +235,8 @@ export class WebSocketManager {
           id: partner.id,
           businessName: partner.businessName,
           currentTier: partner.pricingTier
-        }
+        },
+        timestamp: Date.now()
       }
     });
 
@@ -157,7 +245,8 @@ export class WebSocketManager {
       type: 'tier_upgrade',
       data: { 
         status: 'submitted',
-        message: 'Tarif yaxshilash so\'rovingiz yuborildi. Admin ko\'rib chiqadi.'
+        message: 'Tarif yaxshilash so\'rovingiz yuborildi. Admin ko\'rib chiqadi.',
+        timestamp: Date.now()
       }
     });
   }
@@ -166,7 +255,12 @@ export class WebSocketManager {
   public sendToUser(userId: string, message: WebSocketMessage) {
     const client = this.clients.get(userId);
     if (client && client.ws.readyState === WebSocket.OPEN) {
-      client.ws.send(JSON.stringify(message));
+      try {
+        client.ws.send(JSON.stringify(message));
+      } catch (error) {
+        console.error(`Error sending message to user ${userId}:`, error);
+        this.clients.delete(userId);
+      }
     }
   }
 
@@ -174,7 +268,12 @@ export class WebSocketManager {
   public notifyAdmins(message: WebSocketMessage) {
     this.clients.forEach((client, userId) => {
       if (client.userRole === 'admin' && client.ws.readyState === WebSocket.OPEN) {
-        client.ws.send(JSON.stringify(message));
+        try {
+          client.ws.send(JSON.stringify(message));
+        } catch (error) {
+          console.error(`Error sending admin notification to user ${userId}:`, error);
+          this.clients.delete(userId);
+        }
       }
     });
   }
@@ -183,7 +282,12 @@ export class WebSocketManager {
   public notifyPartners(message: WebSocketMessage) {
     this.clients.forEach((client, userId) => {
       if (client.userRole === 'partner' && client.ws.readyState === WebSocket.OPEN) {
-        client.ws.send(JSON.stringify(message));
+        try {
+          client.ws.send(JSON.stringify(message));
+        } catch (error) {
+          console.error(`Error sending partner notification to user ${userId}:`, error);
+          this.clients.delete(userId);
+        }
       }
     });
   }
@@ -192,7 +296,12 @@ export class WebSocketManager {
   public broadcast(message: WebSocketMessage) {
     this.clients.forEach((client, userId) => {
       if (client.ws.readyState === WebSocket.OPEN) {
-        client.ws.send(JSON.stringify(message));
+        try {
+          client.ws.send(JSON.stringify(message));
+        } catch (error) {
+          console.error(`Error broadcasting to user ${userId}:`, error);
+          this.clients.delete(userId);
+        }
       }
     });
   }
@@ -205,6 +314,20 @@ export class WebSocketManager {
   // Get connected clients info
   public getConnectedClients(): ConnectedClient[] {
     return Array.from(this.clients.values());
+  }
+
+  // Get online status for specific user
+  public isUserOnline(userId: string): boolean {
+    const client = this.clients.get(userId);
+    return client ? client.ws.readyState === WebSocket.OPEN : false;
+  }
+
+  // Cleanup method
+  public cleanup() {
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+    }
+    this.wss.close();
   }
 }
 

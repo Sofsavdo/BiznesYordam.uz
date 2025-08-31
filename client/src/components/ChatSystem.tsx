@@ -1,14 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { useWebSocket } from '@/hooks/useWebSocket';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '@/hooks/useAuth';
-import { useWebSocket } from '@/hooks/useWebSocket';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { Send, MessageCircle, X, Users } from 'lucide-react';
+import { Send, Paperclip, Smile, MoreVertical, Phone, Video } from 'lucide-react';
+import { apiRequest } from '@/lib/queryClient';
 
 interface Message {
   id: string;
@@ -17,219 +19,431 @@ interface Message {
   content: string;
   isRead: boolean;
   createdAt: string;
-  fromUser?: {
+  messageType?: 'text' | 'file' | 'image';
+  fileUrl?: string;
+  fileName?: string;
+  fileSize?: number;
+}
+
+interface ChatPartner {
+  id: string;
+  businessName: string;
+  businessCategory: string;
+  userData: {
+    id: string;
     username: string;
     firstName?: string;
     lastName?: string;
   };
+  isOnline: boolean;
+  lastMessage?: Message;
 }
 
 interface ChatSystemProps {
-  isOpen: boolean;
-  onClose: () => void;
+  partnerId?: string;
+  isAdmin?: boolean;
 }
 
-export function ChatSystem({ isOpen, onClose }: ChatSystemProps) {
+export function ChatSystem({ partnerId, isAdmin = false }: ChatSystemProps) {
   const { user } = useAuth();
-  const { isConnected, sendMessage } = useWebSocket();
+  const { isConnected, sendMessage, connectionStatus, reconnect } = useWebSocket();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const [selectedUserId, setSelectedUserId] = useState<string>('');
+  
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [partners, setPartners] = useState<ChatPartner[]>([]);
+  const [selectedPartner, setSelectedPartner] = useState<ChatPartner | null>(null);
   const [newMessage, setNewMessage] = useState('');
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout>();
 
-  // Get all users for chat list
-  const { data: users = [] } = useQuery({
-    queryKey: ['/api/users'],
-    enabled: isOpen && user?.role === 'admin',
-  });
+  // Scroll to bottom when new messages arrive
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-  // Get messages for selected user
-  const { data: messages = [], refetch: refetchMessages } = useQuery({
-    queryKey: ['/api/messages'],
-    enabled: isOpen && !!user?.id,
-  });
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-  // Send message mutation
-  const sendMessageMutation = useMutation({
-    mutationFn: async (data: { toUserId: string; content: string }) => {
-      const response = await fetch('/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error('Xabar yuborishda xatolik');
-      return response.json();
-    },
-    onSuccess: () => {
-      setNewMessage('');
-      refetchMessages();
-      queryClient.invalidateQueries({ queryKey: ['/api/messages'] });
-    },
-    onError: () => {
+  // Load chat partners (for admin)
+  useEffect(() => {
+    if (isAdmin) {
+      loadChatPartners();
+    }
+  }, [isAdmin]);
+
+  // Load messages for selected partner
+  useEffect(() => {
+    if (selectedPartner) {
+      loadMessages(selectedPartner.userData.id);
+    }
+  }, [selectedPartner]);
+
+  // Handle WebSocket messages
+  useEffect(() => {
+    if (isConnected && selectedPartner) {
+      // Listen for new messages
+      const handleNewMessage = (event: MessageEvent) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'message' && data.data) {
+            const message = data.data;
+            if (
+              (message.fromUserId === selectedPartner.userData.id && message.toUserId === user?.id) ||
+              (message.fromUserId === user?.id && message.toUserId === selectedPartner.userData.id)
+            ) {
+              setMessages(prev => [...prev, message]);
+            }
+          }
+        } catch (error) {
+          console.error('Error handling WebSocket message:', error);
+        }
+      };
+
+      // Add event listener
+      window.addEventListener('message', handleNewMessage);
+      return () => window.removeEventListener('message', handleNewMessage);
+    }
+  }, [isConnected, selectedPartner, user?.id]);
+
+  const loadChatPartners = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiRequest('GET', '/api/admin/chat-partners');
+      const data = await response.json();
+      setPartners(data);
+      
+      // Auto-select first partner if none selected
+      if (data.length > 0 && !selectedPartner) {
+        setSelectedPartner(data[0]);
+      }
+    } catch (error) {
+      console.error('Error loading chat partners:', error);
       toast({
         title: "Xatolik",
-        description: "Xabar yuborishda xatolik yuz berdi",
-        variant: "destructive",
+        description: "Hamkorlar yuklanmadi",
+        variant: "destructive"
       });
-    },
-  });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // Filter messages for selected user
-  const filteredMessages = Array.isArray(messages) ? messages.filter((msg: Message) => 
-    (msg.fromUserId === user?.id && msg.toUserId === selectedUserId) ||
-    (msg.fromUserId === selectedUserId && msg.toUserId === user?.id)
-  ) : [];
+  const loadMessages = async (partnerUserId: string) => {
+    try {
+      setIsLoading(true);
+      const response = await apiRequest('GET', `/api/admin/chats/${partnerUserId}/messages`);
+      const data = await response.json();
+      setMessages(data);
+    } catch (error) {
+      console.error('Error loading messages:', error);
+      toast({
+        title: "Xatolik",
+        description: "Xabarlar yuklanmadi",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // Get unread message count
-  const unreadCount = Array.isArray(messages) ? messages.filter((msg: Message) => 
-    msg.toUserId === user?.id && !msg.isRead
-  ).length : 0;
+  const sendChatMessage = async (content: string, messageType: 'text' | 'file' = 'text', fileData?: any) => {
+    if (!selectedPartner || !content.trim()) return;
+
+    try {
+      const messageData = {
+        message: content,
+        messageType,
+        ...(fileData && { fileUrl: fileData.fileUrl, fileName: fileData.fileName, fileSize: fileData.fileSize })
+      };
+
+      const response = await apiRequest(
+        'POST', 
+        `/api/chat/partners/${selectedPartner.id}/message`, 
+        messageData
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        setMessages(prev => [...prev, result.newMessage]);
+        setNewMessage('');
+        
+        // Send via WebSocket for real-time delivery
+        sendMessage({
+          type: 'message',
+          data: {
+            toUserId: selectedPartner.userData.id,
+            content,
+            messageType,
+            ...(fileData && { fileUrl: fileData.fileUrl, fileName: fileData.fileName, fileSize: fileData.fileSize })
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Xatolik",
+        description: "Xabar yuborilmadi",
+        variant: "destructive"
+      });
+    }
+  };
 
   const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedUserId) return;
-
-    sendMessageMutation.mutate({
-      toUserId: selectedUserId,
-      content: newMessage.trim(),
-    });
-
-    // Also send via WebSocket for real-time
-    sendMessage({
-      type: 'message',
-      data: {
-        toUserId: selectedUserId,
-        content: newMessage.trim(),
-      },
-    });
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+    if (newMessage.trim()) {
+      sendChatMessage(newMessage.trim());
     }
   };
 
-  // Auto-scroll to bottom when new messages arrive
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [filteredMessages]);
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  if (!isOpen) return null;
+    try {
+      // Upload file (simplified - in real app, upload to cloud storage)
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await apiRequest('POST', '/api/chat/upload', formData);
+      const fileData = await response.json();
+
+      // Send file message
+      await sendChatMessage(file.name, 'file', fileData);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      toast({
+        title: "Xatolik",
+        description: "Fayl yuklanmadi",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleTyping = () => {
+    setIsTyping(true);
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+    }, 1000);
+  };
+
+  const formatTime = (dateString: string) => {
+    return new Date(dateString).toLocaleTimeString('uz-UZ', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  };
+
+  if (!user) {
+    return (
+      <Card className="w-full h-full">
+        <CardContent className="flex items-center justify-center h-full">
+          <p>Avtorizatsiya talab qilinadi</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <Card className="w-full max-w-4xl h-[80vh] flex flex-col">
-        <CardHeader className="flex-shrink-0 border-b">
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <MessageCircle className="h-5 w-5" />
-              Chat tizimi
-              {unreadCount > 0 && (
-                <Badge variant="destructive">{unreadCount}</Badge>
-              )}
-            </CardTitle>
-            <Button variant="ghost" size="sm" onClick={onClose}>
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
-            {isConnected ? 'Ulangan' : 'Uzilgan'}
-          </div>
-        </CardHeader>
-
-        <div className="flex flex-1 overflow-hidden">
-          {/* User list for admin */}
-          {user?.role === 'admin' && (
-            <div className="w-64 border-r flex flex-col">
-              <div className="p-4 border-b">
-                <h3 className="font-medium flex items-center gap-2">
-                  <Users className="h-4 w-4" />
-                  Foydalanuvchilar
-                </h3>
-              </div>
-              <ScrollArea className="flex-1">
-                <div className="p-2 space-y-1">
-                  {Array.isArray(users) && users.map((userItem: any) => (
-                    <button
-                      key={userItem.id}
-                      onClick={() => setSelectedUserId(userItem.id)}
-                      className={`w-full text-left p-3 rounded-lg hover:bg-accent transition-colors ${
-                        selectedUserId === userItem.id ? 'bg-accent' : ''
-                      }`}
-                    >
-                      <div className="font-medium">
-                        {userItem.firstName} {userItem.lastName}
+    <div className="flex h-full">
+      {/* Partner List (Admin only) */}
+      {isAdmin && (
+        <div className="w-80 border-r">
+          <Card className="h-full rounded-none border-0">
+            <CardHeader className="border-b">
+              <CardTitle className="flex items-center justify-between">
+                <span>Hamkorlar</span>
+                <Badge variant={isConnected ? "default" : "destructive"}>
+                  {connectionStatus === 'connected' ? 'Online' : 'Offline'}
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <ScrollArea className="h-[calc(100vh-200px)]">
+                {partners.map((partner) => (
+                  <div
+                    key={partner.id}
+                    className={`p-4 border-b cursor-pointer hover:bg-muted/50 ${
+                      selectedPartner?.id === partner.id ? 'bg-muted' : ''
+                    }`}
+                    onClick={() => setSelectedPartner(partner)}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Avatar>
+                        <AvatarImage src="" />
+                        <AvatarFallback>
+                          {getInitials(partner.businessName)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{partner.businessName}</p>
+                        <p className="text-sm text-muted-foreground truncate">
+                          {partner.businessCategory}
+                        </p>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <Badge variant={partner.isOnline ? "default" : "secondary"} className="text-xs">
+                            {partner.isOnline ? 'Online' : 'Offline'}
+                          </Badge>
+                        </div>
                       </div>
-                      <div className="text-sm text-muted-foreground">
-                        {userItem.role}
-                      </div>
-                    </button>
-                  ))}
-                </div>
+                    </div>
+                  </div>
+                ))}
               </ScrollArea>
-            </div>
-          )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
-          {/* Chat area */}
-          <div className="flex-1 flex flex-col">
-            {selectedUserId ? (
-              <>
-                {/* Messages */}
-                <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-                  <div className="space-y-4">
-                    {filteredMessages.map((message: Message) => (
-                      <div
-                        key={message.id}
-                        className={`flex ${message.fromUserId === user?.id ? 'justify-end' : 'justify-start'}`}
-                      >
+      {/* Chat Area */}
+      <div className="flex-1 flex flex-col">
+        {selectedPartner ? (
+          <>
+            {/* Chat Header */}
+            <Card className="rounded-none border-0 border-b">
+              <CardHeader className="py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Avatar>
+                      <AvatarImage src="" />
+                      <AvatarFallback>
+                        {getInitials(selectedPartner.businessName)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <CardTitle className="text-lg">{selectedPartner.businessName}</CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedPartner.businessCategory}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant={selectedPartner.isOnline ? "default" : "secondary"}>
+                      {selectedPartner.isOnline ? 'Online' : 'Offline'}
+                    </Badge>
+                    <Button variant="ghost" size="sm">
+                      <Phone className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                      <Video className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-hidden">
+              <ScrollArea className="h-full">
+                <div className="p-4 space-y-4">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.fromUserId === user.id ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`max-w-xs lg:max-w-md ${message.fromUserId === user.id ? 'order-2' : 'order-1'}`}>
                         <div
-                          className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                            message.fromUserId === user?.id
+                          className={`rounded-lg px-4 py-2 ${
+                            message.fromUserId === user.id
                               ? 'bg-primary text-primary-foreground'
                               : 'bg-muted'
                           }`}
                         >
-                          <div className="text-sm">{message.content}</div>
-                          <div className="text-xs opacity-70 mt-1">
-                            {new Date(message.createdAt).toLocaleTimeString()}
-                          </div>
+                          {message.messageType === 'file' ? (
+                            <div className="flex items-center space-x-2">
+                              <Paperclip className="h-4 w-4" />
+                              <span>{message.fileName || 'Fayl'}</span>
+                            </div>
+                          ) : (
+                            <p className="text-sm">{message.content}</p>
+                          )}
                         </div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {formatTime(message.createdAt)}
+                        </p>
                       </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+                    </div>
+                  ))}
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="bg-muted rounded-lg px-4 py-2">
+                        <p className="text-sm text-muted-foreground">Yozmoqda...</p>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+              </ScrollArea>
+            </div>
 
-                {/* Message input */}
-                <div className="p-4 border-t flex gap-2">
+            {/* Message Input */}
+            <Card className="rounded-none border-0 border-t">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Paperclip className="h-4 w-4" />
+                  </Button>
                   <Input
                     value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onChange={(e) => {
+                      setNewMessage(e.target.value);
+                      handleTyping();
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
                     placeholder="Xabar yozing..."
-                    disabled={sendMessageMutation.isPending}
+                    className="flex-1"
                   />
                   <Button
-                    onClick={handleSendMessage}
-                    disabled={!newMessage.trim() || sendMessageMutation.isPending}
+                    variant="ghost"
                     size="sm"
+                    onClick={() => {/* Emoji picker */}}
                   >
+                    <Smile className="h-4 w-4" />
+                  </Button>
+                  <Button onClick={handleSendMessage} disabled={!newMessage.trim()}>
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
-              </>
-            ) : (
-              <div className="flex-1 flex items-center justify-center text-muted-foreground">
-                {user?.role === 'admin' ? 'Chat qilish uchun foydalanuvchi tanlang' : 'Admin bilan bog\'lanish uchun kutmoqda'}
-              </div>
-            )}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  accept="image/*,.pdf,.doc,.docx,.txt"
+                />
+              </CardContent>
+            </Card>
+          </>
+        ) : (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-muted-foreground">Suhbatlashish uchun hamkor tanlang</p>
+            </div>
           </div>
-        </div>
-      </Card>
+        )}
+      </div>
     </div>
   );
 }
