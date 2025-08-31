@@ -76,7 +76,17 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  // Static fayllarni serve qilishda CORS sozlamalarini qo'shamiz
+  app.use(express.static(distPath, {
+    setHeaders: (res, path) => {
+      // CSS va JS fayllar uchun CORS headerlarini qo'shamiz
+      if (path.endsWith('.css') || path.endsWith('.js')) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      }
+    }
+  }));
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {

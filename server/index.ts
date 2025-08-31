@@ -10,7 +10,19 @@ import { initializeWebSocket } from "./websocket";
 const app = express();
 
 // ✅ CORS ni faqat ruxsat berilgan domenlar bilan ishlatamiz
-const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",").filter(origin => origin.trim());
+const allowedOrigins = [
+  'http://localhost:5000',
+  'http://localhost:3000',
+  'https://biznesyordam.uz',
+  'https://www.biznesyordam.uz',
+  'https://biznesyordam-backend.onrender.com',
+  'https://biznes-yordam.onrender.com'
+];
+
+// Environment'dan qo'shimcha originlarni qo'shamiz
+const envOrigins = (process.env.CORS_ORIGIN || "").split(",").filter(origin => origin.trim());
+allowedOrigins.push(...envOrigins);
+
 console.log("🔧 Allowed CORS Origins:", allowedOrigins);
 
 app.use(
@@ -19,7 +31,7 @@ app.use(
       // Development uchun origin bo'lmasligi mumkin
       if (!origin) return callback(null, true);
       
-      if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+      if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
         callback(null, true);
       } else {
         console.log("❌ CORS blocked for origin:", origin);
@@ -27,8 +39,8 @@ app.use(
       }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     exposedHeaders: ['Set-Cookie'],
     optionsSuccessStatus: 200
   })
