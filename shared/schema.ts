@@ -8,7 +8,8 @@ import {
   timestamp,
   decimal,
   index,
-  pgEnum
+  pgEnum,
+  json
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -18,16 +19,12 @@ export const userRoleEnum = pgEnum('user_role', ['customer', 'partner', 'admin']
 export const marketplaceEnum = pgEnum('marketplace', ['uzum', 'wildberries', 'yandex', 'ozon']);
 export const categoryEnum = pgEnum('category', ['electronics', 'clothing', 'home', 'sports', 'beauty']);
 
-// Session storage table (required for authentication)
-export const sessions = pgTable(
-  "sessions",
-  {
-    sid: varchar("sid").primaryKey(),
-    sess: text("sess").notNull(), // JSON as text
-    expire: timestamp("expire").notNull(),
-  },
-  (table) => [index("IDX_session_expire").on(table.expire)],
-);
+// Session table for PostgreSQL session store
+export const sessions = pgTable("sessions", {
+  sid: varchar("sid").primaryKey(),
+  sess: json("sess").notNull(),
+  expire: timestamp("expire", { mode: "date" }).notNull(),
+});
 
 // Users table
 export const users = pgTable("users", {

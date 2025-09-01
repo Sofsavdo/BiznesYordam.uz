@@ -1,12 +1,28 @@
 import { db } from "./db";
-import { users, partners, pricingTiers, sptCosts, commissionSettings, marketplaceApiConfigs, fulfillmentRequests } from "@shared/schema";
+import { users, partners, pricingTiers, sptCosts, commissionSettings, marketplaceApiConfigs, fulfillmentRequests, sessions } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { seedSystemSettings } from "./storage";
+import { sql } from "drizzle-orm";
 
-async function seedData() {
+export async function seedDatabase() {
   try {
-    console.log("Seeding data...");
+    console.log("🌱 Starting database seeding...");
+
+    // Create sessions table if it doesn't exist
+    try {
+      await db.execute(sql`
+        CREATE TABLE IF NOT EXISTS sessions (
+          sid VARCHAR PRIMARY KEY,
+          sess JSON NOT NULL,
+          expire TIMESTAMP NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS IDX_session_expire ON sessions(expire);
+      `);
+      console.log("✅ Sessions table created/verified");
+    } catch (error) {
+      console.log("ℹ️ Sessions table already exists or error:", error);
+    }
 
     // Check if admin user already exists
     let admin = await db.select().from(users).where(eq(users.username, "admin")).then((rows: any[]) => rows[0]);
@@ -280,4 +296,4 @@ async function seedData() {
 }
 
 // Run seeding
-seedData().catch(console.error);
+seedDatabase().catch(console.error);

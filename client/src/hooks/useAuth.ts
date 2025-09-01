@@ -134,7 +134,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log('🔄 Setting user data:', authData.user);
       setUser(authData.user);
       setPartner(authData.partner || null);
-      setPermissions((authData as any).permissions || null);
+      setPermissions((data as any).permissions || null);
     }
     // NEVER clear user data when authData is null - let it persist
     // This prevents unnecessary logouts

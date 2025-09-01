@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { WebSocketServer } from "ws";
 import session from "express-session";
 import MemoryStore from "memorystore";
+import pgSession from "connect-pg-simple";
 import cors from "cors";
 import "./types"; // Import session types
 import { storage } from "./storage";
@@ -21,6 +22,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 const MemoryStoreSession = MemoryStore(session);
+const PostgresStore = pgSession(session);
 
 // WebSocket connections storage
 const wsConnections = new Map<string, any>();
@@ -111,17 +113,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   };
   // Session configuration
+  const isProduction = process.env.NODE_ENV === 'production';
+  
+  // Use PostgreSQL session store in production, MemoryStore in development
+  const sessionStore = isProduction 
+    ? new PostgresStore({
+        conObject: {
+          connectionString: process.env.DATABASE_URL,
+          ssl: { rejectUnauthorized: false }
+        },
+        tableName: 'sessions'
+      })
+    : new MemoryStoreSession({
+        checkPeriod: 86400000, // prune expired entries every 24h
+      });
+
   app.use(session({
-    store: new MemoryStoreSession({
-      checkPeriod: 86400000, // prune expired entries every 24h
-    }),
+    store: sessionStore,
     secret: process.env.SESSION_SECRET || 'your-secret-key-dev-only',
     resave: true, // Enable resave for better session persistence
     saveUninitialized: false,
     cookie: {
-      secure: false, // Set to false for now to debug
+      secure: isProduction, // true for production (HTTPS)
       httpOnly: true,
-      sameSite: 'lax', // Use 'lax' for better compatibility
+      sameSite: isProduction ? 'none' : 'lax', // 'none' for cross-origin in production
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/', // Ensure cookie is available for all paths
     },
