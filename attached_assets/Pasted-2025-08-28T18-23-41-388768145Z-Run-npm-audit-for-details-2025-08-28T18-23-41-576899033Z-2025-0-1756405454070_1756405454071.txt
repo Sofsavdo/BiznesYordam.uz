@@ -1,0 +1,50 @@
+2025-08-28T18:23:41.388768145Z Run `npm audit` for details.
+2025-08-28T18:23:41.576899033Z 
+2025-08-28T18:23:41.576916664Z > rest-express@1.0.0 build
+2025-08-28T18:23:41.576920524Z > npm run build:client && npm run build:server
+2025-08-28T18:23:41.576923344Z 
+2025-08-28T18:23:41.680823842Z 
+2025-08-28T18:23:41.680846782Z > rest-express@1.0.0 build:client
+2025-08-28T18:23:41.680852282Z > cd client && npm install && npx vite build --config ../vite.config.js
+2025-08-28T18:23:41.680855842Z 
+2025-08-28T18:23:42.837066098Z 
+2025-08-28T18:23:42.837089748Z up to date, audited 546 packages in 1s
+2025-08-28T18:23:42.837119589Z 
+2025-08-28T18:23:42.837135089Z 72 packages are looking for funding
+2025-08-28T18:23:42.83716115Z   run `npm fund` for details
+2025-08-28T18:23:42.845326628Z 
+2025-08-28T18:23:42.845342158Z 7 vulnerabilities (3 low, 4 moderate)
+2025-08-28T18:23:42.845345378Z 
+2025-08-28T18:23:42.845348448Z To address issues that do not require attention, run:
+2025-08-28T18:23:42.845351918Z   npm audit fix
+2025-08-28T18:23:42.845356578Z 
+2025-08-28T18:23:42.845362028Z To address all issues (including breaking changes), run:
+2025-08-28T18:23:42.845367548Z   npm audit fix --force
+2025-08-28T18:23:42.845371599Z 
+2025-08-28T18:23:42.845376019Z Run `npm audit` for details.
+2025-08-28T18:23:43.274185139Z vite v5.4.19 building for production...
+2025-08-28T18:23:43.321204683Z transforming...
+2025-08-28T18:23:43.626885267Z Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+2025-08-28T18:23:43.626904007Z   npx update-browserslist-db@latest
+2025-08-28T18:23:43.626908557Z   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2025-08-28T18:23:43.662669657Z 
+2025-08-28T18:23:43.662704997Z warn - The `content` option in your Tailwind CSS configuration is missing or empty.
+2025-08-28T18:23:43.662708008Z warn - Configure your content sources or your generated CSS will be missing styles.
+2025-08-28T18:23:43.662752818Z warn - https://tailwindcss.com/docs/content-configuration
+2025-08-28T18:23:43.749551815Z ✓ 3 modules transformed.
+2025-08-28T18:23:43.753840213Z x Build failed in 457ms
+2025-08-28T18:23:43.755599585Z error during build:
+2025-08-28T18:23:43.755607625Z [vite:css] [postcss] /opt/render/project/src/client/src/index.css:1:1: The `bg-background` class does not exist. If `bg-background` is a custom class, make sure it is defined within a `@layer` directive.
+2025-08-28T18:23:43.755611875Z file: /opt/render/project/src/client/src/index.css:1:0
+2025-08-28T18:23:43.755615975Z     at Input.error (/opt/render/project/src/node_modules/postcss/lib/input.js:106:16)
+2025-08-28T18:23:43.755619465Z     at AtRule.error (/opt/render/project/src/node_modules/postcss/lib/node.js:115:32)
+2025-08-28T18:23:43.755625476Z     at processApply (/opt/render/project/src/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:380:29)
+2025-08-28T18:23:43.755629105Z     at /opt/render/project/src/node_modules/tailwindcss/lib/lib/expandApplyAtRules.js:551:9
+2025-08-28T18:23:43.755632516Z     at /opt/render/project/src/node_modules/tailwindcss/lib/processTailwindFeatures.js:55:50
+2025-08-28T18:23:43.755635856Z     at async plugins (/opt/render/project/src/node_modules/tailwindcss/lib/plugin.js:38:17)
+2025-08-28T18:23:43.755639236Z     at async LazyResult.runAsync (/opt/render/project/src/node_modules/postcss/lib/lazy-result.js:261:11)
+2025-08-28T18:23:43.755643506Z     at async compileCSS (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:36898:21)
+2025-08-28T18:23:43.755646906Z     at async Object.transform (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:36171:11)
+2025-08-28T18:23:43.755650416Z     at async transform (file:///opt/render/project/src/node_modules/rollup/dist/es/shared/node-entry.js:19640:16)
+2025-08-28T18:23:43.88026879Z ==> Build failed 😞
+2025-08-28T18:23:43.88029409Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys

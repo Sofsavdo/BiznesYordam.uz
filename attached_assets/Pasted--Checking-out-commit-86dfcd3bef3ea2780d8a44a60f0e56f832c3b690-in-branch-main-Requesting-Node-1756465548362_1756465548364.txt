@@ -1,0 +1,77 @@
+==> Checking out commit 86dfcd3bef3ea2780d8a44a60f0e56f832c3b690 in branch main
+==> Requesting Node.js version >=18.x
+==> Using Node.js version 24.7.0 via /opt/render/project/src/package.json
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Running build command 'npm install && npm run build'...
+added 545 packages, and audited 546 packages in 10s
+72 packages are looking for funding
+  run `npm fund` for details
+7 vulnerabilities (3 low, 4 moderate)
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+> rest-express@1.0.0 build
+> npm run build:client && npm run build:server
+> rest-express@1.0.0 build:client
+> cd client && npm install && npx vite build --config ../vite.config.js
+up to date, audited 546 packages in 1s
+72 packages are looking for funding
+  run `npm fund` for details
+7 vulnerabilities (3 low, 4 moderate)
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+vite v5.4.19 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+warn - The `content` option in your Tailwind CSS configuration is missing or empty.
+warn - Configure your content sources or your generated CSS will be missing styles.
+warn - https://tailwindcss.com/docs/content-configuration
+✓ 1743 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                                                                           2.07 kB │ gzip:   0.76 kB
+../dist/public/assets/tild6537-3533-4030-b664-303239373731__deliverys_1756310171599-m0UUsLfE.png  310.03 kB
+../dist/public/assets/index-DizLNZAM.css                                                            5.51 kB │ gzip:   1.63 kB
+../dist/public/assets/index-a3XJ8fzi.js                                                           669.33 kB │ gzip: 168.24 kB
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.23s
+> rest-express@1.0.0 build:server
+> esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+  dist/index.js  119.8kb
+⚡ Done in 11ms
+==> Uploading build...
+==> Uploaded in 6.6s. Compression took 3.6s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'npm start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+✅ PostgreSQL database connection established
+11:04:57 AM [express] 🚀 Starting BiznesYordam Fulfillment Platform...
+11:04:58 AM [express] ✅ Server running on port 5000
+11:05:03 AM [express] GET /api/health 200 in 3ms :: {"status":"ok","time":"2025-08-29T11:05:03.895Z"}
+11:05:03 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:03.899Z"}
+==> Your service is live 🎉
+==> 
+==> ///////////////////////////////////////////////////////////
+==> 
+==> Available at your primary URL https://biznesyordam-backend.onrender.com
+==> 
+==> ///////////////////////////////////////////////////////////
+11:05:08 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:08.895Z"}
+11:05:13 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:13.895Z"}
+11:05:18 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:18.894Z"}
+11:05:23 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:23.896Z"}
+11:05:23 AM [express] GET /api/health 200 in 12ms :: {"status":"ok","time":"2025-08-29T11:05:23.898Z"}
+11:05:28 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:28.895Z"}
+11:05:33 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:05:33.895Z"}

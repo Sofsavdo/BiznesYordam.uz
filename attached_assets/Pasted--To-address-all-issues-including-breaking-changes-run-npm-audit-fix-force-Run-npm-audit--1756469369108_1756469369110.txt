@@ -1,0 +1,412 @@
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+vite v5.4.19 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+warn - The `content` option in your Tailwind CSS configuration is missing or empty.
+warn - Configure your content sources or your generated CSS will be missing styles.
+warn - https://tailwindcss.com/docs/content-configuration
+✓ 1743 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                                                                           2.07 kB │ gzip:   0.76 kB
+../dist/public/assets/tild6537-3533-4030-b664-303239373731__deliverys_1756310171599-m0UUsLfE.png  310.03 kB
+(!) Some chunks are larger than 500 kB after minification. Consider:
+../dist/public/assets/index-DizLNZAM.css                                                            5.51 kB │ gzip:   1.63 kB
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+../dist/public/assets/index-a3XJ8fzi.js                                                           669.33 kB │ gzip: 168.24 kB
+✓ built in 4.09s
+> rest-express@1.0.0 build:server
+> esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+  dist/index.js  119.8kb
+⚡ Done in 12ms
+==> Uploading build...
+==> Uploaded in 5.9s. Compression took 3.9s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'npm start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+✅ PostgreSQL database connection established
+11:52:04 AM [express] 🚀 Starting BiznesYordam Fulfillment Platform...
+11:52:04 AM [express] ✅ Server running on port 5000
+11:52:05 AM [express] GET /api/health 200 in 3ms :: {"status":"ok","time":"2025-08-29T11:52:05.446Z"}
+11:52:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:52:05.450Z"}
+==> Your service is live 🎉
+==> 
+==> ///////////////////////////////////////////////////////////
+==> 
+==> Available at your primary URL https://biznesyordam.uz + 2 more domains
+==> 
+==> ///////////////////////////////////////////////////////////
+11:52:10 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:10.444Z"}
+11:52:15 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:15.444Z"}
+11:52:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:20.444Z"}
+11:52:25 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:52:25.445Z"}
+11:52:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:30.444Z"}
+11:52:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:35.447Z"}
+11:52:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:35.448Z"}
+11:52:40 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:40.445Z"}
+11:52:45 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:45.445Z"}
+11:52:50 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:52:50.444Z"}
+11:52:55 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:52:55.444Z"}
+11:53:00 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:00.444Z"}
+11:53:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:05.445Z"}
+11:53:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:05.446Z"}
+11:53:10 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:10.444Z"}
+11:53:15 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:53:15.445Z"}
+11:53:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:53:20.444Z"}
+11:53:25 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:25.444Z"}
+11:53:30 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:30.444Z"}
+11:53:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:53:35.444Z"}
+11:53:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:53:35.445Z"}
+11:53:40 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:40.445Z"}
+11:53:45 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:53:45.445Z"}
+11:53:50 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:53:50.445Z"}
+11:53:55 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:53:55.444Z"}
+11:54:00 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:54:00.446Z"}
+11:54:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:05.444Z"}
+11:54:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:05.445Z"}
+11:54:10 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:10.444Z"}
+11:54:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:15.444Z"}
+11:54:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:54:20.445Z"}
+11:54:25 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:54:25.445Z"}
+11:54:30 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:30.444Z"}
+11:54:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:54:35.444Z"}
+11:54:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:35.445Z"}
+11:54:40 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:54:40.444Z"}
+11:54:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:45.445Z"}
+11:54:50 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:54:50.444Z"}
+11:54:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:54:55.445Z"}
+11:55:00 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:00.445Z"}
+11:55:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:55:05.445Z"}
+11:55:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:55:05.446Z"}
+11:55:10 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:10.444Z"}
+11:55:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:55:15.444Z"}
+11:55:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:20.445Z"}
+11:55:25 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:25.444Z"}
+11:55:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:30.445Z"}
+11:55:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:35.444Z"}
+11:55:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:55:35.446Z"}
+11:55:40 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:40.444Z"}
+11:55:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:55:45.444Z"}
+11:55:50 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:55:50.444Z"}
+11:55:55 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:55:55.444Z"}
+11:56:00 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:56:00.445Z"}
+11:56:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:05.444Z"}
+11:56:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:05.445Z"}
+11:56:10 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:56:10.444Z"}
+11:56:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:15.447Z"}
+11:56:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:56:20.444Z"}
+11:56:25 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:25.445Z"}
+11:56:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:56:30.444Z"}
+11:56:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:35.446Z"}
+11:56:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:35.447Z"}
+11:56:40 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:40.444Z"}
+11:56:45 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:56:45.444Z"}
+11:56:50 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:50.444Z"}
+11:56:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:56:55.444Z"}
+11:57:00 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:00.444Z"}
+11:57:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:57:05.445Z"}
+11:57:05 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:05.446Z"}
+==> Detected service running on port 5000
+==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+11:57:10 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:10.444Z"}
+11:57:15 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:15.445Z"}
+11:57:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:20.444Z"}
+11:57:25 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:57:25.445Z"}
+11:57:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:30.445Z"}
+11:57:35 AM [express] GET /api/health 200 in 2ms :: {"status":"ok","time":"2025-08-29T11:57:35.445Z"}
+11:57:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:57:35.447Z"}
+11:57:40 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:40.444Z"}
+11:57:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:57:45.444Z"}
+11:57:50 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:57:50.444Z"}
+11:57:55 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:57:55.445Z"}
+11:58:00 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:00.444Z"}
+11:58:05 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:05.444Z"}
+11:58:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:05.445Z"}
+11:58:10 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:10.445Z"}
+11:58:15 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:15.444Z"}
+11:58:20 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:20.445Z"}
+11:58:25 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:25.444Z"}
+11:58:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:30.445Z"}
+11:58:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:35.444Z"}
+11:58:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:35.446Z"}
+11:58:40 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:58:40.445Z"}
+11:58:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:45.445Z"}
+11:58:50 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:50.444Z"}
+11:58:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:58:55.445Z"}
+11:59:00 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:00.444Z"}
+11:59:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:05.444Z"}
+11:59:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:05.445Z"}
+11:59:10 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:10.444Z"}
+11:59:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:15.444Z"}
+11:59:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:20.444Z"}
+11:59:25 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:25.444Z"}
+11:59:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:30.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:35.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:35.445Z"}
+11:59:40 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:40.445Z"}
+11:59:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:45.444Z"}
+11:59:50 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:50.445Z"}
+11:59:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:55.444Z"}
+12:00:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:00.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:05.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:05.445Z"}
+12:00:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:10.444Z"}
+12:00:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:15.444Z"}
+12:00:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:20.444Z"}
+12:00:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:25.444Z"}
+12:00:30 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:30.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:35.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:35.446Z"}
+12:00:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:40.445Z"}
+12:00:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:45.444Z"}
+12:00:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:50.445Z"}
+12:00:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:55.445Z"}
+12:01:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:00.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.446Z"}
+12:01:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:10.444Z"}
+12:01:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:15.444Z"}
+12:01:20 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:20.444Z"}
+12:01:25 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:25.444Z"}
+12:01:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:30.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.445Z"}
+12:01:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:40.444Z"}
+12:01:45 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:45.445Z"}
+12:01:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:50.444Z"}
+12:01:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:55.445Z"}
+12:02:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:02:00.445Z"}
+11:59:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:05.445Z"}
+11:59:10 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:10.444Z"}
+11:59:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:15.444Z"}
+11:59:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:20.444Z"}
+11:59:25 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:25.444Z"}
+11:59:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:30.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:35.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:35.445Z"}
+11:59:40 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:40.445Z"}
+11:59:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:45.444Z"}
+11:59:50 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:50.445Z"}
+11:59:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:55.444Z"}
+12:00:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:00.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:05.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:05.445Z"}
+12:00:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:10.444Z"}
+12:00:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:15.444Z"}
+12:00:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:20.444Z"}
+12:00:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:25.444Z"}
+12:00:30 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:30.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:35.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:35.446Z"}
+12:00:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:40.445Z"}
+12:00:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:45.444Z"}
+12:00:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:50.445Z"}
+12:00:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:55.445Z"}
+12:01:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:00.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.446Z"}
+12:01:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:10.444Z"}
+12:01:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:15.444Z"}
+12:01:20 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:20.444Z"}
+12:01:25 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:25.444Z"}
+12:01:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:30.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.445Z"}
+12:01:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:40.444Z"}
+12:01:45 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:45.445Z"}
+12:01:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:50.444Z"}
+12:01:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:55.445Z"}
+12:02:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:02:00.445Z"}
+11:59:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:05.445Z"}
+11:59:10 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:10.444Z"}
+11:59:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:15.444Z"}
+11:59:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:20.444Z"}
+11:59:25 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:25.444Z"}
+11:59:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:30.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:35.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:35.445Z"}
+11:59:40 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:40.445Z"}
+11:59:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:45.444Z"}
+11:59:50 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:50.445Z"}
+11:59:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:55.444Z"}
+12:00:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:00.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:05.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:05.445Z"}
+12:00:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:10.444Z"}
+12:00:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:15.444Z"}
+12:00:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:20.444Z"}
+12:00:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:25.444Z"}
+12:00:30 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:30.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:35.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:35.446Z"}
+12:00:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:40.445Z"}
+12:00:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:45.444Z"}
+12:00:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:50.445Z"}
+12:00:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:55.445Z"}
+12:01:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:00.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.446Z"}
+12:01:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:10.444Z"}
+12:01:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:15.444Z"}
+12:01:20 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:20.444Z"}
+12:01:25 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:25.444Z"}
+12:01:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:30.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.445Z"}
+12:01:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:40.444Z"}
+12:01:45 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:45.445Z"}
+12:01:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:50.444Z"}
+12:01:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:55.445Z"}
+12:02:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:02:00.445Z"}
+11:59:05 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:05.445Z"}
+11:59:10 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:10.444Z"}
+11:59:15 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:15.444Z"}
+11:59:20 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:20.444Z"}
+11:59:25 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:25.444Z"}
+11:59:30 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:30.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:35.444Z"}
+11:59:35 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:35.445Z"}
+11:59:40 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:40.445Z"}
+11:59:45 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:45.444Z"}
+11:59:50 AM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T11:59:50.445Z"}
+11:59:55 AM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T11:59:55.444Z"}
+12:00:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:00.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:05.444Z"}
+12:00:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:05.445Z"}
+12:00:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:10.444Z"}
+12:00:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:15.444Z"}
+12:00:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:20.444Z"}
+12:00:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:25.444Z"}
+12:00:30 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:30.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:35.445Z"}
+12:00:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:35.446Z"}
+12:00:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:40.445Z"}
+12:00:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:00:45.444Z"}
+12:00:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:50.445Z"}
+12:00:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:00:55.445Z"}
+12:01:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:00.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.444Z"}
+12:01:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:05.446Z"}
+12:01:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:10.444Z"}
+12:01:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:15.444Z"}
+12:01:20 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:20.444Z"}
+12:01:25 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:25.444Z"}
+12:01:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:30.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.444Z"}
+12:01:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:35.445Z"}
+12:01:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:40.444Z"}
+12:01:45 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:45.445Z"}
+12:01:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:01:50.444Z"}
+12:01:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:01:55.445Z"}
+12:02:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:02:00.445Z"}
+12:02:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:05.444Z"}
+12:02:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:05.445Z"}
+12:02:10 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:10.444Z"}
+12:02:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:15.444Z"}
+12:02:20 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:20.444Z"}
+12:02:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:25.445Z"}
+12:02:30 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:30.445Z"}
+12:02:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:35.444Z"}
+12:02:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:02:35.445Z"}
+12:02:40 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:40.444Z"}
+12:02:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:45.445Z"}
+12:02:50 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:50.444Z"}
+12:02:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:02:55.445Z"}
+12:03:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:00.444Z"}
+12:03:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:05.444Z"}
+12:03:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:05.445Z"}
+12:03:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:10.444Z"}
+12:03:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:15.444Z"}
+12:03:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:20.444Z"}
+12:03:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:25.445Z"}
+12:03:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:30.444Z"}
+12:03:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:35.444Z"}
+12:03:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:35.445Z"}
+12:03:40 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:40.444Z"}
+12:03:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:03:45.445Z"}
+12:03:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:50.444Z"}
+12:03:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:03:55.444Z"}
+12:04:00 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:00.461Z"}
+12:04:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:04:05.444Z"}
+12:04:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:05.445Z"}
+12:04:10 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:04:10.444Z"}
+12:04:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:04:15.444Z"}
+12:04:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:20.444Z"}
+12:04:25 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:25.445Z"}
+12:04:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:30.445Z"}
+12:04:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:35.444Z"}
+12:04:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:35.445Z"}
+12:04:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:40.444Z"}
+12:04:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:04:45.445Z"}
+12:04:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:50.444Z"}
+12:04:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:04:55.444Z"}
+12:05:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:00.444Z"}
+12:05:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:05.444Z"}
+12:05:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:05.445Z"}
+12:05:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:05:10.444Z"}
+12:05:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:15.447Z"}
+12:05:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:05:20.444Z"}
+12:05:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:25.445Z"}
+12:05:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:05:30.444Z"}
+12:05:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:05:35.444Z"}
+12:05:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:05:35.445Z"}
+12:05:40 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:40.444Z"}
+12:05:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:45.445Z"}
+12:05:50 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:50.444Z"}
+12:05:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:05:55.445Z"}
+12:06:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:06:00.445Z"}
+12:06:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:06:05.444Z"}
+12:06:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:05.445Z"}
+12:06:10 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:06:10.444Z"}
+12:06:15 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:15.445Z"}
+12:06:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:20.444Z"}
+12:06:25 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:25.446Z"}
+12:06:30 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:06:30.445Z"}
+12:06:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:06:35.445Z"}
+12:06:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:35.446Z"}
+12:06:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:40.444Z"}
+12:06:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:06:45.444Z"}
+12:06:50 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:50.444Z"}
+12:06:55 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:06:55.444Z"}
+12:07:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:00.444Z"}
+12:07:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:07:05.445Z"}
+12:07:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:07:05.446Z"}
+12:07:09 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:07:09.042Z"}
+12:07:10 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:10.445Z"}
+12:07:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:15.444Z"}
+12:07:20 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:07:20.444Z"}
+12:07:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:25.444Z"}
+12:07:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:07:30.444Z"}
+12:07:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:35.444Z"}
+12:07:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:35.445Z"}
+12:07:36 PM [express] GET /api/auth/me 401 in 1ms :: {"message":"Avtorizatsiya yo'q"}
+12:07:40 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:07:40.444Z"}
+12:07:45 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:45.444Z"}
+12:07:50 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:50.444Z"}
+12:07:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:07:55.445Z"}
+12:08:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:00.445Z"}
+12:08:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:05.445Z"}
+12:08:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:05.446Z"}
+12:08:10 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:08:10.444Z"}
+12:08:15 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:15.444Z"}
+12:08:20 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:20.444Z"}
+12:08:25 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:25.444Z"}
+12:08:30 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:08:30.446Z"}
+12:08:35 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:35.444Z"}
+12:08:35 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:08:35.445Z"}
+12:08:40 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:40.444Z"}
+12:08:45 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:08:45.444Z"}
+12:08:50 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:50.444Z"}
+12:08:55 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:08:55.444Z"}
+12:09:00 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:09:00.445Z"}
+12:09:05 PM [express] GET /api/health 200 in 1ms :: {"status":"ok","time":"2025-08-29T12:09:05.444Z"}
+12:09:05 PM [express] GET /api/health 200 in 0ms :: {"status":"ok","time":"2025-08-29T12:09:05.445Z"}
