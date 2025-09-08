@@ -1572,7 +1572,7 @@ class DatabaseStorage implements IStorage {
       worksheet.columns = columns;
 
       // Add header styling
-      worksheet.getRow(1).eachCell((cell) => {
+      worksheet.getRow(1).eachCell((cell: any) => {
         cell.font = { bold: true };
         cell.fill = {
           type: 'pattern',
@@ -1593,7 +1593,7 @@ class DatabaseStorage implements IStorage {
       });
 
       // Auto-fit columns
-      worksheet.columns.forEach(column => {
+      worksheet.columns.forEach((column: any) => {
         if (column.eachCell) {
           let maxLength = 0;
           column.eachCell({ includeEmpty: true }, (cell: any) => {
@@ -1613,7 +1613,7 @@ class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error('Excel generation error:', error);
       // Fallback to simple CSV
-      const csvData = `Partner,${partner?.businessName || 'N/A'}\nMarketplace,${marketplace}\nData Type,${dataType}\nGenerated,${new Date().toISOString()}`;
+      const csvData = `Partner,${partnerId || 'N/A'}\nMarketplace,${marketplace}\nData Type,${dataType}\nGenerated,${new Date().toISOString()}`;
       return Buffer.from(csvData, 'utf-8');
     }
   }

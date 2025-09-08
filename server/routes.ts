@@ -187,8 +187,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         email: user.email || undefined,
         firstName: user.firstName || undefined,
         lastName: user.lastName || undefined,
-        role: user.role,
-        isActive: Boolean(user.isActive)
+        role: user.role
       };
       
       // Save session explicitly and wait for it

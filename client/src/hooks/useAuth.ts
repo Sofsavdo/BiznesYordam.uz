@@ -9,6 +9,7 @@ interface User {
   firstName?: string;
   lastName?: string;
   role: 'admin' | 'partner' | 'customer';
+  isActive?: boolean;
 }
 
 interface Partner {
