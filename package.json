@@ -23,7 +23,7 @@
     "dev:client": "cd client && npm run dev",
     "dev:server": "cross-env NODE_ENV=development tsx server/index.ts",
     "build": "npm run build:client && npm run build:server",
-    "start": "node dist/index.js",
+    "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
@@ -37,7 +37,9 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "production:setup": "npm run db:push && npm run seed && npm run build",
-    "production:start": "npm run production:setup && npm start"
+    "production:start": "npm run production:setup && npm start",
+    "rebuild:sqlite": "npm rebuild better-sqlite3",
+    "postinstall": "npm run rebuild:sqlite"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
