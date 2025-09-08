@@ -53,6 +53,10 @@ fi
 print_status "Installing dependencies..."
 npm install
 
+# Rebuild better-sqlite3 to ensure native bindings are available
+print_status "Rebuilding better-sqlite3..."
+npm rebuild better-sqlite3
+
 # Install client dependencies
 print_status "Installing client dependencies..."
 cd client && npm install && cd ..
