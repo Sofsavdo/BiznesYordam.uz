@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: biznesyordam
+      POSTGRES_USER: biznes
+      POSTGRES_PASSWORD: biznes
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DATABASE_URL: postgresql://biznes:biznes@db:5432/biznesyordam
+      SESSION_SECRET: change-me-in-prod
+      CORS_ORIGIN: http://localhost:5000
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+volumes:
+  pgdata:

@@ -6,8 +6,39 @@ import { setupVite, serveStatic, log } from "./vite";
 import { errorHandler, notFound } from "./errorHandler";
 // Mock database removed - using real database
 import { initializeWebSocket } from "./websocket";
+import helmet from "helmet";
+import * as Sentry from "@sentry/node";
+import winston from "winston";
 
 const app = express();
+
+// Basic Winston logger
+const logger = winston.createLogger({
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.timestamp(),
+        winston.format.printf(({ level, message, timestamp }) => `${timestamp} [${level}] ${message}`)
+      )
+    })
+  ]
+});
+
+// Sentry init (optional DSN)
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    tracesSampleRate: 0.2
+  });
+  app.use(Sentry.Handlers.requestHandler());
+}
+
+// Helmet security headers
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
 
 // ✅ CORS ni faqat ruxsat berilgan domenlar bilan ishlatamiz
 const allowedOrigins = [
@@ -74,34 +105,26 @@ app.use((req, res, next) => {
 
   // Log session information for auth endpoints
   if (path.startsWith('/api/auth')) {
-    console.log('🔍 Auth Request:', {
-      method: req.method,
-      path: path,
-      sessionID: req.sessionID,
-      hasSession: !!req.session,
-      hasUser: !!req.session?.user,
-      cookies: req.headers.cookie,
-      origin: req.headers.origin
-    });
+    logger.info(`Auth request ${req.method} ${path}`);
   }
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
     capturedJsonResponse = bodyJson;
     return originalResJson.apply(res, [bodyJson, ...args]);
-  };
+  } as any;
 
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+        try { logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`; } catch {}
       }
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
+      if (logLine.length > 200) {
+        logLine = logLine.slice(0, 199) + "…";
       }
-      log(logLine);
+      logger.info(logLine);
     }
   });
 
@@ -131,6 +154,9 @@ app.use((req, res, next) => {
   app.use(notFound);
 
   // Error handler
+  if (process.env.SENTRY_DSN) {
+    app.use(Sentry.Handlers.errorHandler());
+  }
   app.use(errorHandler);
 
   // ✅ PORT - Render'dan oladi

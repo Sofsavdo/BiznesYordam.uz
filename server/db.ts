@@ -46,8 +46,9 @@ if (connectionString && connectionString.includes('postgresql://') && !connectio
 async function initializeSQLite() {
   console.log('🔧 Initializing SQLite database...');
   
-  // Use file-based SQLite instead of memory for persistence
-  const dbPath = process.env.NODE_ENV === 'production' ? ':memory:' : './dev.db';
+  const isTestEnv = process.env.NODE_ENV === 'test';
+  // Use in-memory DB for tests, file for dev, and allow memory for prod if configured
+  const dbPath = isTestEnv ? ':memory:' : (process.env.NODE_ENV === 'production' ? ':memory:' : './dev.db');
   const sqlite = new Database(dbPath);
   db = drizzleSQLite(sqlite, { schema });
   
@@ -194,8 +195,10 @@ async function initializeSQLite() {
     );
   `);
   
-  // Seed initial data for SQLite
-  await seedSQLiteData(sqlite);
+  // Seed initial data for SQLite (skip in tests)
+  if (!isTestEnv) {
+    await seedSQLiteData(sqlite);
+  }
   
   console.log('✅ SQLite database connection established (development mode)');
 }

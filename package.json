@@ -33,15 +33,21 @@
     "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "test": "echo \"✅ All tests passed - Production ready\" && exit 0",
+    "test": "cross-env NODE_ENV=test vitest run --dir server/__tests__ --reporter=verbose",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write .",
     "production:setup": "npm run db:push && npm run seed && npm run build",
     "production:start": "npm run production:setup && npm start",
     "rebuild:sqlite": "npm rebuild better-sqlite3",
     "postinstall": "npm run rebuild:sqlite"
   },
   "dependencies": {
+    "helmet": "^7.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.13.0",
+    "@sentry/node": "^7.120.3",
     "@hookform/resolvers": "^3.10.0",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@neondatabase/serverless": "^0.10.4",
@@ -137,7 +143,14 @@
     "@types/react-dom": "^18.3.1",
     "@types/ws": "^8.5.13",
     "drizzle-kit": "^0.30.6",
-    "tsx": "^4.20.5"
+    "tsx": "^4.20.5",
+    "eslint": "^8.57.1",
+    "prettier": "^3.3.3",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "vitest": "^2.1.9",
+    "supertest": "^7.1.4",
+    "@types/supertest": "^6.0.3"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"

@@ -12,6 +12,8 @@ import {
   insertFulfillmentRequestSchema 
 } from "@shared/schema";
 import { ZodError } from "zod";
+import swaggerUi from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
 
 // Enhanced authentication middleware with better error handling
 function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -84,6 +86,17 @@ export function registerRoutes(app: express.Application): Server {
 
   // Health check endpoint
   app.get("/api/health", healthCheck);
+
+  // Swagger setup
+  const swaggerSpec = swaggerJSDoc({
+    definition: {
+      openapi: '3.0.0',
+      info: { title: 'BiznesYordam API', version: '2.0.1' },
+      servers: [{ url: '/' }]
+    },
+    apis: []
+  });
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 
   // Authentication routes
   app.post("/api/auth/login", asyncHandler(async (req: Request, res: Response) => {

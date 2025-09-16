@@ -1,28 +1,19 @@
-# Use the official Node.js runtime as a parent image
-FROM node:18-alpine
-
-# Set the working directory in the container
+# Build stage
+FROM node:20-alpine AS builder
 WORKDIR /app
-
-# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
-COPY client/package*.json ./client/
-
-# Install dependencies
-RUN npm install
-RUN cd client && npm install
-
-# Copy the current directory contents into the container
+RUN npm ci --no-audit --no-fund
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
-
-# Define environment variable
+# Runtime stage
+FROM node:20-alpine AS runner
 ENV NODE_ENV=production
-
-# Run the app when the container launches
-CMD ["npm", "start"]
+WORKDIR /app
+COPY --from=builder /app/package*.json ./
+RUN npm ci --omit=dev --no-audit --no-fund && npm rebuild better-sqlite3 || true
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/client/index.html ./client/index.html
+COPY --from=builder /app/dist/public ./dist/public
+EXPOSE 5000
+CMD ["node", "dist/index.js"]
