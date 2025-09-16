@@ -93,20 +93,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // false for development
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     },
   }));
 
-  // CORS configuration
-  app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? process.env.FRONTEND_ORIGIN 
-      : 'http://localhost:5000',
-    credentials: true,
-  }));
 
   // Auth routes
   app.post('/api/auth/login', rateLimit(10, 60_000), async (req, res) => {
@@ -139,7 +132,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         permissions = await storage.getAdminPermissions(user.id);
       }
 
-      res.json({ user, partner, permissions });
+      // Sanitize user object
+      const safeUser = {
+        id: user.id,
+        username: user.username,
+        email: user.email || undefined,
+        firstName: user.firstName || undefined,
+        lastName: user.lastName || undefined,
+        role: user.role
+      };
+
+      res.json({ user: safeUser, partner, permissions });
     } catch (error) {
       console.error('Login error:', error);
       res.status(400).json({ message: "Ma'lumotlar noto'g'ri" });
@@ -498,15 +501,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/marketplace-integrations', requireAuth, requireRole(['admin']), async (req, res) => {
-    try {
-      const integrations = await storage.getMarketplaceIntegrations();
-      res.json(integrations);
-    } catch (error) {
-      console.error('Get marketplace integrations error:', error);
-      res.status(500).json({ message: "Server xatoligi" });
-    }
-  });
+  // (removed duplicate) marketplace integrations endpoint above
 
   app.post('/api/partners/:partnerId/api-docs', requireAuth, requireRole(['admin']), async (req, res) => {
     try {
@@ -529,72 +524,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Chat routes for admin
-  app.get('/api/admin/chats/:partnerId/messages', requireAuth, requireRole(['admin']), async (req, res) => {
-    try {
-      const { partnerId } = req.params;
-      const adminUser = getAuthUser(req);
-      
-      // Get partner info
-      const partner = await storage.getPartner(partnerId);
-      if (!partner) {
-        return res.status(404).json({ message: "Hamkor topilmadi" });
-      }
-
-      // Get messages between admin and partner
-      const messages = await storage.getMessages(partner.userId);
-      res.json(messages);
-    } catch (error) {
-      console.error('Get chat messages error:', error);
-      res.status(500).json({ message: "Server xatoligi" });
-    }
-  });
-
-  app.post('/api/chat/partners/:partnerId/message', requireAuth, requireRole(['admin']), async (req, res) => {
-    try {
-      const { partnerId } = req.params;
-      const { message, messageType = 'text', fileUrl, fileName } = req.body;
-      const adminUser = getAuthUser(req);
-      
-      // Get partner info
-      const partner = await storage.getPartner(partnerId);
-      if (!partner) {
-        return res.status(404).json({ message: "Hamkor topilmadi" });
-      }
-
-      // Create message
-      const newMessage = await storage.createMessage({
-        fromUserId: adminUser.id,
-        toUserId: partner.userId,
-        content: message
-      });
-
-      // Send real-time notification via WebSocket
-      const partnerWs = wsConnections.get(partner.userId);
-      if (partnerWs && partnerWs.readyState === 1) {
-        partnerWs.send(JSON.stringify({
-          type: 'new_message',
-          id: newMessage.id,
-          fromUserId: adminUser.id,
-          toUserId: partner.userId,
-          content: message,
-          messageType: messageType || 'text',
-          fileUrl: fileUrl || null,
-          fileName: fileName || null,
-          senderType: 'admin',
-          createdAt: newMessage.createdAt
-        }));
-      }
-      
-      res.json({ 
-        message: "Xabar yuborildi",
-        newMessage 
-      });
-    } catch (error) {
-      console.error('Send message error:', error);
-      res.status(500).json({ message: "Server xatoligi" });
-    }
-  });
+  // Chat routes for admin (deduplicated below)
 
   // Get all partners for chat
   app.get('/api/admin/chat-partners', requireAuth, requireRole(['admin']), async (req, res) => {
@@ -1074,7 +1004,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/dashboard/stats', requireAuth, async (req, res) => {
     try {
       const user = getAuthUser(req);
-      const partnerId = user.role === 'partner' ? user.partnerId : undefined;
+      let partnerId: string | undefined = undefined;
+      if (user.role === 'partner') {
+        const partner = await storage.getPartnerByUserId(user.id);
+        partnerId = partner?.id;
+      }
       const stats = await storage.getDashboardStats(partnerId);
       res.json(stats);
     } catch (error) {

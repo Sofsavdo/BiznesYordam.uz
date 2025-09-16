@@ -10,7 +10,8 @@ import {
   marketplaceIntegrations,
   systemSettings,
   adminPermissions,
-  contactForms
+  contactForms,
+  marketplaceApiConfigs
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
@@ -1508,7 +1509,7 @@ class DatabaseStorage implements IStorage {
   // Marketplace Integrations
   async getMarketplaceIntegrations(): Promise<any[]> {
     try {
-      return await db.select().from(marketplaceIntegrations);
+      return await db.select().from(marketplaceApiConfigs);
     } catch (error) {
       console.error('Database error in getMarketplaceIntegrations:', error);
       return [];
@@ -1517,10 +1518,21 @@ class DatabaseStorage implements IStorage {
 
   async createMarketplaceIntegration(partnerId: string, marketplace: string, config: any): Promise<any> {
     try {
-      const [integration] = await db.insert(marketplaceIntegrations).values({
-        partnerId,
-        marketplace,
-        config: JSON.stringify(config),
+      let effectivePartnerId = partnerId;
+      if (partnerId === 'admin') {
+        const existingPartner = await db.select().from(partners).limit(1);
+        if (existingPartner.length === 0) throw new Error('No partner available to attach marketplace config');
+        effectivePartnerId = existingPartner[0].id;
+      }
+      const [integration] = await db.insert(marketplaceApiConfigs).values({
+        partnerId: effectivePartnerId,
+        marketplace: marketplace as any,
+        apiKey: config.apiKey || null,
+        apiSecret: config.apiSecret || null,
+        shopId: config.shopId || null,
+        additionalData: config.additionalData ? JSON.stringify(config.additionalData) : null,
+        status: config.status || 'connected',
+        lastSync: config.lastSync || new Date(),
         createdAt: new Date()
       }).returning();
       return integration;
@@ -1532,11 +1544,23 @@ class DatabaseStorage implements IStorage {
 
   async updateMarketplaceIntegration(partnerId: string, marketplace: string, updates: any): Promise<any> {
     try {
-      const [integration] = await db.update(marketplaceIntegrations)
-        .set({ ...updates, updatedAt: new Date() })
-        .where(eq(marketplaceIntegrations.partnerId, partnerId))
-        .and(eq(marketplaceIntegrations.marketplace, marketplace))
-        .returning();
+      const updatePayload: any = { updatedAt: new Date() };
+      if (updates.status !== undefined) updatePayload.status = updates.status;
+      if (updates.lastSync !== undefined) updatePayload.lastSync = updates.lastSync;
+      if (updates.apiKey !== undefined) updatePayload.apiKey = updates.apiKey;
+      if (updates.apiSecret !== undefined) updatePayload.apiSecret = updates.apiSecret;
+      if (updates.shopId !== undefined) updatePayload.shopId = updates.shopId;
+      if (updates.additionalData !== undefined) updatePayload.additionalData = JSON.stringify(updates.additionalData);
+
+      let query = db.update(marketplaceApiConfigs)
+        .set(updatePayload)
+        .where(eq(marketplaceApiConfigs.marketplace, marketplace as any));
+
+      if (partnerId !== 'admin') {
+        query = query.and(eq(marketplaceApiConfigs.partnerId, partnerId));
+      }
+
+      const [integration] = await query.returning();
       return integration;
     } catch (error) {
       console.error('Database error in updateMarketplaceIntegration:', error);

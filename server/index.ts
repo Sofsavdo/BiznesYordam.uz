@@ -13,7 +13,11 @@ const app = express();
 const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",");
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(null, false);
+    },
     credentials: true,
   })
 );
@@ -77,6 +81,9 @@ app.use((req, res, next) => {
 
   // ✅ PORT - Render'dan oladi
   const port = parseInt(process.env.PORT || "5000", 10);
+  if (app.get("env") === 'production') {
+    app.set('trust proxy', 1);
+  }
   server.listen(
     {
       port,
