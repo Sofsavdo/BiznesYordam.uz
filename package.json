@@ -40,7 +40,7 @@
     "production:setup": "npm run db:push && npm run seed && npm run build",
     "production:start": "npm run production:setup && npm start",
     "rebuild:sqlite": "npm rebuild better-sqlite3",
-    "postinstall": "npm run rebuild:sqlite"
+    "postinstall": "if [ \"$REBUILD_SQLITE\" = \"1\" ]; then npm run rebuild:sqlite; else echo Skipping better-sqlite3 rebuild; fi"
   },
   "dependencies": {
     "helmet": "^7.1.0",

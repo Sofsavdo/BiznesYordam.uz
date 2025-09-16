@@ -23,8 +23,8 @@ export async function apiRequest(
       import.meta.env.DEV) {
     baseUrl = `${window.location.protocol}//${window.location.host}`;
   } else if (!baseUrl) {
-    // Production uchun fallback
-    baseUrl = 'https://biznesyordam-backend.onrender.com';
+    // Production default: same-origin (server and client on one domain)
+    baseUrl = `${window.location.protocol}//${window.location.host}`;
   }
   
   const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;

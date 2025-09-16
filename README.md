@@ -184,6 +184,10 @@ CORS_ORIGIN=https://yourdomain.com
 PORT=5000
 ```
 
+### cPanel Shared Hosting
+
+For cPanel deployment steps and configuration, see `CPANEL_DEPLOYMENT.md`.
+
 ## 📊 **Tech Stack**
 
 ### Frontend
