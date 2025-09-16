@@ -1,5 +1,7 @@
 # 🚀 BiznesYordam - O'zbekiston Marketplace Fulfillment Platform
 
+> 2025-09-16 • Version 2.0.1: Production fixes applied (auth/session cookies, CORS allow-list, chat route deduplication, partner dashboard stats partnerId resolution, marketplace storage alignment). After pulling latest main, restart the server and ensure `CORS_ORIGIN` and `SESSION_SECRET` are configured.
+
 **Professional marketplace fulfillment platform for Uzbekistan businesses**
 
 [![Production Status](https://img.shields.io/badge/Status-Production%20Ready-green)](https://biznes-yordam.onrender.com)
