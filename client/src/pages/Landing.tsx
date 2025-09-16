@@ -23,10 +23,13 @@ import {
   Play,
   MessageCircle
 } from 'lucide-react';
+import { useEffect, useState } from "react";
 
 export default function Landing() {
   const { t } = useLanguage();
   const [, setLocation] = useLocation();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const stats = [
     {
@@ -185,318 +188,295 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background hero-surface">
       <Navigation />
-      
-      {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent/10 to-primary/10 rounded-full blur-3xl"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="text-center lg:text-left animate-fade-in">
-              <div className="inline-flex items-center bg-white/80 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-6">
-                <span className="text-sm font-medium text-primary">🚀 #1 Marketplace Management Platform</span>
+      <main className="pt-20 sm:pt-24 md:pt-28">
+        {/* Hero Section */}
+        <section className="pt-10 md:pt-16 pb-16 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent/10 to-primary/10 rounded-full blur-3xl"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div className="text-center lg:text-left animate-fade-in">
+                <div className="inline-flex items-center bg-white/80 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-6">
+                  <span className="text-sm font-medium text-primary">🚀 #1 Marketplace Management Platform</span>
+                </div>
+                <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                  <span className="text-gradient-primary block">BiznesYordam</span>
+                  <span className="text-muted-foreground">O'zbekiston uchun</span>
+                </h1>
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0">
+                  Professional marketplace fulfillment platformasi — Uzum, Wildberries, Yandex va Ozon bilan integratsiya, real-time analytics, premium qo'llab-quvvatlash.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                  <Button className="hover-lift">
+                    <Crown className="mr-2 h-5 w-5" /> {t("hero.get_started") || "Boshlash"}
+                  </Button>
+                  <Button variant="outline" className="hover-lift">
+                    <Play className="mr-2 h-5 w-5" /> Demo
+                  </Button>
+                </div>
+                
+                {/* Key Features */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                  <div className="flex items-center justify-center lg:justify-start">
+                    <CheckCircle className="text-accent mr-2 h-4 w-4" />
+                    <span className="text-muted-foreground">To'liq Fulfillment</span>
+                  </div>
+                  <div className="flex items-center justify-center lg:justify-start">
+                    <CheckCircle className="text-accent mr-2 h-4 w-4" />
+                    <span className="text-muted-foreground">Real-time Analytics</span>
+                  </div>
+                  <div className="flex items-center justify-center lg:justify-start">
+                    <CheckCircle className="text-accent mr-2 h-4 w-4" />
+                    <span className="text-muted-foreground">24/7 Qo'llab-quvvatlash</span>
+                  </div>
+                </div>
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Professional
-                <span className="text-gradient-primary block">
-                  Marketplace Management
-                </span>
-                <span className="text-muted-foreground">O'zbekiston uchun</span>
-              </h1>
-              <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0">
-                Marketplace savdolaringizni professional darajada boshqaring.
-                <strong> Uzum Market, Wildberries, Yandex Market</strong> va boshqa platformalar bilan to'liq integratsiya.
-                Mahsulot tayyorlashdan logistikagacha to'liq xizmat kompleksi.
+
+              {/* Right Image */}
+              <div className="relative animate-slide-up">
+                <div className="relative bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-business border border-white/30">
+                  <img 
+                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                    alt="Professional Marketplace Dashboard" 
+                    className="w-full h-auto rounded-2xl shadow-elegant" 
+                  />
+                  
+                  {/* Floating elements */}
+                  <div className="absolute -top-4 -right-4 bg-accent text-white p-3 rounded-xl shadow-glow animate-bounce">
+                    <BarChart3 className="h-6 w-6" />
+                  </div>
+                  <div className="absolute -bottom-4 -left-4 bg-primary text-white p-3 rounded-xl shadow-glow animate-pulse">
+                    <Target className="h-6 w-6" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="py-16 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section */}
+        <section id="services" className="py-20 bg-muted/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-20 animate-fade-in">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Professional Xizmatlar</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                Marketplace savdolaringiz uchun to'liq professional yechim va fulfillment xizmatlari
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+              <div className="inline-flex items-center bg-primary/10 border border-primary/20 rounded-full px-6 py-3">
+                <span className="text-primary font-semibold">🚀 To'liq Fulfillment Xizmati</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+              {services.map((service, index) => (
+                <Card 
+                  key={index} 
+                  className="hover-lift animate-slide-up border-2 border-primary/10 shadow-elegant"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                  data-testid={`card-${service.title.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <CardHeader>
+                    <div className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6`}>
+                      <service.icon className={`text-2xl ${service.iconColor}`} />
+                    </div>
+                    <CardTitle className="text-2xl font-bold text-foreground mb-4">{service.title}</CardTitle>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3 mb-6">
+                      {service.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center">
+                          <CheckCircle className="text-accent mr-3 h-4 w-4" />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className={`bg-gradient-to-r ${service.color} rounded-lg p-4`}>
+                      <p className={`text-sm ${service.iconColor} font-medium`}>
+                        💡 Barcha marketplace'lar uchun optimizatsiya
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Calculator Section */}
+        <FulfillmentCalculator />
+
+        {/* Pricing Section */}
+        <section id="pricing" className="py-20 bg-gradient-to-br from-muted/30 to-primary/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16 animate-fade-in">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Hamkorlik Rejalari</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Biznes ehtiyojlaringizga mos keladigan professional hamkorlik rejasini tanlang
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {pricingTiers.map((tier, index) => (
+                <Card 
+                  key={index}
+                  className={`relative hover-lift animate-slide-up ${
+                    tier.popular 
+                      ? 'border-2 border-primary shadow-business scale-105' 
+                      : 'border border-border shadow-elegant'
+                  }`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {tier.popular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <Badge className="bg-primary text-primary-foreground px-4 py-1">
+                        Tavsiya etiladi
+                      </Badge>
+                    </div>
+                  )}
+                  
+                  <CardHeader className="text-center">
+                    <CardTitle className="text-xl font-bold text-foreground mb-2">{tier.name}</CardTitle>
+                    <p className="text-muted-foreground mb-6">{tier.description}</p>
+                    <div className="text-4xl font-bold text-primary mb-2">
+                      {tier.price === "0" ? "Bepul" : tier.price === "Individual" ? "Individual" : `${tier.price} so'm`}
+                    </div>
+                    <div className="text-muted-foreground">
+                      {tier.price !== "Individual" && "Oylik to'lov"}
+                    </div>
+                    <div className="mt-4">
+                      <Badge variant="outline" className="text-primary border-primary">
+                        {tier.commission} komissiya
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent>
+                    <div className="space-y-4 mb-8">
+                      {tier.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center">
+                          <CheckCircle className="text-accent mr-3 h-4 w-4" />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <Button 
+                      variant={tier.buttonVariant}
+                      className="w-full scale-hover"
+                      onClick={() => setLocation('/partner-registration')}
+                      data-testid={`button-select-${tier.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      {tier.buttonText}
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-20 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16 animate-fade-in">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Hamkorlarimiz Fikri</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Bizning hamkorlarimiz qanday professional natijalarga erishganini ko'ring
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <Card 
+                  key={index} 
+                  className="hover-lift animate-slide-up shadow-elegant"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                        <span className="text-primary font-bold text-lg">{testimonial.avatar}</span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                        <p className="text-sm text-muted-foreground">{testimonial.business}</p>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
+                      "{testimonial.content}"
+                    </p>
+                    <div className="flex items-center text-yellow-500">
+                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-current" />
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-primary to-secondary relative overflow-hidden">
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="text-center text-white animate-fade-in">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Professional Hamkor Bo'ling
+              </h2>
+              <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
+                Bizning professional jamoa bilan hamkorlik qiling va marketplace savdolaringizni yangi bosqichga olib chiqing.
+                To'liq fulfillment va professional qo'llab-quvvatlash.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   onClick={() => setLocation('/partner-registration')}
-                  variant="premium"
+                  variant="secondary"
                   size="lg"
-                  className="hover-lift"
-                  data-testid="button-partner-start"
+                  className="bg-white text-primary hover:bg-white/90 hover-lift"
+                  data-testid="button-start-partnership"
                 >
-                  <Crown className="mr-2 h-5 w-5" />
-                  Hamkor Bo'lish
+                  <Users className="mr-2 h-5 w-5" />
+                  Hamkorlikni Boshlash
                 </Button>
                 <Button 
-                  onClick={() => {
-                    const calculatorSection = document.getElementById('calculator');
-                    if (calculatorSection) {
-                      calculatorSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
+                  onClick={() => setLocation('/partner-dashboard')}
                   variant="outline"
                   size="lg"
-                  className="hover-lift"
-                  data-testid="button-demo"
+                  className="border-2 border-white text-white hover:bg-white hover:text-primary hover-lift"
+                  data-testid="button-get-consultation"
                 >
-                  <Play className="mr-2 h-5 w-5" />
-                  Demo Ko'rish
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Bepul Konsultatsiya
                 </Button>
               </div>
-              
-              {/* Key Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center justify-center lg:justify-start">
-                  <CheckCircle className="text-accent mr-2 h-4 w-4" />
-                  <span className="text-muted-foreground">To'liq Fulfillment</span>
-                </div>
-                <div className="flex items-center justify-center lg:justify-start">
-                  <CheckCircle className="text-accent mr-2 h-4 w-4" />
-                  <span className="text-muted-foreground">Real-time Analytics</span>
-                </div>
-                <div className="flex items-center justify-center lg:justify-start">
-                  <CheckCircle className="text-accent mr-2 h-4 w-4" />
-                  <span className="text-muted-foreground">24/7 Qo'llab-quvvatlash</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="relative animate-slide-up">
-              <div className="relative bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-business border border-white/30">
-                <img 
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-                  alt="Professional Marketplace Dashboard" 
-                  className="w-full h-auto rounded-2xl shadow-elegant" 
-                />
-                
-                {/* Floating elements */}
-                <div className="absolute -top-4 -right-4 bg-accent text-white p-3 rounded-xl shadow-glow animate-bounce">
-                  <BarChart3 className="h-6 w-6" />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-primary text-white p-3 rounded-xl shadow-glow animate-pulse">
-                  <Target className="h-6 w-6" />
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
-                <div className="text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-20 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Professional Xizmatlar</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Marketplace savdolaringiz uchun to'liq professional yechim va fulfillment xizmatlari
-            </p>
-            <div className="inline-flex items-center bg-primary/10 border border-primary/20 rounded-full px-6 py-3">
-              <span className="text-primary font-semibold">🚀 To'liq Fulfillment Xizmati</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            {services.map((service, index) => (
-              <Card 
-                key={index} 
-                className="hover-lift animate-slide-up border-2 border-primary/10 shadow-elegant"
-                style={{ animationDelay: `${index * 0.2}s` }}
-                data-testid={`card-${service.title.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                <CardHeader>
-                  <div className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6`}>
-                    <service.icon className={`text-2xl ${service.iconColor}`} />
-                  </div>
-                  <CardTitle className="text-2xl font-bold text-foreground mb-4">{service.title}</CardTitle>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3 mb-6">
-                    {service.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center">
-                        <CheckCircle className="text-accent mr-3 h-4 w-4" />
-                        <span className="text-sm text-muted-foreground">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className={`bg-gradient-to-r ${service.color} rounded-lg p-4`}>
-                    <p className={`text-sm ${service.iconColor} font-medium`}>
-                      💡 Barcha marketplace'lar uchun optimizatsiya
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Calculator Section */}
-      <FulfillmentCalculator />
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-gradient-to-br from-muted/30 to-primary/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Hamkorlik Rejalari</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Biznes ehtiyojlaringizga mos keladigan professional hamkorlik rejasini tanlang
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {pricingTiers.map((tier, index) => (
-              <Card 
-                key={index}
-                className={`relative hover-lift animate-slide-up ${
-                  tier.popular 
-                    ? 'border-2 border-primary shadow-business scale-105' 
-                    : 'border border-border shadow-elegant'
-                }`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground px-4 py-1">
-                      Tavsiya etiladi
-                    </Badge>
-                  </div>
-                )}
-                
-                <CardHeader className="text-center">
-                  <CardTitle className="text-xl font-bold text-foreground mb-2">{tier.name}</CardTitle>
-                  <p className="text-muted-foreground mb-6">{tier.description}</p>
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    {tier.price === "0" ? "Bepul" : tier.price === "Individual" ? "Individual" : `${tier.price} so'm`}
-                  </div>
-                  <div className="text-muted-foreground">
-                    {tier.price !== "Individual" && "Oylik to'lov"}
-                  </div>
-                  <div className="mt-4">
-                    <Badge variant="outline" className="text-primary border-primary">
-                      {tier.commission} komissiya
-                    </Badge>
-                  </div>
-                </CardHeader>
-                
-                <CardContent>
-                  <div className="space-y-4 mb-8">
-                    {tier.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center">
-                        <CheckCircle className="text-accent mr-3 h-4 w-4" />
-                        <span className="text-sm text-muted-foreground">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <Button 
-                    variant={tier.buttonVariant}
-                    className="w-full scale-hover"
-                    onClick={() => setLocation('/partner-registration')}
-                    data-testid={`button-select-${tier.name.toLowerCase().replace(/\s+/g, '-')}`}
-                  >
-                    {tier.buttonText}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Hamkorlarimiz Fikri</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Bizning hamkorlarimiz qanday professional natijalarga erishganini ko'ring
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card 
-                key={index} 
-                className="hover-lift animate-slide-up shadow-elegant"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-primary font-bold text-lg">{testimonial.avatar}</span>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                      <p className="text-sm text-muted-foreground">{testimonial.business}</p>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="flex items-center text-yellow-500">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center text-white animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Professional Hamkor Bo'ling
-            </h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-              Bizning professional jamoa bilan hamkorlik qiling va marketplace savdolaringizni yangi bosqichga olib chiqing.
-              To'liq fulfillment va professional qo'llab-quvvatlash.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={() => setLocation('/partner-registration')}
-                variant="secondary"
-                size="lg"
-                className="bg-white text-primary hover:bg-white/90 hover-lift"
-                data-testid="button-start-partnership"
-              >
-                <Users className="mr-2 h-5 w-5" />
-                Hamkorlikni Boshlash
-              </Button>
-              <Button 
-                onClick={() => setLocation('/partner-dashboard')}
-                variant="outline"
-                size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary hover-lift"
-                data-testid="button-get-consultation"
-              >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Bepul Konsultatsiya
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-16">

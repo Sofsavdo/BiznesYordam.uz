@@ -25,20 +25,23 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-slate-200 fixed w-full top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex items-center space-x-3">
               <button 
                 onClick={() => setLocation('/')}
-                className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+                className="flex items-center space-x-3 hover:opacity-90 transition-opacity"
                 data-testid="button-home"
               >
-                <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center shadow-elegant">
                   <span className="text-white font-bold text-sm">BY</span>
                 </div>
-                <h1 className="text-2xl font-bold text-slate-900">BiznesYordam</h1>
+                <h1 className="text-2xl font-bold text-slate-900 relative">
+                  BiznesYordam
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full gradient-business rounded-full opacity-60"></span>
+                </h1>
               </button>
             </div>
           </div>
@@ -94,7 +97,7 @@ export function Navigation() {
                 </button>
                 <Button 
                   onClick={() => setLocation('/partner-dashboard')}
-                  className="bg-primary hover:bg-primary/90 mr-2"
+                  className="bg-primary hover:bg-primary/90 mr-2 hover-lift"
                   data-testid="button-login"
                 >
                   {t('nav.login')}
@@ -102,6 +105,7 @@ export function Navigation() {
                 <Button 
                   variant="outline"
                   onClick={() => setLocation('/partner-registration')}
+                  className="hover-lift"
                   data-testid="button-register"
                 >
                   {t('nav.register')}
@@ -125,6 +129,7 @@ export function Navigation() {
                   <Button
                     onClick={() => setLocation('/admin-panel')}
                     variant="outline"
+                    className="hover-lift"
                   >
                     {t('nav.admin')}
                   </Button>
@@ -133,6 +138,7 @@ export function Navigation() {
                   <Button
                     onClick={() => setLocation('/partner-dashboard')}
                     variant="outline"
+                    className="hover-lift"
                   >
                     {t('nav.dashboard')}
                   </Button>

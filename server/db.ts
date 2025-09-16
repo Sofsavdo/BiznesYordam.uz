@@ -366,4 +366,5 @@ export function getDatabaseInfo() {
     isConnected: !!db,
     connectionString: isPostgreSQL ? 'PostgreSQL' : 'SQLite'
   };
+}
 export { db };
