@@ -2,6 +2,8 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { drizzle as drizzleSQLite } from 'drizzle-orm/better-sqlite3';
 import { Pool } from 'pg';
 import Database from 'better-sqlite3';
+import fs from 'fs';
+import path from 'path';
 import * as schema from "@shared/schema";
 import { config } from 'dotenv';
 import { eq } from 'drizzle-orm';
@@ -47,8 +49,23 @@ async function initializeSQLite() {
   console.log('🔧 Initializing SQLite database...');
   
   const isTestEnv = process.env.NODE_ENV === 'test';
-  // Use in-memory DB for tests, file for dev, and allow memory for prod if configured
-  const dbPath = isTestEnv ? ':memory:' : (process.env.NODE_ENV === 'production' ? ':memory:' : './dev.db');
+  // Prefer a persistent path when not in tests
+  const configuredPath = process.env.SQLITE_PATH;
+  const defaultPath = './data/app.db';
+  const dbPath = isTestEnv ? ':memory:' : (configuredPath && configuredPath.trim().length > 0 ? configuredPath : defaultPath);
+
+  // Ensure directory exists for file-based SQLite
+  if (dbPath !== ':memory:') {
+    const dir = path.dirname(dbPath);
+    try {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+    } catch (e) {
+      console.error('Failed to create SQLite directory', dir, e);
+    }
+  }
+
   const sqlite = new Database(dbPath);
   db = drizzleSQLite(sqlite, { schema });
   

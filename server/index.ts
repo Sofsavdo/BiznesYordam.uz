@@ -47,8 +47,12 @@ const allowedOrigins = [
   'http://0.0.0.0:5000',
   'http://localhost:3000',
   'http://localhost:8080',
+  // Production domain (both http/https and www)
   'https://biznesyordam.uz',
+  'http://biznesyordam.uz',
   'https://www.biznesyordam.uz',
+  'http://www.biznesyordam.uz',
+  // Legacy deployments
   'https://biznesyordam-backend.onrender.com',
   'https://biznes-yordam.onrender.com'
 ];
@@ -71,8 +75,19 @@ app.use(
         return;
       }
       
-      // Allow all known origins
-      if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      // Allow all known origins or subdomains of biznesyordam.uz
+      const isBiznesyordamSubdomain = (() => {
+        try {
+          const url = new URL(origin);
+          return url.hostname === 'biznesyordam.uz' ||
+                 url.hostname === 'www.biznesyordam.uz' ||
+                 url.hostname.endsWith('.biznesyordam.uz');
+        } catch {
+          return false;
+        }
+      })();
+
+      if (allowedOrigins.includes(origin) || allowedOrigins.includes('*') || isBiznesyordamSubdomain) {
         callback(null, true);
       } else {
         console.log("❌ CORS blocked for origin:", origin);
@@ -139,9 +154,14 @@ app.use((req, res, next) => {
 
   const server = await registerRoutes(app);
 
-  // Initialize WebSocket server
-  const wsManager = initializeWebSocket(server);
-  (global as any).wsManager = wsManager;
+  // Initialize WebSocket server (can be disabled via env)
+  const enableWs = (process.env.ENABLE_WEBSOCKETS || 'true').toLowerCase() !== 'false';
+  if (enableWs) {
+    const wsManager = initializeWebSocket(server);
+    (global as any).wsManager = wsManager;
+  } else {
+    log('🛑 WebSocket server disabled via ENABLE_WEBSOCKETS=false');
+  }
 
   // ✅ Vite faqat developmentda ishlaydi
   if (app.get("env") === "development") {
