@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: biznesyordam-backend
+    env: docker
+    plan: starter
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        sync: false  # Render ichida qo'lda qo'shiladi
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://biznesyordam.uz,https://www.biznesyordam.uz
+      - key: FRONTEND_ORIGIN
+        value: https://biznesyordam.uz
+      - key: VITE_API_URL
+        value: https://biznesyordam.uz
+      - key: DATABASE_AUTO_SETUP
+        value: "true"
+    domains:
+      - biznesyordam.uz
+      - www.biznesyordam.uz

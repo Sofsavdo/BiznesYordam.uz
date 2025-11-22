@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "close": "Close",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "none": "None"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "orders": "Orders",
+    "analytics": "Analytics",
+    "reports": "Reports",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "overview": "Overview",
+    "statistics": "Statistics",
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions"
+  },
+  "products": {
+    "title": "Products",
+    "addProduct": "Add Product",
+    "editProduct": "Edit Product",
+    "deleteProduct": "Delete Product",
+    "productName": "Product Name",
+    "category": "Category",
+    "price": "Price",
+    "stock": "Stock",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "sku": "SKU",
+    "barcode": "Barcode"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "revenue": "Revenue",
+    "profit": "Profit",
+    "orders": "Orders",
+    "customers": "Customers",
+    "growth": "Growth",
+    "trend": "Trend",
+    "comparison": "Comparison",
+    "period": "Period",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly"
+  },
+  "tier": {
+    "current": "Current Tier",
+    "upgrade": "Upgrade Tier",
+    "downgrade": "Downgrade Tier",
+    "features": "Features",
+    "pricing": "Pricing",
+    "commission": "Commission",
+    "benefits": "Benefits",
+    "savings": "Savings",
+    "roi": "ROI"
+  },
+  "notifications": {
+    "success": "Success!",
+    "error": "Error!",
+    "warning": "Warning!",
+    "info": "Information",
+    "newOrder": "New Order",
+    "orderCompleted": "Order Completed",
+    "tierUpgraded": "Tier Upgraded",
+    "messageReceived": "New Message"
+  },
+  "filters": {
+    "title": "Filters",
+    "dateRange": "Date Range",
+    "from": "From",
+    "to": "To",
+    "marketplace": "Marketplace",
+    "category": "Category",
+    "status": "Status",
+    "amount": "Amount",
+    "clear": "Clear",
+    "apply": "Apply"
+  },
+  "export": {
+    "title": "Export",
+    "excel": "Excel",
+    "csv": "CSV",
+    "pdf": "PDF",
+    "selectFormat": "Select Format",
+    "downloading": "Downloading...",
+    "success": "Successfully downloaded",
+    "error": "Download error"
+  },
+  "chat": {
+    "title": "Chat",
+    "sendMessage": "Send Message",
+    "typing": "Typing...",
+    "online": "Online",
+    "offline": "Offline",
+    "noMessages": "No messages",
+    "selectPartner": "Select Partner"
+  },
+  "reports": {
+    "title": "Reports",
+    "weekly": "Weekly Report",
+    "monthly": "Monthly Report",
+    "custom": "Custom Report",
+    "scheduled": "Scheduled",
+    "generate": "Generate",
+    "download": "Download",
+    "email": "Send to Email"
+  }
+}

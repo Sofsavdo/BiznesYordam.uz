@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "export": "Экспорт",
+    "import": "Импорт",
+    "close": "Закрыть",
+    "submit": "Отправить",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Предыдущий",
+    "yes": "Да",
+    "no": "Нет",
+    "all": "Все",
+    "none": "Нет"
+  },
+  "nav": {
+    "home": "Главная",
+    "dashboard": "Панель",
+    "products": "Товары",
+    "orders": "Заказы",
+    "analytics": "Аналитика",
+    "reports": "Отчеты",
+    "settings": "Настройки",
+    "profile": "Профиль",
+    "logout": "Выход"
+  },
+  "dashboard": {
+    "title": "Панель управления",
+    "welcome": "Добро пожаловать",
+    "overview": "Обзор",
+    "statistics": "Статистика",
+    "recentActivity": "Последняя активность",
+    "quickActions": "Быстрые действия"
+  },
+  "products": {
+    "title": "Товары",
+    "addProduct": "Добавить товар",
+    "editProduct": "Редактировать товар",
+    "deleteProduct": "Удалить товар",
+    "productName": "Название товара",
+    "category": "Категория",
+    "price": "Цена",
+    "stock": "Склад",
+    "status": "Статус",
+    "active": "Активный",
+    "inactive": "Неактивный",
+    "sku": "Артикул",
+    "barcode": "Штрих-код"
+  },
+  "analytics": {
+    "title": "Аналитика",
+    "revenue": "Выручка",
+    "profit": "Прибыль",
+    "orders": "Заказы",
+    "customers": "Клиенты",
+    "growth": "Рост",
+    "trend": "Тренд",
+    "comparison": "Сравнение",
+    "period": "Период",
+    "daily": "Ежедневно",
+    "weekly": "Еженедельно",
+    "monthly": "Ежемесячно",
+    "yearly": "Ежегодно"
+  },
+  "tier": {
+    "current": "Текущий тариф",
+    "upgrade": "Повысить тариф",
+    "downgrade": "Понизить тариф",
+    "features": "Возможности",
+    "pricing": "Цены",
+    "commission": "Комиссия",
+    "benefits": "Преимущества",
+    "savings": "Экономия",
+    "roi": "ROI"
+  },
+  "notifications": {
+    "success": "Успешно!",
+    "error": "Ошибка!",
+    "warning": "Предупреждение!",
+    "info": "Информация",
+    "newOrder": "Новый заказ",
+    "orderCompleted": "Заказ выполнен",
+    "tierUpgraded": "Тариф обновлен",
+    "messageReceived": "Новое сообщение"
+  },
+  "filters": {
+    "title": "Фильтры",
+    "dateRange": "Диапазон дат",
+    "from": "С",
+    "to": "По",
+    "marketplace": "Маркетплейс",
+    "category": "Категория",
+    "status": "Статус",
+    "amount": "Сумма",
+    "clear": "Очистить",
+    "apply": "Применить"
+  },
+  "export": {
+    "title": "Экспорт",
+    "excel": "Excel",
+    "csv": "CSV",
+    "pdf": "PDF",
+    "selectFormat": "Выберите формат",
+    "downloading": "Загрузка...",
+    "success": "Успешно загружено",
+    "error": "Ошибка загрузки"
+  },
+  "chat": {
+    "title": "Чат",
+    "sendMessage": "Отправить сообщение",
+    "typing": "Печатает...",
+    "online": "Онлайн",
+    "offline": "Оффлайн",
+    "noMessages": "Нет сообщений",
+    "selectPartner": "Выберите партнера"
+  },
+  "reports": {
+    "title": "Отчеты",
+    "weekly": "Еженедельный отчет",
+    "monthly": "Ежемесячный отчет",
+    "custom": "Пользовательский отчет",
+    "scheduled": "Запланированные",
+    "generate": "Создать",
+    "download": "Скачать",
+    "email": "Отправить на email"
+  }
+}

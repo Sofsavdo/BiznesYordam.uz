@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "delete": "O'chirish",
+    "edit": "Tahrirlash",
+    "search": "Qidirish",
+    "filter": "Filtr",
+    "export": "Yuklash",
+    "import": "Import",
+    "close": "Yopish",
+    "submit": "Yuborish",
+    "back": "Orqaga",
+    "next": "Keyingi",
+    "previous": "Oldingi",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "all": "Barchasi",
+    "none": "Yo'q"
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "dashboard": "Dashboard",
+    "products": "Mahsulotlar",
+    "orders": "Buyurtmalar",
+    "analytics": "Tahlil",
+    "reports": "Hisobotlar",
+    "settings": "Sozlamalar",
+    "profile": "Profil",
+    "logout": "Chiqish"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Xush kelibsiz",
+    "overview": "Umumiy",
+    "statistics": "Statistika",
+    "recentActivity": "So'nggi faoliyat",
+    "quickActions": "Tezkor amallar"
+  },
+  "products": {
+    "title": "Mahsulotlar",
+    "addProduct": "Mahsulot qo'shish",
+    "editProduct": "Mahsulotni tahrirlash",
+    "deleteProduct": "Mahsulotni o'chirish",
+    "productName": "Mahsulot nomi",
+    "category": "Kategoriya",
+    "price": "Narx",
+    "stock": "Ombor",
+    "status": "Holat",
+    "active": "Faol",
+    "inactive": "Nofaol",
+    "sku": "SKU",
+    "barcode": "Shtrix-kod"
+  },
+  "analytics": {
+    "title": "Tahlil",
+    "revenue": "Aylanma",
+    "profit": "Foyda",
+    "orders": "Buyurtmalar",
+    "customers": "Mijozlar",
+    "growth": "O'sish",
+    "trend": "Trend",
+    "comparison": "Taqqoslash",
+    "period": "Davr",
+    "daily": "Kunlik",
+    "weekly": "Haftalik",
+    "monthly": "Oylik",
+    "yearly": "Yillik"
+  },
+  "tier": {
+    "current": "Joriy tarif",
+    "upgrade": "Tarifni yangilash",
+    "downgrade": "Tarifni pasaytirish",
+    "features": "Imkoniyatlar",
+    "pricing": "Narxlar",
+    "commission": "Komissiya",
+    "benefits": "Foyda",
+    "savings": "Tejamkorlik",
+    "roi": "ROI"
+  },
+  "notifications": {
+    "success": "Muvaffaqiyatli!",
+    "error": "Xatolik!",
+    "warning": "Ogohlantirish!",
+    "info": "Ma'lumot",
+    "newOrder": "Yangi buyurtma",
+    "orderCompleted": "Buyurtma yakunlandi",
+    "tierUpgraded": "Tarif yangilandi",
+    "messageReceived": "Yangi xabar"
+  },
+  "filters": {
+    "title": "Filtrlar",
+    "dateRange": "Sana oralig'i",
+    "from": "Dan",
+    "to": "Gacha",
+    "marketplace": "Marketplace",
+    "category": "Kategoriya",
+    "status": "Holat",
+    "amount": "Summa",
+    "clear": "Tozalash",
+    "apply": "Qo'llash"
+  },
+  "export": {
+    "title": "Eksport",
+    "excel": "Excel",
+    "csv": "CSV",
+    "pdf": "PDF",
+    "selectFormat": "Format tanlang",
+    "downloading": "Yuklanmoqda...",
+    "success": "Muvaffaqiyatli yuklandi",
+    "error": "Yuklashda xatolik"
+  },
+  "chat": {
+    "title": "Chat",
+    "sendMessage": "Xabar yuborish",
+    "typing": "Yozmoqda...",
+    "online": "Onlayn",
+    "offline": "Oflayn",
+    "noMessages": "Xabarlar yo'q",
+    "selectPartner": "Hamkor tanlang"
+  },
+  "reports": {
+    "title": "Hisobotlar",
+    "weekly": "Haftalik hisobot",
+    "monthly": "Oylik hisobot",
+    "custom": "Maxsus hisobot",
+    "scheduled": "Rejalashtirilgan",
+    "generate": "Yaratish",
+    "download": "Yuklash",
+    "email": "Emailga yuborish"
+  }
+}
