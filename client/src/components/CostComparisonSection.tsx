@@ -79,18 +79,20 @@ export function CostComparisonSection() {
 
   const biznesYordamCosts = {
     title: "BiznesYordam.uz",
-    subtitle: "AI-Powered Avtomatlashtirish",
-    totalMonthly: "10,000,000",
+    subtitle: "AI + Profit Share Model",
+    totalMonthly: "8,000,000",
     breakdown: [
       {
-        category: "💎 Professional Plus Tarif",
+        category: "💎 Business Standard Tarif",
         items: [
-          { name: "Platforma obunasi", cost: "10,000,000", icon: Sparkles },
-          { name: "4 marketplace integratsiya", cost: "0", icon: CheckCircle },
-          { name: "2000 mahsulot boshqaruv", cost: "0", icon: CheckCircle },
-          { name: "2000kg omborxona", cost: "0", icon: CheckCircle }
+          { name: "Oylik abonent", cost: "8,000,000", icon: Sparkles },
+          { name: "Profit share: 25% (faqat foyda bo'lsa!)", cost: "0", icon: CheckCircle },
+          { name: "2 marketplace integratsiya", cost: "0", icon: CheckCircle },
+          { name: "500 mahsulot boshqaruv", cost: "0", icon: CheckCircle },
+          { name: "500kg omborxona", cost: "0", icon: CheckCircle },
+          { name: "SPT xizmati BEPUL", cost: "0", icon: CheckCircle }
         ],
-        total: "10,000,000"
+        total: "8,000,000"
       },
       {
         category: "🤖 AI Xizmatlari (Qo'shimcha)",
@@ -146,7 +148,7 @@ export function CostComparisonSection() {
             </span>
             <span className="text-slate-700"> → </span>
             <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-              11,000,000
+              9,000,000
             </span>
           </h2>
           
