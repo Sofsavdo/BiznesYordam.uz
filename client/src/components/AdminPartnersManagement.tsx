@@ -120,25 +120,34 @@ export function AdminPartnersManagement() {
     blocked: partners.filter(p => !p.isActive).length
   };
 
+  const statCards = [
+    { label: 'Jami', value: stats.total, icon: Users, cardClass: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200', textClass: 'text-blue-700', valueClass: 'text-blue-900', iconClass: 'text-blue-600' },
+    { label: 'Tasdiqlangan', value: stats.approved, icon: CheckCircle, cardClass: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200', textClass: 'text-green-700', valueClass: 'text-green-900', iconClass: 'text-green-600' },
+    { label: 'Kutilmoqda', value: stats.pending, icon: AlertTriangle, cardClass: 'bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200', textClass: 'text-orange-700', valueClass: 'text-orange-900', iconClass: 'text-orange-600' },
+    { label: 'Faol', value: stats.active, icon: Zap, cardClass: 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200', textClass: 'text-purple-700', valueClass: 'text-purple-900', iconClass: 'text-purple-600' },
+    { label: 'Bloklangan', value: stats.blocked, icon: Ban, cardClass: 'bg-gradient-to-br from-red-50 to-red-100 border-red-200', textClass: 'text-red-700', valueClass: 'text-red-900', iconClass: 'text-red-600' }
+  ];
+
+  const quickStats = [
+    { label: 'Aylanma', getValue: (p: Partner) => formatCurrency(p.totalRevenue || 0), icon: DollarSign, cardClass: 'bg-green-50 border-green-200', iconClass: 'text-green-600', textClass: 'text-green-700', valueClass: 'text-green-900' },
+    { label: 'Buyurtmalar', getValue: (p: Partner) => p.totalOrders || 0, icon: ShoppingCart, cardClass: 'bg-blue-50 border-blue-200', iconClass: 'text-blue-600', textClass: 'text-blue-700', valueClass: 'text-blue-900' },
+    { label: 'Mahsulotlar', getValue: (p: Partner) => p.totalProducts || 0, icon: Package, cardClass: 'bg-purple-50 border-purple-200', iconClass: 'text-purple-600', textClass: 'text-purple-700', valueClass: 'text-purple-900' },
+    { label: 'Komissiya', getValue: (p: Partner) => formatCurrency(p.commissionPaid || 0), icon: TrendingUp, cardClass: 'bg-amber-50 border-amber-200', iconClass: 'text-amber-600', textClass: 'text-amber-700', valueClass: 'text-amber-900' }
+  ];
+
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="grid grid-cols-5 gap-4">
-        {[
-          { label: 'Jami', value: stats.total, icon: Users, color: 'blue' },
-          { label: 'Tasdiqlangan', value: stats.approved, icon: CheckCircle, color: 'green' },
-          { label: 'Kutilmoqda', value: stats.pending, icon: AlertTriangle, color: 'orange' },
-          { label: 'Faol', value: stats.active, icon: Zap, color: 'purple' },
-          { label: 'Bloklangan', value: stats.blocked, icon: Ban, color: 'red' }
-        ].map((stat, i) => (
-          <Card key={i} className={`bg-gradient-to-br from-${stat.color}-50 to-${stat.color}-100 border-${stat.color}-200`}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        {statCards.map((stat, i) => (
+          <Card key={i} className={stat.cardClass}>
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className={`text-sm font-medium text-${stat.color}-700`}>{stat.label}</p>
-                  <p className={`text-3xl font-bold text-${stat.color}-900`}>{stat.value}</p>
+                  <p className={`text-sm font-medium ${stat.textClass}`}>{stat.label}</p>
+                  <p className={`text-3xl font-bold ${stat.valueClass}`}>{stat.value}</p>
                 </div>
-                <stat.icon className={`w-10 h-10 text-${stat.color}-600 opacity-50`} />
+                <stat.icon className={`w-10 h-10 ${stat.iconClass} opacity-50`} />
               </div>
             </CardContent>
           </Card>
@@ -194,18 +203,13 @@ export function AdminPartnersManagement() {
                 </div>
 
                 <div className="lg:col-span-4 grid grid-cols-2 gap-3">
-                  {[
-                    { label: 'Aylanma', value: formatCurrency(p.totalRevenue || 0), icon: DollarSign, color: 'green' },
-                    { label: 'Buyurtmalar', value: p.totalOrders || 0, icon: ShoppingCart, color: 'blue' },
-                    { label: 'Mahsulotlar', value: p.totalProducts || 0, icon: Package, color: 'purple' },
-                    { label: 'Komissiya', value: formatCurrency(p.commissionPaid || 0), icon: TrendingUp, color: 'amber' }
-                  ].map((s, i) => (
-                    <div key={i} className={`p-3 bg-${s.color}-50 rounded-lg border border-${s.color}-200`}>
+                  {quickStats.map((s, i) => (
+                    <div key={i} className={`p-3 rounded-lg border ${s.cardClass}`}>
                       <div className="flex items-center gap-2 mb-1">
-                        <s.icon className={`w-4 h-4 text-${s.color}-600`} />
-                        <span className={`text-xs text-${s.color}-700 font-medium`}>{s.label}</span>
+                        <s.icon className={`w-4 h-4 ${s.iconClass}`} />
+                        <span className={`text-xs font-medium ${s.textClass}`}>{s.label}</span>
                       </div>
-                      <p className={`text-lg font-bold text-${s.color}-900`}>{s.value}</p>
+                      <p className={`text-lg font-bold ${s.valueClass}`}>{s.getValue(p)}</p>
                     </div>
                   ))}
                 </div>

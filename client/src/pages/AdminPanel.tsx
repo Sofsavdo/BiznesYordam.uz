@@ -48,6 +48,7 @@ import {
   Filter,
   Download,
   Upload,
+  AlertCircle,
   RefreshCw
 } from 'lucide-react';
 
@@ -450,9 +451,9 @@ export default function AdminPanel() {
               </TabsTrigger>
             </TabsList>
 
-            {/* Overview Tab */}
+            {/* Overview Tab - MUKAMMAL BOY */}
             <TabsContent value="overview" className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Recent Activity */}
                 <Card className="shadow-elegant">
                   <CardHeader>
@@ -462,18 +463,48 @@ export default function AdminPanel() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       {partners.slice(0, 5).map((partner) => (
-                        <div key={partner.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                        <div key={partner.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
                           <div>
-                            <p className="font-medium">{partner.businessName}</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="font-medium text-sm">{partner.businessName}</p>
+                            <p className="text-xs text-muted-foreground">
                               {new Date(partner.createdAt).toLocaleDateString('uz-UZ')}
                             </p>
                           </div>
                           {getStatusBadge(partner.isApproved ? 'approved' : 'pending')}
                         </div>
                       ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Top Partners */}
+                <Card className="shadow-elegant">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Crown className="w-5 h-5 text-amber-500" />
+                      Top Hamkorlar
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {partners
+                        .sort((a, b) => (parseFloat(b.monthlyRevenue || '0') - parseFloat(a.monthlyRevenue || '0')))
+                        .slice(0, 5)
+                        .map((partner, idx) => (
+                          <div key={partner.id} className="flex items-center gap-3 p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-100">
+                            <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                              {idx + 1}
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-medium text-sm">{partner.businessName}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {formatCurrency(parseFloat(partner.monthlyRevenue || '0'))}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </CardContent>
                 </Card>
@@ -487,31 +518,123 @@ export default function AdminPanel() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-3">
-                      <Button onClick={() => setSelectedTab('analytics')} variant="outline" className="w-full justify-start">
-                        <FileText className="w-4 h-4 mr-2" />
-                        Tahlil va Statistika
-                      </Button>
-                      <Button onClick={() => setSelectedTab('partners')} variant="outline" className="w-full justify-start">
+                    <div className="space-y-2">
+                      <Button onClick={() => setSelectedTab('partners')} variant="outline" className="w-full justify-start" size="sm">
                         <Users className="w-4 h-4 mr-2" />
                         Hamkorlarni boshqarish
                       </Button>
-                      <Button onClick={() => setSelectedTab('requests')} variant="outline" className="w-full justify-start">
+                      <Button onClick={() => setSelectedTab('requests')} variant="outline" className="w-full justify-start" size="sm">
                         <Package className="w-4 h-4 mr-2" />
-                        So'rovlarni ko'rib chiqish
+                        So'rovlarni ko'rish
                       </Button>
-                      <Button onClick={() => setSelectedTab('tiers')} variant="outline" className="w-full justify-start">
+                      <Button onClick={() => setSelectedTab('tiers')} variant="outline" className="w-full justify-start" size="sm">
                         <Crown className="w-4 h-4 mr-2" />
                         Tarif so'rovlari
                       </Button>
-                      <Button onClick={() => setSelectedTab('reports')} variant="outline" className="w-full justify-start">
+                      <Button onClick={() => setSelectedTab('marketplace')} variant="outline" className="w-full justify-start" size="sm">
+                        <Globe className="w-4 h-4 mr-2" />
+                        Marketplace
+                      </Button>
+                      <Button onClick={() => setSelectedTab('analytics')} variant="outline" className="w-full justify-start" size="sm">
+                        <FileText className="w-4 h-4 mr-2" />
+                        Tahlil
+                      </Button>
+                      <Button onClick={() => setSelectedTab('reports')} variant="outline" className="w-full justify-start" size="sm">
                         <Download className="w-4 h-4 mr-2" />
                         Hisobotlar
                       </Button>
-                      <Button onClick={() => setSelectedTab('settings')} variant="outline" className="w-full justify-start">
-                        <Settings className="w-4 h-4 mr-2" />
-                        Sozlamalar
-                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Additional Overview Cards */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Monthly Trend */}
+                <Card className="shadow-elegant">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-green-500" />
+                      Oylik Aylanma Trendi
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-100">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Jami Aylanma</p>
+                          <p className="text-2xl font-bold text-green-700">
+                            {formatCurrency(partners.reduce((sum, p) => sum + parseFloat(p.monthlyRevenue || '0'), 0))}
+                          </p>
+                        </div>
+                        <TrendingUp className="w-12 h-12 text-green-500 opacity-50" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
+                          <p className="text-xs text-muted-foreground">O'rtacha</p>
+                          <p className="text-lg font-bold text-blue-700">
+                            {formatCurrency(partners.length > 0 ? partners.reduce((sum, p) => sum + parseFloat(p.monthlyRevenue || '0'), 0) / partners.length : 0)}
+                          </p>
+                        </div>
+                        <div className="p-3 bg-purple-50 rounded-lg border border-purple-100">
+                          <p className="text-xs text-muted-foreground">Faol Hamkorlar</p>
+                          <p className="text-lg font-bold text-purple-700">
+                            {partners.filter(p => p.isApproved).length}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Pending Actions */}
+                <Card className="shadow-elegant">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5 text-orange-500" />
+                      Kutilayotgan Amallar
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-100 hover:bg-orange-100 transition-colors cursor-pointer" onClick={() => setSelectedTab('partners')}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                            <Users className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">Yangi Hamkorlar</p>
+                            <p className="text-xs text-muted-foreground">Tasdiqlash kutmoqda</p>
+                          </div>
+                        </div>
+                        <Badge className="bg-orange-500">{partners.filter(p => !p.isApproved).length}</Badge>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer" onClick={() => setSelectedTab('requests')}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                            <Package className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">Fulfillment So'rovlar</p>
+                            <p className="text-xs text-muted-foreground">Ko'rib chiqish kerak</p>
+                          </div>
+                        </div>
+                        <Badge className="bg-blue-500">{fulfillmentRequests.filter(r => r.status === 'pending').length}</Badge>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100 hover:bg-purple-100 transition-colors cursor-pointer" onClick={() => setSelectedTab('tiers')}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                            <Crown className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">Tarif So'rovlari</p>
+                            <p className="text-xs text-muted-foreground">Yangi tarifga o'tish</p>
+                          </div>
+                        </div>
+                        <Badge className="bg-purple-500">{tierUpgradeRequests.filter(r => r.status === 'pending').length}</Badge>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

@@ -212,11 +212,21 @@ export default function Landing() {
                   Professional marketplace fulfillment platformasi — Uzum, Wildberries, Yandex va Ozon bilan integratsiya, real-time analytics, premium qo'llab-quvvatlash.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-                  <Button className="hover-lift">
-                    <Crown className="mr-2 h-5 w-5" /> {t("hero.get_started") || "Boshlash"}
+                  <Button 
+                    onClick={() => setLocation('/partner-registration')}
+                    className="gradient-primary text-primary-foreground hover:shadow-glow scale-hover font-semibold h-12 px-6 py-3 hover-lift"
+                  >
+                    <Crown className="mr-2 h-5 w-5" /> Hamkorlikni Boshlash
                   </Button>
-                  <Button variant="outline" className="hover-lift">
-                    <Play className="mr-2 h-5 w-5" /> Demo
+                  <Button 
+                    onClick={() => {
+                      const pricingSection = document.getElementById('pricing');
+                      pricingSection?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    variant="outline" 
+                    className="hover-lift border-2 h-12 px-6 py-3"
+                  >
+                    <Package className="mr-2 h-5 w-5" /> Tariflarni Ko'rish
                   </Button>
                 </div>
                 
@@ -464,23 +474,24 @@ export default function Landing() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   onClick={() => setLocation('/partner-registration')}
-                  variant="secondary"
                   size="lg"
-                  className="bg-white text-primary hover:bg-white/90 hover-lift"
+                  className="bg-white text-primary hover:bg-white/90 hover:shadow-xl hover-lift font-semibold"
                   data-testid="button-start-partnership"
                 >
                   <Users className="mr-2 h-5 w-5" />
                   Hamkorlikni Boshlash
                 </Button>
                 <Button 
-                  onClick={() => setLocation('/partner-dashboard')}
-                  variant="outline"
+                  onClick={() => {
+                    const servicesSection = document.getElementById('services');
+                    servicesSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   size="lg"
-                  className="border-2 border-white text-white hover:bg-white hover:text-primary hover-lift"
-                  data-testid="button-get-consultation"
+                  className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary hover-lift font-semibold"
+                  data-testid="button-learn-more"
                 >
-                  <MessageCircle className="mr-2 h-5 w-5" />
-                  Bepul Konsultatsiya
+                  <Package className="mr-2 h-5 w-5" />
+                  Xizmatlar Bilan Tanishish
                 </Button>
               </div>
             </div>
