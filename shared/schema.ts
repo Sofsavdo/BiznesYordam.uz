@@ -88,6 +88,11 @@ export const partners = pgTable("partners", {
   isApproved: boolean("is_approved").notNull().default(false),
   approvedAt: timestamp("approved_at"),
   approvedBy: varchar("approved_by").references(() => users.id),
+  // AI Services - Optional Feature
+  aiEnabled: boolean("ai_enabled").notNull().default(false),
+  aiRequestedAt: timestamp("ai_requested_at"),
+  aiApprovedAt: timestamp("ai_approved_at"),
+  aiApprovedBy: varchar("ai_approved_by").references(() => users.id),
   notes: text("notes"),
   createdAt: timestamp("created_at").default(sql`now()`),
   updatedAt: timestamp("updated_at").default(sql`now()`),

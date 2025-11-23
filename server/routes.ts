@@ -5,6 +5,9 @@ import { storage } from "./storage";
 import { healthCheck } from "./health";
 import { getSessionConfig } from "./session";
 import { asyncHandler } from "./errorHandler";
+import { eq } from "drizzle-orm";
+import { db } from "./db";
+import { partners } from "@shared/schema";
 import { 
   loginSchema, 
   partnerRegistrationSchema,
@@ -775,6 +778,63 @@ export function registerRoutes(app: express.Application): Server {
         error: result.error
       });
     }
+  }));
+
+  // AI Services Toggle - Partner Request & Admin Approval
+  app.post("/api/partners/ai-toggle", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+    const partner = await storage.getPartnerByUserId(req.session!.user!.id);
+    if (!partner) {
+      return res.status(404).json({ message: "Hamkor topilmadi", code: "PARTNER_NOT_FOUND" });
+    }
+
+    const { enabled } = req.body;
+
+    if (enabled) {
+      // Request AI - admin approval needed
+      await db.update(partners).set({ aiRequestedAt: new Date(), updatedAt: new Date() })
+        .where(eq(partners.id, partner.id));
+
+      await storage.createAuditLog({
+        userId: req.session!.user!.id,
+        action: 'AI_REQUESTED',
+        entityType: 'partner',
+        entityId: partner.id
+      });
+
+      res.json({ success: true, message: "AI so'rov yuborildi", aiEnabled: false, pendingApproval: true });
+    } else {
+      // Disable AI immediately
+      await db.update(partners).set({ 
+        aiEnabled: false, aiRequestedAt: null, aiApprovedAt: null, 
+        aiApprovedBy: null, updatedAt: new Date() 
+      }).where(eq(partners.id, partner.id));
+
+      await storage.createAuditLog({
+        userId: req.session!.user!.id,
+        action: 'AI_DISABLED',
+        entityType: 'partner',
+        entityId: partner.id
+      });
+
+      res.json({ success: true, message: "AI o'chirildi", aiEnabled: false });
+    }
+  }));
+
+  app.post("/api/admin/partners/:partnerId/approve-ai", requireAdmin, asyncHandler(async (req: Request, res: Response) => {
+    const { partnerId } = req.params;
+    await db.update(partners).set({ 
+      aiEnabled: true, aiApprovedAt: new Date(), 
+      aiApprovedBy: req.session!.user!.id, updatedAt: new Date() 
+    }).where(eq(partners.id, partnerId));
+
+    await storage.createAuditLog({
+      userId: req.session!.user!.id,
+      action: 'AI_APPROVED',
+      entityType: 'partner',
+      entityId: partnerId
+    });
+
+    res.json({ success: true, message: "AI tasdiqlandi", aiEnabled: true });
   }));
 
   // ==================== NEW MODULE ROUTES ====================

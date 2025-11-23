@@ -52,7 +52,6 @@ export default function PartnerDashboard() {
   const { toast } = useToast();
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showTierModal, setShowTierModal] = useState(false);
-  const [aiEnabled, setAiEnabled] = useState(false);
 
   // YANGI: Auth yuklanayotganda loading ko‘rsatish
   useEffect(() => {
@@ -240,19 +239,27 @@ export default function PartnerDashboard() {
                 <AIUsageTracker 
                   monthlyRevenue={stats.totalRevenue}
                   pricingTier={partner.pricingTier}
-                  aiEnabled={aiEnabled}
-                  onToggleAI={(enabled) => {
-                    if (enabled) {
+                  aiEnabled={(partner as any).aiEnabled || false}
+                  onToggleAI={async (enabled) => {
+                    try {
+                      const response = await apiRequest('POST', '/api/partners/ai-toggle', { enabled });
+                      const data = await response.json();
+                      
+                      if (data.success) {
+                        toast({
+                          title: enabled ? "AI So'rov Yuborildi" : "AI O'chirildi",
+                          description: data.message,
+                          duration: 5000,
+                        });
+                        
+                        // Refresh partner data
+                        queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
+                      }
+                    } catch (error) {
                       toast({
-                        title: "AI So'rov Yuborildi",
-                        description: "AI xizmatlarni yoqish so'rovi admin paneliga yuborildi. Admin tasdig'idan keyin faollashadi.",
-                        duration: 5000,
-                      });
-                    } else {
-                      setAiEnabled(false);
-                      toast({
-                        title: "AI O'chirildi",
-                        description: "AI xizmatlari o'chirildi. Keyingi oydan boshlab to'lov olinmaydi.",
+                        title: "Xatolik",
+                        description: "AI sozlamalarini o'zgartirishda xatolik yuz berdi",
+                        variant: "destructive",
                         duration: 3000,
                       });
                     }
