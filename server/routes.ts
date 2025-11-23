@@ -22,6 +22,7 @@ import subscriptionRoutes from "./routes/subscriptionRoutes";
 import forecastRoutes from "./routes/forecastRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
 import aiManagerRoutes from "./routes/aiManagerRoutes";
+import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 
 // Enhanced authentication middleware with better error handling
 function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -504,6 +505,73 @@ export function registerRoutes(app: express.Application): Server {
     });
 
     res.json(request);
+  }));
+
+  // Fulfillment accept with AI auto-trigger
+  app.post("/api/fulfillment-requests/:id/accept", requireAdmin, asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const adminId = req.session!.user!.id;
+
+    // Update status to accepted
+    const request = await storage.updateFulfillmentRequest(id, { status: 'accepted' });
+    if (!request) {
+      return res.status(404).json({ 
+        message: "So'rov topilmadi",
+        code: "REQUEST_NOT_FOUND"
+      });
+    }
+
+    // Trigger AI Manager
+    try {
+      const aiResult = await fulfillmentAIIntegration.triggerAIForFulfillment(
+        parseInt(id, 10),
+        adminId
+      );
+
+      await storage.createAuditLog({
+        userId: adminId,
+        action: 'FULFILLMENT_ACCEPTED_AI_TRIGGERED',
+        entityType: 'fulfillment_request',
+        entityId: id,
+        payload: { aiResult }
+      });
+
+      res.json({ 
+        message: "So'rov qabul qilindi va AI ishga tushirildi",
+        request,
+        aiResult
+      });
+    } catch (error: any) {
+      // If AI fails, still accept the fulfillment
+      console.error('AI trigger error:', error.message);
+      res.json({
+        message: "So'rov qabul qilindi, lekin AI xatolik yuz berdi",
+        request,
+        aiError: error.message
+      });
+    }
+  }));
+
+  // Manual AI trigger for specific product
+  app.post("/api/ai-manager/trigger-product/:productId", requireAdmin, asyncHandler(async (req: Request, res: Response) => {
+    const { productId } = req.params;
+    const { marketplaceType } = req.body;
+    const adminId = req.session!.user!.id;
+
+    if (!marketplaceType) {
+      return res.status(400).json({
+        message: "marketplaceType talab qilinadi",
+        code: "MISSING_MARKETPLACE_TYPE"
+      });
+    }
+
+    const result = await fulfillmentAIIntegration.manuallyTriggerAIForProduct(
+      parseInt(productId),
+      marketplaceType,
+      adminId
+    );
+
+    res.json(result);
   }));
 
   // Analytics routes
