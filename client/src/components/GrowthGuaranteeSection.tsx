@@ -4,6 +4,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useLocation } from 'wouter';
 import {
   TrendingUp,
   Target,
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 
 export function GrowthGuaranteeSection() {
+  const [, setLocation] = useLocation();
   const guarantees = [
     {
       icon: TrendingUp,
@@ -253,8 +255,9 @@ export function GrowthGuaranteeSection() {
             <strong className="text-yellow-400"> 100% pul qaytaramiz!</strong> Risk yo'q, faqat o'sish!
           </p>
           <Button 
+            onClick={() => setLocation('/partner-registration')}
             size="lg"
-            className="bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-slate-900 font-bold text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all"
+            className="bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-slate-900 font-bold text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all hover:scale-105"
           >
             <Rocket className="w-6 h-6 mr-2" />
             90 Kunlik Kafolat Bilan Boshlash
