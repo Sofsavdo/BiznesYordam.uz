@@ -26,6 +26,7 @@ import { MarketplaceIntegrationManager } from '@/components/MarketplaceIntegrati
 import { useAuth } from '@/hooks/useAuth';
 import { useTierAccess } from '@/hooks/useTierAccess';
 import { useLocation } from 'wouter';
+import { useToast } from '@/hooks/use-toast';
 import { formatCurrency } from '@/lib/currency';
 import { apiRequest } from '@/lib/queryClient';
 import { useQueryClient } from '@tanstack/react-query';
@@ -48,8 +49,10 @@ export default function PartnerDashboard() {
   const tierAccess = useTierAccess();
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showTierModal, setShowTierModal] = useState(false);
+  const [aiEnabled, setAiEnabled] = useState(false);
 
   // YANGI: Auth yuklanayotganda loading ko‘rsatish
   useEffect(() => {
@@ -237,6 +240,23 @@ export default function PartnerDashboard() {
                 <AIUsageTracker 
                   monthlyRevenue={stats.totalRevenue}
                   pricingTier={partner.pricingTier}
+                  aiEnabled={aiEnabled}
+                  onToggleAI={(enabled) => {
+                    if (enabled) {
+                      toast({
+                        title: "AI So'rov Yuborildi",
+                        description: "AI xizmatlarni yoqish so'rovi admin paneliga yuborildi. Admin tasdig'idan keyin faollashadi.",
+                        duration: 5000,
+                      });
+                    } else {
+                      setAiEnabled(false);
+                      toast({
+                        title: "AI O'chirildi",
+                        description: "AI xizmatlari o'chirildi. Keyingi oydan boshlab to'lov olinmaydi.",
+                        duration: 3000,
+                      });
+                    }
+                  }}
                 />
               )}
               

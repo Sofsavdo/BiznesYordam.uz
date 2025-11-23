@@ -22,17 +22,24 @@ import {
 interface AIUsageTrackerProps {
   monthlyRevenue?: number;
   pricingTier?: string;
+  aiEnabled?: boolean;
+  onToggleAI?: (enabled: boolean) => void;
 }
 
-export function AIUsageTracker({ monthlyRevenue = 50000000, pricingTier = 'business_standard' }: AIUsageTrackerProps) {
-  // AI Service pricing based on usage
+export function AIUsageTracker({ 
+  monthlyRevenue = 50000000, 
+  pricingTier = 'business_standard',
+  aiEnabled = false,
+  onToggleAI
+}: AIUsageTrackerProps) {
+  // AI Service pricing - REALISTIC (1M/month total)
   const aiServices = {
     seo_optimization: {
       name: 'SEO Optimizatsiya',
       icon: Search,
-      usageCount: 45, // mahsulot kartochkalari
-      pricePerUnit: 50000, // 50k per kartochka
-      totalCost: 2250000,
+      usageCount: aiEnabled ? 20 : 0,
+      pricePerUnit: 15000,
+      totalCost: aiEnabled ? 300000 : 0,
       color: 'text-blue-500',
       bgColor: 'bg-blue-50',
       description: 'Mahsulot kartochkalari SEO optimizatsiya'
@@ -40,9 +47,9 @@ export function AIUsageTracker({ monthlyRevenue = 50000000, pricingTier = 'busin
     content_generation: {
       name: 'Kontent Yaratish',
       icon: FileText,
-      usageCount: 120, // tavsiflar
-      pricePerUnit: 20000, // 20k per tavsif
-      totalCost: 2400000,
+      usageCount: aiEnabled ? 30 : 0,
+      pricePerUnit: 10000,
+      totalCost: aiEnabled ? 300000 : 0,
       color: 'text-purple-500',
       bgColor: 'bg-purple-50',
       description: 'AI bilan mahsulot tavsiflari'
@@ -50,60 +57,111 @@ export function AIUsageTracker({ monthlyRevenue = 50000000, pricingTier = 'busin
     image_optimization: {
       name: 'Rasm Optimizatsiya',
       icon: ImageIcon,
-      usageCount: 200, // rasmlar
-      pricePerUnit: 10000, // 10k per rasm
-      totalCost: 2000000,
+      usageCount: aiEnabled ? 40 : 0,
+      pricePerUnit: 5000,
+      totalCost: aiEnabled ? 200000 : 0,
       color: 'text-pink-500',
       bgColor: 'bg-pink-50',
       description: 'Rasm sifati va hajmini optimizatsiya'
     },
     market_analysis: {
-      name: 'Bozor Tahlili',
+      name: 'Bozor Tahlili (Trend Hunter)',
       icon: BarChart3,
-      usageCount: 30, // tahlil
-      pricePerUnit: 100000, // 100k per tahlil
-      totalCost: 3000000,
+      usageCount: aiEnabled ? 5 : 0,
+      pricePerUnit: 40000,
+      totalCost: aiEnabled ? 200000 : 0,
       color: 'text-green-500',
       bgColor: 'bg-green-50',
-      description: 'AI raqobatchilar va bozor tahlili'
-    },
-    price_optimization: {
-      name: 'Narx Strategiyasi',
-      icon: Target,
-      usageCount: 45, // mahsulotlar
-      pricePerUnit: 30000, // 30k per mahsulot
-      totalCost: 1350000,
-      color: 'text-orange-500',
-      bgColor: 'bg-orange-50',
-      description: 'Avtomatik narx optimizatsiya'
+      description: 'AI trend tahlili va raqobatchilar'
     }
   };
 
-  // Calculate totals
-  const totalAICost = Object.values(aiServices).reduce((sum, service) => sum + service.totalCost, 0);
+  // Calculate totals - 1M/month when enabled
+  const totalAICost = aiEnabled ? 1000000 : 0;
   const totalUsageCount = Object.values(aiServices).reduce((sum, service) => sum + service.usageCount, 0);
 
   // AI ROI calculation
-  const estimatedRevenueLift = monthlyRevenue * 0.35; // 35% revenue lift from AI
-  const aiROI = ((estimatedRevenueLift - totalAICost) / totalAICost * 100).toFixed(0);
+  const estimatedRevenueLift = aiEnabled ? monthlyRevenue * 0.25 : 0; // 25% revenue lift
+  const aiROI = aiEnabled && totalAICost > 0 ? ((estimatedRevenueLift - totalAICost) / totalAICost * 100).toFixed(0) : '0';
 
   return (
     <div className="space-y-6">
-      {/* Overview Card */}
-      <Card className="border-2 border-purple-200 shadow-xl">
-        <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
+      {/* AI Toggle Card */}
+      <Card className={`border-2 shadow-xl ${aiEnabled ? 'border-green-400 bg-green-50/30' : 'border-slate-300 bg-slate-50'}`}>
+        <CardHeader className={aiEnabled ? 'bg-gradient-to-r from-green-50 to-emerald-50' : 'bg-slate-100'}>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
-              <Brain className="h-6 w-6 text-purple-600" />
-              AI Xizmatlari Harajati
+              <Brain className={`h-6 w-6 ${aiEnabled ? 'text-green-600' : 'text-slate-400'}`} />
+              AI Xizmatlari {aiEnabled ? '(Faol)' : '(O\'chirilgan)'}
             </CardTitle>
-            <Badge className="bg-purple-600 text-white">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Active
-            </Badge>
+            <div className="flex items-center gap-3">
+              {!aiEnabled && (
+                <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                  <AlertCircle className="h-3 w-3 mr-1" />
+                  Admin tasdig'i kerak
+                </Badge>
+              )}
+              <button
+                onClick={() => onToggleAI?.(!aiEnabled)}
+                className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors ${
+                  aiEnabled ? 'bg-green-600' : 'bg-slate-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
+                    aiEnabled ? 'translate-x-7' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="pt-6">
+          {!aiEnabled && (
+            <div className="mb-6 bg-blue-50 border-2 border-blue-300 rounded-xl p-6">
+              <div className="flex items-start gap-3">
+                <Zap className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-blue-900 mb-2">AI Xizmatlarni Yoqing!</h3>
+                  <p className="text-sm text-blue-800 mb-3">
+                    AI xizmatlari sizga quyidagilarni beradi:
+                  </p>
+                  <ul className="space-y-2 text-sm text-blue-900">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                      <span><strong>25% savdo o'sishi</strong> - AI optimizatsiya</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                      <span><strong>Trend Hunter</strong> - Eng yaxshi mahsulotlarni topish</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                      <span><strong>Avtomatik SEO</strong> - Professional kartochkalar</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                      <span><strong>Bozor tahlili</strong> - Raqobatchilarni kuzatish</span>
+                    </li>
+                  </ul>
+                  <div className="mt-4 p-3 bg-white rounded-lg border-2 border-blue-200">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-slate-900">Oylik to'lov:</span>
+                      <span className="text-2xl font-bold text-blue-600">1,000,000 so'm</span>
+                    </div>
+                    <div className="text-xs text-slate-600 mt-1">
+                      Taxminiy qo'shimcha foyda: {((monthlyRevenue * 0.25) / 1000000).toFixed(1)}M so'm/oy
+                    </div>
+                  </div>
+                  <p className="text-xs text-blue-700 mt-3 font-semibold">
+                    ⚠️ AI xizmatni yoqish uchun yuqoridagi tugmani bosing. Admin tasdig'idan keyin faollashadi.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+          {aiEnabled && (
+            <>
           <div className="grid md:grid-cols-3 gap-6 mb-6">
             {/* Total AI Cost */}
             <div className="bg-gradient-to-br from-purple-500 to-blue-600 text-white rounded-xl p-6 shadow-lg">
@@ -133,7 +191,7 @@ export function AIUsageTracker({ monthlyRevenue = 50000000, pricingTier = 'busin
                 <TrendingUp className="h-5 w-5" />
                 <span className="text-sm opacity-90">AI ROI</span>
               </div>
-              <div className="text-3xl font-bold">+{aiROI}%</div>
+              <div className="text-3xl font-bold">+{aiROI || 0}%</div>
               <div className="text-xs opacity-80 mt-1">foyda o'sishi</div>
             </div>
           </div>
@@ -215,14 +273,30 @@ export function AIUsageTracker({ monthlyRevenue = 50000000, pricingTier = 'busin
             </div>
           </div>
 
-          {/* Pricing Note */}
-          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
+          {/* Success Message */}
+          <div className="mt-4 bg-green-50 border-2 border-green-300 rounded-lg p-4">
             <div className="flex items-start gap-2">
-              <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0" />
-              <div className="text-sm text-blue-900">
-                <span className="font-semibold">Eslatma:</span> AI xizmatlari harajati foydalanish asosida hisoblanadi.
-                Ko'proq foydalansangiz, ko'proq to'laysiz, lekin ko'proq foyda qilasiz! 
-                <span className="font-bold text-blue-700"> Bu sizning tarifingizga qo'shimcha to'lov emas.</span>
+              <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+              <div className="text-sm text-green-900">
+                <span className="font-semibold">AI Xizmatlari Faol!</span> Sizning savdolaringiz AI tomonidan optimizatsiya qilinmoqda.
+                Trend Hunter ham faol - eng yaxshi mahsulotlarni topamiz!
+              </div>
+            </div>
+          </div>
+          </>
+          )}
+          
+          {/* Pricing Note */}
+          <div className="mt-4 bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="h-5 w-5 text-slate-600 flex-shrink-0" />
+              <div className="text-sm text-slate-700">
+                <span className="font-semibold">Eslatma:</span> AI xizmatlari <strong>ixtiyoriy</strong> qo'shimcha xizmatdir.
+                {aiEnabled ? (
+                  <span> Siz AI xizmatlardan foydalanyapsiz - oylik 1M so'm. Istalgan vaqt o'chirib qo'yishingiz mumkin.</span>
+                ) : (
+                  <span> AI xizmatni yoqsangiz, oylik 1M so'm to'lasiz va 25% savdo o'sishini kutishingiz mumkin.</span>
+                )}
               </div>
             </div>
           </div>
