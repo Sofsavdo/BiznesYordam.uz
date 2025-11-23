@@ -108,14 +108,16 @@ export default function Landing() {
   const pricingTiers = [
     {
       name: "Starter Pro",
-      price: "2,500,000",
-      commission: "25%",
-      description: "Yangi boshlovchilar uchun",
+      price: "3,000,000",
+      commission: "50% foydadan",
+      description: "Yangi boshlovchilar - past risk, yuqori ulush",
       features: [
         "1 marketplace",
         "100 mahsulot",
         "100kg omborxona",
-        "Email qo'llab-quvvatlash"
+        "Email qo'llab-quvvatlash",
+        "50% profit share",
+        "SPT xizmati BEPUL!"
       ],
       buttonText: "Boshlash",
       buttonVariant: "outline" as const,
@@ -123,44 +125,50 @@ export default function Landing() {
     },
     {
       name: "Business Standard",
-      price: "5,000,000",
-      commission: "20%",
-      description: "O'sib borayotgan bizneslar uchun",
+      price: "8,000,000",
+      commission: "25% foydadan",
+      description: "O'sib borayotgan biznes - muvozanatli",
       features: [
         "2 marketplace",
         "500 mahsulot",
         "500kg omborxona",
-        "Telefon qo'llab-quvvatlash"
-      ],
-      buttonText: "Tanlash",
-      buttonVariant: "default" as const,
-      popular: false
-    },
-    {
-      name: "Professional Plus",
-      price: "10,000,000",
-      commission: "15%",
-      description: "Katta bizneslar uchun",
-      features: [
-        "4 marketplace",
-        "2000 mahsulot",
-        "2000kg omborxona",
-        "24/7 qo'llab-quvvatlash"
+        "Telefon qo'llab-quvvatlash",
+        "25% profit share",
+        "SPT xizmati BEPUL!"
       ],
       buttonText: "Tanlash",
       buttonVariant: "default" as const,
       popular: true
     },
     {
+      name: "Professional Plus",
+      price: "18,000,000",
+      commission: "15% foydadan",
+      description: "Katta biznes - yuqori to'lov, past ulush",
+      features: [
+        "4 marketplace",
+        "2000 mahsulot",
+        "2000kg omborxona",
+        "24/7 qo'llab-quvvatlash",
+        "15% profit share",
+        "SPT xizmati BEPUL!"
+      ],
+      buttonText: "Tanlash",
+      buttonVariant: "default" as const,
+      popular: false
+    },
+    {
       name: "Enterprise Elite",
-      price: "20,000,000",
-      commission: "10%",
-      description: "Yirik kompaniyalar uchun",
+      price: "25,000,000",
+      commission: "10% foydadan",
+      description: "Korporate - maksimal stabillik",
       features: [
         "Cheksiz marketplace",
         "Cheksiz mahsulot",
         "Cheksiz omborxona",
-        "Dedicated manager"
+        "Dedicated manager",
+        "10% profit share",
+        "SPT xizmati BEPUL!"
       ],
       buttonText: "Bog'lanish",
       buttonVariant: "secondary" as const,
@@ -469,7 +477,8 @@ export default function Landing() {
             <div className="text-center mb-16 animate-fade-in">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Hamkorlik Rejalari</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Biznes ehtiyojlaringizga mos keladigan professional hamkorlik rejasini tanlang
+                <strong className="text-primary">YANGI MODEL:</strong> Abonent to'lov + foydadan ulush - 
+                siz foyda qilsangiz, biz ham foyda qilamiz! <strong className="text-accent">WIN-WIN! 🚀</strong>
               </p>
             </div>
 

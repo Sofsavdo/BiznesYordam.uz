@@ -26,14 +26,16 @@ interface FulfillmentCalculatorProps {
   className?: string;
 }
 
-// YANGI Fulfillment model - v3.0.0 (6-Nov-2025)
-// Komissiya endi SAVDODAN olinadi (oldin foyda edi)
+// YANGI Fulfillment model - v4.0.0 (24-Nov-2025)
+// PROFIT SHARE MODEL: Abonent + Foydadan %
 const FULFILLMENT_TIERS = {
   starter_pro: {
     name: "Starter Pro",
-    monthlyFee: 2500000, // YANGI: 2.5M oylik to'lov
-    commissionRate: 25, // YANGI: 25% savdodan (fixed)
-    description: "Yangi boshlovchilar uchun",
+    monthlyFee: 3000000, // 3M oylik abonent
+    profitShareRate: 50, // 50% foydadan (win-win!)
+    description: "Yangi boshlovchilar - past risk, yuqori share",
+    minRevenue: 20000000, // Min 20M/oy tavsiya
+    maxRevenue: 50000000, // Max 50M/oy
     limits: {
       marketplaces: 1,
       products: 100,
@@ -42,9 +44,11 @@ const FULFILLMENT_TIERS = {
   },
   business_standard: {
     name: "Business Standard", 
-    monthlyFee: 5000000, // YANGI: 5M oylik to'lov
-    commissionRate: 20, // YANGI: 20% savdodan (fixed)
-    description: "O'sib borayotgan bizneslar uchun",
+    monthlyFee: 8000000, // 8M oylik abonent
+    profitShareRate: 25, // 25% foydadan
+    description: "O'sib borayotgan biznes - muvozanatlangan",
+    minRevenue: 50000000, // Min 50M/oy
+    maxRevenue: 150000000, // Max 150M/oy
     limits: {
       marketplaces: 2,
       products: 500,
@@ -53,9 +57,11 @@ const FULFILLMENT_TIERS = {
   },
   professional_plus: {
     name: "Professional Plus",
-    monthlyFee: 10000000, // YANGI: 10M oylik to'lov
-    commissionRate: 15, // YANGI: 15% savdodan (fixed)
-    description: "Katta bizneslar uchun",
+    monthlyFee: 18000000, // 18M oylik abonent
+    profitShareRate: 15, // 15% foydadan
+    description: "Katta biznes - yuqori to'lov, past share",
+    minRevenue: 150000000, // Min 150M/oy
+    maxRevenue: 400000000, // Max 400M/oy
     limits: {
       marketplaces: 4,
       products: 2000,
@@ -64,9 +70,11 @@ const FULFILLMENT_TIERS = {
   },
   enterprise_elite: {
     name: "Enterprise Elite",
-    monthlyFee: 20000000, // YANGI: 20M oylik to'lov
-    commissionRate: 10, // YANGI: 10% savdodan (fixed)
-    description: "Yirik kompaniyalar uchun",
+    monthlyFee: 25000000, // 25M oylik abonent
+    profitShareRate: 10, // 10% foydadan
+    description: "Korporate - maksimal stabillik",
+    minRevenue: 500000000, // Min 500M/oy
+    maxRevenue: 999999999999, // Unlimited
     limits: {
       marketplaces: 999,
       products: 999999,
@@ -111,7 +119,7 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
   const [costInput, setCostInput] = useState<string>("12,000,000");
   const [quantityInput, setQuantityInput] = useState<string>("1");
   const [logisticsSize, setLogisticsSize] = useState<keyof typeof UZUM_LOGISTICS_FEES>("ogt");
-  const [commissionRate, setCommissionRate] = useState<string>("3");
+  const [commissionRate, setCommissionRate] = useState<string>("20");
   const [result, setResult] = useState<FulfillmentResult | null>(null);
 
   // Format number input with commas
@@ -153,28 +161,30 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
     const logisticsFee = logisticsPerItem * quantity;
     const tax = sales * 0.03; // 3% soliq sotuv narxidan
     
-    // YANGI MODEL: Komissiya savdodan (oldin foyda edi)
-    const commissionRate = tierConfig.commissionRate; // Fixed rate
-    const commissionAmount = (sales * commissionRate) / 100; // Savdodan
-    
-    // YANGI: Oylik to'lov (prorated for calculation)
+    // YANGI MODEL v4: Abonent + Profit Share
     const monthlyFee = tierConfig.monthlyFee;
+    const profitShareRate = tierConfig.profitShareRate;
     
-    // Jami fulfillment haqi = Oylik to'lov + savdodan komissiya
-    const totalFulfillmentFee = monthlyFee + commissionAmount;
-    
-    // Hamkor foyda = Sotish - Xarid - Marketpleys komissiya - Logistika - Soliq - Fulfillment haqi
+    // 1. Hamkorning SOF FOYDA'sini hisoblash
     // SPT harajat endi BIZ qilamiz (fulfillment ichida)
     const netProfit = sales - cost - marketpleysCommission - logisticsFee - tax;
+    
+    // 2. Bizning commission = foydadan %
+    const profitShareAmount = (netProfit * profitShareRate) / 100;
+    
+    // 3. Jami fulfillment haqi = Abonent + Profit Share
+    const totalFulfillmentFee = monthlyFee + profitShareAmount;
+    
+    // 4. Hamkor FINAL foyda = Net profit - Total fulfillment
     const partnerProfit = netProfit - totalFulfillmentFee;
     const profitPercentage = sales > 0 ? (partnerProfit / sales) * 100 : 0;
 
     return {
       tierName: tierConfig.name,
       fixedPayment: monthlyFee,
-      commissionRate,
+      commissionRate: profitShareRate, // Bu endi profit share %
       marketpleysCommissionRate,
-      commissionAmount,
+      commissionAmount: profitShareAmount, // Bu endi profit share amount
       totalFulfillmentFee,
       partnerProfit,
       profitPercentage,
@@ -240,8 +250,8 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
           </h2>
           
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Haqiqiy <strong className="text-emerald-600">Uzum Market FBO</strong> modeli asosida - 
-            professional hisoblar va <strong className="text-cyan-600">SPT xizmati BEPUL!</strong>
+            <strong className="text-emerald-600">YANGI MODEL:</strong> Abonent to'lov + foyda ulushingizdan % - 
+            siz foyda qilsangiz biz ham foyda qilamiz. <strong className="text-cyan-600">WIN-WIN!</strong> 🚀
           </p>
         </div>
 
@@ -254,7 +264,7 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
               Professional Foyda Kalkulyatori
             </CardTitle>
             <CardDescription className="text-slate-600 text-lg mt-2">
-              <strong className="text-emerald-600">Yangi xizmat:</strong> SPT harajatlar endi bizning tarafimizdan - Siz faqat asosiy xarajatlarni to'laysiz!
+              <strong className="text-emerald-600">Profit Share Model:</strong> Abonent + foydadan ulush - siz foyda qilmasangiz, biz ham olmaymiz! SPT BEPUL! ✅
             </CardDescription>
           </CardHeader>
           
@@ -333,14 +343,14 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                     type="number"
                     value={commissionRate}
                     onChange={(e) => setCommissionRate(e.target.value)}
-                    placeholder="3"
+                    placeholder="20"
                     min="0"
                     max="35"
                     step="0.1"
                     className="text-right text-2xl h-12 font-bold text-slate-900"
                   />
                   <div className="text-xs text-slate-700 font-medium">
-                    Marketpleys seller panelida ko'rsatilgan aniq komissiya foizini kiriting
+                    O'rtacha: 18-20% (Uzum, Wildberries, Ozon)
                   </div>
                 </div>
 
@@ -406,12 +416,15 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                     </div>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-800 font-medium">Fixed to'lov:</span>
+                        <span className="text-slate-800 font-medium">Oylik abonent:</span>
                         <span className="font-semibold text-blue-600 text-xl whitespace-nowrap">{result.fixedPayment === null ? 'Individual' : formatSom(result.fixedPayment)}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-800 font-medium">Komissiya ({result.commissionRate}%):</span>
+                        <span className="text-slate-800 font-medium">Profit share ({result.commissionRate}%):</span>
                         <span className="font-semibold text-blue-600 text-xl whitespace-nowrap">{formatSom(result.commissionAmount)}</span>
+                      </div>
+                      <div className="text-xs text-slate-600 italic mt-1">
+                        💡 Foydangizdan {result.commissionRate}% - foyda bo'lmasa, to'lov yo'q!
                       </div>
                       <div className="flex justify-between items-center bg-emerald-100 border border-emerald-300 rounded-lg p-3">
                         <span className="text-emerald-800 font-bold text-sm">✅ SPT xizmati:</span>
