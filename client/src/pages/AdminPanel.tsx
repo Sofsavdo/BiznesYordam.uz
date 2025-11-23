@@ -905,7 +905,11 @@ export default function AdminPanel() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex gap-4">
-                    <DataExportButton />
+                    <DataExportButton 
+                      data={partners} 
+                      filename="platform-analytics"
+                      type="analytics"
+                    />
                     <ScheduledReports />
                   </div>
                 </CardContent>
