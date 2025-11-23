@@ -824,6 +824,10 @@ export default function AdminPanel() {
 
             {/* Analytics Tab */}
             <TabsContent value="analytics" className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Platformaning to'liq tahlili</h2>
+                <p className="text-muted-foreground mb-6">Barcha hamkorlar bo'yicha umumiy statistika va ko'rsatkichlar</p>
+              </div>
               <Card className="shadow-elegant">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -832,7 +836,14 @@ export default function AdminPanel() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ComprehensiveAnalytics />
+                  <ComprehensiveAnalytics data={[]} />
+                  <div className="mt-6 p-6 bg-muted/30 rounded-lg text-center">
+                    <BarChart3 className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+                    <p className="text-lg font-medium mb-2">Tahlil ma'lumotlari</p>
+                    <p className="text-muted-foreground">
+                      Hamkorlardan tranzaksiya ma'lumotlari kelganda bu yerda to'liq tahlillar ko'rsatiladi
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
