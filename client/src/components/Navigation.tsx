@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/context/LanguageContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 import { LogOut, Menu, X } from 'lucide-react';
 
@@ -45,7 +46,10 @@ export function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+            
             {!user ? (
               <>
                 <button 
@@ -95,7 +99,7 @@ export function Navigation() {
                 </button>
                 <Button 
                   onClick={() => setLocation('/login')}
-                  className="bg-primary hover:bg-primary/90 mr-2 hover-lift"
+                  className="bg-primary hover:bg-primary/90 hover-lift"
                   data-testid="button-login"
                 >
                   {t('nav.login')}
