@@ -19,7 +19,6 @@ interface FulfillmentResult {
   netProfit: number;
   marketpleysCommission: number;
   logisticsFee: number;
-  sptCost: number;
   tax: number;
 }
 
@@ -152,7 +151,6 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
     // Marketpleys harajatlari (sotuv narxidan hisoblanadi)
     const marketpleysCommission = (sales * marketpleysCommissionRate) / 100;
     const logisticsFee = logisticsPerItem * quantity;
-    const sptCost = 2000 * quantity; // SPT harajati har bir mahsulot uchun 2000 som
     const tax = sales * 0.03; // 3% soliq sotuv narxidan
     
     // YANGI MODEL: Komissiya savdodan (oldin foyda edi)
@@ -165,8 +163,9 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
     // Jami fulfillment haqi = Oylik to'lov + savdodan komissiya
     const totalFulfillmentFee = monthlyFee + commissionAmount;
     
-    // Hamkor foyda = Sotish - Xarid - SPT - Marketpleys komissiya - Logistika - Soliq - Fulfillment haqi
-    const netProfit = sales - cost - sptCost - marketpleysCommission - logisticsFee - tax;
+    // Hamkor foyda = Sotish - Xarid - Marketpleys komissiya - Logistika - Soliq - Fulfillment haqi
+    // SPT harajat endi BIZ qilamiz (fulfillment ichida)
+    const netProfit = sales - cost - marketpleysCommission - logisticsFee - tax;
     const partnerProfit = netProfit - totalFulfillmentFee;
     const profitPercentage = sales > 0 ? (partnerProfit / sales) * 100 : 0;
 
@@ -182,7 +181,6 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
       netProfit,
       marketpleysCommission,
       logisticsFee,
-      sptCost,
       tax
     };
   };
@@ -221,21 +219,42 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
   };
 
   return (
-    <section id="calculator" className="py-20 bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">Fulfillment Kalkulyatori</h2>
-          <p className="text-xl text-slate-600">Logistika va fulfillment xarajatlarini professional hisoblang</p>
+    <section id="calculator" className="py-24 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      </div>
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-16 animate-fade-in">
+          <Badge className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white border-none px-6 py-2 text-base mb-6">
+            <Calculator className="w-5 h-5 mr-2 inline" />
+            FOYDA KALKULYATORI
+          </Badge>
+          
+          <h2 className="text-5xl md:text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+              Fulfillment Kalkulyatori
+            </span>
+          </h2>
+          
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            Haqiqiy <strong className="text-emerald-600">Uzum Market FBO</strong> modeli asosida - 
+            professional hisoblar va <strong className="text-cyan-600">SPT xizmati BEPUL!</strong>
+          </p>
         </div>
 
-        <Card className={`bg-white shadow-2xl border-0 ${className}`}>
-          <CardHeader className="text-center bg-gradient-to-r from-primary/10 to-secondary/10 border-b">
-            <CardTitle className="flex items-center justify-center gap-2 text-slate-900">
-              <Calculator className="h-6 w-6 text-primary" />
-              Fulfillment Foyda Kalkulyatori
+        <Card className={`bg-white/90 backdrop-blur-sm shadow-2xl border-2 border-white hover:shadow-emerald-200/50 transition-all duration-300 ${className}`}>
+          <CardHeader className="text-center bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 border-b-2 border-emerald-200">
+            <CardTitle className="flex items-center justify-center gap-3 text-slate-900 text-2xl">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Calculator className="h-7 w-7 text-white" />
+              </div>
+              Professional Foyda Kalkulyatori
             </CardTitle>
-            <CardDescription className="text-slate-600">
-              Haqiqiy Uzum Market FBO modeli asosida - marketpleys komissiyalari va logistika harajatlari hisobida
+            <CardDescription className="text-slate-600 text-lg mt-2">
+              <strong className="text-emerald-600">Yangi xizmat:</strong> SPT harajatlar endi bizning tarafimizdan - Siz faqat asosiy xarajatlarni to'laysiz!
             </CardDescription>
           </CardHeader>
           
@@ -394,14 +413,14 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                         <span className="text-slate-800 font-medium">Komissiya ({result.commissionRate}%):</span>
                         <span className="font-semibold text-blue-600 text-xl whitespace-nowrap">{formatSom(result.commissionAmount)}</span>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-slate-800 font-medium">SPT harajat:</span>
-                        <span className="font-semibold text-blue-600 text-lg whitespace-nowrap">{formatSom(result.sptCost)}</span>
+                      <div className="flex justify-between items-center bg-emerald-100 border border-emerald-300 rounded-lg p-3">
+                        <span className="text-emerald-800 font-bold text-sm">✅ SPT xizmati:</span>
+                        <span className="font-bold text-emerald-600 text-lg">BEPUL!</span>
                       </div>
                       <Separator />
                       <div className="flex justify-between items-center font-semibold">
-                        <span className="text-slate-900">Jami Fulfillment harajat:</span>
-                        <span className="text-blue-600 text-2xl whitespace-nowrap">{formatSom(result.totalFulfillmentFee + result.sptCost)}</span>
+                        <span className="text-slate-900">Jami Fulfillment:</span>
+                        <span className="text-blue-600 text-2xl whitespace-nowrap">{formatSom(result.totalFulfillmentFee)}</span>
                       </div>
                     </div>
                   </div>
@@ -413,11 +432,11 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                       <h4 className="font-semibold text-green-900">Sizning Final Foydangiz</h4>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600 mb-2 whitespace-nowrap">
-                        {formatSom(result.netProfit - (result.totalFulfillmentFee + result.sptCost))}
+                      <div className="text-4xl font-black text-green-600 mb-3 whitespace-nowrap">
+                        {formatSom(result.partnerProfit)}
                       </div>
-                      <div className="text-sm text-green-700">
-                        Foyda foizi: {(((result.netProfit - (result.totalFulfillmentFee + result.sptCost)) / parseNumberInput(salesInput)) * 100).toFixed(1)}%
+                      <div className="text-base text-green-700 font-semibold mb-2">
+                        Foyda foizi: {result.profitPercentage.toFixed(1)}%
                       </div>
                       <Badge variant="outline" className="mt-2 text-green-700 border-green-300">
                         {result.tierName}
