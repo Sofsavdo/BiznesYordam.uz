@@ -50,6 +50,7 @@ const allowedOrigins = [
   'http://0.0.0.0:5000',
   'http://localhost:3000',
   'http://localhost:8080',
+  'http://127.0.0.1:1337', // Browser preview
   'https://biznesyordam.uz',
   'https://www.biznesyordam.uz',
   'https://biznesyordam-backend.onrender.com',
@@ -69,6 +70,13 @@ app.use(
       if (!origin) {
         console.log("✅ CORS: Same-origin request allowed");
         return callback(null, true);
+      }
+      
+      // Allow all localhost and 127.0.0.1 ports (development)
+      if (origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))) {
+        console.log("✅ CORS: Localhost/127.0.0.1 allowed:", origin);
+        callback(null, true);
+        return;
       }
       
       // Allow Replit development domains (dynamic proxy URLs)

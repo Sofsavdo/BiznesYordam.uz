@@ -18,6 +18,8 @@ import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
 import { InventoryManagement } from '@/components/InventoryManagement';
 import { OrderManagement } from '@/components/OrderManagement';
 import { StockAlerts } from '@/components/StockAlerts';
+import { InventoryTracker } from '@/components/InventoryTracker';
+import { ROICalculatorModal } from '@/components/ROICalculatorModal';
 import { useAuth } from '@/hooks/useAuth';
 import { useTierAccess } from '@/hooks/useTierAccess';
 import { useLocation } from 'wouter';
@@ -44,6 +46,7 @@ export default function PartnerDashboard() {
   const queryClient = useQueryClient();
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showTierModal, setShowTierModal] = useState(false);
+  const [showROIModal, setShowROIModal] = useState(false);
 
   // YANGI: Auth yuklanayotganda loading ko‘rsatish
   useEffect(() => {
@@ -167,6 +170,10 @@ export default function PartnerDashboard() {
                   <Crown className="w-3 h-3 mr-1" />
                   {getTierName(partner?.pricingTier || 'starter_pro')}
                 </Badge>
+                <Button onClick={() => setShowROIModal(true)} variant="outline" size="sm" className="hover-lift">
+                  <TrendingUp className="w-4 h-4 mr-2" />
+                  ROI Kalkulyator
+                </Button>
                 <Button onClick={() => setShowTierModal(true)} variant="premium" size="sm" className="hover-lift">
                   <Crown className="w-4 h-4 mr-2" />
                   Tarifni Yangilash
@@ -196,8 +203,9 @@ export default function PartnerDashboard() {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-8">
+            <TabsList className="grid w-full grid-cols-9">
               <TabsTrigger value="overview"><BarChart3 className="w-4 h-4 mr-2" />Umumiy</TabsTrigger>
+              <TabsTrigger value="tracker"><Eye className="w-4 h-4 mr-2" />Tracking</TabsTrigger>
               <TabsTrigger value="inventory"><Package className="w-4 h-4 mr-2" />Ombor</TabsTrigger>
               <TabsTrigger value="orders"><Truck className="w-4 h-4 mr-2" />Buyurtmalar</TabsTrigger>
               <TabsTrigger value="analytics"><FileSpreadsheet className="w-4 h-4 mr-2" />Tahlil</TabsTrigger>
@@ -238,6 +246,11 @@ export default function PartnerDashboard() {
               </div>
             </TabsContent>
 
+            {/* YANGI: Inventory Tracker Tab */}
+            <TabsContent value="tracker">
+              <InventoryTracker />
+            </TabsContent>
+
             {/* Boshqa tablar ham qoladi — ularni o‘chirib qisqartirdim, lekin saqlang */}
             <TabsContent value="products">{/* Mahsulotlar */}</TabsContent>
             <TabsContent value="requests">{/* So'rovlar */}</TabsContent>
@@ -254,6 +267,12 @@ export default function PartnerDashboard() {
           queryClient.invalidateQueries({ queryKey: ['/api/partners/me'] });
           setShowTierModal(false);
         }}
+        currentTier={partner?.pricingTier || 'starter_pro'}
+      />
+
+      <ROICalculatorModal
+        isOpen={showROIModal}
+        onClose={() => setShowROIModal(false)}
         currentTier={partner?.pricingTier || 'starter_pro'}
       />
     </div>
