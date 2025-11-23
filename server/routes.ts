@@ -22,6 +22,7 @@ import subscriptionRoutes from "./routes/subscriptionRoutes";
 import forecastRoutes from "./routes/forecastRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
 import aiManagerRoutes from "./routes/aiManagerRoutes";
+import trendingRoutes from "./routes/trendingRoutes";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 
 // Enhanced authentication middleware with better error handling
@@ -798,6 +799,9 @@ export function registerRoutes(app: express.Application): Server {
 
   // AI Autonomous Manager routes
   app.use("/api/ai-manager", requireAuth, aiManagerRoutes);
+
+  // Trending Products Analytics routes
+  app.use("/api/trending", requireAuth, trendingRoutes);
 
   // ==================== INVENTORY MANAGEMENT ROUTES ====================
 
