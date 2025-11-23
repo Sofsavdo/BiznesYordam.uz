@@ -18,6 +18,7 @@ import { ScheduledReports } from '@/components/ScheduledReports';
 import { AdminMarketplaceIntegration } from '@/components/AdminMarketplaceIntegration';
 import { AdminPartnersManagement } from '@/components/AdminPartnersManagement';
 import { AIManagerDashboard } from '@/components/AIManagerDashboard';
+import { AdvancedPartnerAnalytics } from '@/components/AdvancedPartnerAnalytics';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
@@ -879,24 +880,33 @@ export default function AdminPanel() {
             {/* Analytics Tab */}
             <TabsContent value="analytics" className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2">Platformaning to'liq tahlili</h2>
-                <p className="text-muted-foreground mb-6">Barcha hamkorlar bo'yicha umumiy statistika va ko'rsatkichlar</p>
+                <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                  <BarChart3 className="w-7 h-7 text-purple-600" />
+                  Platformaning to'liq tahlili
+                </h2>
+                <p className="text-muted-foreground mb-6">Hamkorlar bo'yicha foyda breakdown, AI usage, marketplace statistika</p>
               </div>
-              <Card className="shadow-elegant">
+
+              {/* ADVANCED PARTNER ANALYTICS - NEW! */}
+              <AdvancedPartnerAnalytics />
+
+              {/* Comprehensive Analytics */}
+              <div className="grid gap-6 mt-6">
+                <ComprehensiveAnalytics />
+              </div>
+
+              {/* Reports Export */}
+              <Card className="mt-6">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <FileText className="w-5 h-5" />
-                    Keng Qamrovli Tahlil
+                    <Download className="w-5 h-5" />
+                    Hisobotlarni Yuklab Olish
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ComprehensiveAnalytics data={[]} />
-                  <div className="mt-6 p-6 bg-muted/30 rounded-lg text-center">
-                    <BarChart3 className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-                    <p className="text-lg font-medium mb-2">Tahlil ma'lumotlari</p>
-                    <p className="text-muted-foreground">
-                      Hamkorlardan tranzaksiya ma'lumotlari kelganda bu yerda to'liq tahlillar ko'rsatiladi
-                    </p>
+                  <div className="flex gap-4">
+                    <DataExportButton />
+                    <ScheduledReports />
                   </div>
                 </CardContent>
               </Card>

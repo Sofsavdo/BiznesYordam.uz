@@ -15,6 +15,7 @@ import { TrendingProducts } from '@/components/TrendingProducts';
 import { TrendingProductsDashboard } from '@/components/TrendingProductsDashboard';
 import { EnhancedTierUpgradeModal } from '@/components/EnhancedTierUpgradeModal';
 import { PartnerTierInfo } from '@/components/PartnerTierInfo';
+import { AIUsageTracker } from '@/components/AIUsageTracker';
 import { DataExportButton } from '@/components/DataExportButton';
 import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
 import { InventoryManagement } from '@/components/InventoryManagement';
@@ -230,6 +231,14 @@ export default function PartnerDashboard() {
                   />
                 );
               })()}
+              
+              {/* AI Usage Tracker */}
+              {partner && (
+                <AIUsageTracker 
+                  monthlyRevenue={stats.totalRevenue}
+                  pricingTier={partner.pricingTier}
+                />
+              )}
               
               <StockAlerts />
               <div className="equal-grid grid-cols-1 lg:grid-cols-2 gap-6">
