@@ -14,6 +14,7 @@ import { MarketplaceApiConfig } from '@/components/MarketplaceApiConfig';
 import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
 import { DataExportButton } from '@/components/DataExportButton';
 import { ScheduledReports } from '@/components/ScheduledReports';
+import { AdminMarketplaceIntegration } from '@/components/AdminMarketplaceIntegration';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
@@ -409,10 +410,14 @@ export default function AdminPanel() {
 
           {/* Main Content */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-8">
+            <TabsList className="grid w-full grid-cols-9">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Umumiy
+              </TabsTrigger>
+              <TabsTrigger value="marketplace" className="flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                Marketplace
               </TabsTrigger>
               <TabsTrigger value="analytics" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
@@ -510,6 +515,17 @@ export default function AdminPanel() {
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
+
+            {/* Marketplace Integration Tab */}
+            <TabsContent value="marketplace" className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Marketplace Integratsiyasi Boshqaruvi</h2>
+                <p className="text-muted-foreground mb-6">
+                  Hamkorlardan kelgan marketplace ulanish so'rovlarini ko'rib chiqing va tasdiqlang
+                </p>
+              </div>
+              <AdminMarketplaceIntegration />
             </TabsContent>
 
             {/* Partners Tab */}
