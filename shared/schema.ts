@@ -82,7 +82,9 @@ export const partners = pgTable("partners", {
   businessCategory: categoryEnum("business_category").notNull(),
   monthlyRevenue: decimal("monthly_revenue"),
   pricingTier: varchar("pricing_tier").notNull().default('starter_pro'),
-  commissionRate: decimal("commission_rate").notNull().default('0.25'), // YANGI: 25% savdodan (Starter Pro default)
+  monthlyFee: decimal("monthly_fee").notNull().default('3000000'), // YANGI v4: Oylik abonent (Starter Pro default)
+  profitShareRate: decimal("profit_share_rate").notNull().default('0.50'), // YANGI v4: Foydadan % (Starter Pro default)
+  commissionRate: decimal("commission_rate").notNull().default('0.50'), // Legacy compat
   isApproved: boolean("is_approved").notNull().default(false),
   approvedAt: timestamp("approved_at"),
   approvedBy: varchar("approved_by").references(() => users.id),
