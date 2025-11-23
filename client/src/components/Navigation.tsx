@@ -3,8 +3,6 @@ import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/context/LanguageContext';
-import { LanguageSwitcher } from './LanguageSwitcher';
-import { GoogleTranslateWidget } from './GoogleTranslateWidget';
 
 import { LogOut, Menu, X } from 'lucide-react';
 
@@ -47,13 +45,7 @@ export function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
-            {/* Google Translate Widget - AUTO TRANSLATION */}
-            <GoogleTranslateWidget />
-            
-            {/* Language Switcher */}
-            <LanguageSwitcher />
-            
+          <div className="hidden md:flex items-center space-x-4">
             {!user ? (
               <>
                 <button 
