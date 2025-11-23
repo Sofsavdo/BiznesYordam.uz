@@ -1,11 +1,15 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+export type Language = 'uz' | 'ru';
 
 interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
   t: (key: string) => string;
 }
 
-// O'zbek tilida tarjimalar
-const translations = {
+// O'zbek tilidagi tarjimalar
+const translationsUz = {
   // Navigation
   'nav.home': 'Bosh sahifa',
   'nav.services': 'Xizmatlar',
@@ -76,18 +80,133 @@ const translations = {
   'currency.profit': 'Foyda',
   'currency.price': 'Narx',
   'currency.cost': 'Xarid narxi',
-  'currency.sale': 'Sotuv narxi'
+  'currency.sale': 'Sotuv narxi',
+  
+  // Tier Info
+  'tier.payment': 'To\'lov Tuzilmasi',
+  'tier.monthly': 'Oylik Abonent',
+  'tier.profitShare': 'Profit Share',
+  'tier.services': 'Xizmatlar',
+  'tier.revenue': 'Tavsiya etiladigan aylanma',
+  'tier.upgrade': 'Yuqori Tarifga O\'ting',
+  'tier.noProfit': 'Foyda bo\'lmasa, faqat abonent to\'lanadi!',
+  'tier.fromProfit': 'foydadan',
+  'tier.fixed': 'Fixed oylik to\'lov',
+  'tier.netProfit': 'Sof foydangizdan'
+};
+
+// Rus tilidagi tarjimalar
+const translationsRu = {
+  // Navigation
+  'nav.home': 'Главная',
+  'nav.services': 'Услуги',
+  'nav.calculator': 'Калькулятор',
+  'nav.pricing': 'Тарифы',
+  'nav.login': 'Войти',
+  'nav.register': 'Регистрация',
+  'nav.dashboard': 'Панель',
+  'nav.admin': 'Админ',
+  'nav.logout': 'Выйти',
+  'nav.hello': 'Привет',
+
+  // Landing Page
+  'hero.title': 'Платформа Fulfillment для Marketplace',
+  'hero.subtitle': 'Упрощаем торговлю на Uzum, Wildberries, Yandex Market и других маркетплейсах. Принимаем, готовим, доставляем и управляем всеми процессами.',
+  'hero.features.title': 'Премиум возможности',
+  'hero.button.partner': 'Стать партнером',
+  'hero.button.register': 'Регистрация',
+
+  // Pricing
+  'pricing.title': 'Тарифные планы',
+  'pricing.subtitle': 'Выберите профессиональное решение под ваш бизнес',
+  'pricing.tier.starter': 'Starter Pro',
+  'pricing.tier.business': 'Business Standard',
+  'pricing.tier.professional': 'Professional Plus',
+  'pricing.tier.enterprise': 'Enterprise Elite',
+  'pricing.monthly': 'Ежемесячный платеж',
+  'pricing.commission': 'комиссия',
+  'pricing.custom': 'По договоренности',
+  'pricing.choose': 'Выбрать',
+  'pricing.recommended': 'Рекомендуется',
+
+  // Calculator
+  'calc.title': 'Калькулятор Fulfillment',
+  'calc.subtitle': 'Профессиональный расчет логистики и fulfillment расходов',
+
+  // Common
+  'common.monthly': 'в месяц',
+  'common.som': 'сум',
+  'common.secure': '100% Безопасно',
+  'common.partners': '500+ Партнеров',
+  
+  // Features
+  'features.title': 'Возможности платформы BiznesYordam',
+  'features.subtitle': 'Самый мощный набор инструментов для профессиональных партнеров',
+  
+  // Buttons
+  'hero.button.telegram': 'Telegram канал',
+
+  // Dashboard
+  'dashboard.analytics': 'Аналитика',
+  'dashboard.requests': 'Запросы',
+  'dashboard.products': 'Товары',
+  'dashboard.logout': 'Выйти',
+
+  // Forms
+  'form.firstName': 'Имя',
+  'form.lastName': 'Фамилия',
+  'form.email': 'Email',
+  'form.phone': 'Телефон',
+  'form.password': 'Пароль',
+  'form.submit': 'Отправить',
+  'form.login': 'Войти',
+  'form.register': 'Регистрация',
+
+  // Currency
+  'currency.som': 'сум',
+  'currency.profit': 'Прибыль',
+  'currency.price': 'Цена',
+  'currency.cost': 'Цена закупки',
+  'currency.sale': 'Цена продажи',
+  
+  // Tier Info
+  'tier.payment': 'Структура оплаты',
+  'tier.monthly': 'Ежемесячная подписка',
+  'tier.profitShare': 'Profit Share',
+  'tier.services': 'Услуги',
+  'tier.revenue': 'Рекомендуемый оборот',
+  'tier.upgrade': 'Перейти на высший тариф',
+  'tier.noProfit': 'Если нет прибыли, платите только подписку!',
+  'tier.fromProfit': 'от прибыли',
+  'tier.fixed': 'Фиксированный ежемесячный платеж',
+  'tier.netProfit': 'От вашей чистой прибыли'
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  // Get saved language from localStorage or default to 'uz'
+  const [language, setLanguageState] = useState<Language>(() => {
+    const saved = localStorage.getItem('language');
+    return (saved === 'uz' || saved === 'ru') ? saved : 'uz';
+  });
+
+  // Save to localStorage when language changes
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+  };
+
   const t = (key: string): string => {
+    const translations = language === 'uz' ? translationsUz : translationsRu;
     return translations[key as keyof typeof translations] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
