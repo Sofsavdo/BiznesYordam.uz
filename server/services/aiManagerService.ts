@@ -2,17 +2,15 @@
 // AI AUTONOMOUS MANAGER - Core Service
 
 import OpenAI from 'openai';
-import Anthropic from '@anthropic-ai/sdk';
 import { db } from '../db';
+import { calculateOptimalPrice } from './priceCalculationService';
 
 // ================================================================
 // CONFIGURATION
 // ================================================================
 const OPENAI_KEY = process.env.OPENAI_API_KEY || '';
-const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || '';
 
 const openai = new OpenAI({ apiKey: OPENAI_KEY });
-const anthropic = new Anthropic({ apiKey: ANTHROPIC_KEY });
 
 // ================================================================
 // 1. AI PRODUCT CARD GENERATOR
@@ -27,7 +25,7 @@ export interface ProductInput {
 }
 
 export async function generateProductCard(input: ProductInput, partnerId: number) {
-  console.log('🤖 AI: Mahsulot kartochkasi yaratilmoqda...', input.name);
+  console.log('🤖 AI: Generating product card...', input.name);
   
   // Task qo'shish
   const taskId = await createAITask({
@@ -161,10 +159,10 @@ MUHIM:
       wasSuccessful: true,
     });
 
-    console.log('✅ AI: Mahsulot kartochkasi tayyor!', result.title);
+    console.log('✅ AI: Product card ready!', result.title);
     return { success: true, productId: generatedProduct.id, data: result };
   } catch (error: any) {
-    console.error('❌ AI: Xatolik:', error.message);
+    console.error('❌ AI: Error:', error.message);
     
     await updateAITask(taskId, {
       status: 'failed',
@@ -183,7 +181,7 @@ export async function optimizePrice(
   productId: number,
   marketplaceType: string
 ) {
-  console.log('🤖 AI: Narx optimizatsiya qilinmoqda...');
+  console.log('🤖 AI: Optimizing price...');
 
   const taskId = await createAITask({
     partnerId,
@@ -281,7 +279,7 @@ Optimal narxni taklif qiling va JSON formatda javob bering:
 // 3. AI MONITORING & ISSUE DETECTION
 // ================================================================
 export async function monitorPartnerProducts(partnerId: number) {
-  console.log('🤖 AI: Hamkor mahsulotlari monitoring qilinmoqda...', partnerId);
+  console.log('🤖 AI: Monitoring partner products...', partnerId);
 
   try {
     // Get all partner's products across all marketplaces
@@ -298,9 +296,9 @@ export async function monitorPartnerProducts(partnerId: number) {
         issues.push({
           type: 'low_stock',
           severity: product.stock_quantity === 0 ? 'critical' : 'high',
-          title: 'Qoldig\'i kam',
-          description: `Mahsulot: ${product.title}. Qoldiq: ${product.stock_quantity}`,
-          suggestedAction: 'Omborda qoldiqni to\'ldiring yoki mahsulotni marketplace'dan olib tashlang',
+          title: 'Low Stock',
+          description: `Product: ${product.title}. Stock: ${product.stock_quantity}`,
+          suggestedAction: 'Restock inventory or remove product from marketplace',
         });
       }
 
@@ -358,10 +356,10 @@ export async function monitorPartnerProducts(partnerId: number) {
       });
     }
 
-    console.log(`✅ AI: ${issues.length} ta muammo aniqlandi`);
+    console.log(`✅ AI: ${issues.length} issues detected`);
     return { success: true, issuesFound: issues.length, issues };
   } catch (error: any) {
-    console.error('❌ AI: Monitoring xatolik:', error.message);
+    console.error('❌ AI: Monitoring error:', error.message);
     throw error;
   }
 }
@@ -374,7 +372,7 @@ export async function autoUploadToMarketplace(
   marketplaceType: string,
   credentials: any
 ) {
-  console.log('🤖 AI: Marketplace'ga yuklanmoqda...', marketplaceType);
+  console.log('🤖 AI: Uploading to marketplace...', marketplaceType);
 
   // Bu yerda real API integration bo'ladi
   // Hozircha mock implementation
@@ -424,7 +422,7 @@ export async function autoUploadToMarketplace(
 
     return { success: true, marketplaceProductId };
   } catch (error: any) {
-    console.error('❌ Marketplace upload xatolik:', error.message);
+    console.error('❌ Marketplace upload error:', error.message);
     throw error;
   }
 }
@@ -517,28 +515,28 @@ async function getRecentSales(productId: number, days: number, offset: number = 
 // Marketplace upload functions (mock implementations)
 async function uploadToUzum(product: any, credentials: any): Promise<string> {
   // Real: Uzum API integration
-  console.log('📤 Uzum Market'ga yuklanmoqda...');
+  console.log('📤 Uploading to Uzum Market...');
   await new Promise(resolve => setTimeout(resolve, 2000)); // simulate API call
   return `uzum_${Date.now()}`;
 }
 
 async function uploadToWildberries(product: any, credentials: any): Promise<string> {
   // Real: Wildberries API integration
-  console.log('📤 Wildberries'ga yuklanmoqda...');
+  console.log('📤 Uploading to Wildberries...');
   await new Promise(resolve => setTimeout(resolve, 2000));
   return `wb_${Date.now()}`;
 }
 
 async function uploadToYandex(product: any, credentials: any): Promise<string> {
   // Real: Yandex Market API integration
-  console.log('📤 Yandex Market'ga yuklanmoqda...');
+  console.log('📤 Uploading to Yandex Market...');
   await new Promise(resolve => setTimeout(resolve, 2000));
   return `yandex_${Date.now()}`;
 }
 
 async function uploadToOzon(product: any, credentials: any): Promise<string> {
   // Real: Ozon API integration
-  console.log('📤 Ozon'ga yuklanmoqda...');
+  console.log('📤 Uploading to Ozon...');
   await new Promise(resolve => setTimeout(resolve, 2000));
   return `ozon_${Date.now()}`;
 }

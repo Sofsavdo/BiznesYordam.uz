@@ -413,10 +413,13 @@ export default function AdminPanel() {
 
           {/* Main Content */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-9">
+            <TabsList className="grid w-full grid-cols-10">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Umumiy
+              </TabsTrigger>
+              <TabsTrigger value="ai-manager" className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+                🤖 AI Manager
               </TabsTrigger>
               <TabsTrigger value="marketplace" className="flex items-center gap-2">
                 <Globe className="w-4 h-4" />
@@ -640,6 +643,11 @@ export default function AdminPanel() {
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
+
+            {/* AI MANAGER TAB - YANGI */}
+            <TabsContent value="ai-manager" className="space-y-6">
+              <AIManagerDashboard />
             </TabsContent>
 
             {/* Marketplace Integration Tab */}

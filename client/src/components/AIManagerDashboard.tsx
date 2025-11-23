@@ -18,34 +18,59 @@ export function AIManagerDashboard() {
   const queryClient = useQueryClient();
   const [selectedTab, setSelectedTab] = useState('overview');
 
-  const { data: partners = [] } = useQuery({
+  const { data: partners = [] } = useQuery<any[]>({
     queryKey: ['admin-partners'],
-    queryFn: () => apiRequest('admin/partners'),
+    queryFn: async () => {
+      const response = await fetch('/api/admin/partners', { credentials: 'include' });
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
   });
 
-  const { data: aiTasks = [] } = useQuery({
+  const { data: aiTasks = [] } = useQuery<any[]>({
     queryKey: ['ai-tasks'],
-    queryFn: () => apiRequest('ai-manager/tasks'),
+    queryFn: async () => {
+      const response = await fetch('/api/ai-manager/tasks', { credentials: 'include' });
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
   });
 
-  const { data: aiAlerts = [] } = useQuery({
+  const { data: aiAlerts = [] } = useQuery<any[]>({
     queryKey: ['ai-alerts'],
-    queryFn: () => apiRequest('ai-manager/alerts'),
+    queryFn: async () => {
+      const response = await fetch('/api/ai-manager/alerts', { credentials: 'include' });
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
   });
 
-  const { data: aiProducts = [] } = useQuery({
+  const { data: aiProducts = [] } = useQuery<any[]>({
     queryKey: ['ai-products'],
-    queryFn: () => apiRequest('ai-manager/products'),
+    queryFn: async () => {
+      const response = await fetch('/api/ai-manager/products', { credentials: 'include' });
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
   });
 
-  const { data: aiConfig } = useQuery({
+  const { data: aiConfig } = useQuery<any>({
     queryKey: ['ai-config'],
-    queryFn: () => apiRequest('ai-manager/config'),
+    queryFn: async () => {
+      const response = await fetch('/api/ai-manager/config', { credentials: 'include' });
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
   });
 
   const triggerMonitoringMutation = useMutation({
     mutationFn: async (partnerId: number) => {
-      return apiRequest(`ai-manager/monitor/partner/${partnerId}`, { method: 'POST' });
+      const response = await fetch(`/api/ai-manager/monitor/partner/${partnerId}`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error('Failed to trigger monitoring');
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ai-alerts'] });
