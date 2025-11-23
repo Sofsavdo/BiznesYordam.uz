@@ -16,6 +16,7 @@ import { DataExportButton } from '@/components/DataExportButton';
 import { ScheduledReports } from '@/components/ScheduledReports';
 import { AdminMarketplaceIntegration } from '@/components/AdminMarketplaceIntegration';
 import { AdminPartnersManagement } from '@/components/AdminPartnersManagement';
+import { AIManagerDashboard } from '@/components/AIManagerDashboard';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
