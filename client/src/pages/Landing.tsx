@@ -1,4 +1,7 @@
 import { FulfillmentCalculator } from '@/components/FulfillmentCalculator';
+import { AIFeatureShowcase } from '@/components/AIFeatureShowcase';
+import { CostComparisonSection } from '@/components/CostComparisonSection';
+import { GrowthGuaranteeSection } from '@/components/GrowthGuaranteeSection';
 import { Navigation } from '@/components/Navigation';
 import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -334,8 +337,17 @@ export default function Landing() {
           </div>
         </section>
 
+        {/* AI Features Showcase - YANGI! */}
+        <AIFeatureShowcase />
+
+        {/* Cost Comparison - YANGI! */}
+        <CostComparisonSection />
+
         {/* Calculator Section */}
         <FulfillmentCalculator />
+
+        {/* Growth Guarantee - YANGI! */}
+        <GrowthGuaranteeSection />
 
         {/* Pricing Section */}
         <section id="pricing" className="py-20 bg-gradient-to-br from-muted/30 to-primary/5">
