@@ -540,16 +540,41 @@ export default function Landing() {
                 </Card>
               ))}
             </div>
+            
+            {/* Trust Badge */}
+            <div className="mt-16 text-center">
+              <div className="inline-flex items-center bg-white/90 backdrop-blur-sm rounded-full px-8 py-4 shadow-xl border-2 border-purple-200">
+                <Shield className="w-6 h-6 text-green-500 mr-3" />
+                <span className="text-slate-700 font-bold text-lg">100% Verified Reviews</span>
+                <CheckCircle className="w-6 h-6 text-green-500 ml-3" />
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="py-20 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Testimonials Section - PREMIUM */}
+        <section className="py-24 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-400 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-pink-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="text-center mb-16 animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Hamkorlarimiz Fikri</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Bizning hamkorlarimiz qanday professional natijalarga erishganini ko'ring
+              <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-none px-6 py-2 text-base mb-6">
+                <MessageCircle className="w-5 h-5 mr-2 inline" />
+                HAMKORLAR SHARHLARI
+              </Badge>
+              
+              <h2 className="text-5xl md:text-6xl font-black mb-6">
+                <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+                  Muvaffaqiyat Hikoyalari
+                </span>
+              </h2>
+              
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                Real hamkorlarimizning <strong className="text-purple-600">haqiqiy natijalari</strong> va tajribalari
               </p>
             </div>
             
@@ -557,30 +582,50 @@ export default function Landing() {
               {testimonials.map((testimonial, index) => (
                 <Card 
                   key={index} 
-                  className="hover-lift animate-slide-up shadow-elegant"
+                  className="bg-white/80 backdrop-blur-sm border-2 border-white hover:border-purple-200 hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-2xl animate-slide-up"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                        <span className="text-primary font-bold text-lg">{testimonial.avatar}</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                        <p className="text-sm text-muted-foreground">{testimonial.business}</p>
-                      </div>
-                    </div>
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      "{testimonial.content}"
-                    </p>
-                    <div className="flex items-center text-yellow-500">
+                  <CardContent className="p-8">
+                    {/* Rating Stars - Top */}
+                    <div className="flex items-center justify-center mb-6">
                       {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-current" />
+                        <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400 animate-pulse" style={{animationDelay: `${i * 0.1}s`}} />
                       ))}
+                    </div>
+                    
+                    {/* Quote Icon */}
+                    <div className="text-purple-200 text-6xl font-serif mb-4 text-center leading-none">"</div>
+                    
+                    {/* Testimonial Content */}
+                    <p className="text-slate-700 text-lg mb-6 leading-relaxed text-center font-medium italic">
+                      {testimonial.content}
+                    </p>
+                    
+                    {/* Divider */}
+                    <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-6 rounded-full"></div>
+                    
+                    {/* Author Info */}
+                    <div className="flex items-center justify-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4 shadow-lg">
+                        <span className="text-white font-bold text-2xl">{testimonial.avatar}</span>
+                      </div>
+                      <div className="text-left">
+                        <h4 className="font-bold text-slate-900 text-lg">{testimonial.name}</h4>
+                        <p className="text-sm text-purple-600 font-semibold">{testimonial.business}</p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
               ))}
+            </div>
+            
+            {/* Trust Badge */}
+            <div className="mt-16 text-center">
+              <div className="inline-flex items-center bg-white/90 backdrop-blur-sm rounded-full px-8 py-4 shadow-xl border-2 border-purple-200">
+                <Shield className="w-6 h-6 text-green-500 mr-3" />
+                <span className="text-slate-700 font-bold text-lg">100% Verified Reviews</span>
+                <CheckCircle className="w-6 h-6 text-green-500 ml-3" />
+              </div>
             </div>
           </div>
         </section>
