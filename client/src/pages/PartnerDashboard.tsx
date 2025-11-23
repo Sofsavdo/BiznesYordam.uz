@@ -251,11 +251,162 @@ export default function PartnerDashboard() {
               <InventoryTracker />
             </TabsContent>
 
-            {/* Boshqa tablar ham qoladi — ularni o‘chirib qisqartirdim, lekin saqlang */}
-            <TabsContent value="products">{/* Mahsulotlar */}</TabsContent>
-            <TabsContent value="requests">{/* So'rovlar */}</TabsContent>
-            <TabsContent value="profit"><ProfitDashboard /></TabsContent>
-            <TabsContent value="trends"><TrendingProducts /></TabsContent>
+            {/* Inventory (Ombor) Tab */}
+            <TabsContent value="inventory">
+              <InventoryManagement />
+            </TabsContent>
+
+            {/* Orders (Buyurtmalar) Tab */}
+            <TabsContent value="orders">
+              <OrderManagement />
+            </TabsContent>
+
+            {/* Analytics (Tahlil) Tab */}
+            <TabsContent value="analytics">
+              <ComprehensiveAnalytics data={analytics} />
+            </TabsContent>
+
+            {/* Products (Mahsulotlar) Tab */}
+            <TabsContent value="products" className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">Mahsulotlar</h3>
+                <ProductForm />
+              </div>
+              
+              {productsLoading ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
+                    <p>Yuklanmoqda...</p>
+                  </CardContent>
+                </Card>
+              ) : products.length === 0 ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+                    <p className="text-lg font-medium mb-2">Mahsulotlar yo'q</p>
+                    <p className="text-muted-foreground mb-4">Birinchi mahsulotingizni qo'shing</p>
+                    <ProductForm />
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-4">
+                  {products.map((product) => (
+                    <Card key={product.id} className="hover:shadow-md transition-shadow">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h3 className="text-lg font-semibold">{product.name}</h3>
+                              <Badge variant={product.isActive ? 'default' : 'secondary'}>{product.isActive ? 'Faol' : 'Nofaol'}</Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-3">{product.description}</p>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                              <div>
+                                <p className="text-muted-foreground">SKU</p>
+                                <p className="font-medium">{product.sku}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Kategoriya</p>
+                                <p className="font-medium">{product.category}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Narx</p>
+                                <p className="font-medium text-green-600">{formatCurrency(parseFloat(product.price))}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Tan narxi</p>
+                                <p className="font-medium">{formatCurrency(parseFloat(product.costPrice))}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="sm"><Edit className="h-4 w-4" /></Button>
+                            <Button variant="ghost" size="sm"><Trash2 className="h-4 w-4" /></Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </TabsContent>
+
+            {/* Requests (So'rovlar) Tab */}
+            <TabsContent value="requests" className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="text-2xl font-bold">Fulfillment So'rovlar</h3>
+                <FulfillmentRequestForm products={products} />
+              </div>
+              
+              {requestsLoading ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
+                    <p>Yuklanmoqda...</p>
+                  </CardContent>
+                </Card>
+              ) : fulfillmentRequests.length === 0 ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <Truck className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+                    <p className="text-lg font-medium mb-2">So'rovlar yo'q</p>
+                    <p className="text-muted-foreground mb-4">Yangi so'rov yarating</p>
+                    <FulfillmentRequestForm products={products} />
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-4">
+                  {fulfillmentRequests.map((request) => (
+                    <Card key={request.id} className="hover:shadow-md transition-shadow">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h3 className="text-lg font-semibold">{request.title}</h3>
+                              {getStatusBadge(request.status)}
+                              <Badge className={getPriorityColor(request.priority)}>
+                                {request.priority === 'urgent' && 'Shoshilinch'}
+                                {request.priority === 'high' && 'Yuqori'}
+                                {request.priority === 'medium' && "O'rta"}
+                                {request.priority === 'low' && 'Past'}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-3">{request.description}</p>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                              <div>
+                                <p className="text-muted-foreground">Taxminiy xarajat</p>
+                                <p className="font-medium">{formatCurrency(parseFloat(request.estimatedCost))}</p>
+                              </div>
+                              {request.actualCost && (
+                                <div>
+                                  <p className="text-muted-foreground">Haqiqiy xarajat</p>
+                                  <p className="font-medium">{formatCurrency(parseFloat(request.actualCost))}</p>
+                                </div>
+                              )}
+                              <div>
+                                <p className="text-muted-foreground">Yaratilgan</p>
+                                <p className="font-medium">{new Date(request.createdAt).toLocaleDateString('uz-UZ')}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </TabsContent>
+
+            {/* Profit Tab */}
+            <TabsContent value="profit">
+              <ProfitDashboard />
+            </TabsContent>
+
+            {/* Trends Tab */}
+            <TabsContent value="trends">
+              <TrendingProducts />
+            </TabsContent>
           </Tabs>
         </div>
       </div>
