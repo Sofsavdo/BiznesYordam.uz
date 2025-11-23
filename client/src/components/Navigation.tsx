@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
-import { useLanguage } from '@/context/LanguageContext';
 
 import { LogOut, Menu, X } from 'lucide-react';
 
 export function Navigation() {
   const { user, logout } = useAuth();
-  const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [, setLocation] = useLocation();
 
@@ -61,7 +59,7 @@ export function Navigation() {
                   className="text-slate-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                   data-testid="button-services"
                 >
-                  {t('nav.services')}
+                  Xizmatlar
                 </button>
                 <button 
                   onClick={() => {
@@ -76,7 +74,7 @@ export function Navigation() {
                   className="text-slate-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                   data-testid="button-calculator"
                 >
-                  {t('nav.calculator')}
+                  Kalkulyator
                 </button>
                 <button 
                   onClick={() => {
@@ -91,14 +89,14 @@ export function Navigation() {
                   className="text-slate-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                   data-testid="button-pricing"
                 >
-                  {t('nav.pricing')}
+                  Tariflar
                 </button>
                 <Button 
                   onClick={() => setLocation('/login')}
                   className="bg-primary hover:bg-primary/90 hover-lift"
                   data-testid="button-login"
                 >
-                  {t('nav.login')}
+                  Kirish
                 </Button>
                 <Button 
                   variant="outline"
@@ -106,13 +104,13 @@ export function Navigation() {
                   className="hover-lift"
                   data-testid="button-register"
                 >
-                  {t('nav.register')}
+                  Ro'yxatdan o'tish
                 </Button>
               </>
             ) : (
               <div className="flex items-center space-x-4">
                 <span className="text-sm text-slate-600">
-                  {t('nav.hello')}, {user.firstName || user.username}
+                  Salom, {user.firstName || user.username}
                 </span>
                 {user.role === 'admin' && (
                   <Button
@@ -120,7 +118,7 @@ export function Navigation() {
                     variant="outline"
                     className="hover-lift"
                   >
-                    {t('nav.admin')}
+                    Admin
                   </Button>
                 )}
                 {user.role === 'partner' && (
@@ -129,7 +127,7 @@ export function Navigation() {
                     variant="outline"
                     className="hover-lift"
                   >
-                    {t('nav.dashboard')}
+                    Dashboard
                   </Button>
                 )}
                 <Button
@@ -139,7 +137,7 @@ export function Navigation() {
                   className="text-slate-600 hover:text-slate-900"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
-                  {t('nav.logout')}
+                  Chiqish
                 </Button>
               </div>
             )}
