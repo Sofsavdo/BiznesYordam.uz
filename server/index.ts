@@ -194,16 +194,11 @@ app.use((req, res, next) => {
   }
   app.use(errorHandler);
 
-  // ✅ PORT - Render'dan oladi
+    // ✅ PORT - Render'dan oladi
   const port = parseInt(process.env.PORT || "5000", 10);
-  server.listen(
-    {
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    },
-    () => {
-      log(`✅ Server running on port ${port}`);
-    }
-  );
+  
+  // Windows'da ENOTSUP xatosini oldini olish uchun oddiy listen
+  server.listen(port, "0.0.0.0", () => {
+    log(`✅ Server running on port ${port}`);
+  });
 })();

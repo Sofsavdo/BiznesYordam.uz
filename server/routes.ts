@@ -15,6 +15,12 @@ import { ZodError } from "zod";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import debugRoutes from "./debugRoutes";
+import inventoryRoutes from "./routes/inventoryRoutes";
+import investorRoutes from "./routes/investorRoutes";
+import marketplaceIntegrationRoutes from "./routes/marketplaceIntegrationRoutes";
+import subscriptionRoutes from "./routes/subscriptionRoutes";
+import forecastRoutes from "./routes/forecastRoutes";
+import broadcastRoutes from "./routes/broadcastRoutes";
 
 // Enhanced authentication middleware with better error handling
 function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -700,6 +706,26 @@ export function registerRoutes(app: express.Application): Server {
       });
     }
   }));
+
+  // ==================== NEW MODULE ROUTES ====================
+
+  // Inventory Tracking routes
+  app.use("/api/inventory", requirePartner, inventoryRoutes);
+
+  // Investor routes
+  app.use("/api/investor", requireAuth, investorRoutes);
+
+  // Marketplace Integration routes (Gibrid)
+  app.use("/api/marketplace-integration", requireAuth, marketplaceIntegrationRoutes);
+
+  // Subscription & Add-ons routes
+  app.use("/api/subscriptions", requirePartner, subscriptionRoutes);
+
+  // Forecast & Business Intelligence routes
+  app.use("/api/forecast", requirePartner, forecastRoutes);
+
+  // Broadcast & Notifications routes
+  app.use("/api/broadcast", requireAuth, broadcastRoutes);
 
   // ==================== INVENTORY MANAGEMENT ROUTES ====================
 
