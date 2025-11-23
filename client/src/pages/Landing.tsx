@@ -24,7 +24,9 @@ import {
   Users,
   ArrowRight,
   Play,
-  MessageCircle
+  MessageCircle,
+  Sparkles,
+  Rocket
 } from 'lucide-react';
 import { useEffect, useState } from "react";
 
@@ -194,77 +196,145 @@ export default function Landing() {
     <div className="min-h-screen bg-background hero-surface">
       <Navigation />
       <main className="pt-20 sm:pt-24 md:pt-28">
-        {/* Hero Section */}
-        <section className="pt-10 md:pt-16 pb-16 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
-          {/* Background decorative elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent/10 to-primary/10 rounded-full blur-3xl"></div>
+        {/* Hero Section - PREMIUM DESIGN */}
+        <section className="pt-10 md:pt-20 pb-20 md:pb-32 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+          {/* Advanced Background Effects */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-purple-400 to-pink-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+          </div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Content */}
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Left Content - Enhanced */}
               <div className="text-center lg:text-left animate-fade-in">
-                <div className="inline-flex items-center bg-white/80 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-6">
-                  <span className="text-sm font-medium text-primary">🚀 #1 Marketplace Management Platform</span>
+                {/* Premium Badge */}
+                <div className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full px-6 py-3 mb-8 shadow-xl animate-bounce">
+                  <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
+                  <span className="text-sm font-bold"> O'zbekiston #1 AI Platform</span>
+                  <Badge className="ml-3 bg-white/20 text-white border-none">NEW</Badge>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-                  <span className="text-gradient-primary block">BiznesYordam</span>
-                  <span className="text-muted-foreground">O'zbekiston uchun</span>
+                
+                {/* Hero Title - Massive & Eye-catching */}
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                    BiznesYordam
+                  </span>
+                  <span className="block text-3xl md:text-4xl lg:text-5xl font-bold text-slate-700">
+                    AI bilan Savdo Qiling! 
+                  </span>
                 </h1>
-                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0">
-                  Professional marketplace fulfillment platformasi — Uzum, Wildberries, Yandex va Ozon bilan integratsiya, real-time analytics, premium qo'llab-quvvatlash.
+                
+                {/* Enhanced Description */}
+                <p className="text-xl md:text-2xl text-slate-600 mb-6 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                  <strong className="text-slate-900">O'zbekistanda birinchi</strong> <span className="text-purple-600 font-semibold">GPT-4 Sun'iy Intellekt</span> bilan ishlaydigan marketplace management platformasi.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                
+                {/* Key Value Props - Enhanced */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border-2 border-blue-200 shadow-lg hover:scale-105 transition-all">
+                    <div className="text-3xl font-bold text-blue-600 mb-1">10x</div>
+                    <div className="text-sm text-slate-600 font-medium">Tezroq</div>
+                  </div>
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border-2 border-purple-200 shadow-lg hover:scale-105 transition-all">
+                    <div className="text-3xl font-bold text-purple-600 mb-1">76%</div>
+                    <div className="text-sm text-slate-600 font-medium">Tejovchi</div>
+                  </div>
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border-2 border-pink-200 shadow-lg hover:scale-105 transition-all">
+                    <div className="text-3xl font-bold text-pink-600 mb-1">24/7</div>
+                    <div className="text-sm text-slate-600 font-medium">Support</div>
+                  </div>
+                </div>
+                
+                {/* CTA Buttons - Premium */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
                   <Button 
                     onClick={() => setLocation('/partner-registration')}
-                    className="gradient-primary text-primary-foreground hover:shadow-glow scale-hover font-semibold h-12 px-6 py-3 hover-lift"
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold text-lg px-8 py-7 rounded-2xl shadow-2xl hover:shadow-blue-500/50 transition-all transform hover:scale-105"
                   >
-                    <Crown className="mr-2 h-5 w-5" /> Hamkorlikni Boshlash
+                    <Rocket className="mr-3 h-6 w-6 animate-bounce" />
+                    BEPUL BOSHLASH
+                    <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                   <Button 
                     onClick={() => {
                       const pricingSection = document.getElementById('pricing');
                       pricingSection?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    variant="outline" 
-                    className="hover-lift border-2 h-12 px-6 py-3"
+                    size="lg"
+                    variant="outline"
+                    className="border-3 border-slate-700 text-slate-700 hover:bg-slate-700 hover:text-white font-bold text-lg px-8 py-7 rounded-2xl transition-all transform hover:scale-105"
                   >
-                    <Package className="mr-2 h-5 w-5" /> Tariflarni Ko'rish
+                    <Play className="mr-2 h-6 w-6" />
+                    Demo Ko'rish
                   </Button>
                 </div>
                 
-                {/* Key Features */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                  <div className="flex items-center justify-center lg:justify-start">
-                    <CheckCircle className="text-accent mr-2 h-4 w-4" />
-                    <span className="text-muted-foreground">To'liq Fulfillment</span>
+                {/* Trust Indicators */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm">
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <Shield className="text-green-500 h-5 w-5" />
+                    <span className="font-medium">90 Kun Kafolat</span>
                   </div>
-                  <div className="flex items-center justify-center lg:justify-start">
-                    <CheckCircle className="text-accent mr-2 h-4 w-4" />
-                    <span className="text-muted-foreground">Real-time Analytics</span>
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <Users className="text-blue-500 h-5 w-5" />
+                    <span className="font-medium">500+ Hamkorlar</span>
                   </div>
-                  <div className="flex items-center justify-center lg:justify-start">
-                    <CheckCircle className="text-accent mr-2 h-4 w-4" />
-                    <span className="text-muted-foreground">24/7 Qo'llab-quvvatlash</span>
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <Star className="text-yellow-500 h-5 w-5 fill-current" />
+                    <span className="font-medium">99.2% Qoniqish</span>
                   </div>
                 </div>
               </div>
 
-              {/* Right Image */}
+              {/* Right Side - Enhanced Dashboard Preview */}
               <div className="relative animate-slide-up">
-                <div className="relative bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-business border border-white/30">
+                {/* Floating Stats Cards */}
+                <div className="absolute -top-6 -left-6 bg-gradient-to-br from-green-400 to-emerald-500 text-white rounded-2xl p-4 shadow-2xl z-10 animate-bounce">
+                  <div className="flex items-center gap-3">
+                    <TrendingUp className="h-8 w-8" />
+                    <div>
+                      <div className="text-2xl font-bold">+250%</div>
+                      <div className="text-xs opacity-90">Savdo O'sishi</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="absolute -bottom-6 -right-6 bg-gradient-to-br from-blue-400 to-purple-500 text-white rounded-2xl p-4 shadow-2xl z-10 animate-pulse">
+                  <div className="flex items-center gap-3">
+                    <DollarSign className="h-8 w-8" />
+                    <div>
+                      <div className="text-2xl font-bold">+800%</div>
+                      <div className="text-xs opacity-90">Foyda</div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Main Dashboard Image */}
+                <div className="relative bg-gradient-to-br from-white to-blue-50 rounded-3xl p-4 shadow-2xl border-4 border-white/50 backdrop-blur-lg">
                   <img 
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-                    alt="Professional Marketplace Dashboard" 
-                    className="w-full h-auto rounded-2xl shadow-elegant" 
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800" 
+                    alt="Professional AI Dashboard" 
+                    className="w-full h-auto rounded-2xl shadow-xl" 
                   />
                   
-                  {/* Floating elements */}
-                  <div className="absolute -top-4 -right-4 bg-accent text-white p-3 rounded-xl shadow-glow animate-bounce">
-                    <BarChart3 className="h-6 w-6" />
+                  {/* Corner Badges */}
+                  <div className="absolute top-8 right-8 bg-gradient-to-br from-yellow-400 to-orange-500 text-white p-3 rounded-xl shadow-lg animate-pulse">
+                    <Zap className="h-7 w-7" />
                   </div>
-                  <div className="absolute -bottom-4 -left-4 bg-primary text-white p-3 rounded-xl shadow-glow animate-pulse">
-                    <Target className="h-6 w-6" />
+                  
+                  {/* Bottom Stats Bar */}
+                  <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <div className="text-xs text-slate-600 font-medium">Live Analytics</div>
+                      <div className="flex gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -272,62 +342,106 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-16 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Stats Section - PREMIUM */}
+        <section className="py-20 bg-gradient-to-br from-white via-blue-50 to-purple-50 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="text-center mb-12">
+              <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-none px-6 py-2 text-base mb-4">
+                <BarChart3 className="w-4 h-4 mr-2 inline" />
+                HAQIQIY NATIJALAR
+              </Badge>
+            </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
-                  <div className="text-muted-foreground">{stat.label}</div>
+                <div 
+                  key={index} 
+                  className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border-2 border-white shadow-2xl hover:scale-110 transition-all duration-300 animate-scale-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                      <stat.icon className="h-8 w-8 text-white" />
+                    </div>
+                    <div className="text-5xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                      {stat.value}
+                    </div>
+                    <div className="text-slate-600 font-semibold text-center">{stat.label}</div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Services Section */}
-        <section id="services" className="py-20 bg-muted/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Services Section - PREMIUM DARK */}
+        <section id="services" className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+          {/* Animated Grid Background */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{backgroundImage: 'linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)', backgroundSize: '50px 50px'}}></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="text-center mb-20 animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Professional Xizmatlar</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                Marketplace savdolaringiz uchun to'liq professional yechim va fulfillment xizmatlari
+              <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 px-6 py-2 text-lg mb-6">
+                <Sparkles className="w-5 h-5 mr-2 inline animate-pulse" />
+                PREMIUM XIZMATLAR
+              </Badge>
+              
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  To'liq Yechim
+                </span>
+                <br />
+                <span className="text-white">Sizning Biznesingiz Uchun</span>
+              </h2>
+              
+              <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
+                Marketplace savdolaringiz uchun <strong className="text-yellow-400">to'liq professional yechim</strong> va
+                <strong className="text-blue-400"> fulfillment xizmatlari</strong> - hammasi bir joyda!
               </p>
-              <div className="inline-flex items-center bg-primary/10 border border-primary/20 rounded-full px-6 py-3">
-                <span className="text-primary font-semibold">🚀 To'liq Fulfillment Xizmati</span>
+              
+              <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-400 text-slate-900 rounded-full px-8 py-4 font-bold text-lg shadow-2xl">
+                <Rocket className="w-6 h-6 mr-3 animate-bounce" />
+                To'liq Fulfillment + AI Automation
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {services.map((service, index) => (
                 <Card 
                   key={index} 
-                  className="hover-lift animate-slide-up border-2 border-primary/10 shadow-elegant"
+                  className="bg-white/10 backdrop-blur-md border-2 border-white/20 hover:border-white/40 hover:bg-white/15 transition-all duration-300 hover:scale-105 shadow-2xl animate-slide-up"
                   style={{ animationDelay: `${index * 0.2}s` }}
                   data-testid={`card-${service.title.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   <CardHeader>
-                    <div className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6`}>
-                      <service.icon className={`text-2xl ${service.iconColor}`} />
+                    <div className="w-24 h-24 bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 rounded-3xl flex items-center justify-center mb-6 shadow-2xl transform hover:rotate-6 transition-transform">
+                      <service.icon className="text-4xl text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold text-foreground mb-4">{service.title}</CardTitle>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                    <CardTitle className="text-3xl font-bold text-white mb-4">{service.title}</CardTitle>
+                    <p className="text-white/80 text-lg mb-6 leading-relaxed">
                       {service.description}
                     </p>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-4 mb-6">
                       {service.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center">
-                          <CheckCircle className="text-accent mr-3 h-4 w-4" />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        <div key={featureIndex} className="flex items-start gap-3 bg-white/5 rounded-xl p-3 hover:bg-white/10 transition-all">
+                          <CheckCircle className="text-green-400 h-6 w-6 flex-shrink-0 mt-0.5" />
+                          <span className="text-white font-medium">{feature}</span>
                         </div>
                       ))}
                     </div>
-                    <div className={`bg-gradient-to-r ${service.color} rounded-lg p-4`}>
-                      <p className={`text-sm ${service.iconColor} font-medium`}>
-                        💡 Barcha marketplace'lar uchun optimizatsiya
+                    <div className="bg-gradient-to-r from-yellow-400/20 to-orange-400/20 backdrop-blur-sm rounded-2xl p-5 border border-yellow-400/30">
+                      <p className="text-yellow-300 font-bold text-center flex items-center justify-center gap-2">
+                        <Zap className="w-5 h-5" />
+                        Premium Marketplace Integration
                       </p>
                     </div>
                   </CardContent>
