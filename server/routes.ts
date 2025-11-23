@@ -21,6 +21,7 @@ import marketplaceIntegrationRoutes from "./routes/marketplaceIntegrationRoutes"
 import subscriptionRoutes from "./routes/subscriptionRoutes";
 import forecastRoutes from "./routes/forecastRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
+import aiManagerRoutes from "./routes/aiManagerRoutes";
 
 // Enhanced authentication middleware with better error handling
 function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -726,6 +727,9 @@ export function registerRoutes(app: express.Application): Server {
 
   // Broadcast & Notifications routes
   app.use("/api/broadcast", requireAuth, broadcastRoutes);
+
+  // AI Autonomous Manager routes
+  app.use("/api/ai-manager", requireAuth, aiManagerRoutes);
 
   // ==================== INVENTORY MANAGEMENT ROUTES ====================
 
