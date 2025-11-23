@@ -1,6 +1,6 @@
-// NEW PRICING CONFIGURATION
-// Updated: 6-Nov-2025
-// Version: 3.0.0
+// NEW PRICING CONFIGURATION - PROFIT SHARE MODEL
+// Updated: 24-Nov-2025
+// Version: 4.0.0 - WIN-WIN Model
 
 export const NEW_PRICING_TIERS = {
   starter_pro: {
@@ -10,17 +10,16 @@ export const NEW_PRICING_TIERS = {
     nameRu: 'Starter Pro',
     nameEn: 'Starter Pro',
     
-    // YANGI: Oylik to'lov
-    monthlyFee: 2500000, // 2,500,000 so'm
+    // PROFIT SHARE MODEL: Abonent + Foydadan %
+    monthlyFee: 3000000, // 3,000,000 so'm oylik abonent
     
-    // YANGI: Komissiya savdodan (oldin foyda edi)
-    commissionRate: 0.25, // 25%
-    commissionMin: 0.25,
-    commissionMax: 0.25,
+    // YANGI: Profit share (foydadan %)
+    profitShareRate: 0.50, // 50% foydadan
+    commissionRate: 0.50, // Legacy compat
     
     // Maqsadli aylanma
-    minRevenue: 10000000, // 10M
-    maxRevenue: 30000000, // 30M
+    minRevenue: 20000000, // 20M
+    maxRevenue: 50000000, // 50M
     
     // Cheklovlar
     limits: {
@@ -45,9 +44,10 @@ export const NEW_PRICING_TIERS = {
     ],
     
     // Qo'shimcha ma'lumotlar
-    description: 'Yangi boshlovchilar va kichik bizneslar uchun',
+    description: 'Yangi boshlovchilar - past risk, yuqori profit share',
     popular: false,
     color: 'blue',
+    badge: 'Low Risk'
   },
   
   business_standard: {
@@ -57,17 +57,16 @@ export const NEW_PRICING_TIERS = {
     nameRu: 'Business Standard',
     nameEn: 'Business Standard',
     
-    // YANGI: Oylik to'lov
-    monthlyFee: 5000000, // 5,000,000 so'm
+    // PROFIT SHARE MODEL: Abonent + Foydadan %
+    monthlyFee: 8000000, // 8,000,000 so'm oylik abonent
     
-    // YANGI: Komissiya savdodan
-    commissionRate: 0.20, // 20%
-    commissionMin: 0.20,
-    commissionMax: 0.20,
+    // YANGI: Profit share (foydadan %)
+    profitShareRate: 0.25, // 25% foydadan
+    commissionRate: 0.25, // Legacy compat
     
     // Maqsadli aylanma
-    minRevenue: 30000000, // 30M
-    maxRevenue: 100000000, // 100M
+    minRevenue: 50000000, // 50M
+    maxRevenue: 150000000, // 150M
     
     // Cheklovlar
     limits: {
@@ -96,9 +95,10 @@ export const NEW_PRICING_TIERS = {
       'Sharh boshqaruvi',
     ],
     
-    description: 'O\'sib borayotgan bizneslar uchun',
+    description: 'O\'sib borayotgan biznes - muvozanatlangan model',
     popular: true,
     color: 'green',
+    badge: 'Recommended'
   },
   
   professional_plus: {
@@ -108,17 +108,16 @@ export const NEW_PRICING_TIERS = {
     nameRu: 'Professional Plus',
     nameEn: 'Professional Plus',
     
-    // YANGI: Oylik to'lov
-    monthlyFee: 10000000, // 10,000,000 so'm
+    // PROFIT SHARE MODEL: Abonent + Foydadan %
+    monthlyFee: 18000000, // 18,000,000 so'm oylik abonent
     
-    // YANGI: Komissiya savdodan
-    commissionRate: 0.15, // 15%
-    commissionMin: 0.15,
-    commissionMax: 0.15,
+    // YANGI: Profit share (foydadan %)
+    profitShareRate: 0.15, // 15% foydadan
+    commissionRate: 0.15, // Legacy compat
     
     // Maqsadli aylanma
-    minRevenue: 100000000, // 100M
-    maxRevenue: 300000000, // 300M
+    minRevenue: 150000000, // 150M
+    maxRevenue: 400000000, // 400M
     
     // Cheklovlar
     limits: {
@@ -151,9 +150,10 @@ export const NEW_PRICING_TIERS = {
       'Reklama boshqaruvi',
     ],
     
-    description: 'Katta bizneslar va professionallar uchun',
+    description: 'Katta biznes - yuqori to\'lov, past profit share',
     popular: false,
     color: 'purple',
+    badge: 'High Volume'
   },
   
   enterprise_elite: {
@@ -163,16 +163,15 @@ export const NEW_PRICING_TIERS = {
     nameRu: 'Enterprise Elite',
     nameEn: 'Enterprise Elite',
     
-    // YANGI: Oylik to'lov
-    monthlyFee: 20000000, // 20,000,000 so'm
+    // PROFIT SHARE MODEL: Abonent + Foydadan %
+    monthlyFee: 25000000, // 25,000,000 so'm oylik abonent
     
-    // YANGI: Komissiya savdodan
-    commissionRate: 0.10, // 10%
-    commissionMin: 0.10,
-    commissionMax: 0.10,
+    // YANGI: Profit share (foydadan %)
+    profitShareRate: 0.10, // 10% foydadan
+    commissionRate: 0.10, // Legacy compat
     
     // Maqsadli aylanma
-    minRevenue: 300000000, // 300M
+    minRevenue: 500000000, // 500M
     maxRevenue: null, // Cheksiz
     
     // Cheklovlar
@@ -205,18 +204,29 @@ export const NEW_PRICING_TIERS = {
       'Investor munosabatlari',
     ],
     
-    description: 'Yirik kompaniyalar va investorlar uchun',
+    description: 'Korporate - maksimal stabillik, minimal share',
     popular: false,
     color: 'gold',
+    badge: 'VIP'
   },
 };
 
-// YANGI: Komissiya hisoblash funksiyasi (savdodan)
+// YANGI v4: Profit share hisoblash (foydadan %)
+// netProfit = revenue - costs - marketplace fees
+export function calculateProfitShare(netProfit: number, tier: string): number {
+  const tierConfig = NEW_PRICING_TIERS[tier as keyof typeof NEW_PRICING_TIERS];
+  if (!tierConfig) return 0;
+  
+  return netProfit * (tierConfig.profitShareRate || tierConfig.commissionRate);
+}
+
+// Legacy compat: Komissiya hisoblash (eski model)
 export function calculateCommission(revenue: number, tier: string): number {
   const tierConfig = NEW_PRICING_TIERS[tier as keyof typeof NEW_PRICING_TIERS];
   if (!tierConfig) return 0;
   
-  return revenue * tierConfig.commissionRate;
+  // Legacy: savdodan % (eski model)
+  return revenue * (tierConfig.profitShareRate || tierConfig.commissionRate);
 }
 
 // YANGI: Oylik to'lov olish
@@ -227,80 +237,68 @@ export function getMonthlyFee(tier: string): number {
   return tierConfig.monthlyFee;
 }
 
-// YANGI: Umumiy to'lov hisoblash
-export function calculateTotalPayment(revenue: number, tier: string): {
+// YANGI v4: Umumiy to'lov hisoblash (PROFIT SHARE MODEL)
+export function calculateTotalPayment(
+  revenue: number, 
+  netProfit: number, 
+  tier: string
+): {
   monthlyFee: number;
-  commission: number;
+  profitShare: number;
+  commission: number; // Legacy compat
   total: number;
 } {
   const monthlyFee = getMonthlyFee(tier);
-  const commission = calculateCommission(revenue, tier);
+  const profitShare = calculateProfitShare(netProfit, tier);
   
   return {
     monthlyFee,
-    commission,
-    total: monthlyFee + commission,
+    profitShare,
+    commission: profitShare, // Legacy compat
+    total: monthlyFee + profitShare,
   };
 }
 
-// YANGI: Hamkor foydasi hisoblash
+// YANGI v4: Hamkor foydasi hisoblash (PROFIT SHARE MODEL)
 export function calculatePartnerProfit(
   revenue: number,
   productCost: number,
+  marketplaceFees: number,
   tier: string
 ): {
   revenue: number;
   productCost: number;
+  marketplaceFees: number;
+  grossProfit: number;
   monthlyFee: number;
-  commission: number;
-  totalCosts: number;
+  profitShare: number;
+  totalFulfillmentFee: number;
   netProfit: number;
   profitMargin: number;
 } {
-  const payment = calculateTotalPayment(revenue, tier);
-  const totalCosts = productCost + payment.total;
-  const netProfit = revenue - totalCosts;
+  // 1. Gross profit (avval marketplace fees ayiramiz)
+  const grossProfit = revenue - productCost - marketplaceFees;
+  
+  // 2. Fulfillment fees (abonent + profit share)
+  const payment = calculateTotalPayment(revenue, grossProfit, tier);
+  
+  // 3. Net profit (gross - fulfillment)
+  const netProfit = grossProfit - payment.total;
   const profitMargin = revenue > 0 ? (netProfit / revenue) * 100 : 0;
   
   return {
     revenue,
     productCost,
+    marketplaceFees,
+    grossProfit,
     monthlyFee: payment.monthlyFee,
-    commission: payment.commission,
-    totalCosts,
+    profitShare: payment.profitShare,
+    totalFulfillmentFee: payment.total,
     netProfit,
     profitMargin,
   };
 }
 
-// YANGI: Tejamkorlik hisoblash
-export function calculateSavings(revenue: number, tier: string): {
-  ourCost: number;
-  selfCost: number;
-  savings: number;
-  savingsPercent: number;
-} {
-  const payment = calculateTotalPayment(revenue, tier);
-  
-  // Agar o'zi qilsa (o'rtacha xarajatlar)
-  const selfCost = {
-    starter_pro: 17500000, // 15M jamoa + 2M ombor + 0.5M platforma
-    business_standard: 37000000, // 27M jamoa + 10M reklama
-    professional_plus: 65000000, // 40M jamoa + 20M marketing + 5M texnologiya
-    enterprise_elite: 145000000, // 80M jamoa + 50M marketing + 10M texnologiya + 5M yuridik
-  };
-  
-  const selfCostAmount = selfCost[tier as keyof typeof selfCost] || 0;
-  const savings = selfCostAmount - payment.total;
-  const savingsPercent = selfCostAmount > 0 ? (savings / selfCostAmount) * 100 : 0;
-  
-  return {
-    ourCost: payment.total,
-    selfCost: selfCostAmount,
-    savings,
-    savingsPercent,
-  };
-}
 
 // Export default
 export default NEW_PRICING_TIERS;
