@@ -4,6 +4,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useLocation } from 'wouter';
 import { 
   Brain, 
   Zap, 
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 
 export function AIFeatureShowcase() {
+  const [, setLocation] = useLocation();
   const aiFeatures = [
     {
       icon: Brain,
@@ -186,17 +188,19 @@ export function AIFeatureShowcase() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
+                onClick={() => setLocation('/partner-registration')}
                 size="lg"
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none shadow-xl hover:shadow-2xl transition-all"
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none shadow-xl hover:shadow-2xl transition-all hover:scale-105"
               >
                 <Brain className="w-5 h-5 mr-2" />
                 AI Demo Ko'rish
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button 
+                onClick={() => setLocation('/partner-registration')}
                 size="lg"
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10"
+                className="border-white/30 text-white hover:bg-white/10 hover:scale-105 transition-all"
               >
                 <Zap className="w-5 h-5 mr-2" />
                 Bepul Sinab Ko'rish

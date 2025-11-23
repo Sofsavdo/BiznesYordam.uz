@@ -4,6 +4,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useLocation } from 'wouter';
 import {
   Users,
   Warehouse,
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 
 export function CostComparisonSection() {
+  const [, setLocation] = useLocation();
   const traditionalCosts = {
     title: "An'anaviy Usul",
     subtitle: "2-3 hodim + Ombor + Inventar",
@@ -324,8 +326,9 @@ export function CostComparisonSection() {
               </div>
             </div>
             <Button 
+              onClick={() => setLocation('/partner-registration')}
               size="lg"
-              className="bg-white text-blue-600 hover:bg-slate-100 shadow-xl text-lg px-8 py-6"
+              className="bg-white text-blue-600 hover:bg-slate-100 shadow-xl text-lg px-8 py-6 hover:scale-105 transition-all"
             >
               <Sparkles className="w-6 h-6 mr-2" />
               Hoziroq Boshlash
