@@ -28,6 +28,7 @@ import { useLocation } from 'wouter';
 import { formatCurrency } from '@/lib/currency';
 import { apiRequest } from '@/lib/queryClient';
 import { useQueryClient } from '@tanstack/react-query';
+import { NEW_PRICING_TIERS } from '../../../NEW_PRICING_CONFIG';
 import {
   Package, TrendingUp, Settings, Crown, BarChart3, DollarSign,
   Target, Zap, CheckCircle, Clock, AlertTriangle, User, Building, CreditCard,
@@ -215,15 +216,20 @@ export default function PartnerDashboard() {
 
             <TabsContent value="overview" className="space-y-6">
               {/* Partner Tier Info Card */}
-              {partner && (
-                <PartnerTierInfo 
-                  currentTier={partner.pricingTier || 'starter_pro'}
-                  monthlyFee={parseFloat((partner as any).monthlyFee || '3000000')}
-                  profitShareRate={parseFloat((partner as any).profitShareRate || '0.50')}
-                  monthlyRevenue={stats.totalRevenue}
-                  onUpgradeClick={() => setShowTierModal(true)}
-                />
-              )}
+              {partner && (() => {
+                const tierKey = partner.pricingTier || 'starter_pro';
+                const tierConfig = NEW_PRICING_TIERS[tierKey as keyof typeof NEW_PRICING_TIERS];
+                
+                return (
+                  <PartnerTierInfo 
+                    currentTier={tierKey}
+                    monthlyFee={parseFloat((partner as any).monthlyFee || tierConfig.monthlyFee.toString())}
+                    profitShareRate={parseFloat((partner as any).profitShareRate || (tierConfig.profitShareRate || tierConfig.commissionRate).toString())}
+                    monthlyRevenue={stats.totalRevenue}
+                    onUpgradeClick={() => setShowTierModal(true)}
+                  />
+                );
+              })()}
               
               <StockAlerts />
               <div className="equal-grid grid-cols-1 lg:grid-cols-2 gap-6">
