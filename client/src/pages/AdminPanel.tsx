@@ -15,6 +15,7 @@ import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
 import { DataExportButton } from '@/components/DataExportButton';
 import { ScheduledReports } from '@/components/ScheduledReports';
 import { AdminMarketplaceIntegration } from '@/components/AdminMarketplaceIntegration';
+import { AdminPartnersManagement } from '@/components/AdminPartnersManagement';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
@@ -528,105 +529,9 @@ export default function AdminPanel() {
               <AdminMarketplaceIntegration />
             </TabsContent>
 
-            {/* Partners Tab */}
+            {/* Partners Tab - YANGI MUKAMMAL */}
             <TabsContent value="partners" className="space-y-6">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                <div>
-                  <h2 className="text-2xl font-bold">Hamkorlar Boshqaruvi</h2>
-                  <p className="text-muted-foreground">Hamkorlarni tasdiqlash va boshqarish</p>
-                </div>
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Hamkor qidirish..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-64"
-                  />
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-3 py-2 border border-input rounded-lg bg-background"
-                  >
-                    <option value="all">Barchasi</option>
-                    <option value="approved">Tasdiqlangan</option>
-                    <option value="pending">Kutilayotgan</option>
-                  </select>
-                </div>
-              </div>
-              <div className="grid gap-6">
-                {filteredPartners.map((partner) => (
-                  <Card key={partner.id} className="shadow-elegant hover-lift">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                            <span className="text-primary font-bold">
-                              {partner.businessName?.charAt(0) || 'H'}
-                            </span>
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-semibold">{partner.businessName}</h3>
-                            <p className="text-muted-foreground">
-                              {partner.userData?.firstName} {partner.userData?.lastName}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              {partner.userData?.email} • {partner.userData?.phone}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {getStatusBadge(partner.isApproved ? 'approved' : 'pending')}
-                          <Badge variant="outline">
-                            {getTierName(partner.pricingTier)}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div>
-                          <p className="text-sm text-muted-foreground">Kategoriya</p>
-                          <p className="font-medium">{partner.businessCategory}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">Oylik Aylanma</p>
-                          <p className="font-medium">{formatCurrency(parseFloat(partner.monthlyRevenue || '0'))}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">Ro'yxatdan o'tgan</p>
-                          <p className="font-medium">
-                            {new Date(partner.createdAt).toLocaleDateString('uz-UZ')}
-                          </p>
-                        </div>
-                      </div>
-                      {partner.notes && (
-                        <div className="mb-4 p-3 bg-muted/30 rounded-lg">
-                          <p className="text-sm text-muted-foreground">Izohlar:</p>
-                          <p className="text-sm">{partner.notes}</p>
-                        </div>
-                      )}
-                      {!partner.isApproved && (
-                        <div className="flex gap-2">
-                          <Button
-                            onClick={() => approvePartnerMutation.mutate(partner.id)}
-                            disabled={approvePartnerMutation.isPending}
-                            variant="success"
-                            size="sm"
-                          >
-                            <UserCheck className="w-4 h-4 mr-2" />
-                            Tasdiqlash
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                          >
-                            <UserX className="w-4 h-4 mr-2" />
-                            Rad etish
-                          </Button>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <AdminPartnersManagement />
             </TabsContent>
 
             {/* Fulfillment Requests Tab */}

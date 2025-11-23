@@ -6,7 +6,7 @@ import { getTierName } from '@/hooks/useTierAccess';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
-import { TierSelectionModal } from './TierSelectionModal';
+import { EnhancedTierUpgradeModal } from './EnhancedTierUpgradeModal';
 
 interface TierUpgradePromptProps {
   currentTier: string;
@@ -189,8 +189,8 @@ export function TierUpgradePrompt({
         </Card>
       </div>
 
-      {/* Tier Selection Modal */}
-      <TierSelectionModal 
+      {/* Enhanced Tier Upgrade Modal */}
+      <EnhancedTierUpgradeModal 
         isOpen={showTierModal}
         onClose={() => setShowTierModal(false)}
         onSuccess={() => setIsVisible(false)}

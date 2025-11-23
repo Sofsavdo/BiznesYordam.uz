@@ -164,10 +164,8 @@ export function EnhancedTierUpgradeModal({ isOpen, onClose, onSuccess, currentTi
   });
 
   const currentTierDetails = TIER_DETAILS[currentTier as keyof typeof TIER_DETAILS];
-  const availableTiers = Object.entries(TIER_DETAILS).filter(([key]) => {
-    const tierOrder = { starter_pro: 1, business_standard: 2, professional_plus: 3, enterprise_elite: 4 };
-    return tierOrder[key as keyof typeof tierOrder] > tierOrder[currentTier as keyof typeof tierOrder];
-  });
+  // BARCHA tariflarni ko'rsatish (hozirgi tarfdan boshqa)
+  const availableTiers = Object.entries(TIER_DETAILS).filter(([key]) => key !== currentTier);
 
   // ROI Calculator
   const roiCalculation = useMemo(() => {
