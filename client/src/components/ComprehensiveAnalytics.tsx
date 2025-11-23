@@ -26,7 +26,7 @@ interface ComprehensiveAnalyticsProps {
   data: AnalyticsData[];
 }
 
-export function ComprehensiveAnalytics({ data }: ComprehensiveAnalyticsProps) {
+export function ComprehensiveAnalytics({ data = [] }: ComprehensiveAnalyticsProps) {
   // Calculate summary statistics
   const totalRevenue = data.reduce((sum, item) => sum + parseFloat(item.revenue || '0'), 0);
   const totalOrders = data.reduce((sum, item) => sum + (item.orders || 0), 0);

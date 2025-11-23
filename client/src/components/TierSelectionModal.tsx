@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Check, Crown, Star, Zap, Sparkles } from 'lucide-react';
+import { Check, Crown, Star, Zap, Sparkles, DollarSign, Percent, TrendingUp, Package } from 'lucide-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
@@ -38,14 +38,83 @@ interface PricingTier {
   isActive: boolean;
 }
 
+// YANGI: To'liq tarif ma'lumotlari
+const TIER_INFO: Record<string, any> = {
+  starter_pro: {
+    name: 'Starter Pro',
+    monthlyFee: 2500000,
+    commissionRate: 25,
+    minRevenue: 10000000,
+    maxRevenue: 30000000,
+    color: 'blue',
+    icon: Package,
+    features: [
+      '1 ta marketplace',
+      '100 tagacha mahsulot',
+      'Basic dashboard',
+      'Ombor xizmati (100 kg)',
+      'Email yordam (48h)'
+    ]
+  },
+  business_standard: {
+    name: 'Business Standard',
+    monthlyFee: 5000000,
+    commissionRate: 20,
+    minRevenue: 30000000,
+    maxRevenue: 100000000,
+    color: 'green',
+    icon: TrendingUp,
+    popular: true,
+    features: [
+      '2 ta marketplace',
+      '500 tagacha mahsulot',
+      'To\'liq dashboard',
+      'Prognozlar',
+      'Ombor (500 kg)',
+      'Telefon yordam (24h)',
+      'Oylik konsultatsiya'
+    ]
+  },
+  professional_plus: {
+    name: 'Professional Plus',
+    monthlyFee: 10000000,
+    commissionRate: 15,
+    minRevenue: 100000000,
+    maxRevenue: 300000000,
+    color: 'purple',
+    icon: Star,
+    features: [
+      '4 ta marketplace',
+      '2,000 tagacha mahsulot',
+      'Premium dashboard',
+      'AI tahlil va Trend Hunter',
+      'Ombor (2,000 kg)',
+      '24/7 yordam',
+      'Shaxsiy menejer'
+    ]
+  },
+  enterprise_elite: {
+    name: 'Enterprise Elite',
+    monthlyFee: 20000000,
+    commissionRate: 10,
+    minRevenue: 300000000,
+    maxRevenue: null,
+    color: 'orange',
+    icon: Crown,
+    features: [
+      'Cheksiz marketplace',
+      'Cheksiz mahsulot',
+      'Enterprise dashboard',
+      'Full AI & Analytics',
+      'Ombor (5,000 kg)',
+      'Shaxsiy jamoa',
+      'VIP xizmat'
+    ]
+  }
+};
+
 const getTierDisplayName = (tier: string) => {
-  const names = {
-    starter_pro: 'Starter Pro',
-    business_standard: 'Business Standard',
-    professional_plus: 'Professional Plus',
-    enterprise_elite: 'Enterprise Elite'
-  };
-  return names[tier as keyof typeof names] || tier;
+  return TIER_INFO[tier]?.name || tier;
 };
 
 const getTierOrder = (tier: string) => {
@@ -177,22 +246,36 @@ export function TierSelectionModal({ isOpen, onClose, onSuccess, currentTier }: 
                           <Sparkles className="h-5 w-5 text-primary opacity-60 animate-float" />
                         </div>
                         <div className="space-y-3">
-                          <div className="text-3xl font-bold text-gradient-business">
-                            {tier.fixedCost === '0' || parseFloat(tier.fixedCost) === 0 ? 
-                              tier.tier === 'enterprise_elite' ? 'Individual' : 'Bepul' 
-                              : formatCurrency(parseFloat(tier.fixedCost))} 
-                            <span className="text-lg text-muted-foreground font-normal">/ oy</span>
+                          {/* Oylik to'lov */}
+                          <div className="p-3 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+                            <div className="flex items-center gap-2 mb-1">
+                              <DollarSign className="h-4 w-4 text-blue-600" />
+                              <span className="text-xs font-medium text-blue-600">OYLIK TO'LOV</span>
+                            </div>
+                            <div className="text-2xl font-bold text-blue-900">
+                              {TIER_INFO[tier.tier]?.monthlyFee ? 
+                                formatCurrency(TIER_INFO[tier.tier].monthlyFee) : 
+                                formatCurrency(parseFloat(tier.fixedCost))} 
+                              <span className="text-sm text-blue-700 font-normal">/ oy</span>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 p-2 bg-accent/10 rounded-lg">
-                            <Star className="h-4 w-4 text-accent" />
-                            <span className="text-sm font-medium">
-                              Komissiya: {(parseFloat(tier.commissionMin) * 100).toFixed(1)}% - {(parseFloat(tier.commissionMax) * 100).toFixed(1)}%
-                            </span>
+                          
+                          {/* Komissiya */}
+                          <div className="p-3 bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg border border-amber-200">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Percent className="h-4 w-4 text-amber-600" />
+                              <span className="text-xs font-medium text-amber-600">KOMISSIYA (SAVDODAN)</span>
+                            </div>
+                            <div className="text-2xl font-bold text-amber-900">
+                              {TIER_INFO[tier.tier]?.commissionRate || (parseFloat(tier.commissionMin) * 100).toFixed(0)}%
+                            </div>
                           </div>
+                          
+                          {/* Min aylanma */}
                           <div className="flex items-center gap-2 p-2 bg-primary/10 rounded-lg">
-                            <Zap className="h-4 w-4 text-primary" />
+                            <TrendingUp className="h-4 w-4 text-primary" />
                             <span className="text-sm font-medium">
-                              Min. aylanma: {formatCurrency(parseFloat(tier.minRevenue))}
+                              Min. aylanma: {formatCurrency(TIER_INFO[tier.tier]?.minRevenue || parseFloat(tier.minRevenue))}
                             </span>
                           </div>
                         </div>
