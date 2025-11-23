@@ -14,6 +14,7 @@ import { ProfitDashboard } from '@/components/ProfitDashboard';
 import { TrendingProducts } from '@/components/TrendingProducts';
 import { TrendingProductsDashboard } from '@/components/TrendingProductsDashboard';
 import { EnhancedTierUpgradeModal } from '@/components/EnhancedTierUpgradeModal';
+import { PartnerTierInfo } from '@/components/PartnerTierInfo';
 import { DataExportButton } from '@/components/DataExportButton';
 import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
 import { InventoryManagement } from '@/components/InventoryManagement';
@@ -213,6 +214,17 @@ export default function PartnerDashboard() {
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
+              {/* Partner Tier Info Card */}
+              {partner && (
+                <PartnerTierInfo 
+                  currentTier={partner.pricingTier || 'starter_pro'}
+                  monthlyFee={parseFloat((partner as any).monthlyFee || '3000000')}
+                  profitShareRate={parseFloat((partner as any).profitShareRate || '0.50')}
+                  monthlyRevenue={stats.totalRevenue}
+                  onUpgradeClick={() => setShowTierModal(true)}
+                />
+              )}
+              
               <StockAlerts />
               <div className="equal-grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="shadow-elegant">
