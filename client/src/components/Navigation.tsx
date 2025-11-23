@@ -4,6 +4,7 @@ import { useLocation } from 'wouter';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/context/LanguageContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { GoogleTranslateWidget } from './GoogleTranslateWidget';
 
 import { LogOut, Menu, X } from 'lucide-react';
 
@@ -47,6 +48,9 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
+            {/* Google Translate Widget - AUTO TRANSLATION */}
+            <GoogleTranslateWidget />
+            
             {/* Language Switcher */}
             <LanguageSwitcher />
             
