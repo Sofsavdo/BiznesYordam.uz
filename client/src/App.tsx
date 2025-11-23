@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { GlobalErrorBoundary } from "@/components/GlobalErrorBoundary";
 
 // Pages
 import Landing from "@/pages/Landing";
@@ -32,7 +32,7 @@ function Router() {
 
 function App() {
   return (
-    <ErrorBoundary>
+    <GlobalErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <AuthProvider>
@@ -43,7 +43,7 @@ function App() {
           </AuthProvider>
         </LanguageProvider>
       </QueryClientProvider>
-    </ErrorBoundary>
+    </GlobalErrorBoundary>
   );
 }
 

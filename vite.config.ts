@@ -53,28 +53,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // React core - MUST include scheduler for proper React hooks
+          // React core - MUST include scheduler
           if (id.includes('node_modules/react/') || 
               id.includes('node_modules/react-dom/') ||
               id.includes('node_modules/scheduler/')) {
             return 'react-vendor';
           }
-          // Radix UI components
-          if (id.includes('node_modules/@radix-ui')) {
+          // Radix UI - split by component groups
+          if (id.includes('node_modules/@radix-ui/react-dialog') ||
+              id.includes('node_modules/@radix-ui/react-dropdown-menu') ||
+              id.includes('node_modules/@radix-ui/react-popover')) {
             return 'ui-vendor';
           }
-          // Charts
+          if (id.includes('node_modules/@radix-ui')) {
+            return 'ui-vendor-extra';
+          }
+          // Charts - heavy library
           if (id.includes('node_modules/recharts')) {
             return 'chart-vendor';
           }
           // TanStack Query
           if (id.includes('node_modules/@tanstack/react-query')) {
             return 'query-vendor';
-          }
-          // Form libraries
-          if (id.includes('node_modules/react-hook-form') || 
-              id.includes('node_modules/@hookform')) {
-            return 'form-vendor';
           }
           // Icons
           if (id.includes('node_modules/lucide-react')) {
@@ -84,19 +84,30 @@ export default defineConfig({
           if (id.includes('node_modules/wouter')) {
             return 'router-vendor';
           }
-          // Other large dependencies
+          // Zod validation
+          if (id.includes('node_modules/zod')) {
+            return 'validation-vendor';
+          }
+          // Date utilities
+          if (id.includes('node_modules/date-fns')) {
+            return 'date-vendor';
+          }
+          // Other vendors
           if (id.includes('node_modules/')) {
             return 'vendor';
           }
         },
-        // Optimize chunk names
-        chunkFileNames: 'assets/[name]-[hash].js',
+        // Optimize chunk names with better caching
+        chunkFileNames: (chunkInfo) => {
+          const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split('/').pop() : 'chunk';
+          return `assets/[name]-[hash].js`;
+        },
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
       },
     },
-    // Increase chunk size warning limit
-    chunkSizeWarningLimit: 1000,
+    // Optimize chunk size
+    chunkSizeWarningLimit: 800,
   },
   server: {
     port: 5000,
