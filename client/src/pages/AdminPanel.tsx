@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Navigation } from '@/components/Navigation';
 import { LoginForm } from '@/components/LoginForm';
 import { TrendingProducts } from '@/components/TrendingProducts';
+import { TrendingProductsDashboard } from '@/components/TrendingProductsDashboard';
 import { MarketplaceApiConfig } from '@/components/MarketplaceApiConfig';
 import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
 import { DataExportButton } from '@/components/DataExportButton';
@@ -870,9 +871,9 @@ export default function AdminPanel() {
               </div>
             </TabsContent>
 
-            {/* Trending Products Tab */}
+            {/* Trending Products Tab - ADVANCED VERSION */}
             <TabsContent value="trends" className="space-y-6">
-              <TrendingProducts />
+              <TrendingProductsDashboard />
             </TabsContent>
 
             {/* Analytics Tab */}

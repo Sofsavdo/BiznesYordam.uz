@@ -12,6 +12,7 @@ import { ProductForm } from '@/components/ProductForm';
 import { FulfillmentRequestForm } from '@/components/FulfillmentRequestForm';
 import { ProfitDashboard } from '@/components/ProfitDashboard';
 import { TrendingProducts } from '@/components/TrendingProducts';
+import { TrendingProductsDashboard } from '@/components/TrendingProductsDashboard';
 import { EnhancedTierUpgradeModal } from '@/components/EnhancedTierUpgradeModal';
 import { DataExportButton } from '@/components/DataExportButton';
 import { ComprehensiveAnalytics } from '@/components/ComprehensiveAnalytics';
@@ -404,9 +405,9 @@ export default function PartnerDashboard() {
               <ProfitDashboard />
             </TabsContent>
 
-            {/* Trends Tab */}
+            {/* Trends Tab - ADVANCED VERSION */}
             <TabsContent value="trends">
-              <TrendingProducts />
+              <TrendingProductsDashboard />
             </TabsContent>
           </Tabs>
         </div>
