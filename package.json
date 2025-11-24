@@ -44,6 +44,7 @@
     "postinstall": "npm run rebuild:sqlite"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
     "@hookform/resolvers": "^3.10.0",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@neondatabase/serverless": "^0.10.4",
@@ -82,6 +83,7 @@
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
     "bcryptjs": "^3.0.2",
+    "bull": "^4.12.0",
     "better-sqlite3": "^12.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -117,6 +119,7 @@
     "openai": "^5.15.0",
     "openid-client": "^6.6.4",
     "passport": "^0.7.0",
+    "puppeteer": "^22.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.13.1",
     "postcss": "^8.4.47",
@@ -128,6 +131,8 @@
     "react-icons": "^5.4.0",
     "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.2",
+    "redis": "^4.6.13",
+    "speakeasy": "^2.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "tailwind-merge": "^2.6.0",
