@@ -27,7 +27,8 @@ import {
   Image as ImageIcon,
   Video,
   FileText,
-  Search
+  Search,
+  RefreshCw
 } from 'lucide-react';
 
 interface AIActivity {
@@ -66,37 +67,33 @@ export function AIManagerLiveMonitor() {
   const [isPaused, setIsPaused] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState<AIActivity | null>(null);
 
-  // Simulate real-time updates (in production, use WebSocket)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Mock data - replace with WebSocket connection
-      const mockActivity: AIActivity = {
-        id: `act_${Date.now()}`,
-        timestamp: new Date(),
-        type: ['research', 'strategy', 'image', 'video', 'content'][Math.floor(Math.random() * 5)] as any,
-        status: Math.random() > 0.1 ? 'completed' : 'processing',
-        partnerId: '1',
-        partnerName: 'Texno Savdo',
-        productName: 'iPhone 15 Pro Max',
-        marketplace: ['uzum', 'wildberries', 'yandex', 'ozon'][Math.floor(Math.random() * 4)],
-        duration: Math.floor(Math.random() * 60) + 10,
-        progress: Math.floor(Math.random() * 100)
-      };
+  // Manual refresh only - no auto-update to prevent flickering
+  const handleRefresh = () => {
+    // In production, fetch from API or WebSocket
+    const mockActivity: AIActivity = {
+      id: `act_${Date.now()}`,
+      timestamp: new Date(),
+      type: ['research', 'strategy', 'image', 'video', 'content'][Math.floor(Math.random() * 5)] as any,
+      status: Math.random() > 0.1 ? 'completed' : 'processing',
+      partnerId: '1',
+      partnerName: 'Texno Savdo',
+      productName: 'iPhone 15 Pro Max',
+      marketplace: ['uzum', 'wildberries', 'yandex', 'ozon'][Math.floor(Math.random() * 4)],
+      duration: Math.floor(Math.random() * 60) + 10,
+      progress: Math.floor(Math.random() * 100)
+    };
 
-      setActivities(prev => [mockActivity, ...prev].slice(0, 50));
-      
-      // Update stats
-      setStats(prev => ({
-        ...prev,
-        activeWorkers: Math.floor(Math.random() * 30) + 70,
-        queuedTasks: Math.floor(Math.random() * 50) + 10,
-        completedToday: prev.completedToday + 1,
-        successRate: 99.2 + Math.random() * 0.8
-      }));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
+    setActivities(prev => [mockActivity, ...prev].slice(0, 50));
+    
+    // Update stats
+    setStats(prev => ({
+      ...prev,
+      activeWorkers: Math.floor(Math.random() * 30) + 70,
+      queuedTasks: Math.floor(Math.random() * 50) + 10,
+      completedToday: prev.completedToday + 1,
+      successRate: 99.2 + Math.random() * 0.8
+    }));
+  };
 
   const getActivityIcon = (type: string) => {
     const icons = {
@@ -144,26 +141,17 @@ export function AIManagerLiveMonitor() {
             AI Manager Live Monitor
           </h2>
           <p className="text-slate-600 mt-1">
-            Real-time kuzatuv va boshqaruv
+            AI Manager faoliyatini kuzating
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Button
-            onClick={() => setIsPaused(!isPaused)}
-            variant={isPaused ? "default" : "outline"}
+            onClick={handleRefresh}
+            variant="outline"
             size="lg"
           >
-            {isPaused ? (
-              <>
-                <Play className="h-5 w-5 mr-2" />
-                Davom Ettirish
-              </>
-            ) : (
-              <>
-                <Pause className="h-5 w-5 mr-2" />
-                Pauza
-              </>
-            )}
+            <RefreshCw className="h-5 w-5 mr-2" />
+            Yangilash
           </Button>
           <Button variant="outline" size="lg">
             <Settings className="h-5 w-5 mr-2" />
