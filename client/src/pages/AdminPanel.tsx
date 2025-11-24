@@ -19,6 +19,8 @@ import { AdminMarketplaceIntegration } from '@/components/AdminMarketplaceIntegr
 import { AdminPartnersManagement } from '@/components/AdminPartnersManagement';
 import { AIManagerDashboard } from '@/components/AIManagerDashboard';
 import { AdvancedPartnerAnalytics } from '@/components/AdvancedPartnerAnalytics';
+import { AIManagerLiveMonitor } from '@/components/AIManagerLiveMonitor';
+import { AICommandCenter } from '@/components/AICommandCenter';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
@@ -52,7 +54,8 @@ import {
   Download,
   Upload,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  Brain
 } from 'lucide-react';
 
 
@@ -647,9 +650,29 @@ export default function AdminPanel() {
               </div>
             </TabsContent>
 
-            {/* AI MANAGER TAB - YANGI */}
+            {/* AI MANAGER TAB - ENHANCED */}
             <TabsContent value="ai-manager" className="space-y-6">
-              <AIManagerDashboard />
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold mb-2 flex items-center gap-3">
+                  <Brain className="h-8 w-8 text-purple-600" />
+                  AI Manager Control Center
+                </h2>
+                <p className="text-slate-600">
+                  AI Manager'ni real-time kuzating, buyruqlar bering, sozlang
+                </p>
+              </div>
+
+              {/* Live Monitor */}
+              <AIManagerLiveMonitor />
+
+              {/* Command Center */}
+              <AICommandCenter />
+
+              {/* Original Dashboard */}
+              <div className="mt-6">
+                <h3 className="text-xl font-bold mb-4">AI Manager Statistics</h3>
+                <AIManagerDashboard />
+              </div>
             </TabsContent>
 
             {/* Marketplace Integration Tab */}
