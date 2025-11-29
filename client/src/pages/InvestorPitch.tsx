@@ -696,15 +696,26 @@ export default function InvestorPitch() {
             </div>
             <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-2 border-purple-500 rounded-2xl p-6 text-center">
               <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl">📊</span>
+              </div>
+              <h3 className="text-2xl font-bold text-purple-400 mb-2">Operatsiya Rahbari</h3>
+              <p className="text-gray-300 mb-3">Logistika va Fulfillment</p>
+              <ul className="text-sm text-gray-400 space-y-1">
+                <li>• 3+ yil bozor tajriba</li>
+                <li>• Ombor boshqaruvi</li>
+                <li>• Jarayon optimallashtirish</li>
+              </ul>
+            </div>
+            <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 border-2 border-green-500 rounded-2xl p-6 text-center">
               <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <span className="text-4xl">🎯</span>
               </div>
               <h3 className="text-2xl font-bold text-green-400 mb-2">Biznes Rahbari</h3>
-              <p className="text-gray-300 mb-3">Sales & Partnerships</p>
+              <p className="text-gray-300 mb-3">Savdo va Hamkorlik</p>
               <ul className="text-sm text-gray-400 space-y-1">
-                <li>• Seller relationships</li>
-                <li>• Strategic planning</li>
-                <li>• Fundraising</li>
+                <li>• Seller munosabatlari</li>
+                <li>• Strategik rejalashtirish</li>
+                <li>• Investitsiya jalb qilish</li>
               </ul>
             </div>
           </div>
