@@ -63,13 +63,13 @@ export default function InvestorPitch() {
           <div className="space-y-6">
             <div className="bg-red-500/10 border-2 border-red-500 rounded-2xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all">
               <AlertCircle className="w-12 h-12 text-red-400 mb-4" />
-              <h3 className="text-2xl font-bold text-red-400 mb-3">HR Muammosi</h3>
+              <h3 className="text-2xl font-bold text-red-400 mb-3">Kadrlar Muammosi</h3>
               <p className="text-gray-300">Yaxshi xodimlar kam, qimmat va barqaror emas</p>
             </div>
             <div className="bg-gradient-to-br from-red-600 to-orange-600 rounded-2xl p-8 transform hover:scale-105 transition-all">
               <h3 className="text-3xl font-black text-white mb-4">NATIJA:</h3>
               <div className="space-y-2 text-lg text-white">
-                <p>❌ GMV o'sadi, foyda tushadi</p>
+                <p>❌ Savdo hajmi o'sadi, foyda tushadi</p>
                 <p>❌ Vaqt yo'qotiladi</p>
                 <p>❌ Xarajatlar oshadi</p>
               </div>
@@ -89,9 +89,9 @@ export default function InvestorPitch() {
             <Package className="w-16 h-16 text-blue-400 mb-4" />
             <h3 className="text-3xl font-bold text-blue-400 mb-4">AI Fulfillment Platforma</h3>
             <ul className="space-y-3 text-lg text-gray-300">
-              <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Ombor boshqaruvi va real-time stok tracking</li>
+              <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Ombor boshqaruvi va jonli zaxira kuzatuvi</li>
               <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Qadoqlash va stikerlash avtomatlashtirilgan</li>
-              <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Paket va buyurtma tracking</li>
+              <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Paket va buyurtma kuzatuvi</li>
             </ul>
           </div>
           <div className="bg-gradient-to-br from-purple-600/20 to-green-600/20 border-2 border-purple-500 rounded-2xl p-8 backdrop-blur-sm">
@@ -99,7 +99,7 @@ export default function InvestorPitch() {
             <h3 className="text-3xl font-bold text-purple-400 mb-4">AI Marketplace Operator</h3>
             <ul className="space-y-3 text-lg text-gray-300">
               <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Listing va narx optimizatsiya (AI)</li>
-              <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Ko'p marketplace GMV boshqaruvi</li>
+              <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Ko'p bozorda savdo hajmi boshqaruvi</li>
               <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> Avtomatik buyurtma va qaytish boshqaruvi</li>
             </ul>
           </div>
@@ -119,7 +119,7 @@ export default function InvestorPitch() {
               <div className="bg-gray-900/80 rounded-lg p-6 mb-3 border border-gray-700 backdrop-blur-sm">
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <div className="text-xs text-gray-400 mb-1">Total GMV (3 marketplace)</div>
+                    <div className="text-xs text-gray-400 mb-1">Jami Savdo (3 bozor)</div>
                     <div className="text-4xl font-black text-white">700M so'm</div>
                   </div>
                   <div className="text-right">
@@ -143,48 +143,48 @@ export default function InvestorPitch() {
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-700">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">ROI</span>
+                    <span className="text-gray-400">Foyda %</span>
                     <span className="text-green-400 font-bold">+342%</span>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-300 text-sm">✅ Real-time tracking | ✅ Multi-marketplace | ✅ Auto-sync</p>
+              <p className="text-gray-300 text-sm">✅ Jonli kuzatuv | ✅ Ko'p bozor | ✅ Avto-sinxron</p>
             </div>
             <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 border-2 border-purple-500 rounded-2xl p-6 overflow-hidden">
               <h3 className="text-2xl font-bold text-purple-400 mb-4">🤖 AI Manager Live</h3>
               <div className="bg-gray-900/80 rounded-lg p-6 mb-3 border border-gray-700 backdrop-blur-sm">
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <div className="text-xs text-gray-400 mb-1">Active AI Workers</div>
+                    <div className="text-xs text-gray-400 mb-1">Faol AI Ishchilar</div>
                     <div className="text-4xl font-black text-white">8 Agents</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-gray-400 mb-1">Running Tasks</div>
+                    <div className="text-xs text-gray-400 mb-1">Ishlamoqda</div>
                     <div className="text-3xl font-black text-blue-400">12</div>
                   </div>
                 </div>
                 <div className="space-y-2 mt-4">
                   <div className="flex items-center justify-between bg-green-600/10 rounded p-2 border-l-4 border-green-500">
-                    <span className="text-sm text-gray-300">Price Optimization</span>
-                    <span className="text-xs text-green-400">✓ Active</span>
+                    <span className="text-sm text-gray-300">Narx Optimallashtirish</span>
+                    <span className="text-xs text-green-400">✓ Faol</span>
                   </div>
                   <div className="flex items-center justify-between bg-blue-600/10 rounded p-2 border-l-4 border-blue-500">
-                    <span className="text-sm text-gray-300">Listing Generation</span>
-                    <span className="text-xs text-blue-400">⚡ Running</span>
+                    <span className="text-sm text-gray-300">E'lon Yaratish</span>
+                    <span className="text-xs text-blue-400">⚡ Ishlamoqda</span>
                   </div>
                   <div className="flex items-center justify-between bg-purple-600/10 rounded p-2 border-l-4 border-purple-500">
-                    <span className="text-sm text-gray-300">Trend Analysis</span>
+                    <span className="text-sm text-gray-300">Trend Tahlili</span>
                     <span className="text-xs text-purple-400">⚡ Running</span>
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-700">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Success Rate</span>
+                    <span className="text-gray-400">Muvaffaqiyat</span>
                     <span className="text-green-400 font-bold">99.8%</span>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-300 text-sm">✅ 24/7 monitoring | ✅ Parallel execution | ✅ Auto-scaling</p>
+              <p className="text-gray-300 text-sm">✅ 24/7 monitoring | ✅ Parallel bajarish | ✅ Avto-kengayish</p>
             </div>
           </div>
           <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500 rounded-2xl p-6">
@@ -213,7 +213,7 @@ export default function InvestorPitch() {
             </div>
             <div className="mt-4 p-4 bg-blue-600/10 rounded-lg border border-blue-500/30">
               <p className="text-sm text-gray-300 text-center">
-                ✅ <span className="font-bold text-blue-400">BiznesYordam Fee: 1 200 000 so'm</span> (6% GMV) | 
+                ✅ <span className="font-bold text-blue-400">BiznesYordam Haq: 1 200 000 so'm</span> (6% savdo) | 
                 Seller Net Profit: <span className="font-bold text-green-400">4 200 000 so'm</span>
               </p>
             </div>
@@ -248,7 +248,7 @@ export default function InvestorPitch() {
                 <li>✅ 24/7 ishla yadi, to'xtamaydi</li>
                 <li>✅ Ish vaqti: non-stop</li>
                 <li>✅ O'qitish: 0 vaqt, tayyor</li>
-                <li>✅ Xarajat: $100-$200 API</li>
+                <li>✅ Xarajat: $100-$200 dasturiy interfeys</li>
               </ul>
             </div>
           </div>
@@ -311,7 +311,7 @@ export default function InvestorPitch() {
         <div className="grid md:grid-cols-3 gap-6 mt-12">
           <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-2 border-green-500 rounded-2xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all">
             <Award className="w-12 h-12 text-green-400 mb-4 mx-auto" />
-            <h3 className="text-2xl font-bold text-green-400 mb-3 text-center">First-Mover Advantage</h3>
+            <h3 className="text-2xl font-bold text-green-400 mb-3 text-center">Birinchi Boshlagan Ustunligi</h3>
             <p className="text-gray-300 text-center">O'zbekistonda birinchi AI-based fulfillment operator</p>
           </div>
           <div className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border-2 border-blue-500 rounded-2xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all">
@@ -321,7 +321,7 @@ export default function InvestorPitch() {
           </div>
           <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-2 border-purple-500 rounded-2xl p-6 backdrop-blur-sm transform hover:scale-105 transition-all">
             <Globe className="w-12 h-12 text-purple-400 mb-4 mx-auto" />
-            <h3 className="text-2xl font-bold text-purple-400 mb-3 text-center">Multi-Marketplace</h3>
+            <h3 className="text-2xl font-bold text-purple-400 mb-3 text-center">Ko'p Bozor</h3>
             <p className="text-gray-300 text-center">3-4 marketplace bitta paneldan</p>
           </div>
         </div>
@@ -624,12 +624,12 @@ export default function InvestorPitch() {
     // Slide 12: Traction va Roadmap
     {
       type: 'content',
-      title: 'Traction va Roadmap',
+      title: 'Hozirgi Holat va Reja',
       subtitle: 'Nimaga erishdik va qayerga bormoqdamiz',
       content: (
         <div className="mt-12 space-y-8">
           <div className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-2 border-green-500 rounded-2xl p-8">
-            <h3 className="text-3xl font-bold text-green-400 mb-6">✅ Hozirgi Holat (MVP Ready)</h3>
+            <h3 className="text-3xl font-bold text-green-400 mb-6">✅ Hozirgi Holat (Mahsulot Tayyor)</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="text-5xl font-black text-white mb-2">100%</div>
@@ -647,7 +647,7 @@ export default function InvestorPitch() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-blue-600/20 border-2 border-blue-500 rounded-2xl p-6">
-              <h3 className="text-xl font-bold text-blue-400 mb-3">Q1 2025 (3 oy)</h3>
+              <h3 className="text-xl font-bold text-blue-400 mb-3">1-chorak 2025 (3 oy)</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>• 5-10 seller onboarding</li>
                 <li>• Ombor jihozlash</li>
@@ -655,19 +655,19 @@ export default function InvestorPitch() {
               </ul>
             </div>
             <div className="bg-purple-600/20 border-2 border-purple-500 rounded-2xl p-6">
-              <h3 className="text-xl font-bold text-purple-400 mb-3">Q2-Q3 2025 (6 oy)</h3>
+              <h3 className="text-xl font-bold text-purple-400 mb-3">2-3 chorak 2025 (6 oy)</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>• 25 seller portfeli</li>
                 <li>• Premium features launch</li>
-                <li>• $50k+ MRR</li>
+                <li>• $50k+ oylik daromad</li>
               </ul>
             </div>
             <div className="bg-green-600/20 border-2 border-green-500 rounded-2xl p-6">
-              <h3 className="text-xl font-bold text-green-400 mb-3">Q4 2025 (12 oy)</h3>
+              <h3 className="text-xl font-bold text-green-400 mb-3">4-chorak 2025 (12 oy)</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>• 40+ seller base</li>
                 <li>• Region expansion (KZ)</li>
-                <li>• $120k+ MRR</li>
+                <li>• $120k+ oylik daromad</li>
               </ul>
             </div>
           </div>
@@ -677,8 +677,8 @@ export default function InvestorPitch() {
     // Slide 13: Jamoa
     {
       type: 'content',
-      title: 'Jamoa va Ekspertiza',
-      subtitle: 'Tech + Marketplace + Operations',
+      title: 'Jamoa va Tajriba',
+      subtitle: 'Texnologiya + Bozor + Operatsiya',
       content: (
         <div className="mt-12 space-y-8">
           <div className="grid md:grid-cols-3 gap-6">
@@ -686,7 +686,7 @@ export default function InvestorPitch() {
               <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <span className="text-4xl">👨‍💻</span>
               </div>
-              <h3 className="text-2xl font-bold text-blue-400 mb-2">Tech Founder</h3>
+              <h3 className="text-2xl font-bold text-blue-400 mb-2">Texnologiya Asoschisi</h3>
               <p className="text-gray-300 mb-3">Full-stack Developer</p>
               <ul className="text-sm text-gray-400 space-y-1">
                 <li>• AI/ML integration</li>
@@ -696,21 +696,10 @@ export default function InvestorPitch() {
             </div>
             <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-2 border-purple-500 rounded-2xl p-6 text-center">
               <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-4xl">📊</span>
-              </div>
-              <h3 className="text-2xl font-bold text-purple-400 mb-2">Operations Lead</h3>
-              <p className="text-gray-300 mb-3">Logistics & Fulfillment</p>
-              <ul className="text-sm text-gray-400 space-y-1">
-                <li>• 3+ yil marketplace</li>
-                <li>• Ombor boshqaruvi</li>
-                <li>• Process optimization</li>
-              </ul>
-            </div>
-            <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 border-2 border-green-500 rounded-2xl p-6 text-center">
               <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <span className="text-4xl">🎯</span>
               </div>
-              <h3 className="text-2xl font-bold text-green-400 mb-2">Business Lead</h3>
+              <h3 className="text-2xl font-bold text-green-400 mb-2">Biznes Rahbari</h3>
               <p className="text-gray-300 mb-3">Sales & Partnerships</p>
               <ul className="text-sm text-gray-400 space-y-1">
                 <li>• Seller relationships</li>
@@ -815,7 +804,7 @@ export default function InvestorPitch() {
     {
       type: 'content',
       title: 'Nega Aynan Hozir?',
-      subtitle: 'Perfect timing: bozor, texnologiya, demand',
+      subtitle: 'Mukammal vaqt: bozor, texnologiya, talab',
       content: (
         <div className="mt-12 space-y-8">
           <div className="grid md:grid-cols-3 gap-6">
@@ -843,12 +832,12 @@ export default function InvestorPitch() {
                 <li>✅ Fulfillment muammosi</li>
                 <li>✅ HR kamchiligi</li>
                 <li>✅ Arzon yechim kerak</li>
-                <li>✅ Tayyor buying hozir</li>
+                <li>✅ Sotib olishga tayyor</li>
               </ul>
             </div>
           </div>
           <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl p-8 text-center">
-            <h3 className="text-4xl font-black text-white mb-4">🚀 First-Mover Window: 6-12 oy</h3>
+            <h3 className="text-4xl font-black text-white mb-4">🚀 Birinchi Boshlash Imkoniyati: 6-12 oy</h3>
             <p className="text-2xl text-orange-100">Agar hozir boshlamasak, raqobatchilar paydo bo'ladi</p>
           </div>
         </div>
@@ -922,7 +911,7 @@ export default function InvestorPitch() {
                 <tr className="border-b-2 border-blue-500">
                   <th className="p-4 text-xl font-bold text-white">Davr</th>
                   <th className="p-4 text-xl font-bold text-purple-400">Seller Soni</th>
-                  <th className="p-4 text-xl font-bold text-blue-400">MRR</th>
+                  <th className="p-4 text-xl font-bold text-blue-400">Oylik Daromad</th>
                   <th className="p-4 text-xl font-bold text-orange-400">Xarajat</th>
                   <th className="p-4 text-xl font-bold text-green-400">Net Profit</th>
                 </tr>
@@ -974,7 +963,7 @@ export default function InvestorPitch() {
             </table>
           </div>
           <div className="mt-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-center">
-            <h3 className="text-3xl font-bold text-white mb-4">18 Oy ichida: $1.08M ARR, $90k+ MRR</h3>
+            <h3 className="text-3xl font-bold text-white mb-4">18 Oy ichida: $1.08M yillik, $90k+ oylik daromad</h3>
             <p className="text-xl text-blue-100">Profitabel, skeyllanuvchi, investor exit tayyor</p>
           </div>
         </div>
@@ -1105,26 +1094,25 @@ export default function InvestorPitch() {
       </button>
 
       {/* Slide content */}
-      <div className="relative w-full min-h-screen flex items-center justify-center p-4 md:p-12 z-10">
-        <div className="max-w-7xl w-full">
+      <div className="relative w-full h-screen flex items-center justify-center p-6 md:p-8 z-10 overflow-y-auto">
+        <div className="max-w-6xl w-full my-auto">
           {currentSlideData.type === 'title' && (
             <div>{currentSlideData.content}</div>
           )}
           
           {currentSlideData.type === 'content' && (
-            <div className="space-y-8">
-              <div className="text-center mb-12">
-                <div className="inline-block px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-sm font-bold mb-4">
-                  SLAYD {currentSlide + 1}
-                </div>
-                <h2 className="text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <div className="space-y-4">
+              <div className="text-center mb-6">
+                <h2 className="text-4xl md:text-5xl font-black mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                   {currentSlideData.title}
                 </h2>
-                <p className="text-2xl md:text-3xl text-gray-300 font-semibold">
+                <p className="text-xl md:text-2xl text-gray-300 font-semibold">
                   {currentSlideData.subtitle}
                 </p>
               </div>
-              {currentSlideData.content}
+              <div className="max-h-[calc(100vh-300px)] overflow-y-auto pr-2">
+                {currentSlideData.content}
+              </div>
             </div>
           )}
 
@@ -1134,46 +1122,27 @@ export default function InvestorPitch() {
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 flex items-center gap-6 z-50 bg-black/50 backdrop-blur-md rounded-full px-8 py-4 border border-white/20">
+      {/* Navigation - Simplified */}
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-50">
         <Button
           onClick={prevSlide}
           disabled={currentSlide === 0}
           variant="outline"
           size="icon"
-          className="bg-white/10 hover:bg-white/20 border-white/30 disabled:opacity-30 transform hover:scale-110 transition-all"
+          className="bg-black/70 hover:bg-black/90 border-white/40 disabled:opacity-20 disabled:cursor-not-allowed backdrop-blur-md rounded-full w-14 h-14 shadow-lg"
         >
-          <ArrowLeft className="w-6 h-6" />
+          <ArrowLeft className="w-7 h-7" />
         </Button>
-        
-        <div className="text-lg font-bold px-4">
-          {currentSlide + 1} / {slides.length}
-        </div>
 
         <Button
           onClick={nextSlide}
           disabled={currentSlide === slides.length - 1}
           variant="outline"
           size="icon"
-          className="bg-white/10 hover:bg-white/20 border-white/30 disabled:opacity-30 transform hover:scale-110 transition-all"
+          className="bg-black/70 hover:bg-black/90 border-white/40 disabled:opacity-20 disabled:cursor-not-allowed backdrop-blur-md rounded-full w-14 h-14 shadow-lg"
         >
-          <ArrowRight className="w-6 h-6" />
+          <ArrowRight className="w-7 h-7" />
         </Button>
-      </div>
-
-      {/* Slide indicators */}
-      <div className="fixed bottom-32 left-1/2 transform -translate-x-1/2 flex gap-2 z-50">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`h-2 rounded-full transition-all transform hover:scale-125 ${
-              index === currentSlide 
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 w-12' 
-                : 'bg-gray-600 w-2 hover:bg-gray-500'
-            }`}
-          />
-        ))}
       </div>
     </div>
   );
