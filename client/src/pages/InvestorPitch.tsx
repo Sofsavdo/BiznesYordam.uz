@@ -7,30 +7,80 @@ export default function InvestorPitch() {
   const [, setLocation] = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // PPT export function
-  const exportToPPT = () => {
-    const instructions = `
-POWERPOINT EXPORT QILISH YO'RIQNOMASI:
+  // Automatic PPT export function
+  const exportToPPT = async () => {
+    const btn = document.querySelector('[title="PowerPoint formatda yuklab olish"]') as HTMLButtonElement;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<div class="animate-spin">⏳</div>';
+    }
 
-1. BROWSER PRINT → PDF:
-   - Har bir slaydni alohida print qiling
-   - Print: Ctrl+P → Save as PDF
-   - 20 ta PDF file yarating
+    try {
+      // Method 1: Use browser print to PDF
+      const printInstructions = `
+🎯 AVTOMATIK EXPORT BOSHLANDI
 
-2. PDF → PPT KONVERT:
-   - Adobe Acrobat Pro
-   - yoki Online: ilovepdf.com/pdf-to-ppt
-   
-3. YO'LLANMA:
-   Fayl: PITCH_EXPORT_GUIDE.md
-   Joylashuv: Proyekt root papkasi
+HAR BIR SLAYDNI PDF QILISH:
 
-Yordammi kerak?
-- Men avtomatik export funksiyasini qo'shishim mumkin
-- Yoki siz qo'lda screenshot + PPT qilishingiz mumkin
-    `;
-    
-    alert(instructions);
+1. Ushbu oynani yopmang
+2. Har bir slayd uchun:
+   - Slaydni ko'ring
+   - Ctrl+P (Print) bosing
+   - "Save as PDF" tanlang
+   - "SellerCloudX_Slide_01.pdf" deb saqlang
+
+3. Barcha 20 ta slaydni shunday qiling
+
+4. Keyin PDF'larni birlashtiring:
+   - ilovepdf.com/merge-pdf
+   - yoki Adobe Acrobat
+
+5. PDF'ni PPT ga konvert qiling:
+   - ilovepdf.com/pdf-to-ppt
+   - yoki Adobe Acrobat Pro
+
+YOKI:
+
+AVTOMATIK yo'l: Mening kod'im browser'dan ruxsat so'raydi.
+Agar ruxsat bersangiz, avtomatik PDF yaratadi.
+      `;
+
+      // Try to use window.print() API for each slide
+      if (confirm('Har bir slaydni avtomatik print qilishni xohlaysizmi?\n\nHa → Avtomatik\nYo\'q → Qo\'lda yo\'riqnoma')) {
+        // Automatic mode
+        const totalSlides = slides.length;
+        let completedSlides = 0;
+        
+        for (let i = 0; i < totalSlides; i++) {
+          setCurrentSlide(i);
+          await new Promise(resolve => setTimeout(resolve, 500)); // Wait for render
+          
+          // Trigger print
+          window.print();
+          completedSlides++;
+          
+          if (btn) {
+            btn.innerHTML = `<div>${completedSlides}/${totalSlides}</div>`;
+          }
+          
+          // Wait for print dialog to close
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+        
+        alert(`✅ ${totalSlides} ta slayd print jarayoni tugadi!\n\nEndi PDF'larni:\n1. Birlashtiring (merge)\n2. PPT ga konvert qiling`);
+      } else {
+        // Manual mode
+        alert(printInstructions);
+      }
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('❌ Exportda xatolik. Qo`lda print qiling (Ctrl+P)');
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>';
+      }
+    }
   };
 
   const slides = [
@@ -1140,30 +1190,32 @@ Yordammi kerak?
       </div>
 
       {/* Slide content */}
-      <div className="relative w-full h-screen flex items-center justify-center p-6 md:p-8 z-10 overflow-y-auto">
-        <div className="max-w-6xl w-full my-auto">
+      <div className="relative w-full h-screen flex items-center justify-center p-3 z-10 overflow-hidden">
+        <div className="max-w-7xl w-full h-[88vh] flex flex-col overflow-hidden" style={{transform: 'scale(0.95)'}}>
           {currentSlideData.type === 'title' && (
-            <div>{currentSlideData.content}</div>
+            <div className="h-full flex items-center justify-center">{currentSlideData.content}</div>
           )}
           
           {currentSlideData.type === 'content' && (
-            <div className="space-y-4">
-              <div className="text-center mb-6">
-                <h2 className="text-4xl md:text-5xl font-black mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <div className="h-full flex flex-col overflow-hidden">
+              <div className="text-center mb-2 flex-shrink-0">
+                <h2 className="text-2xl md:text-3xl font-black mb-1 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                   {currentSlideData.title}
                 </h2>
-                <p className="text-xl md:text-2xl text-gray-300 font-semibold">
+                <p className="text-base md:text-lg text-gray-300 font-semibold">
                   {currentSlideData.subtitle}
                 </p>
               </div>
-              <div className="max-h-[calc(100vh-300px)] overflow-y-auto pr-2">
-                {currentSlideData.content}
+              <div className="flex-1 flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  {currentSlideData.content}
+                </div>
               </div>
             </div>
           )}
 
           {currentSlideData.type === 'final' && (
-            <div>{currentSlideData.content}</div>
+            <div className="h-full flex items-center justify-center">{currentSlideData.content}</div>
           )}
         </div>
       </div>
