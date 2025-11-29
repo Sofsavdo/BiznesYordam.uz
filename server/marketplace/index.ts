@@ -85,3 +85,9 @@ export abstract class MarketplaceIntegration {
     logger.error(`[${this.marketplace}] ${message}`, error);
   }
 }
+
+// Export all integrations
+export { UzumIntegration } from './uzum';
+export { WildberriesIntegration } from './wildberries';
+export { YandexIntegration } from './yandex';
+export { OzonIntegration } from './ozon';

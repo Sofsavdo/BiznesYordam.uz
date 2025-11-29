@@ -1,7 +1,7 @@
 // AI MANAGER LIVE MONITOR
 // Real-time monitoring of AI Manager activities - Admin only
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -64,35 +64,88 @@ export function AIManagerLiveMonitor() {
     avgProcessingTime: 0,
     totalCost: 0
   });
-  const [isPaused, setIsPaused] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState<AIActivity | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
 
-  // Manual refresh only - no auto-update to prevent flickering
-  const handleRefresh = () => {
-    // In production, fetch from API or WebSocket
-    const mockActivity: AIActivity = {
-      id: `act_${Date.now()}`,
-      timestamp: new Date(),
-      type: ['research', 'strategy', 'image', 'video', 'content'][Math.floor(Math.random() * 5)] as any,
-      status: Math.random() > 0.1 ? 'completed' : 'processing',
-      partnerId: '1',
-      partnerName: 'Texno Savdo',
-      productName: 'iPhone 15 Pro Max',
-      marketplace: ['uzum', 'wildberries', 'yandex', 'ozon'][Math.floor(Math.random() * 4)],
-      duration: Math.floor(Math.random() * 60) + 10,
-      progress: Math.floor(Math.random() * 100)
+  // Initialize WebSocket connection
+  useEffect(() => {
+    const connectWebSocket = () => {
+      // Get current user info for WebSocket authentication
+      const userId = localStorage.getItem('userId') || 'admin';
+      const role = 'admin';
+
+      const wsUrl = `ws://localhost:5000/ws?userId=${userId}&role=${role}`;
+      const ws = new WebSocket(wsUrl);
+
+      ws.onopen = () => {
+        console.log('WebSocket connected for AI monitoring');
+        setIsConnected(true);
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const message = JSON.parse(event.data);
+
+          switch (message.type) {
+            case 'ai_activity':
+              // Add new activity to the list
+              setActivities(prev => [message.data, ...prev.slice(0, 49)]);
+              break;
+            case 'ai_stats':
+              // Update stats
+              setStats(message.data);
+              break;
+            case 'system':
+              console.log('WebSocket system message:', message.data);
+              break;
+            default:
+              console.log('Unknown WebSocket message type:', message.type);
+          }
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+        setIsConnected(false);
+        // Attempt to reconnect after 5 seconds
+        setTimeout(connectWebSocket, 5000);
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        setIsConnected(false);
+      };
+
+      wsRef.current = ws;
     };
 
-    setActivities(prev => [mockActivity, ...prev].slice(0, 50));
-    
-    // Update stats
-    setStats(prev => ({
-      ...prev,
-      activeWorkers: Math.floor(Math.random() * 30) + 70,
-      queuedTasks: Math.floor(Math.random() * 50) + 10,
-      completedToday: prev.completedToday + 1,
-      successRate: 99.2 + Math.random() * 0.8
-    }));
+    connectWebSocket();
+
+    // Cleanup on unmount
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
+
+  // Manual refresh function (fallback)
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      // Fetch current data (you might want to implement an API endpoint for this)
+      // For now, we'll just simulate a refresh
+      setTimeout(() => {
+        setIsRefreshing(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+      setIsRefreshing(false);
+    }
   };
 
   const getActivityIcon = (type: string) => {

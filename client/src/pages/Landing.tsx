@@ -741,12 +741,22 @@ export default function Landing() {
           
           <div className="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
             <p>&copy; 2024 BiznesYordam. Barcha huquqlar himoyalangan.</p>
-            <button 
-              onClick={() => setLocation('/admin-login')}
-              className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors"
-            >
-              Admin Panel
-            </button>
+            <div className="flex justify-center gap-4 mt-4">
+              <Button
+                onClick={() => setLocation('/investor-pitch')}
+                variant="outline"
+                className="bg-gradient-to-r from-primary to-secondary text-white border-none hover:shadow-lg hover:scale-105 transition-all"
+              >
+                <Rocket className="mr-2 h-4 w-4" />
+                Investorlar uchun
+              </Button>
+              <button 
+                onClick={() => setLocation('/admin-login')}
+                className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+              >
+                Admin Panel
+              </button>
+            </div>
           </div>
         </div>
       </footer>

@@ -30,8 +30,23 @@ const tiers: Record<string, TierData> = {
   enterprise_elite: { name: 'Enterprise Elite', monthlyFee: 20000000, commissionRate: 0.10, color: 'orange' }
 };
 
+const formatSom = (value: number): string => {
+  return new Intl.NumberFormat('uz-UZ').format(Math.round(value)) + " so'm";
+};
+
+const formatNumberInput = (value: string): string => {
+  const numbers = value.replace(/\D/g, '');
+  const clean = numbers.replace(/^0+/, '') || '0';
+  return clean.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+};
+
+const parseNumberInput = (value: string): number => {
+  return parseInt(value.replace(/[\s,]/g, '') || '0', 10);
+};
+
 export function ROICalculatorModal({ isOpen, onClose, currentTier }: ROICalculatorModalProps) {
   const [monthlyRevenue, setMonthlyRevenue] = useState<number>(50000000); // 50M so'm
+  const [monthlyRevenueInput, setMonthlyRevenueInput] = useState<string>('50 000 000');
   const [avgProfit, setAvgProfit] = useState<number>(30); // 30% profit margin
 
   // Hisoblashlar
@@ -77,13 +92,18 @@ export function ROICalculatorModal({ isOpen, onClose, currentTier }: ROICalculat
                   <Label htmlFor="revenue">Oylik savdo aylanmangiz (so'm)</Label>
                   <Input
                     id="revenue"
-                    type="number"
-                    value={monthlyRevenue}
-                    onChange={(e) => setMonthlyRevenue(Number(e.target.value))}
-                    className="text-lg font-semibold"
+                    type="text"
+                    inputMode="numeric"
+                    value={monthlyRevenueInput}
+                    onChange={(e) => {
+                      const formatted = formatNumberInput(e.target.value);
+                      setMonthlyRevenueInput(formatted);
+                      setMonthlyRevenue(parseNumberInput(formatted));
+                    }}
+                    className="text-xl md:text-2xl font-semibold text-right font-mono"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    {monthlyRevenue.toLocaleString()} so'm
+                    {formatSom(monthlyRevenue)}
                   </p>
                 </div>
 
@@ -94,10 +114,10 @@ export function ROICalculatorModal({ isOpen, onClose, currentTier }: ROICalculat
                     type="number"
                     value={avgProfit}
                     onChange={(e) => setAvgProfit(Number(e.target.value))}
-                    className="text-lg font-semibold"
+                    className="text-xl md:text-2xl font-semibold text-right"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    {(monthlyRevenue * (avgProfit / 100)).toLocaleString()} so'm gross profit
+                    {formatSom(monthlyRevenue * (avgProfit / 100))} gross profit
                   </p>
                 </div>
               </div>
@@ -115,19 +135,19 @@ export function ROICalculatorModal({ isOpen, onClose, currentTier }: ROICalculat
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
                   <div>
                     <p className="text-muted-foreground">Oylik to'lov</p>
-                    <p className="font-bold">{currentCalc.monthlyFee.toLocaleString()} so'm</p>
+                    <p className="font-bold text-base md:text-lg">{formatSom(currentCalc.monthlyFee)}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Komissiya ({(tiers[currentTier].commissionRate * 100)}%)</p>
-                    <p className="font-bold">{currentCalc.commission.toLocaleString()} so'm</p>
+                    <p className="font-bold text-base md:text-lg">{formatSom(currentCalc.commission)}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Jami xarajat</p>
-                    <p className="font-bold text-red-600">{currentCalc.totalCost.toLocaleString()} so'm</p>
+                    <p className="font-bold text-red-600 text-base md:text-lg">{formatSom(currentCalc.totalCost)}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Sof foyda</p>
-                    <p className="font-bold text-green-600">{currentCalc.netProfit.toLocaleString()} so'm</p>
+                    <p className="font-bold text-green-600 text-base md:text-lg">{formatSom(currentCalc.netProfit)}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">ROI</p>
@@ -163,7 +183,7 @@ export function ROICalculatorModal({ isOpen, onClose, currentTier }: ROICalculat
                         {isBetter && (
                           <div className="text-right">
                             <p className="text-xs text-muted-foreground">Qo'shimcha foyda</p>
-                            <p className="font-bold text-green-600">+{difference.toLocaleString()} so'm</p>
+                            <p className="font-bold text-green-600 text-sm md:text-base">+{formatSom(difference)}</p>
                           </div>
                         )}
                       </div>
@@ -171,19 +191,19 @@ export function ROICalculatorModal({ isOpen, onClose, currentTier }: ROICalculat
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
                         <div>
                           <p className="text-muted-foreground">Oylik to'lov</p>
-                          <p className="font-semibold">{calc.monthlyFee.toLocaleString()}</p>
+                          <p className="font-semibold text-sm md:text-base">{formatSom(calc.monthlyFee)}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">Komissiya ({(tier.commissionRate * 100)}%)</p>
-                          <p className="font-semibold">{calc.commission.toLocaleString()}</p>
+                          <p className="font-semibold text-sm md:text-base">{formatSom(calc.commission)}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">Jami xarajat</p>
-                          <p className="font-semibold text-red-600">{calc.totalCost.toLocaleString()}</p>
+                          <p className="font-semibold text-red-600 text-sm md:text-base">{formatSom(calc.totalCost)}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">Sof foyda</p>
-                          <p className="font-semibold text-green-600">{calc.netProfit.toLocaleString()}</p>
+                          <p className="font-semibold text-green-600 text-sm md:text-base">{formatSom(calc.netProfit)}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">ROI</p>

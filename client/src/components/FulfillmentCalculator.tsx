@@ -115,22 +115,22 @@ const UZUM_LOGISTICS_FEES = {
 
 export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps) {
   const [selectedTier, setSelectedTier] = useState<keyof typeof FULFILLMENT_TIERS>("starter_pro");
-  const [salesInput, setSalesInput] = useState<string>("20,000,000");
-  const [costInput, setCostInput] = useState<string>("12,000,000");
+  const [salesInput, setSalesInput] = useState<string>("20 000 000");
+  const [costInput, setCostInput] = useState<string>("12 000 000");
   const [quantityInput, setQuantityInput] = useState<string>("1");
   const [logisticsSize, setLogisticsSize] = useState<keyof typeof UZUM_LOGISTICS_FEES>("ogt");
   const [commissionRate, setCommissionRate] = useState<string>("20");
   const [result, setResult] = useState<FulfillmentResult | null>(null);
 
-  // Format number input with commas
+  // Format number input with space-separated thousands (1 000 000)
   const formatNumberInput = (value: string): string => {
     const numbers = value.replace(/\D/g, '');
     const cleanNumbers = numbers.replace(/^0+/, '') || '0';
-    return cleanNumbers.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return cleanNumbers.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   };
 
   const parseNumberInput = (value: string): number => {
-    return parseInt(value.replace(/,/g, '') || '0', 10);
+    return parseInt(value.replace(/[\s,]/g, '') || '0', 10);
   };
 
   const handleSalesInputChange = (value: string) => {
@@ -303,8 +303,8 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                     type="text"
                     value={salesInput}
                     onChange={(e) => handleSalesInputChange(e.target.value)}
-                    placeholder="20,000,000"
-                    className="text-right font-mono text-2xl h-12 font-bold text-slate-900"
+                    placeholder="20 000 000"
+                    className="text-right font-mono text-2xl md:text-3xl h-12 font-bold text-slate-900"
                   />
                 </div>
 
@@ -314,8 +314,8 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                     type="text"
                     value={costInput}
                     onChange={(e) => handleCostInputChange(e.target.value)}
-                    placeholder="12,000,000"
-                    className="text-right font-mono text-2xl h-12 font-bold text-slate-900"
+                    placeholder="12 000 000"
+                    className="text-right font-mono text-2xl md:text-3xl h-12 font-bold text-slate-900"
                   />
                 </div>
 
@@ -327,7 +327,7 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                     onChange={(e) => setQuantityInput(e.target.value)}
                     placeholder="1"
                     min="1"
-                    className="text-right text-2xl h-12 font-bold text-slate-900"
+                    className="text-right text-2xl md:text-3xl h-12 font-bold text-slate-900"
                   />
                 </div>
               </div>
@@ -383,28 +383,39 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                 <div className="grid md:grid-cols-3 gap-6">
                   {/* Marketpleys Harajatlari */}
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+
                     <div className="flex items-center gap-2 mb-3">
                       <Package className="h-5 w-5 text-red-600" />
                       <h4 className="font-semibold text-red-900">Marketpleys Harajatlari</h4>
                     </div>
                     <div className="space-y-3 text-sm">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center gap-2">
                         <span className="text-slate-800 font-medium">Marketpleys komissiya ({result.marketpleysCommissionRate}%):</span>
-                        <span className="font-semibold text-red-600 text-lg text-slate-900 whitespace-nowrap">{formatSom(result.marketpleysCommission)}</span>
+                        <span className="font-semibold text-red-600 text-xs md:text-sm lg:text-base leading-tight text-slate-900 text-right">
+                          {formatSom(result.marketpleysCommission)}
+                        </span>
                       </div>
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center gap-2">
                         <span className="text-slate-800 font-medium">Logistika ({UZUM_LOGISTICS_FEES[logisticsSize].name}):</span>
-                        <span className="font-semibold text-red-600 text-lg text-slate-900 whitespace-nowrap">{formatSom(result.logisticsFee)}</span>
+                        <span className="font-semibold text-red-600 text-xs md:text-sm lg:text-base leading-tight text-slate-900 text-right">
+                          {formatSom(result.logisticsFee)}
+                        </span>
                       </div>
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center gap-2">
                         <span className="text-slate-800 font-medium">Soliq (3%):</span>
-                        <span className="font-semibold text-red-600 text-lg text-slate-900 whitespace-nowrap">{formatSom(result.tax)}</span>
+                        <span className="font-semibold text-red-600 text-xs md:text-sm lg:text-base leading-tight text-slate-900 text-right">
+                          {formatSom(result.tax)}
+                        </span>
                       </div>
+
                       <Separator />
-                      <div className="flex justify-between items-center font-semibold">
+                      <div className="flex justify-between items-center gap-2 font-semibold">
                         <span className="text-slate-900">Sof Foyda:</span>
-                        <span className="text-green-600 text-2xl whitespace-nowrap">{formatSom(result.netProfit)}</span>
+                        <span className="text-green-600 text-lg md:text-xl leading-tight text-right">
+                          {formatSom(result.netProfit)}
+                        </span>
                       </div>
+
                     </div>
                   </div>
 
@@ -415,14 +426,19 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                       <h4 className="font-semibold text-blue-900">Fulfillment Harajatlari</h4>
                     </div>
                     <div className="space-y-3 text-sm">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center gap-2">
                         <span className="text-slate-800 font-medium">Oylik abonent:</span>
-                        <span className="font-semibold text-blue-600 text-xl whitespace-nowrap">{result.fixedPayment === null ? 'Individual' : formatSom(result.fixedPayment)}</span>
+                        <span className="font-semibold text-blue-600 text-base md:text-lg leading-tight text-right">
+                          {result.fixedPayment === null ? 'Individual' : formatSom(result.fixedPayment)}
+                        </span>
                       </div>
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center gap-2">
                         <span className="text-slate-800 font-medium">Profit share ({result.commissionRate}%):</span>
-                        <span className="font-semibold text-blue-600 text-xl whitespace-nowrap">{formatSom(result.commissionAmount)}</span>
+                        <span className="font-semibold text-blue-600 text-base md:text-lg leading-tight text-right">
+                          {formatSom(result.commissionAmount)}
+                        </span>
                       </div>
+
                       <div className="text-xs text-slate-600 italic mt-1">
                         💡 Foydangizdan {result.commissionRate}% - foyda bo'lmasa, to'lov yo'q!
                       </div>
@@ -431,10 +447,13 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                         <span className="font-bold text-emerald-600 text-lg">BEPUL!</span>
                       </div>
                       <Separator />
-                      <div className="flex justify-between items-center font-semibold">
+                      <div className="flex justify-between items-center gap-2 font-semibold">
                         <span className="text-slate-900">Jami Fulfillment:</span>
-                        <span className="text-blue-600 text-2xl whitespace-nowrap">{formatSom(result.totalFulfillmentFee)}</span>
+                        <span className="text-blue-600 text-lg md:text-xl leading-tight text-right">
+                          {formatSom(result.totalFulfillmentFee)}
+                        </span>
                       </div>
+
                     </div>
                   </div>
 
@@ -444,10 +463,11 @@ export function FulfillmentCalculator({ className }: FulfillmentCalculatorProps)
                       <DollarSign className="h-5 w-5 text-green-600" />
                       <h4 className="font-semibold text-green-900">Sizning Final Foydangiz</h4>
                     </div>
-                    <div className="text-center">
-                      <div className="text-4xl font-black text-green-600 mb-3 whitespace-nowrap">
+                      <div className="text-center">
+                      <div className="text-3xl md:text-4xl font-black text-green-600 mb-3">
                         {formatSom(result.partnerProfit)}
                       </div>
+
                       <div className="text-base text-green-700 font-semibold mb-2">
                         Foyda foizi: {result.profitPercentage.toFixed(1)}%
                       </div>

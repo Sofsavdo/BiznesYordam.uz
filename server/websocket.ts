@@ -3,7 +3,7 @@ import { Server } from 'http';
 import { storage } from './storage';
 
 interface WebSocketMessage {
-  type: 'message' | 'notification' | 'tier_upgrade' | 'system' | 'ping' | 'pong';
+  type: 'message' | 'notification' | 'tier_upgrade' | 'system' | 'ping' | 'pong' | 'ai_activity' | 'ai_stats';
   data: any;
   userId?: string;
   partnerId?: string;
@@ -290,6 +290,46 @@ export class WebSocketManager {
           client.ws.send(JSON.stringify(message));
         } catch (error) {
           console.error(`Error sending partner notification to user ${userId}:`, error);
+          this.clients.delete(userId);
+        }
+      }
+    });
+  }
+
+  // Send AI activity update to all admin users
+  public broadcastAIActivity(activityData: any) {
+    const message: WebSocketMessage = {
+      type: 'ai_activity',
+      data: activityData,
+      timestamp: Date.now()
+    };
+
+    this.clients.forEach((client, userId) => {
+      if (client.userRole === 'admin' && client.ws.readyState === WebSocket.OPEN) {
+        try {
+          client.ws.send(JSON.stringify(message));
+        } catch (error) {
+          console.error(`Error sending AI activity to admin ${userId}:`, error);
+          this.clients.delete(userId);
+        }
+      }
+    });
+  }
+
+  // Send AI stats update to all admin users
+  public broadcastAIStats(statsData: any) {
+    const message: WebSocketMessage = {
+      type: 'ai_stats',
+      data: statsData,
+      timestamp: Date.now()
+    };
+
+    this.clients.forEach((client, userId) => {
+      if (client.userRole === 'admin' && client.ws.readyState === WebSocket.OPEN) {
+        try {
+          client.ws.send(JSON.stringify(message));
+        } catch (error) {
+          console.error(`Error sending AI stats to admin ${userId}:`, error);
           this.clients.delete(userId);
         }
       }
