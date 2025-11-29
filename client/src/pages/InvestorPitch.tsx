@@ -1,11 +1,37 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, X, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, X, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, AlertCircle } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 export default function InvestorPitch() {
   const [, setLocation] = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // PPT export function
+  const exportToPPT = () => {
+    const instructions = `
+POWERPOINT EXPORT QILISH YO'RIQNOMASI:
+
+1. BROWSER PRINT → PDF:
+   - Har bir slaydni alohida print qiling
+   - Print: Ctrl+P → Save as PDF
+   - 20 ta PDF file yarating
+
+2. PDF → PPT KONVERT:
+   - Adobe Acrobat Pro
+   - yoki Online: ilovepdf.com/pdf-to-ppt
+   
+3. YO'LLANMA:
+   Fayl: PITCH_EXPORT_GUIDE.md
+   Joylashuv: Proyekt root papkasi
+
+Yordammi kerak?
+- Men avtomatik export funksiyasini qo'shishim mumkin
+- Yoki siz qo'lda screenshot + PPT qilishingiz mumkin
+    `;
+    
+    alert(instructions);
+  };
 
   const slides = [
     // Slide 1: Title
@@ -1096,13 +1122,22 @@ export default function InvestorPitch() {
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-green-600 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
       </div>
 
-      {/* Close button */}
-      <button
-        onClick={() => setLocation('/')}
-        className="fixed top-8 right-8 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all transform hover:scale-110 border border-white/20"
-      >
-        <X className="w-7 h-7" />
-      </button>
+      {/* Top buttons */}
+      <div className="fixed top-8 right-8 z-50 flex gap-3">
+        <button
+          onClick={exportToPPT}
+          className="p-3 rounded-full bg-green-600/80 hover:bg-green-600 backdrop-blur-sm transition-all transform hover:scale-110 border border-green-400/50"
+          title="PowerPoint formatda yuklab olish"
+        >
+          <Download className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => setLocation('/')}
+          className="p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all transform hover:scale-110 border border-white/20"
+        >
+          <X className="w-7 h-7" />
+        </button>
+      </div>
 
       {/* Slide content */}
       <div className="relative w-full h-screen flex items-center justify-center p-6 md:p-8 z-10 overflow-y-auto">
