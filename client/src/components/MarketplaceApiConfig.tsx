@@ -297,7 +297,7 @@ export function MarketplaceApiConfig() {
                     <Input
                       id="webhookUrl"
                       name="webhookUrl"
-                      placeholder="https://biznesyordam.uz/webhooks/marketplace"
+                      placeholder="https://SellerCloudX.uz/webhooks/marketplace"
                       defaultValue={selectedConfig?.webhookUrl || ''}
                       data-testid="input-webhook-url"
                     />

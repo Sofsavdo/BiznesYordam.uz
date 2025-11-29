@@ -86,7 +86,7 @@ export function GrowthGuaranteeSection() {
 
   const beforeAfter = {
     before: {
-      title: "BIZNESYORDAM'DAN OLDIN ❌",
+      title: "SellerCloudX'DAN OLDIN ❌",
       items: [
         "Oyiga 10M so'm aylanma",
         "15% foyda margin",
@@ -99,7 +99,7 @@ export function GrowthGuaranteeSection() {
       color: "red"
     },
     after: {
-      title: "BIZNESYORDAM'DAN KEYIN ✅",
+      title: "SellerCloudX'DAN KEYIN ✅",
       items: [
         "Oyiga 35M so'm aylanma (+250%)",
         "35% foyda margin (+20%)",

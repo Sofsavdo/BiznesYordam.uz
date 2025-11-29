@@ -115,7 +115,7 @@ export function ChatSystem({ partnerId, isAdmin = false }: ChatSystemProps) {
       
       const adminPartner: ChatPartner = {
         id: 'admin',
-        businessName: 'BiznesYordam Admin',
+        businessName: 'SellerCloudX Admin',
         businessCategory: 'Support',
         userData: adminData,
         isOnline: true

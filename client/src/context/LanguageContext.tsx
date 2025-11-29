@@ -53,7 +53,7 @@ const translationsUz = {
   'common.partners': '500+ Hamkor',
   
   // Features
-  'features.title': 'BiznesYordam Platform Imkoniyatlari',
+  'features.title': 'SellerCloudX Platform Imkoniyatlari',
   'features.subtitle': 'Professional hamkorlar uchun yaratilgan eng kuchli asboblar to\'plami',
   
   // Buttons
@@ -140,7 +140,7 @@ const translationsRu = {
   'common.partners': '500+ Партнеров',
   
   // Features
-  'features.title': 'Возможности платформы BiznesYordam',
+  'features.title': 'Возможности платформы SellerCloudX',
   'features.subtitle': 'Самый мощный набор инструментов для профессиональных партнеров',
   
   // Buttons

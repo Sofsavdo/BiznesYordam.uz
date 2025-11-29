@@ -107,7 +107,7 @@ export function AIFeatureShowcase() {
           </h2>
           
           <p className="text-xl text-slate-300 max-w-4xl mx-auto mb-8 leading-relaxed">
-            <strong className="text-white">BiznesYordam.uz</strong> - O'zbekistonda birinchi va yagona 
+            <strong className="text-white">SellerCloudX.uz</strong> - O'zbekistonda birinchi va yagona 
             <span className="text-purple-400 font-semibold"> GPT-4 Sun'iy Intellekt</span> bilan 
             qurilgan marketplace management platformasi. 
             <span className="text-green-400 font-semibold"> Inson omilidan 10x tezroq</span>, 

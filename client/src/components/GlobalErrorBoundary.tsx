@@ -126,10 +126,10 @@ export class GlobalErrorBoundary extends Component<Props, State> {
               <div className="text-center text-sm text-slate-600 pt-4 border-t">
                 <p>Agar muammo davom etsa, iltimos support bilan bog'laning:</p>
                 <a 
-                  href="mailto:support@biznesyordam.uz" 
+                  href="mailto:support@SellerCloudX.uz" 
                   className="text-blue-600 hover:underline font-semibold"
                 >
-                  support@biznesyordam.uz
+                  support@SellerCloudX.uz
                 </a>
               </div>
             </CardContent>

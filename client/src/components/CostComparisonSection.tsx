@@ -1,5 +1,5 @@
 // client/src/components/CostComparisonSection.tsx
-// TRADITIONAL vs BIZNESYORDAM - COST COMPARISON
+// TRADITIONAL vs SellerCloudX - COST COMPARISON
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -79,8 +79,8 @@ export function CostComparisonSection() {
     color: "red"
   };
 
-  const biznesYordamCosts = {
-    title: "BiznesYordam.uz",
+  const SellerCloudXCosts = {
+    title: "SellerCloudX.uz",
     subtitle: "AI + Profit Share Model",
     totalMonthly: "8,000,000",
     breakdown: [
@@ -120,11 +120,11 @@ export function CostComparisonSection() {
 
   const savings = {
     monthly: (parseFloat(traditionalCosts.totalMonthly.replace(/,/g, '')) - 
-              parseFloat(biznesYordamCosts.totalMonthly.replace(/,/g, ''))).toLocaleString(),
+              parseFloat(SellerCloudXCosts.totalMonthly.replace(/,/g, ''))).toLocaleString(),
     yearly: ((parseFloat(traditionalCosts.totalMonthly.replace(/,/g, '')) - 
-             parseFloat(biznesYordamCosts.totalMonthly.replace(/,/g, ''))) * 12).toLocaleString(),
+             parseFloat(SellerCloudXCosts.totalMonthly.replace(/,/g, ''))) * 12).toLocaleString(),
     percentage: Math.round(((parseFloat(traditionalCosts.totalMonthly.replace(/,/g, '')) - 
-                parseFloat(biznesYordamCosts.totalMonthly.replace(/,/g, ''))) / 
+                parseFloat(SellerCloudXCosts.totalMonthly.replace(/,/g, ''))) / 
                parseFloat(traditionalCosts.totalMonthly.replace(/,/g, '')) * 100))
   };
 
@@ -225,7 +225,7 @@ export function CostComparisonSection() {
             </CardContent>
           </Card>
 
-          {/* BiznesYordam Method */}
+          {/* SellerCloudX Method */}
           <Card className="border-2 border-green-200 shadow-xl hover:shadow-2xl transition-all relative">
             <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
               <Badge className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 text-lg shadow-xl">
@@ -237,24 +237,24 @@ export function CostComparisonSection() {
             <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 border-b-2 border-green-200 pt-8">
               <div className="flex items-center justify-between mb-4">
                 <CardTitle className="text-2xl font-bold text-green-700">
-                  {biznesYordamCosts.title}
+                  {SellerCloudXCosts.title}
                 </CardTitle>
                 <Badge className="bg-gradient-to-r from-green-500 to-blue-500 text-white text-lg px-4 py-2">
                   <TrendingUp className="w-5 h-5 mr-2" />
                   TEJOVCHI
                 </Badge>
               </div>
-              <p className="text-slate-600">{biznesYordamCosts.subtitle}</p>
+              <p className="text-slate-600">{SellerCloudXCosts.subtitle}</p>
               <div className="mt-4 p-4 bg-green-100 rounded-lg border border-green-300">
                 <div className="text-4xl font-bold text-green-700 mb-1">
-                  ~{biznesYordamCosts.totalMonthly} so'm
+                  ~{SellerCloudXCosts.totalMonthly} so'm
                 </div>
                 <div className="text-sm text-green-600">oylik xarajat (AI bilan)</div>
               </div>
             </CardHeader>
             
             <CardContent className="pt-6">
-              {biznesYordamCosts.breakdown.map((section, idx) => (
+              {SellerCloudXCosts.breakdown.map((section, idx) => (
                 <div key={idx} className="mb-6 last:mb-0">
                   <h4 className="font-semibold text-slate-700 mb-3">{section.category}</h4>
                   <div className="space-y-2 mb-3">
@@ -290,7 +290,7 @@ export function CostComparisonSection() {
                   Ustunliklar:
                 </h4>
                 <div className="space-y-2">
-                  {biznesYordamCosts.benefits.map((benefit, idx) => (
+                  {SellerCloudXCosts.benefits.map((benefit, idx) => (
                     <div key={idx} className="text-sm text-slate-600">
                       {benefit}
                     </div>

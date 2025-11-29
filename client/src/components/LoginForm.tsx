@@ -163,7 +163,7 @@ export function LoginForm({ onSuccess, isAdmin = false }: LoginFormProps) {
         {isAdmin && (
           <div className="text-center mt-6">
             <p className="text-slate-600 text-sm">
-              Default: admin / BiznesYordam2024!
+              Default: admin / SellerCloudX2024!
             </p>
           </div>
         )}

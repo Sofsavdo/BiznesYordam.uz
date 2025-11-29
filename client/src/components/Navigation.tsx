@@ -35,7 +35,7 @@ export function Navigation() {
                   <span className="text-white font-bold text-sm">BY</span>
                 </div>
                 <h1 className="text-2xl font-bold text-slate-900 relative">
-                  BiznesYordam
+                  SellerCloudX
                   <span className="absolute -bottom-1 left-0 h-0.5 w-full gradient-business rounded-full opacity-60"></span>
                 </h1>
               </button>

@@ -289,7 +289,7 @@ Agar ruxsat bersangiz, avtomatik PDF yaratadi.
             </div>
             <div className="mt-4 p-4 bg-blue-600/10 rounded-lg border border-blue-500/30">
               <p className="text-sm text-gray-300 text-center">
-                ✅ <span className="font-bold text-blue-400">BiznesYordam Haq: 1 200 000 so'm</span> (6% savdo) | 
+                ✅ <span className="font-bold text-blue-400">SellerCloudX Haq: 1 200 000 so'm</span> (6% savdo) | 
                 Seller Net Profit: <span className="font-bold text-green-400">4 200 000 so'm</span>
               </p>
             </div>

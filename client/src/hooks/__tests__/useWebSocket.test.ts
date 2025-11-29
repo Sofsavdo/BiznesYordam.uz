@@ -38,7 +38,7 @@ describe('WebSocket URL Generation', () => {
   });
 
   it('should generate correct WebSocket URL for production with HTTPS', () => {
-    const apiUrl = 'https://biznesyordam-backend.onrender.com';
+    const apiUrl = 'https://SellerCloudX-backend.onrender.com';
     const userId = 'test-user-123';
     const role = 'partner';
 
@@ -47,7 +47,7 @@ describe('WebSocket URL Generation', () => {
     const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${protocol}//${url.host}/ws?userId=${userId}&role=${role}`;
 
-    const expectedUrl = `wss://biznesyordam-backend.onrender.com/ws?userId=${userId}&role=${role}`;
+    const expectedUrl = `wss://SellerCloudX-backend.onrender.com/ws?userId=${userId}&role=${role}`;
     expect(wsUrl).toBe(expectedUrl);
   });
 

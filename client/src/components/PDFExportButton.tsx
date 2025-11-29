@@ -25,7 +25,7 @@ export function PDFExportButton({ data, filename, type, title }: PDFExportButton
       // Add logo/header
       doc.setFontSize(20);
       doc.setTextColor(79, 70, 229); // Primary color
-      doc.text('BiznesYordam.uz', 14, 20);
+      doc.text('SellerCloudX.uz', 14, 20);
       
       doc.setFontSize(16);
       doc.setTextColor(0, 0, 0);
@@ -143,7 +143,7 @@ export function PDFExportButton({ data, filename, type, title }: PDFExportButton
           { align: 'center' }
         );
         doc.text(
-          'BiznesYordam.uz - Professional Marketplace Fulfillment',
+          'SellerCloudX.uz - Professional Marketplace Fulfillment',
           doc.internal.pageSize.width / 2,
           doc.internal.pageSize.height - 5,
           { align: 'center' }

@@ -180,7 +180,7 @@ export default function Landing() {
     {
       name: "Aziz Karimov",
       business: "Elektronika hamkori",
-      content: "3 oy ichida oylik daromadim 5M dan 25M so'mga oshdi. BiznesYordam jamoasi professional va sifatli xizmat ko'rsatadi!",
+      content: "3 oy ichida oylik daromadim 5M dan 25M so'mga oshdi. SellerCloudX jamoasi professional va sifatli xizmat ko'rsatadi!",
       rating: 5,
       avatar: "A"
     },
@@ -227,7 +227,7 @@ export default function Landing() {
                 {/* Hero Title - Massive & Eye-catching */}
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
                   <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                    BiznesYordam
+                    SellerCloudX
                   </span>
                   <span className="block text-3xl md:text-4xl lg:text-5xl font-bold text-slate-700">
                     AI bilan Savdo Qiling! 
@@ -689,7 +689,7 @@ export default function Landing() {
                 <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-sm">BY</span>
                 </div>
-                <h3 className="text-2xl font-bold">BiznesYordam</h3>
+                <h3 className="text-2xl font-bold">SellerCloudX</h3>
               </div>
               <p className="text-slate-400 mb-6 max-w-md">
                 O'zbekiston uchun professional marketplace management platform. 
@@ -740,7 +740,7 @@ export default function Landing() {
           </div>
           
           <div className="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 BiznesYordam. Barcha huquqlar himoyalangan.</p>
+            <p>&copy; 2024 SellerCloudX. Barcha huquqlar himoyalangan.</p>
             <div className="flex justify-center gap-4 mt-4">
               <Button
                 onClick={() => setLocation('/investor-pitch')}

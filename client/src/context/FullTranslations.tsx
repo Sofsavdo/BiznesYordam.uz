@@ -4,7 +4,7 @@
 export const FULL_TRANSLATIONS_UZ = {
   // Landing Hero
   'hero.badge': "O'zbekiston #1 AI Platform",
-  'hero.title.main': 'BiznesYordam',
+  'hero.title.main': 'SellerCloudX',
   'hero.title.sub': 'AI bilan Savdo Qiling!',
   'hero.description': "O'zbekistonda birinchi GPT-4 Sun'iy Intellekt bilan ishlaydigan marketplace management platformasi.",
   'hero.stat.times': 'Tezroq',
@@ -124,7 +124,7 @@ export const FULL_TRANSLATIONS_UZ = {
 export const FULL_TRANSLATIONS_RU = {
   // Landing Hero
   'hero.badge': '#1 AI Платформа в Узбекистане',
-  'hero.title.main': 'BiznesYordam',
+  'hero.title.main': 'SellerCloudX',
   'hero.title.sub': 'Торгуйте с AI!',
   'hero.description': 'Первая в Узбекистане платформа управления marketplace с GPT-4 искусственным интеллектом.',
   'hero.stat.times': 'Быстрее',
