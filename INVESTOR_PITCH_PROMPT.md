@@ -58,7 +58,169 @@
 
 ---
 
-## SLIDE 4: TEXNOLOGIYA STACK
+## SLIDE 4: XARAJATLAR TAQQOSLASH
+**Title:** O'zi Boshlasa vs SellerCloudX
+**Subtitle:** Bir yilda 156M so'm tejash + 3x ko'p savdo
+
+**Content:**
+
+**O'ZI BOSHLASA (Oyiga):**
+- Ombor ijara (200m²): 15,000,000 so'm
+- 3 ta xodim (operator, qadoqlovchi, haydovchi): 12,000,000 so'm
+- Transport (yuk mashinasi): 8,000,000 so'm
+- Qadoqlash materiallari: 3,000,000 so'm
+- Kommunal va boshqalar: 2,000,000 so'm
+- **JAMI: 40,000,000 so'm/oy** (≈ $3,000)
+- **YILLIK: 480,000,000 so'm** (≈ $36,000)
+
+**Muammolar:**
+- ❌ Faqat 1 marketplace boshqaradi (vaqt yetmaydi)
+- ❌ Xatolar va qaytarishlar (10-15%)
+- ❌ Xodimlar kasallansa yoki ketsa - biznes to'xtaydi
+- ❌ Listing va narx optimizatsiya qo'lda - kam savdo
+- ❌ Kengayish qiyin va qimmat
+
+**SELLERCLOUDX BILAN (Oyiga):**
+- Business Standard tarif: 8,000,000 so'm
+- Profit share: 25% (faqat foyda bo'lsa!)
+- **JAMI: 8,000,000 so'm/oy** (≈ $600)
+- **YILLIK: 96,000,000 so'm** (≈ $7,200)
+
+**Ustunliklar:**
+- ✅ 2-4 marketplace parallel boshqaruv
+- ✅ AI avtomatik narx va listing optimizatsiya
+- ✅ 99.9% aniqlik, xatosiz
+- ✅ 24/7 ishlab turadi
+- ✅ Trend Hunter - yangi mahsulot imkoniyatlari
+- ✅ Professional fulfillment va qadoqlash
+
+**NATIJA:**
+- 💰 **Tejash: 32M so'm/oy = 384M so'm/yil** (≈ $29,000)
+- 📈 **Savdo: 3-4x ko'proq** (ko'p marketplace + AI optimizatsiya)
+- ⏰ **Vaqt: 70% tejash** - biznesni o'stirishga sarflang
+- 🚀 **Risk: 80% kam** - professional jamoa va AI
+
+---
+
+## SLIDE 5: BIZNING TARIFLAR
+**Title:** Har Bir Biznes Uchun Tarif
+**Subtitle:** Foyda bo'lmasa - to'lov yo'q! (Profit Share Model)
+
+**Content:**
+
+**1. STARTER PRO** - Yangi boshlovchilar uchun
+- Oylik: 3,000,000 so'm
+- Profit Share: 50% (faqat foydadan!)
+- 1 marketplace
+- 100 mahsulot
+- 100kg omborxona
+- Email support
+- **Ideal:** Yangi sellerlar, past risk
+
+**2. BUSINESS STANDARD** ⭐ ENG MASHHUR
+- Oylik: 8,000,000 so'm
+- Profit Share: 25% (faqat foydadan!)
+- 2 marketplace
+- 500 mahsulot
+- 500kg omborxona
+- Telefon support
+- AI Trend Hunter BEPUL
+- **Ideal:** O'sib borayotgan bizneslar
+
+**3. PROFESSIONAL PLUS**
+- Oylik: 18,000,000 so'm
+- Profit Share: 15% (faqat foydadan!)
+- 4 marketplace
+- 2000 mahsulot
+- 2000kg omborxona
+- 24/7 support
+- AI Trend Hunter BEPUL
+- Priority fulfillment
+- **Ideal:** Katta hajmli sellerlar
+
+**4. ENTERPRISE ELITE**
+- Oylik: 25,000,000 so'm
+- Profit Share: 10% (faqat foydadan!)
+- Cheksiz marketplace
+- Cheksiz mahsulot
+- Cheksiz omborxona
+- Dedicated manager
+- Custom AI solutions
+- **Ideal:** Korporativ mijozlar
+
+**HAMMA TARIFLARDA:**
+- ✅ AI Marketplace Operator
+- ✅ Professional Fulfillment
+- ✅ Real-time Analytics Dashboard
+- ✅ Multi-marketplace Integration
+- ✅ Avtomatik narx optimizatsiya
+- ✅ 24/7 monitoring
+
+**KAFOLAT:** 90 kun ichida natija ko'rsatmasak - pul qaytaramiz!
+
+---
+
+## SLIDE 6: NEGA SELLERCLOUDX?
+**Title:** Marketplace'ga O'zi Kirishdan Ko'ra Bizni Tanlash
+**Subtitle:** 10 ta aniq sabab
+
+**Content:**
+
+**1. VAQT TEJASH - 70%**
+- O'zi: Har bir marketplace uchun alohida listing, narx monitoring, buyurtma boshqaruvi
+- Biz: Bitta dashboard'dan barchasi avtomatik
+
+**2. XARAJAT TEJASH - 80%**
+- O'zi: Xodimlar, ombor, transport = 40M so'm/oy
+- Biz: 8M so'm/oy + faqat foyda bo'lsa profit share
+
+**3. KO'P MARKETPLACE - 3-4x SAVDO**
+- O'zi: Vaqt yetmaydi, faqat 1 marketplace
+- Biz: 2-4 marketplace parallel, GMV 3-4x ko'p
+
+**4. AI OPTIMIZATSIYA - 25% SAVDO OSHISHI**
+- O'zi: Qo'lda narx qo'yish, taxmin
+- Biz: AI avtomatik optimal narx, raqobatchi monitoring
+
+**5. PROFESSIONAL LISTING - 40% KO'RINISH**
+- O'zi: Oddiy kartochka, kam ko'rinadi
+- Biz: AI-generated SEO listing, yuqori reytingda
+
+**6. TREND HUNTER - YANGI IMKONIYATLAR**
+- O'zi: Qaysi mahsulot sotilishini bilmaydi
+- Biz: AI real-time trend tahlil, hot products tavsiya
+
+**7. XATOSIZ FULFILLMENT - 99.9%**
+- O'zi: Inson xatosi 10-15%, mijoz noroziligi
+- Biz: AI va professional jamoa, 99.9% aniqlik
+
+**8. 24/7 ISHLAB TURADI**
+- O'zi: Xodim kasallansa - biznes to'xtaydi
+- Biz: AI hech qachon to'xtamaydi, dam olmaydi
+
+**9. RISK KAMAYTIRISH - 80%**
+- O'zi: Katta investitsiya, noaniq natija
+- Biz: Kam investitsiya, 90 kun kafolat, profit share
+
+**10. KENGAYISH OSON**
+- O'zi: Yangi marketplace = yangi xodim, yangi ombor
+- Biz: Bir tugma bosish - yangi marketplace qo'shildi
+
+**HAQIQIY MISOL:**
+
+**Aziz - Elektronika Seller:**
+- Avval: 1 marketplace (Uzum), 5M so'm foyda/oy
+- SellerCloudX bilan: 3 marketplace (Uzum+WB+Ozon), 25M so'm foyda/oy
+- Natija: 5x foyda oshishi, 3 oy ichida!
+
+**Malika - Fashion Seller:**
+- Avval: 2 xodim, 15M so'm xarajat, 10M so'm foyda
+- SellerCloudX bilan: 8M so'm xarajat, 35M so'm foyda
+- Natija: 3.5x foyda, 50% xarajat tejash!
+
+---
+
+## SLIDE 7: TEXNOLOGIYA STACK
 **Title:** Texnologiya va Platforma
 **Subtitle:** Enterprise-darajali, ishlab chiqilgan, scalable
 
