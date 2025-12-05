@@ -192,20 +192,8 @@ export function ChatSystem({ partnerId, isAdmin = false }: ChatSystemProps) {
       );
 
       if (response.ok) {
-        const result = await response.json();
-        setMessages(prev => [...prev, result.newMessage]);
+        await response.json();
         setNewMessage('');
-        
-        // Send via WebSocket for real-time delivery
-        sendMessage({
-          type: 'message',
-          data: {
-            toUserId: selectedPartner.userData.id,
-            content,
-            messageType,
-            ...(fileData && { fileUrl: fileData.fileUrl, fileName: fileData.fileName, fileSize: fileData.fileSize })
-          }
-        });
       }
     } catch (error) {
       console.error('Error sending message:', error);

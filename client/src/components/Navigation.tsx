@@ -122,13 +122,21 @@ export function Navigation() {
                   </Button>
                 )}
                 {user.role === 'partner' && (
-                  <Button
-                    onClick={() => setLocation('/partner-dashboard')}
-                    variant="outline"
-                    className="hover-lift"
-                  >
-                    Dashboard
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => setLocation('/partner-dashboard')}
+                      variant="outline"
+                      className="hover-lift"
+                    >
+                      Dashboard
+                    </Button>
+                    <Button
+                      onClick={() => setLocation('/ai-dashboard')}
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white hover-lift"
+                    >
+                      🤖 AI Manager
+                    </Button>
+                  </>
                 )}
                 <Button
                   onClick={handleLogout}
@@ -235,13 +243,21 @@ export function Navigation() {
                     </Button>
                   )}
                   {user.role === 'partner' && (
-                    <Button
-                      onClick={() => setLocation('/partner-dashboard')}
-                      variant="outline"
-                      className="mx-3 mb-2"
-                    >
-                      Dashboard
-                    </Button>
+                    <>
+                      <Button
+                        onClick={() => setLocation('/partner-dashboard')}
+                        variant="outline"
+                        className="mx-3 mb-2"
+                      >
+                        Dashboard
+                      </Button>
+                      <Button
+                        onClick={() => setLocation('/ai-dashboard')}
+                        className="mx-3 mb-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white"
+                      >
+                        🤖 AI Manager
+                      </Button>
+                    </>
                   )}
                   <Button
                     onClick={handleLogout}

@@ -85,6 +85,8 @@ export const partners = pgTable("partners", {
   monthlyFee: decimal("monthly_fee").notNull().default('3000000'), // YANGI v4: Oylik abonent (Starter Pro default)
   profitShareRate: decimal("profit_share_rate").notNull().default('0.50'), // YANGI v4: Foydadan % (Starter Pro default)
   commissionRate: decimal("commission_rate").notNull().default('0.50'), // Legacy compat
+  planType: varchar("plan_type").notNull().default('local_full_service'),
+  aiPlanCode: varchar("ai_plan_code"),
   isApproved: boolean("is_approved").notNull().default(false),
   approvedAt: timestamp("approved_at"),
   approvedBy: varchar("approved_by").references(() => users.id),
@@ -198,7 +200,6 @@ export const fulfillmentRequests = pgTable("fulfillment_requests", {
   updatedAt: timestamp("updated_at").default(sql`now()`),
 });
 
-// Analytics data
 export const analytics = pgTable("analytics", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
@@ -231,6 +232,10 @@ export const messages = pgTable("messages", {
   fromUserId: varchar("from_user_id").notNull().references(() => users.id),
   toUserId: varchar("to_user_id").notNull().references(() => users.id),
   content: text("content").notNull(),
+  messageType: varchar("message_type").notNull().default('text'),
+  fileUrl: text("file_url"),
+  fileName: varchar("file_name"),
+  fileSize: integer("file_size"),
   isRead: boolean("is_read").notNull().default(false),
   createdAt: timestamp("created_at").default(sql`now()`),
 });

@@ -23,7 +23,7 @@ interface FulfillmentProduct {
  */
 export async function triggerAIForFulfillment(
   fulfillmentRequestId: number,
-  adminId: number
+  adminId: string
 ) {
   console.log('\ud83e\udd16 Starting AI workflow for fulfillment:', fulfillmentRequestId);
 
@@ -190,7 +190,7 @@ export async function triggerAIForFulfillment(
 export async function manuallyTriggerAIForProduct(
   productId: number,
   marketplaceType: string,
-  adminId: number
+  adminId: string
 ) {
   console.log(`\ud83d\udd04 Manually triggering AI for product ${productId} on ${marketplaceType}`);
 

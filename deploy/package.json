@@ -39,7 +39,9 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write .",
     "production:setup": "npm run db:push && npm run build",
-    "production:start": "npm run production:setup && npm start"
+    "production:start": "npm run production:setup && npm start",
+    "rebuild:sqlite": "npm rebuild better-sqlite3",
+    "postinstall": "npm run rebuild:sqlite"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.20.0",
@@ -81,6 +83,7 @@
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
     "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.2.0",
     "bull": "^4.12.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -103,60 +103,49 @@
 ---
 
 ## SLIDE 5: BIZNING TARIFLAR
-**Title:** Har Bir Biznes Uchun Tarif
-**Subtitle:** Foyda bo'lmasa - to'lov yo'q! (Profit Share Model)
+**Title:** Ikkita Asosiy Model va AI Tariflar
+**Subtitle:** Lokal Full-service + Global AI Manager SaaS
 
 **Content:**
 
-**1. STARTER PRO** - Yangi boshlovchilar uchun
-- Oylik: 3,000,000 so'm
-- Profit Share: 50% (faqat foydadan!)
-- 1 marketplace
-- 100 mahsulot
-- 100kg omborxona
-- Email support
-- **Ideal:** Yangi sellerlar, past risk
+**Segment 1: Lokal Full-service Fulfillment + AI Manager (Cheklangan, high-touch)**
+- 5-10 ta yirik lokal hamkorlar uchun (Uzbekistan / Markaziy Osiyo)
+- Ombor, qadoqlash, logistika, qaytarishlar – to‘liq bizda
+- AI Manager barcha marketplace operatsiyalarini (listing, narx, review, reklama tavsiyalari) boshqaradi
+- Narxlash: fulfillment fee + 10-20% GMV revenue share (custom, kelishuv asosida)
+- Maqsad: yuqori GMV, chuqur hamkorlik, kuchli case study lar
 
-**2. BUSINESS STANDARD** ⭐ ENG MASHHUR
-- Oylik: 8,000,000 so'm
-- Profit Share: 25% (faqat foydadan!)
-- 2 marketplace
-- 500 mahsulot
-- 500kg omborxona
-- Telefon support
-- AI Trend Hunter BEPUL
-- **Ideal:** O'sib borayotgan bizneslar
+**Segment 2: Remote AI Manager SaaS (AI-only, skeyllanuvchi)**
+- Fulfillment yo‘q, faqat AI marketplace operator
+- Dunyodagi istalgan seller uchun (Uzum, WB, Ozon, AliExpress, Amazon va boshqalar)
+- 100% remote, FTE operator o‘rniga AI
 
-**3. PROFESSIONAL PLUS**
-- Oylik: 18,000,000 so'm
-- Profit Share: 15% (faqat foydadan!)
-- 4 marketplace
-- 2000 mahsulot
-- 2000kg omborxona
-- 24/7 support
-- AI Trend Hunter BEPUL
-- Priority fulfillment
-- **Ideal:** Katta hajmli sellerlar
+**AI Local Manager (mahalliy bozorlar uchun)**
+- `AI Local Starter` – **$299/oy**
+  - 1 brand, 1 mamlakat
+  - 1-2 marketplace
+  - 1000 tagacha mahsulot
+- `AI Local Pro` – **$699/oy**
+  - 2-3 brand
+  - 2-3 marketplace
+  - 5000 tagacha mahsulot
 
-**4. ENTERPRISE ELITE**
-- Oylik: 25,000,000 so'm
-- Profit Share: 10% (faqat foydadan!)
-- Cheksiz marketplace
-- Cheksiz mahsulot
-- Cheksiz omborxona
-- Dedicated manager
-- Custom AI solutions
-- **Ideal:** Korporativ mijozlar
+**AI Global Manager (global marketplace lar uchun)**
+- `AI Global Starter` – **$599/oy**
+  - 1-2 brand
+  - 2-3 global marketplace (Amazon, AliExpress, Ozon va boshqalar)
+- `AI Global Scale` – **$1,099/oy**
+  - 3+ brand
+  - 4+ marketplace
+  - Cheklanmaganiga yaqin mahsulot soni
 
-**HAMMA TARIFLARDA:**
-- ✅ AI Marketplace Operator
-- ✅ Professional Fulfillment
-- ✅ Real-time Analytics Dashboard
-- ✅ Multi-marketplace Integration
-- ✅ Avtomatik narx optimizatsiya
-- ✅ 24/7 monitoring
+**Har bir AI tarifda:**
+- ✅ AI Marketplace Operator (narx, listing, review, reklama tavsiyalari)
+- ✅ Real-time analytics dashboard va AI monitoring
+- ✅ Multi-marketplace integratsiya
+- ✅ Chat orqali dedicated AI success manager (support)
 
-**KAFOLAT:** 90 kun ichida natija ko'rsatmasak - pul qaytaramiz!
+**Strategiya:** Mahalliyda 5-10 ta full-service “flagship” hamkor + globalda 100+ remote AI SaaS mijoz
 
 ---
 
@@ -166,6 +155,7 @@
 
 **Content:**
 
+1. **VAQT TEJASH - 70%**
 **1. VAQT TEJASH - 70%**
 - O'zi: Har bir marketplace uchun alohida listing, narx monitoring, buyurtma boshqaruvi
 - Biz: Bitta dashboard'dan barchasi avtomatik
@@ -327,33 +317,57 @@ AI asosida global marketplace trendlarini real-time tahlil qilish va sellerga ta
 
 ## SLIDE 9: BIZNES MODEL
 **Title:** Biznes Modeli
-**Subtitle:** Har bir sellerdan o'rtacha 42 mln so'm / oy
+**Subtitle:** Lokal Full-service + Global AI Manager SaaS
 
 **Content:**
-**Daromad Oqimlari:**
-1. Fulfillment Xizmatlari: Qadoqlash 300-800 so'm/dona, Stiker va paket materiallari, Ombor xizmatlari
-2. AI Operator Xizmatlari: Oylik paket $100-$500, Narx optimallashtirish, Listing boshqaruvi
-3. Revenue Share: Professional 4% GMV, Enterprise 6% GMV, Value-based pricing
+**Asosiy 2 segment:**
 
-**Natija:** 42 MLN SO'M ≈ $3,000 / oy
+1. **Lokal Full-service Fulfillment + AI Manager (cheklangan flagship hamkorlar)**
+   - 5-10 ta yirik seller bilan chuqur hamkorlik
+   - Daromad: fulfillment fee (ombor, qadoqlash, logistika) + 8-15% GMV revenue share
+   - Maqsad: katta GMV, barqaror cashflow, kuchli case study lar
+
+2. **Remote AI Manager SaaS (AI-only, skeyllanuvchi model)**
+   - Dunyodagi istalgan seller uchun marketplace AI operator
+   - Daromad: oylik AI tariflar (abonnement):
+     - AI Local Starter – **$299/oy**
+     - AI Local Pro – **$699/oy**
+     - AI Global Starter – **$599/oy**
+     - AI Global Scale – **$1,099/oy**
+   - 80-90% gross margin (AI API + support xarajatlaridan keyin)
+
+**Modelning strategik g'oyasi:**
+- Lokal full-service flagship mijozlar → barqaror daromad va real bozor natijalari
+- Global AI SaaS → tez o'suvchi, yuqori marjali, MRR/ARR ga asoslangan biznes
+- Bitta platforma, bitta AI yadro – ikkita daromad oqimi
 
 ---
 
 ## SLIDE 10: UNIT ECONOMICS
 **Title:** Unit Economics
-**Subtitle:** Bitta seller bo'yicha raqamlar
+**Subtitle:** Bitta lokal full-service va bitta remote AI SaaS mijoz
 
 **Content:**
-**Bitta Seller (3-4 marketplace):**
-- GMV: 700M so'm / oy
-- SellerCloudX ulushi: 6%
-- Bizga daromad: 42M so'm
 
-**Xarajat Taqsimoti:**
-- Fulfillment: 15M
-- AI xarajat: 8M
-- Operatsiya: 5M
-- **Sof foyda: 14M**
+**1) Lokal Full-service hamkor (flagship seller):**
+- Oylik GMV: ~1.5 mlrd so'm (≈ $120k)
+- SellerCloudX ulushi: 10% GMV (fulfillment + operatsion fee + revenue share)
+- Bizga brutto daromad: ~150M so'm (≈ $12k)
+
+**Xarajatlar:**
+- Fulfillment va logistika: 70-80M so'm
+- AI va operatsion xarajatlar: 20-25M so'm
+- **Sof foyda:** ~45-60M so'm/oy (≈ $3.5k-$4.5k)
+
+5 ta shunday flagship hamkor → 225-300M so'm sof foyda/oy
+
+**2) Remote AI SaaS mijoz (AI Global Scale):**
+- Abonent to'lovi: **$1,099/oy**
+- AI API va server xarajatlari: ~$150/oy
+- Support va operatsion xarajatlar: ~$100/oy
+- **Sof foyda:** ≈ $800/oy (≈ 70%+ gross margin)
+
+100 ta remote AI SaaS mijoz → ≈ $80,000 sof foyda/oy potensiali
 
 ---
 

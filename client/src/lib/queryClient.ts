@@ -29,21 +29,28 @@ export async function apiRequest(
   
   const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
 
+  const isFormData = typeof FormData !== 'undefined' && data instanceof FormData;
+
+  const headers: HeadersInit = {
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    ...options?.headers,
+  };
+
+  if (!isFormData) {
+    (headers as any)['Content-Type'] = 'application/json';
+  }
+
   const config: RequestInit = {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      ...options?.headers,
-    },
+    headers,
     credentials: 'include', // Important for session cookies
     mode: 'cors',
     ...options,
   };
 
   if (data && method !== 'GET') {
-    config.body = JSON.stringify(data);
+    config.body = isFormData ? data : JSON.stringify(data);
   }
 
   console.log(`🌐 API Request: ${method} ${fullUrl}`, { 
@@ -113,8 +120,9 @@ export const queryClient = new QueryClient({
           const response = await apiRequest('GET', url);
           return response.json();
         }
-        // Fallback to default behavior
-        return getQueryFn({ on401: "returnNull" })({ queryKey });
+        // Fallback to default behavior (cast to any to satisfy TS)
+        const fallback = getQueryFn({ on401: "returnNull" }) as any;
+        return fallback({ queryKey });
       },
       refetchInterval: false,
       refetchOnWindowFocus: false,

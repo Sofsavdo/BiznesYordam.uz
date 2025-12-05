@@ -1,6 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
 import { Server } from "http";
+import fs from "fs";
+import multer from "multer";
 import { storage } from "./storage";
 import { healthCheck } from "./health";
 import { getSessionConfig } from "./session";
@@ -8,6 +10,7 @@ import { asyncHandler } from "./errorHandler";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
 import { partners } from "@shared/schema";
+
 import { 
   loginSchema, 
   partnerRegistrationSchema,
@@ -18,6 +21,7 @@ import { ZodError } from "zod";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import debugRoutes from "./debugRoutes";
+
 import inventoryRoutes from "./routes/inventoryRoutes";
 import investorRoutes from "./routes/investorRoutes";
 import marketplaceIntegrationRoutes from "./routes/marketplaceIntegrationRoutes";
@@ -26,7 +30,10 @@ import forecastRoutes from "./routes/forecastRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
 import aiManagerRoutes from "./routes/aiManagerRoutes";
 import trendingRoutes from "./routes/trendingRoutes";
+import aiDashboardRoutes from "./routes/aiDashboard";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
+import appConfig from "./config";
+import { uploadLimiter } from "./middleware/rateLimiter";
 
 // Enhanced authentication middleware with better error handling
 function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -93,6 +100,19 @@ function handleValidationError(error: any, req: Request, res: Response, next: Ne
 
 export function registerRoutes(app: express.Application): Server {
   const server = new Server(app);
+
+  // File upload configuration for chat/support files
+  const uploadPath = appConfig.upload.uploadPath;
+  if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath, { recursive: true });
+  }
+  const upload = multer({
+    dest: uploadPath,
+    limits: { fileSize: appConfig.upload.maxFileSize },
+  });
+
+  // Serve uploaded files statically
+  app.use('/uploads', express.static(uploadPath));
 
   // Session configuration
   app.use(session(getSessionConfig()));
@@ -859,6 +879,9 @@ export function registerRoutes(app: express.Application): Server {
 
   // AI Autonomous Manager routes
   app.use("/api/ai-manager", requireAuth, aiManagerRoutes);
+
+  // AI Dashboard routes (Partner view-only)
+  app.use("/api/ai-dashboard", requireAuth, aiDashboardRoutes);
 
   // Trending Products Analytics routes
   app.use("/api/trending", requireAuth, trendingRoutes);

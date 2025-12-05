@@ -30,15 +30,14 @@ import { useToast } from '@/hooks/use-toast';
 import { formatCurrency } from '@/lib/currency';
 import { apiRequest } from '@/lib/queryClient';
 import { useQueryClient } from '@tanstack/react-query';
-import { NEW_PRICING_TIERS } from '../../../NEW_PRICING_CONFIG';
+import { NEW_PRICING_TIERS, AI_MANAGER_PLANS } from '../../../NEW_PRICING_CONFIG';
+import { ChatSystem } from '@/components/ChatSystem';
 import {
   Package, TrendingUp, Settings, Crown, BarChart3, DollarSign,
   Target, Zap, CheckCircle, Clock, AlertTriangle, User, Building, CreditCard,
   Globe, Truck, Star, ArrowRight, Plus, Eye, Edit, Trash2, Download, Upload, RefreshCw,
-  FileSpreadsheet, TrendingDown
+  FileSpreadsheet, TrendingDown, MessageCircle
 } from 'lucide-react';
-
-
 
 interface Product { id: string; name: string; category: string; description: string; price: string; costPrice: string; sku: string; barcode: string; weight: string; isActive: boolean; createdAt: string; }
 interface FulfillmentRequest { id: string; title: string; description: string; status: string; priority: string; estimatedCost: string; actualCost: string; createdAt: string; }
@@ -53,7 +52,6 @@ export default function PartnerDashboard() {
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showTierModal, setShowTierModal] = useState(false);
 
-  // YANGI: Auth yuklanayotganda loading ko‘rsatish
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
@@ -63,7 +61,6 @@ export default function PartnerDashboard() {
     }
   }, [user, authLoading, setLocation]);
 
-  // Agar hali yuklanayotgan bo‘lsa — loading
   if (authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -75,7 +72,6 @@ export default function PartnerDashboard() {
     );
   }
 
-  // Agar user yo‘q bo‘lsa
   if (!user || user.role !== 'partner') {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -84,7 +80,6 @@ export default function PartnerDashboard() {
     );
   }
 
-  // Data queries
   const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
     queryFn: async () => {
@@ -157,6 +152,12 @@ export default function PartnerDashboard() {
     return tierNames[tier as keyof typeof tierNames] || tier;
   };
 
+  const getPlanTypeLabel = (planType?: string) => {
+    if (!planType || planType === 'local_full_service') return 'Local Full-service';
+    if (planType === 'remote_ai_saas') return 'Remote AI Manager SaaS';
+    return planType;
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -204,7 +205,7 @@ export default function PartnerDashboard() {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-10">
+            <TabsList className="grid w-full grid-cols-11">
               <TabsTrigger value="overview"><BarChart3 className="w-4 h-4 mr-2" />Umumiy</TabsTrigger>
               <TabsTrigger value="marketplace"><Globe className="w-4 h-4 mr-2" />Marketplace</TabsTrigger>
               <TabsTrigger value="tracker"><Eye className="w-4 h-4 mr-2" />Tracking</TabsTrigger>
@@ -215,16 +216,60 @@ export default function PartnerDashboard() {
               <TabsTrigger value="requests"><Truck className="w-4 h-4 mr-2" />So'rovlar</TabsTrigger>
               <TabsTrigger value="profit"><DollarSign className="w-4 h-4 mr-2" />Foyda</TabsTrigger>
               <TabsTrigger value="trends"><TrendingUp className="w-4 h-4 mr-2" />Trendlar</TabsTrigger>
+              <TabsTrigger value="support"><MessageCircle className="w-4 h-4 mr-2" />Support chat</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
-              {/* Partner Tier Info Card */}
+              {/* Partner Tier / Plan Info Card */}
               {partner && (() => {
+                const planType = (partner as any).planType || 'local_full_service';
+
+                if (planType === 'remote_ai_saas') {
+                  const aiPlanCode = (partner as any).aiPlanCode;
+                  const plan = aiPlanCode
+                    ? AI_MANAGER_PLANS[aiPlanCode as keyof typeof AI_MANAGER_PLANS]
+                    : null;
+
+                  return (
+                    <Card className="border-2 border-primary/30 shadow-lg">
+                      <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10">
+                        <CardTitle className="flex items-center justify-between">
+                          <span>AI Manager Rejasi</span>
+                          {plan && (
+                            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">
+                              {plan.name}
+                            </Badge>
+                          )}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-4 space-y-2">
+                        <p className="text-sm text-muted-foreground">
+                          Reja turi: {getPlanTypeLabel(planType)}
+                        </p>
+                        {plan ? (
+                          <>
+                            <p className="text-sm">
+                              Oylik to'lov: <span className="font-semibold">${plan.monthlyFee}/oy</span>
+                            </p>
+                            <p className="text-sm">
+                              Komissiya: <span className="font-semibold">{(plan.revenueCommissionRate * 100).toFixed(2)}% savdodan</span>
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">
+                            AI Manager rejangiz hali tanlanmagan. Admin bilan bog'laning.
+                          </p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                }
+
                 const tierKey = partner.pricingTier || 'starter_pro';
                 const tierConfig = NEW_PRICING_TIERS[tierKey as keyof typeof NEW_PRICING_TIERS];
-                
+
                 return (
-                  <PartnerTierInfo 
+                  <PartnerTierInfo
                     currentTier={tierKey}
                     monthlyFee={parseFloat((partner as any).monthlyFee || tierConfig.monthlyFee.toString())}
                     profitShareRate={parseFloat((partner as any).profitShareRate || (tierConfig.profitShareRate || tierConfig.commissionRate).toString())}
@@ -233,10 +278,9 @@ export default function PartnerDashboard() {
                   />
                 );
               })()}
-              
               {/* AI Usage Tracker */}
               {partner && (
-                <AIUsageTracker 
+                <AIUsageTracker
                   monthlyRevenue={stats.totalRevenue}
                   pricingTier={partner.pricingTier}
                   aiEnabled={(partner as any).aiEnabled || false}
@@ -462,6 +506,26 @@ export default function PartnerDashboard() {
             {/* Trends Tab - ADVANCED VERSION */}
             <TabsContent value="trends">
               <TrendingProductsDashboard />
+            </TabsContent>
+
+            {/* Support Chat Tab */}
+            <TabsContent value="support" className="space-y-4">
+              <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-blue-900">
+                    <MessageCircle className="w-5 h-5" />
+                    Support bilan chat
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-slate-600">
+                    Admin jamoasi bilan real-time yozishmalarda savollarga javob oling, fayl yuboring va holatingizni kuzating.
+                  </p>
+                </CardContent>
+              </Card>
+              <div className="rounded-xl border bg-white shadow-soft h-[640px]">
+                <ChatSystem partnerId={partner?.id} />
+              </div>
             </TabsContent>
           </Tabs>
         </div>

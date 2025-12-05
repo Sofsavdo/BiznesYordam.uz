@@ -299,6 +299,111 @@ export function calculatePartnerProfit(
   };
 }
 
+export const AI_MANAGER_PLANS = {
+  ai_local_starter: {
+    id: 'ai_local_starter',
+    segment: 'local',
+    name: 'AI Local Starter',
+    nameUz: 'AI Local Starter',
+    nameRu: 'AI Local Starter',
+    nameEn: 'AI Local Starter',
+    monthlyFee: 299,
+    currency: 'USD',
+    revenueCommissionRate: 0.015,
+    maxBrands: 1,
+    maxMarketplaces: 2,
+    maxProducts: 1000,
+    features: [
+      '1 brand',
+      '1-2 lokal marketplace',
+      '1000 tagacha mahsulot',
+      'AI listing va narx optimizatsiya',
+      'AI review va messaging yordamchisi',
+      'Asosiy analytics dashboard',
+    ],
+  },
+  ai_local_pro: {
+    id: 'ai_local_pro',
+    segment: 'local',
+    name: 'AI Local Pro',
+    nameUz: 'AI Local Pro',
+    nameRu: 'AI Local Pro',
+    nameEn: 'AI Local Pro',
+    monthlyFee: 699,
+    currency: 'USD',
+    revenueCommissionRate: 0.015,
+    maxBrands: 3,
+    maxMarketplaces: 3,
+    maxProducts: 5000,
+    features: [
+      '2-3 brand',
+      '2-3 lokal marketplace',
+      '5000 tagacha mahsulot',
+      'Kengaytirilgan AI optimizatsiya',
+      'AI Trend tavsiyalari',
+      'Prioritet support',
+    ],
+  },
+  ai_global_starter: {
+    id: 'ai_global_starter',
+    segment: 'global',
+    name: 'AI Global Starter',
+    nameUz: 'AI Global Starter',
+    nameRu: 'AI Global Starter',
+    nameEn: 'AI Global Starter',
+    monthlyFee: 599,
+    currency: 'USD',
+    revenueCommissionRate: 0.01,
+    maxBrands: 2,
+    maxMarketplaces: 3,
+    maxProducts: 3000,
+    features: [
+      '1-2 brand',
+      '2-3 global marketplace',
+      'AI listing va narx global bozor uchun',
+      'Raqobatchi monitoringi',
+      'Asosiy global analytics',
+    ],
+  },
+  ai_global_scale: {
+    id: 'ai_global_scale',
+    segment: 'global',
+    name: 'AI Global Scale',
+    nameUz: 'AI Global Scale',
+    nameRu: 'AI Global Scale',
+    nameEn: 'AI Global Scale',
+    monthlyFee: 1099,
+    currency: 'USD',
+    revenueCommissionRate: 0.01,
+    maxBrands: 5,
+    maxMarketplaces: 5,
+    maxProducts: 20000,
+    features: [
+      '3+ brand',
+      '4+ global marketplace',
+      'Katta hajm uchun AI strategiya',
+      'Kengaytirilgan analytics va reporting',
+      'Dedicated success manager',
+    ],
+  },
+};
+
+export function getAIManagerPlan(planCode: string): (typeof AI_MANAGER_PLANS)[keyof typeof AI_MANAGER_PLANS] | null {
+  const plan = AI_MANAGER_PLANS[planCode as keyof typeof AI_MANAGER_PLANS];
+  return plan || null;
+}
+
+export function getAIManagerMonthlyFee(planCode: string): number {
+  const plan = getAIManagerPlan(planCode);
+  if (!plan) return 0;
+  return plan.monthlyFee;
+}
+
+export function calculateAIManagerCommission(revenue: number, planCode: string): number {
+  const plan = getAIManagerPlan(planCode);
+  if (!plan) return 0;
+  return revenue * (plan.revenueCommissionRate || 0);
+}
 
 // Export default
 export default NEW_PRICING_TIERS;

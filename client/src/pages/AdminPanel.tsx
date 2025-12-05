@@ -21,6 +21,7 @@ import { AIManagerDashboard } from '@/components/AIManagerDashboard';
 import { AdvancedPartnerAnalytics } from '@/components/AdvancedPartnerAnalytics';
 import { AIManagerLiveMonitor } from '@/components/AIManagerLiveMonitor';
 import { AICommandCenter } from '@/components/AICommandCenter';
+import { ChatSystem } from '@/components/ChatSystem';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
@@ -55,7 +56,8 @@ import {
   Upload,
   AlertCircle,
   RefreshCw,
-  Brain
+  Brain,
+  MessageCircle
 } from 'lucide-react';
 
 
@@ -418,7 +420,7 @@ export default function AdminPanel() {
 
           {/* Main Content */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-10">
+            <TabsList className="grid w-full grid-cols-11">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Umumiy
@@ -457,6 +459,10 @@ export default function AdminPanel() {
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="w-4 h-4" />
                 Sozlamalar
+              </TabsTrigger>
+              <TabsTrigger value="chat" className="flex items-center gap-2">
+                <MessageCircle className="w-4 h-4" />
+                Support chat
               </TabsTrigger>
             </TabsList>
 
@@ -647,6 +653,26 @@ export default function AdminPanel() {
                     </div>
                   </CardContent>
                 </Card>
+              </div>
+            </TabsContent>
+
+            {/* Support Chat Tab */}
+            <TabsContent value="chat" className="space-y-4">
+              <Card className="bg-gradient-to-r from-indigo-50 to-blue-50 border-indigo-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-indigo-900">
+                    <MessageCircle className="w-5 h-5" />
+                    Support Chat
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-slate-600">
+                    Hamkorlar bilan real-time yozishma, fayl almashinuvi va statuslarni shu yerda boshqaring.
+                  </p>
+                </CardContent>
+              </Card>
+              <div className="rounded-xl border bg-white shadow-soft h-[720px]">
+                <ChatSystem isAdmin />
               </div>
             </TabsContent>
 

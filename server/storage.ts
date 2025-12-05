@@ -175,6 +175,8 @@ export async function createPartner(partnerData: {
       monthlyRevenue: partnerData.monthlyRevenue,
       pricingTier: partnerData.pricingTier || 'starter_pro',
       commissionRate: '0.25', // YANGI: 25% savdodan (Starter Pro)
+      planType: 'local_full_service',
+      aiPlanCode: null,
       isApproved: false,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -366,6 +368,10 @@ export async function createMessage(messageData: {
   toUserId: string;
   content: string;
   isRead?: boolean;
+  messageType?: string;
+  fileUrl?: string | null;
+  fileName?: string | null;
+  fileSize?: number | null;
 }): Promise<Message> {
   try {
     const [message] = await db.insert(messages).values({
@@ -373,6 +379,10 @@ export async function createMessage(messageData: {
       fromUserId: messageData.fromUserId,
       toUserId: messageData.toUserId,
       content: messageData.content,
+      messageType: (messageData.messageType || 'text') as any,
+      fileUrl: messageData.fileUrl || null,
+      fileName: messageData.fileName || null,
+      fileSize: messageData.fileSize ?? null,
       isRead: messageData.isRead || false,
       createdAt: new Date()
     }).returning();

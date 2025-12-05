@@ -12,6 +12,7 @@ import Landing from "@/pages/Landing";
 import Login from "@/pages/Login";
 import AdminLogin from "@/pages/AdminLogin";
 import PartnerDashboard from "@/pages/PartnerDashboard";
+import PartnerAIDashboard from "@/pages/PartnerAIDashboard";
 import AdminPanel from "@/pages/AdminPanel";
 import PartnerRegistration from "@/pages/PartnerRegistration";
 import InvestorPitch from "@/pages/InvestorPitch";
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/admin-login" component={AdminLogin} />
       <Route path="/partner-registration" component={PartnerRegistration} />
       <Route path="/partner-dashboard" component={PartnerDashboard} />
+      <Route path="/ai-dashboard" component={PartnerAIDashboard} />
       <Route path="/admin-panel" component={AdminPanel} />
       <Route path="/investor-pitch" component={InvestorPitch} />
       <Route component={NotFound} />

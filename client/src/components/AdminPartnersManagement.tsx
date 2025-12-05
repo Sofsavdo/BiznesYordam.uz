@@ -17,6 +17,8 @@ import {
   Crown, Trash2, ShoppingCart, Zap
 } from 'lucide-react';
 
+import { AI_MANAGER_PLANS } from '../../../NEW_PRICING_CONFIG';
+
 interface Partner {
   id: string;
   businessName: string;
@@ -32,6 +34,9 @@ interface Partner {
   totalOrders?: number;
   totalProducts?: number;
   commissionPaid?: number;
+  planType?: string;
+  aiPlanCode?: string;
+  aiEnabled?: boolean;
 }
 
 const TIER_NAMES: Record<string, string> = {
@@ -39,6 +44,19 @@ const TIER_NAMES: Record<string, string> = {
   business_standard: 'Business Standard',
   professional_plus: 'Professional Plus',
   enterprise_elite: 'Enterprise Elite'
+};
+
+const getPlanTypeLabel = (planType?: string) => {
+  if (!planType || planType === 'local_full_service') return 'Local Full-service';
+  if (planType === 'remote_ai_saas') return 'Remote AI Manager SaaS';
+  return planType;
+};
+
+const getAIPlanInfo = (partner: Partner): string | null => {
+  if (partner.planType !== 'remote_ai_saas' || !partner.aiPlanCode) return null;
+  const plan = AI_MANAGER_PLANS[partner.aiPlanCode as keyof typeof AI_MANAGER_PLANS];
+  if (!plan) return partner.aiPlanCode;
+  return `${plan.name} - $${plan.monthlyFee}/oy`;
 };
 
 export function AdminPartnersManagement() {
@@ -188,10 +206,20 @@ export function AdminPartnersManagement() {
                         <Building className="w-3 h-3" />
                         {p.ownerName}
                       </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        <Badge variant="outline" className="text-xs">
+                          {getPlanTypeLabel((p as any).planType)}
+                        </Badge>
+                        {getAIPlanInfo(p as any) && (
+                          <Badge variant="outline" className="text-xs">
+                            {getAIPlanInfo(p as any)}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
                     <Badge variant="outline">
                       <Crown className="w-3 h-3 mr-1" />
-                      {TIER_NAMES[p.pricingTier]}
+                      {TIER_NAMES[p.pricingTier] || p.pricingTier || 'Tarif yo\'q'}
                     </Badge>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
