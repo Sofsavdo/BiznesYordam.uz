@@ -1,63 +1,55 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import Database from 'better-sqlite3';
 import * as schema from '@shared/schema';
-import { config } from 'dotenv';
 
-// ENV yuklash
-config();
+// NOTE:
+// Lokal rivojlanish va demo uchun biz SQLite (better-sqlite3) dan foydalanamiz.
+// Drizzle ORM asosiy jadval va typelarga ishlaydi, lekin ayrim controllerlar
+// xom SQL bilan `db.query`, `db.all`, `db.get` funksiyalarini ham chaqiradi.
+// Shu sababli bu yerda ikkala uslubni ham qo'llab-quvvatlaydigan bitta db obyektini
+// hosil qilamiz.
 
-let db: any;
-let isPostgreSQL = false;
+// Asosiy SQLite connection
+const sqlite = new Database('dev.db');
 
-// PostgreSQL bilan ulanishni ishga tushirish
-(async () => {
-  const connectionString = process.env.DATABASE_URL;
-  const isProduction = process.env.NODE_ENV === 'production';
+// Drizzle ORM instansiyasi (typed schema bilan)
+const drizzleDb = drizzle(sqlite, { schema });
 
-  if (!connectionString || !connectionString.includes('postgresql://')) {
-    console.error('❌ DATABASE_URL PostgreSQL formatida emas yoki bo‘sh.');
-    console.error('   Misol: postgresql://user:password@host:5432/dbname');
-    throw new Error('DATABASE_URL must be a valid PostgreSQL connection string');
-  }
+// Drizzle obyektini kengaytirib, xom SQL helperlarini qo'shamiz
+const db: any = drizzleDb;
 
-  try {
-    const pool = new Pool({
-      connectionString,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-      max: 20,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000,
-    });
+// Simple helper: SELECT/INSERT/UPDATE uchun .query (hamma natijalar)
+db.query = (sql: string, params?: any[]) => {
+  const stmt = sqlite.prepare(sql);
+  return params && params.length > 0 ? stmt.all(...params) : stmt.all();
+};
 
-    // Ulanishni test qilish
-    await pool.query('SELECT 1');
+// .all alias (SQLite style)
+db.all = (sql: string, params?: any[]) => {
+  const stmt = sqlite.prepare(sql);
+  return params && params.length > 0 ? stmt.all(...params) : stmt.all();
+};
 
-    db = drizzle(pool, { schema });
-    isPostgreSQL = true;
+// .get helper – bitta qator qaytarish uchun
+db.get = (sql: string, params?: any[]) => {
+  const stmt = sqlite.prepare(sql);
+  return params && params.length > 0 ? stmt.get(...params) : stmt.get();
+};
 
-    console.log('✅ PostgreSQL database connection established with pg driver');
-  } catch (error) {
-    console.error('❌ Failed to connect to PostgreSQL database');
-    console.error('Error details:', error);
-
-    if (isProduction) {
-      // Production’da albatta Postgres bo‘lishi kerak
-      throw new Error('Failed to connect to PostgreSQL database in production mode');
-    } else {
-      throw error;
-    }
-  }
-})();
+// .run helper – INSERT/UPDATE/DELETE uchun (better-sqlite3 style)
+db.run = (sql: string, params?: any[]) => {
+  const stmt = sqlite.prepare(sql);
+  const info = params && params.length > 0 ? stmt.run(...params) : stmt.run();
+  return info;
+};
 
 // Database haqida ma’lumot qaytaruvchi helper
 export function getDatabaseInfo() {
   return {
-    type: isPostgreSQL ? 'postgresql' : 'unknown',
+    type: 'sqlite',
     isConnected: !!db,
-    connectionString: isPostgreSQL ? 'PostgreSQL' : 'Unknown',
+    connectionString: 'SQLite',
   };
 }
 
-export { db };
+export { db, sqlite };

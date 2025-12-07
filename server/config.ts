@@ -7,7 +7,8 @@ dotenv.config();
 // Define environment schema
 const envSchema = z.object({
   // Database
-  DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+  // Developmentda .env bo'lmasa ham ishlashi uchun default SQLite URL beramiz
+  DATABASE_URL: z.string().default('sqlite:./dev.db'),
   DATABASE_AUTO_SETUP: z.string().optional().default('true'),
   
   // Server
@@ -16,7 +17,11 @@ const envSchema = z.object({
   HOST: z.string().default('0.0.0.0'),
   
   // Session
-  SESSION_SECRET: z.string().min(32, 'SESSION_SECRET must be at least 32 characters'),
+  // Development uchun xavfsiz uzun default, productionda albatta override qilinishi kerak
+  SESSION_SECRET: z
+    .string()
+    .min(32, 'SESSION_SECRET must be at least 32 characters')
+    .default('dev-session-secret-CHANGE-ME-1234567890'),
   
   // CORS
   FRONTEND_ORIGIN: z.string().optional(),

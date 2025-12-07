@@ -249,7 +249,7 @@ async function markTaskFailed(taskId: number, error: string) {
   await db.run(
     `UPDATE ai_tasks 
      SET status = 'failed', 
-         error = ?,
+         error_message = ?,
          completed_at = ?
      WHERE id = ?`,
     [error, new Date().toISOString(), taskId]
@@ -273,7 +273,7 @@ export async function getTaskStatus(taskId: number): Promise<AITask | null> {
     status: task.status,
     inputData: JSON.parse(task.input_data),
     outputData: task.output_data ? JSON.parse(task.output_data) : undefined,
-    error: task.error,
+    error: task.error_message,
     createdAt: new Date(task.created_at),
     completedAt: task.completed_at ? new Date(task.completed_at) : undefined,
   };
@@ -308,7 +308,7 @@ export async function getAccountTasks(
     status: task.status,
     inputData: JSON.parse(task.input_data),
     outputData: task.output_data ? JSON.parse(task.output_data) : undefined,
-    error: task.error,
+    error: task.error_message,
     createdAt: new Date(task.created_at),
     completedAt: task.completed_at ? new Date(task.completed_at) : undefined,
   }));

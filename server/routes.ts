@@ -117,6 +117,16 @@ export function registerRoutes(app: express.Application): Server {
   // Session configuration
   app.use(session(getSessionConfig()));
 
+  // Map session user -> req.user for controllers that expect req.user
+  app.use((req, _res, next) => {
+    if (req.session && req.session.user) {
+      (req as any).user = req.session.user;
+    } else {
+      (req as any).user = undefined;
+    }
+    next();
+  });
+
   // Health check endpoint
   app.get("/api/health", healthCheck);
 

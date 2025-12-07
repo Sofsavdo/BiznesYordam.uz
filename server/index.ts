@@ -9,6 +9,7 @@ import { errorHandler, notFound } from "./errorHandler";
 import { initializeWebSocket } from "./websocket";
 import { initializeAdmin } from "./initAdmin";
 import { runMigrations } from "./migrate";
+import { initializeAIQueue } from "./services/aiTaskQueue";
 import helmet from "helmet";
 import * as Sentry from "@sentry/node";
 import winston from "winston";
@@ -181,6 +182,13 @@ app.use((req, res, next) => {
   } catch (error) {
     console.error('WebSocket initialization failed:', error);
     console.log('⚠️  Continuing without WebSocket support');
+  }
+
+  // Initialize AI task queue (SQLite-based background processor)
+  try {
+    initializeAIQueue();
+  } catch (error) {
+    console.error('AI queue initialization failed:', error);
   }
 
   // ✅ Vite faqat developmentda ishlaydi

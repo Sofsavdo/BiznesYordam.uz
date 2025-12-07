@@ -252,32 +252,6 @@ async function fetchProductDataFromMarket(productName: string, sourceMarket: str
   // For now, we'll use database queries and fallback to reasonable estimates
   
   try {
-    // Try to get data from our analytics database first
-    const existingProduct = await db.query.products.findFirst({
-      where: (products, { eq, like }) => like(products.name, `%${productName}%`),
-    });
-
-    if (existingProduct) {
-      // Use real data from database
-      const analytics = await db.query.analytics.findMany({
-        where: (analytics, { eq }) => eq(analytics.productId, existingProduct.id),
-        limit: 30,
-        orderBy: (analytics, { desc }) => [desc(analytics.date)],
-      });
-
-      const avgViews = analytics.reduce((sum, a) => sum + (a.views || 0), 0) / Math.max(analytics.length, 1);
-      const avgSales = analytics.reduce((sum, a) => sum + (a.sales || 0), 0) / Math.max(analytics.length, 1);
-
-      return {
-        searchVolume: Math.round(avgViews * 30), // Monthly estimate
-        currentPrice: parseFloat(existingProduct.price) || 50,
-        weight: 1.5, // Default estimate
-        category: existingProduct.category || 'electronics',
-        growthRate: avgSales > 0 ? Math.round((avgSales / 10) * 100) : 20,
-        competitorCount: 15, // Estimate
-      };
-    }
-
     // Fallback: Use intelligent estimates based on product name and market
     const priceEstimates: Record<string, number> = {
       'watch': 30,
@@ -404,36 +378,18 @@ export async function scanTrendingProducts(params: {
   // 5. Monitor social media (TikTok, Instagram)
 
   // Get trending products from database or use curated list
-  let trendingProducts: string[] = [];
-  
-  try {
-    // Try to get from database first
-    const dbProducts = await db.query.products.findMany({
-      where: (products, { inArray }) => inArray(products.category, categories),
-      limit: limit * 2,
-      orderBy: (products, { desc }) => [desc(products.createdAt)],
-    });
-    
-    trendingProducts = dbProducts.map(p => p.name);
-  } catch (error) {
-    console.error('Error fetching from database:', error);
-  }
-  
-  // Fallback to curated list if database is empty
-  if (trendingProducts.length === 0) {
-    trendingProducts = [
-      'Smart Watch with Heart Rate Monitor',
-      'Portable Power Bank 20000mAh',
-      'LED Strip Lights RGB',
-      'Wireless Phone Charger',
-      'Bluetooth Speaker Waterproof',
-      'Security Camera WiFi',
-      'Electric Kettle Smart',
-      'Air Purifier HEPA',
-      'Gaming Mouse RGB',
-      'USB-C Hub Multiport',
-    ];
-  }
+  let trendingProducts: string[] = [
+    'Smart Watch with Heart Rate Monitor',
+    'Portable Power Bank 20000mAh',
+    'LED Strip Lights RGB',
+    'Wireless Phone Charger',
+    'Bluetooth Speaker Waterproof',
+    'Security Camera WiFi',
+    'Electric Kettle Smart',
+    'Air Purifier HEPA',
+    'Gaming Mouse RGB',
+    'USB-C Hub Multiport',
+  ];
 
   const results = [];
 

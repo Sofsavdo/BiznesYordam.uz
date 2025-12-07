@@ -36,7 +36,7 @@ export const sessions = pgTable(
 
 // Users table
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   username: varchar("username").notNull().unique(),
   email: varchar("email").unique(),
   password: text("password").notNull(),
@@ -45,8 +45,8 @@ export const users = pgTable("users", {
   phone: varchar("phone"),
   role: userRoleEnum("role").notNull().default('customer'),
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Admin permissions table (fine-grained)
@@ -59,24 +59,24 @@ export const adminPermissions = pgTable("admin_permissions", {
   canReceiveProducts: boolean("can_receive_products").notNull().default(false),
   canActivatePartners: boolean("can_activate_partners").notNull().default(false),
   canManageIntegrations: boolean("can_manage_integrations").notNull().default(false),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Audit logs
 export const auditLogs = pgTable("audit_logs", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
   action: varchar("action").notNull(),
   entityType: varchar("entity_type").notNull(),
   entityId: varchar("entity_id"),
   payload: text("payload"),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Partners table
 export const partners = pgTable("partners", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
   businessName: varchar("business_name"),
   businessCategory: categoryEnum("business_category").notNull(),
@@ -96,13 +96,13 @@ export const partners = pgTable("partners", {
   aiApprovedAt: timestamp("ai_approved_at"),
   aiApprovedBy: varchar("ai_approved_by").references(() => users.id),
   notes: text("notes"),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Contact forms table
 export const contactForms = pgTable("contact_forms", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   firstName: varchar("first_name").notNull(),
   lastName: varchar("last_name").notNull(),
   email: varchar("email").notNull(),
@@ -113,13 +113,13 @@ export const contactForms = pgTable("contact_forms", {
   status: varchar("status").notNull().default('new'),
   processedBy: varchar("processed_by").references(() => users.id),
   processedAt: timestamp("processed_at"),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Pricing tiers configuration
 export const pricingTiers = pgTable("pricing_tiers", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   tier: varchar("tier").notNull().unique(),
   nameUz: varchar("name_uz").notNull(),
   fixedCost: decimal("fixed_cost").notNull(),
@@ -129,12 +129,12 @@ export const pricingTiers = pgTable("pricing_tiers", {
   maxRevenue: decimal("max_revenue"),
   features: text("features").notNull(), // JSON as text
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Products with inventory tracking
 export const products = pgTable("products", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   name: varchar("name").notNull(),
   category: categoryEnum("category").notNull(),
@@ -162,27 +162,27 @@ export const products = pgTable("products", {
   model: varchar("model"),
   
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
-  lastStockUpdate: timestamp("last_stock_update").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
+  lastStockUpdate: timestamp("last_stock_update").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Marketplace integrations
 export const marketplaceIntegrations = pgTable("marketplace_integrations", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   marketplace: marketplaceEnum("marketplace").notNull(),
   isActive: boolean("is_active").notNull().default(false),
   apiCredentials: text("api_credentials"), // encrypted credentials as JSON text
   lastSync: timestamp("last_sync"),
   syncStatus: varchar("sync_status").default('pending'),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Fulfillment requests
 export const fulfillmentRequests = pgTable("fulfillment_requests", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   productId: varchar("product_id").references(() => products.id),
   requestType: varchar("request_type").notNull(), // 'product_preparation', 'logistics', 'marketplace_listing'
@@ -196,12 +196,12 @@ export const fulfillmentRequests = pgTable("fulfillment_requests", {
   dueDate: timestamp("due_date"),
   completedAt: timestamp("completed_at"),
   metadata: text("metadata"), // additional request-specific data as JSON text
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const analytics = pgTable("analytics", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   date: timestamp("date").notNull(),
   revenue: decimal("revenue").notNull().default('0'),
@@ -210,12 +210,12 @@ export const analytics = pgTable("analytics", {
   commissionPaid: decimal("commission_paid").notNull().default('0'),
   marketplace: marketplaceEnum("marketplace"),
   category: categoryEnum("category"),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Notifications system
 export const notifications = pgTable("notifications", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
   type: varchar("type").notNull(), // 'order_update', 'fulfillment_status', 'profit_alert', 'trending_product'
   title: varchar("title").notNull(),
@@ -223,12 +223,12 @@ export const notifications = pgTable("notifications", {
   data: text("data"), // additional data for the notification as JSON text
   isRead: boolean("is_read").notNull().default(false),
   priority: varchar("priority").notNull().default('normal'), // 'low', 'normal', 'high', 'urgent'
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Messages/Chat
 export const messages = pgTable("messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   fromUserId: varchar("from_user_id").notNull().references(() => users.id),
   toUserId: varchar("to_user_id").notNull().references(() => users.id),
   content: text("content").notNull(),
@@ -237,7 +237,7 @@ export const messages = pgTable("messages", {
   fileName: varchar("file_name"),
   fileSize: integer("file_size"),
   isRead: boolean("is_read").notNull().default(false),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Relations
@@ -380,23 +380,23 @@ export type PartnerRegistrationData = z.infer<typeof partnerRegistrationSchema>;
 
 // Additional tables that might be referenced
 export const tierUpgradeRequests = pgTable("tier_upgrade_requests", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   currentTier: varchar("current_tier").notNull(),
   requestedTier: varchar("requested_tier").notNull(),
   reason: text("reason"),
   status: varchar("status").notNull().default("pending"), // pending, approved, rejected
-  requestedAt: timestamp("requested_at").default(sql`now()`),
+  requestedAt: timestamp("requested_at").default(sql`CURRENT_TIMESTAMP`),
   reviewedAt: timestamp("reviewed_at"),
   reviewedBy: varchar("reviewed_by").references(() => users.id),
   adminNotes: text("admin_notes"),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
   approvedAt: timestamp("approved_at"),
   rejectedAt: timestamp("rejected_at"),
 });
 
 export const systemSettings = pgTable("system_settings", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   settingKey: varchar("setting_key").notNull().unique(),
   settingValue: text("setting_value").notNull(),
   settingType: varchar("setting_type").notNull().default('string'), // string, number, boolean, json
@@ -404,8 +404,8 @@ export const systemSettings = pgTable("system_settings", {
   description: text("description"),
   isActive: boolean("is_active").notNull().default(true),
   updatedBy: varchar("updated_by").references(() => users.id),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const insertTierUpgradeRequestSchema = createInsertSchema(tierUpgradeRequests).omit({
@@ -430,7 +430,7 @@ export type InsertSystemSetting = z.infer<typeof insertSystemSettingSchema>;
 
 // Add other tables needed by storage
 export const sptCosts = pgTable("spt_costs", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   productCategory: categoryEnum("product_category"),
   weightRangeMin: decimal("weight_range_min").default('0'),
   weightRangeMax: decimal("weight_range_max"),
@@ -439,12 +439,12 @@ export const sptCosts = pgTable("spt_costs", {
   marketplace: marketplaceEnum("marketplace"),
   isActive: boolean("is_active").notNull().default(true),
   notes: text("notes"),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const commissionSettings = pgTable("commission_settings", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").references(() => partners.id),
   category: categoryEnum("category"),
   marketplace: marketplaceEnum("marketplace"),
@@ -452,27 +452,27 @@ export const commissionSettings = pgTable("commission_settings", {
   minOrderValue: decimal("min_order_value"),
   maxOrderValue: decimal("max_order_value"),
   isActive: boolean("is_active").notNull().default(true),
-  validFrom: timestamp("valid_from").default(sql`now()`),
+  validFrom: timestamp("valid_from").default(sql`CURRENT_TIMESTAMP`),
   validTo: timestamp("valid_to"),
   notes: text("notes"),
   createdBy: varchar("created_by").notNull().references(() => users.id),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const chatRooms = pgTable("chat_rooms", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   name: varchar("name"),
   type: varchar("type").notNull().default('direct'), // direct, group
   participants: text("participants").notNull(), // JSON array of user IDs as text
   lastMessageAt: timestamp("last_message_at"),
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const enhancedMessages = pgTable("enhanced_messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   chatRoomId: varchar("chat_room_id").notNull().references(() => chatRooms.id),
   fromUserId: varchar("from_user_id").notNull().references(() => users.id),
   messageType: varchar("message_type").notNull().default('text'), // text, file, image
@@ -485,12 +485,12 @@ export const enhancedMessages = pgTable("enhanced_messages", {
   isEdited: boolean("is_edited").notNull().default(false),
   editedAt: timestamp("edited_at"),
   replyToMessageId: varchar("reply_to_message_id"),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const marketplaceApiConfigs = pgTable("marketplace_api_configs", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   marketplace: marketplaceEnum("marketplace").notNull(),
   apiKey: varchar("api_key"),
@@ -500,12 +500,12 @@ export const marketplaceApiConfigs = pgTable("marketplace_api_configs", {
   status: varchar("status").notNull().default('disconnected'), // connected, disconnected, error
   lastSync: timestamp("last_sync"),
   syncErrors: text("sync_errors"), // JSON as text
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const excelImports = pgTable("excel_imports", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   marketplace: marketplaceEnum("marketplace").notNull(),
   fileName: varchar("file_name").notNull(),
@@ -518,19 +518,19 @@ export const excelImports = pgTable("excel_imports", {
   successCount: integer("success_count").default(0),
   errorDetails: text("error_details").default('[]'),
   processedAt: timestamp("processed_at"),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const excelTemplates = pgTable("excel_templates", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   name: varchar("name").notNull(),
   marketplace: marketplaceEnum("marketplace").notNull(),
   templateType: varchar("template_type").notNull(),
   columns: text("columns").notNull(), // JSON as text
   requiredColumns: text("required_columns").notNull(), // JSON as text
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const insertSptCostSchema = createInsertSchema(sptCosts).omit({
@@ -591,7 +591,7 @@ export type InsertExcelTemplate = z.infer<typeof insertExcelTemplateSchema>;
 
 // Additional tables from database
 export const profitBreakdown = pgTable("profit_breakdown", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   date: timestamp("date").notNull(),
   marketplace: marketplaceEnum("marketplace").notNull(),
@@ -606,11 +606,11 @@ export const profitBreakdown = pgTable("profit_breakdown", {
   netProfit: varchar("net_profit").default('0'),
   profitMargin: varchar("profit_margin").default('0'),
   ordersCount: integer("orders_count").default(0),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const trendingProducts = pgTable("trending_products", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   productName: varchar("product_name").notNull(),
   category: categoryEnum("category").notNull(),
   description: text("description"),
@@ -626,9 +626,9 @@ export const trendingProducts = pgTable("trending_products", {
   keywords: text("keywords").default('[]'), // JSON array as text
   images: text("images").default('[]'), // JSON array as text
   isActive: boolean("is_active").default(true),
-  scannedAt: timestamp("scanned_at").default(sql`now()`),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  scannedAt: timestamp("scanned_at").default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export type ProfitBreakdown = typeof profitBreakdown.$inferSelect;
@@ -640,7 +640,7 @@ export type AdminPermission = typeof adminPermissions.$inferSelect;
 
 // Warehouses
 export const warehouses = pgTable("warehouses", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   name: varchar("name").notNull(),
   code: varchar("code").notNull().unique(),
   address: text("address").notNull(),
@@ -652,13 +652,13 @@ export const warehouses = pgTable("warehouses", {
   managerId: varchar("manager_id").references(() => users.id),
   contactPhone: varchar("contact_phone"),
   operatingHours: text("operating_hours"), // JSON
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Warehouse Stock (product quantities per warehouse)
 export const warehouseStock = pgTable("warehouse_stock", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   warehouseId: varchar("warehouse_id").notNull().references(() => warehouses.id),
   productId: varchar("product_id").notNull().references(() => products.id),
   quantity: integer("quantity").notNull().default(0),
@@ -666,14 +666,14 @@ export const warehouseStock = pgTable("warehouse_stock", {
   availableQuantity: integer("available_quantity").notNull().default(0),
   location: varchar("location"), // e.g., "A-12-3" (aisle-rack-shelf)
   lastCounted: timestamp("last_counted"),
-  lastMovement: timestamp("last_movement").default(sql`now()`),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  lastMovement: timestamp("last_movement").default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Stock Movements (complete audit trail)
 export const stockMovements = pgTable("stock_movements", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   productId: varchar("product_id").notNull().references(() => products.id),
   warehouseId: varchar("warehouse_id").notNull().references(() => warehouses.id),
   movementType: movementTypeEnum("movement_type").notNull(),
@@ -685,12 +685,12 @@ export const stockMovements = pgTable("stock_movements", {
   referenceId: varchar("reference_id"),
   performedBy: varchar("performed_by").notNull().references(() => users.id),
   notes: text("notes"),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Orders (complete order management)
 export const orders = pgTable("orders", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   orderNumber: varchar("order_number").notNull().unique(),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   customerId: varchar("customer_id"),
@@ -703,7 +703,7 @@ export const orders = pgTable("orders", {
   marketplaceOrderId: varchar("marketplace_order_id"),
   
   // Status tracking
-  orderDate: timestamp("order_date").notNull().default(sql`now()`),
+  orderDate: timestamp("order_date").notNull().default(sql`CURRENT_TIMESTAMP`),
   status: orderStatusEnum("status").notNull().default('pending'),
   paymentStatus: paymentStatusEnum("payment_status").notNull().default('pending'),
   fulfillmentStatus: fulfillmentStatusEnum("fulfillment_status").notNull().default('pending'),
@@ -732,13 +732,13 @@ export const orders = pgTable("orders", {
   shippedAt: timestamp("shipped_at"),
   
   notes: text("notes"),
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Order Items
 export const orderItems = pgTable("order_items", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   orderId: varchar("order_id").notNull().references(() => orders.id),
   productId: varchar("product_id").notNull().references(() => products.id),
   productName: varchar("product_name").notNull(),
@@ -749,12 +749,12 @@ export const orderItems = pgTable("order_items", {
   tax: decimal("tax").default('0'),
   totalPrice: decimal("total_price").notNull(),
   status: varchar("status").default('pending'), // 'pending', 'picked', 'packed', 'shipped'
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Customers (end customers who buy from marketplaces)
 export const customers = pgTable("customers", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   firstName: varchar("first_name").notNull(),
   lastName: varchar("last_name").notNull(),
   email: varchar("email"),
@@ -774,13 +774,13 @@ export const customers = pgTable("customers", {
   defaultShippingAddress: text("default_shipping_address"), // JSON
   billingAddress: text("billing_address"), // JSON
   
-  createdAt: timestamp("created_at").default(sql`now()`),
-  updatedAt: timestamp("updated_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Stock Alerts
 export const stockAlerts = pgTable("stock_alerts", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   productId: varchar("product_id").notNull().references(() => products.id),
   partnerId: varchar("partner_id").notNull().references(() => partners.id),
   alertType: varchar("alert_type").notNull(), // 'low_stock', 'out_of_stock', 'overstock', 'expiry_warning'
@@ -791,12 +791,12 @@ export const stockAlerts = pgTable("stock_alerts", {
   isResolved: boolean("is_resolved").notNull().default(false),
   resolvedAt: timestamp("resolved_at"),
   resolvedBy: varchar("resolved_by").references(() => users.id),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Inventory Reports
 export const inventoryReports = pgTable("inventory_reports", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey(),
   reportType: varchar("report_type").notNull(), // 'valuation', 'movement', 'turnover', 'accuracy'
   partnerId: varchar("partner_id").references(() => partners.id),
   warehouseId: varchar("warehouse_id").references(() => warehouses.id),
@@ -805,7 +805,7 @@ export const inventoryReports = pgTable("inventory_reports", {
   reportData: text("report_data").notNull(), // JSON with report metrics
   generatedBy: varchar("generated_by").notNull().references(() => users.id),
   fileUrl: varchar("file_url"),
-  createdAt: timestamp("created_at").default(sql`now()`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Zod schemas for new tables
