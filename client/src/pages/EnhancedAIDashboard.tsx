@@ -38,9 +38,9 @@ export default function EnhancedAIDashboard() {
 
   // Fetch dashboard data
   const { data: dashboard, isLoading } = useQuery({
-    queryKey: ['enhanced-ai-dashboard'],
+    queryKey: ['ai-dashboard'],
     queryFn: async () => {
-      const res = await fetch('/api/enhanced-ai/dashboard', {
+      const res = await fetch('/api/ai/dashboard', {
         credentials: 'include',
       });
       if (!res.ok) throw new Error('Failed to fetch dashboard');
