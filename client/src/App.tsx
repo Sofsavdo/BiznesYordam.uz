@@ -31,6 +31,7 @@ function Router() {
       <Route path="/onboarding" component={OnboardingWizard} />
       <Route path="/partner-dashboard" component={PartnerDashboard} />
       <Route path="/ai-dashboard" component={PartnerAIDashboard} />
+      <Route path="/partner-ai-dashboard" component={PartnerAIDashboard} />
       <Route path="/enhanced-ai-dashboard" component={EnhancedAIDashboard} />
       <Route path="/remote-access" component={RemoteAccessDashboard} />
       <Route path="/admin-panel" component={AdminPanel} />
