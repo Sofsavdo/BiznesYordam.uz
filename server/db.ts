@@ -279,6 +279,7 @@ try {
       CREATE TABLE IF NOT EXISTS ai_tasks (
         id TEXT PRIMARY KEY,
         partner_id TEXT NOT NULL REFERENCES partners(id),
+        account_id TEXT REFERENCES ai_marketplace_accounts(id),
         task_type TEXT NOT NULL,
         status TEXT DEFAULT 'pending',
         priority TEXT DEFAULT 'medium',
@@ -298,6 +299,7 @@ try {
         partner_id TEXT NOT NULL REFERENCES partners(id),
         product_id TEXT REFERENCES products(id),
         account_id TEXT REFERENCES ai_marketplace_accounts(id),
+        base_product_name TEXT,
         marketplace TEXT NOT NULL,
         title TEXT NOT NULL,
         description TEXT,
