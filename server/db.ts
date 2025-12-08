@@ -350,7 +350,7 @@ try {
     
     if (!partnerCheck) {
       const hashedPassword = bcrypt.hashSync('partner123', 10);
-      const partner_id = 'partner-' + Date.now();
+      const partnerId = 'partner-' + Date.now();
       const userId = 'user-' + Date.now();
       
       // Create partner user
