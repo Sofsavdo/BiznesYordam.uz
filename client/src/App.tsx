@@ -28,9 +28,11 @@ function Router() {
       <Route path="/login" component={Login} />
       <Route path="/admin-login" component={AdminLogin} />
       <Route path="/partner-registration" component={PartnerRegistration} />
+      <Route path="/onboarding" component={OnboardingWizard} />
       <Route path="/partner-dashboard" component={PartnerDashboard} />
       <Route path="/ai-dashboard" component={PartnerAIDashboard} />
       <Route path="/enhanced-ai-dashboard" component={EnhancedAIDashboard} />
+      <Route path="/remote-access" component={RemoteAccessDashboard} />
       <Route path="/admin-panel" component={AdminPanel} />
       <Route path="/investor-pitch" component={InvestorPitch} />
       <Route component={NotFound} />
