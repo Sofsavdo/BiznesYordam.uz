@@ -76,7 +76,10 @@ export function AIManagerLiveMonitor() {
       const userId = localStorage.getItem('userId') || 'admin';
       const role = 'admin';
 
-      const wsUrl = `ws://localhost:5000/ws?userId=${userId}&role=${role}`;
+      // Production-ready WebSocket URL
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = window.location.host;
+      const wsUrl = `${protocol}//${host}/ws?userId=${userId}&role=${role}`;
       const ws = new WebSocket(wsUrl);
 
       ws.onopen = () => {
