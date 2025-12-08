@@ -547,7 +547,7 @@ export function EnhancedTierUpgradeModal({ isOpen, onClose, onSuccess, currentTi
             variant="premium"
           >
             {submitUpgradeRequest.isPending ? (
-              'Yuborilmoqda...'
+              "Yuborilmoqda..."
             ) : (
               <>
                 <Crown className="w-5 h-5 mr-2" />
