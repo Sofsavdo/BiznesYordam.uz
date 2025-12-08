@@ -36,7 +36,7 @@ import {
   Package, TrendingUp, Settings, Crown, BarChart3, DollarSign,
   Target, Zap, CheckCircle, Clock, AlertTriangle, User, Building, CreditCard,
   Globe, Truck, Star, ArrowRight, Plus, Eye, Edit, Trash2, Download, Upload, RefreshCw,
-  FileSpreadsheet, TrendingDown, MessageCircle
+  FileSpreadsheet, TrendingDown, MessageCircle, Brain
 } from 'lucide-react';
 
 interface Product { id: string; name: string; category: string; description: string; price: string; costPrice: string; sku: string; barcode: string; weight: string; isActive: boolean; createdAt: string; }
