@@ -2,8 +2,10 @@
 // Hamkor faqat kuzatadi, hech narsa qilmaydi
 
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { 
   TrendingUp, 
   Activity, 
@@ -15,10 +17,12 @@ import {
   Zap,
   BarChart3,
   Clock,
-  Sparkles
+  Sparkles,
+  ArrowLeft
 } from 'lucide-react';
 
 export default function PartnerAIDashboard() {
+  const [, setLocation] = useLocation();
   // Fetch dashboard data (faqat bir marta)
   const { data: dashboard, isLoading } = useQuery({
     queryKey: ['ai-dashboard'],
