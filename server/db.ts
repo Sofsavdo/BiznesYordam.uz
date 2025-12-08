@@ -39,19 +39,19 @@ try {
       CREATE TABLE IF NOT EXISTS partners (
         id TEXT PRIMARY KEY,
         user_id TEXT NOT NULL UNIQUE REFERENCES users(id),
-        businessName TEXT NOT NULL,
-        businessAddress TEXT,
+        business_name TEXT NOT NULL,
+        business_address TEXT,
         inn TEXT UNIQUE,
         phone TEXT NOT NULL,
         website TEXT,
         approved INTEGER DEFAULT 0,
-        pricingTier TEXT DEFAULT 'starter_pro',
-        monthlyFee INTEGER,
-        profitSharePercent INTEGER,
-        aiEnabled INTEGER DEFAULT 0,
-        warehouseSpaceKg INTEGER,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        lastActivityAt INTEGER
+        pricing_tier TEXT DEFAULT 'starter_pro',
+        monthly_fee INTEGER,
+        profit_share_percent INTEGER,
+        ai_enabled INTEGER DEFAULT 0,
+        warehouse_space_kg INTEGER,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        last_activity_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS products (
