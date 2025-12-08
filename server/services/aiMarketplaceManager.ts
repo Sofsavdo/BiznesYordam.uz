@@ -114,7 +114,7 @@ Tahlil qil va JSON formatda ber:
   return emergentAI.generateJSON(prompt, 'CompetitorAnalysis');
 }
 
-// AI SEO Optimizer
+// AI SEO Optimizer (LEGACY - updated to use emergentAI)
 export async function optimizeSEO(
   currentTitle: string,
   currentDescription: string,
@@ -139,17 +139,10 @@ Optimizatsiya qil va JSON ber:
   "improvements": ["...", "..."]
 }`;
 
-  const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 2000,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = message.content[0].type === 'text' ? message.content[0].text : '{}';
-  return JSON.parse(text);
+  return emergentAI.generateJSON(prompt, 'SEOOptimization');
 }
 
-// AI Ad Campaign Creator
+// AI Ad Campaign Creator (LEGACY - updated to use emergentAI)
 export async function createAdCampaign(
   productInfo: {
     name: string;
@@ -184,17 +177,10 @@ Kampaniya strategiyasini JSON formatda ber:
   "targetingRecommendations": ["...", "..."]
 }`;
 
-  const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 1500,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = message.content[0].type === 'text' ? message.content[0].text : '{}';
-  return JSON.parse(text);
+  return emergentAI.generateJSON(prompt, 'AdCampaign');
 }
 
-// AI Report Generator
+// AI Report Generator (LEGACY - updated to use emergentAI)
 export async function generateReport(
   reportData: {
     period: string;
@@ -227,12 +213,5 @@ Professional hisobot yarat (JSON):
   "nextSteps": ["...", "..."]
 }`;
 
-  const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 2000,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = message.content[0].type === 'text' ? message.content[0].text : '{}';
-  return JSON.parse(text);
+  return emergentAI.generateJSON(prompt, 'Report');
 }
