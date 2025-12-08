@@ -14,6 +14,8 @@ import AdminLogin from "@/pages/AdminLogin";
 import PartnerDashboard from "@/pages/PartnerDashboard";
 import PartnerAIDashboard from "@/pages/PartnerAIDashboard";
 import EnhancedAIDashboard from "@/pages/EnhancedAIDashboard";
+import RemoteAccessDashboard from "@/pages/RemoteAccessDashboard";
+import OnboardingWizard from "@/pages/OnboardingWizard";
 import AdminPanel from "@/pages/AdminPanel";
 import PartnerRegistration from "@/pages/PartnerRegistration";
 import InvestorPitch from "@/pages/InvestorPitch";
