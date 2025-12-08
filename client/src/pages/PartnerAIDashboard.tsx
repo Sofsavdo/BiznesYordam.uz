@@ -99,7 +99,14 @@ export default function PartnerAIDashboard() {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-sm font-medium text-green-700">AI Faol</span>
+              <span className="text-sm font-medium text-green-700">AI Faol</span>
+            </div>
+            <button
+              onClick={() => window.parent.postMessage('close-ai-dashboard', '*')}
+              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors"
+            >
+              ← Orqaga
+            </button>
           </div>
         </div>
 
