@@ -279,7 +279,7 @@ try {
     
     const adminId = 'admin-' + Date.now();
     sqlite.prepare(`
-      INSERT INTO users (id, username, email, password, role, createdAt)
+      INSERT INTO users (id, username, email, password, role, created_at)
       VALUES (?, ?, ?, ?, ?, ?)
     `).run(adminId, 'admin', 'admin@biznesyordam.uz', hashedPassword, 'admin', Date.now());
     
