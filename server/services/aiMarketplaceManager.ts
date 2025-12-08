@@ -32,7 +32,7 @@ Talablar:
   });
 }
 
-// AI Product Card Creator
+// AI Product Card Creator (LEGACY - use productCardAI.createProductCard)
 export async function createProductCard(
   productInfo: {
     name: string;
@@ -69,14 +69,7 @@ Format (JSON):
   "seoScore": 85
 }`;
 
-  const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 2000,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = message.content[0].type === 'text' ? message.content[0].text : '{}';
-  return JSON.parse(text);
+  return emergentAI.generateJSON(prompt, 'ProductCard');
 }
 
 // AI Competitor Analysis
