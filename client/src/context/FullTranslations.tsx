@@ -102,15 +102,15 @@ export const FULL_TRANSLATIONS_UZ = {
   'tabs.trends': 'Trendlar',
   
   // Common Actions
-  'action.view': 'Ko\'rish',
+  'action.view': "Ko'rish",
   'action.edit': 'Tahrirlash',
-  'action.delete': 'O\'chirish',
+  'action.delete': "O'chirish",
   'action.save': 'Saqlash',
   'action.cancel': 'Bekor qilish',
   'action.close': 'Yopish',
   'action.back': 'Ortga',
   'action.next': 'Keyingi',
-  'action.viewAll': 'Barchasini ko\'rish',
+  'action.viewAll': "Barchasini ko'rish",
   
   // Status
   'status.active': 'Faol',
