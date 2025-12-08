@@ -205,18 +205,51 @@ export default function PartnerDashboard() {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-11">
-              <TabsTrigger value="overview"><BarChart3 className="w-4 h-4 mr-2" />Umumiy</TabsTrigger>
-              <TabsTrigger value="marketplace"><Globe className="w-4 h-4 mr-2" />Marketplace</TabsTrigger>
-              <TabsTrigger value="tracker"><Eye className="w-4 h-4 mr-2" />Tracking</TabsTrigger>
-              <TabsTrigger value="inventory"><Package className="w-4 h-4 mr-2" />Ombor</TabsTrigger>
-              <TabsTrigger value="orders"><Truck className="w-4 h-4 mr-2" />Buyurtmalar</TabsTrigger>
-              <TabsTrigger value="analytics"><FileSpreadsheet className="w-4 h-4 mr-2" />Tahlil</TabsTrigger>
-              <TabsTrigger value="products"><Package className="w-4 h-4 mr-2" />Mahsulotlar</TabsTrigger>
-              <TabsTrigger value="requests"><Truck className="w-4 h-4 mr-2" />So'rovlar</TabsTrigger>
-              <TabsTrigger value="profit"><DollarSign className="w-4 h-4 mr-2" />Foyda</TabsTrigger>
-              <TabsTrigger value="trends"><TrendingUp className="w-4 h-4 mr-2" />Trendlar</TabsTrigger>
-              <TabsTrigger value="support"><MessageCircle className="w-4 h-4 mr-2" />Support chat</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-10 lg:grid-cols-12">
+              <TabsTrigger value="overview" className="flex items-center gap-1">
+                <BarChart3 className="w-4 h-4" />
+                <span className="hidden sm:inline">Umumiy</span>
+              </TabsTrigger>
+              <TabsTrigger value="ai-manager" className="flex items-center gap-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-blue-600">
+                <Zap className="w-4 h-4" />
+                <span className="hidden sm:inline">AI Manager</span>
+              </TabsTrigger>
+              <TabsTrigger value="marketplace" className="flex items-center gap-1">
+                <Globe className="w-4 h-4" />
+                <span className="hidden sm:inline">Marketplace</span>
+              </TabsTrigger>
+              <TabsTrigger value="tracker" className="flex items-center gap-1">
+                <Eye className="w-4 h-4" />
+                <span className="hidden sm:inline">Tracking</span>
+              </TabsTrigger>
+              <TabsTrigger value="inventory" className="flex items-center gap-1">
+                <Package className="w-4 h-4" />
+                <span className="hidden sm:inline">Ombor</span>
+              </TabsTrigger>
+              <TabsTrigger value="orders" className="flex items-center gap-1">
+                <Truck className="w-4 h-4" />
+                <span className="hidden sm:inline">Buyurtmalar</span>
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center gap-1">
+                <FileSpreadsheet className="w-4 h-4" />
+                <span className="hidden sm:inline">Tahlil</span>
+              </TabsTrigger>
+              <TabsTrigger value="products" className="flex items-center gap-1">
+                <Package className="w-4 h-4" />
+                <span className="hidden sm:inline">Mahsulotlar</span>
+              </TabsTrigger>
+              <TabsTrigger value="profit" className="flex items-center gap-1">
+                <DollarSign className="w-4 h-4" />
+                <span className="hidden sm:inline">Foyda</span>
+              </TabsTrigger>
+              <TabsTrigger value="trends" className="flex items-center gap-1">
+                <TrendingUp className="w-4 h-4" />
+                <span className="hidden sm:inline">Trendlar</span>
+              </TabsTrigger>
+              <TabsTrigger value="support" className="flex items-center gap-1">
+                <MessageCircle className="w-4 h-4" />
+                <span className="hidden sm:inline">Support</span>
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
