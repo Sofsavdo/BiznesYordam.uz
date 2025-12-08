@@ -51,9 +51,9 @@ export default function EnhancedAIDashboard() {
 
   // Fetch cost analytics
   const { data: costAnalytics } = useQuery({
-    queryKey: ['cost-analytics'],
+    queryKey: ['ai-cost-analytics'],
     queryFn: async () => {
-      const res = await fetch('/api/enhanced-ai/cost-analytics', {
+      const res = await fetch('/api/ai/cost-analytics', {
         credentials: 'include',
       });
       if (!res.ok) throw new Error('Failed to fetch cost analytics');
