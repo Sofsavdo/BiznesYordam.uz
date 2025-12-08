@@ -15,11 +15,16 @@ try {
     -- Create all tables if they don't exist
     CREATE TABLE IF NOT EXISTS users (
       id TEXT PRIMARY KEY,
-      email TEXT UNIQUE NOT NULL,
+      username TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE,
       password TEXT NOT NULL,
-      role TEXT NOT NULL DEFAULT 'partner',
+      firstName TEXT,
+      lastName TEXT,
+      phone TEXT,
+      role TEXT NOT NULL DEFAULT 'customer',
+      isActive INTEGER DEFAULT 1,
       createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-      lastLoginAt INTEGER
+      updatedAt INTEGER DEFAULT (unixepoch())
     );
     
     CREATE TABLE IF NOT EXISTS partners (
