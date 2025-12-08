@@ -28,6 +28,7 @@ function Router() {
       <Route path="/partner-registration" component={PartnerRegistration} />
       <Route path="/partner-dashboard" component={PartnerDashboard} />
       <Route path="/ai-dashboard" component={PartnerAIDashboard} />
+      <Route path="/enhanced-ai-dashboard" component={EnhancedAIDashboard} />
       <Route path="/admin-panel" component={AdminPanel} />
       <Route path="/investor-pitch" component={InvestorPitch} />
       <Route component={NotFound} />
