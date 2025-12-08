@@ -468,10 +468,10 @@ export default function PartnerActivation() {
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="font-semibold text-primary">Hozirgi Tarif</h4>
                     <Badge variant="secondary" className="text-sm">
-                      {partnerData.pricingTier === 'starter_pro' && 'Starter Pro'}
-                      {partnerData.pricingTier === 'business_standard' && 'Business Standard'}
-                      {partnerData.pricingTier === 'professional_plus' && 'Professional Plus'}
-                      {partnerData.pricingTier === 'enterprise_elite' && 'Enterprise Elite'}
+                      {partnerData.pricingTier === "starter_pro" && "Starter Pro"}
+                      {partnerData.pricingTier === "business_standard" && "Business Standard"}
+                      {partnerData.pricingTier === "professional_plus" && "Professional Plus"}
+                      {partnerData.pricingTier === "enterprise_elite" && "Enterprise Elite"}
                     </Badge>
                   </div>
                   <Button
