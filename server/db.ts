@@ -280,9 +280,9 @@ try {
     console.log('✅ All tables created successfully!');
     
     // Create default admin user
-    const adminExists = sqlite.prepare('SELECT COUNT(*) as count FROM users WHERE role = ?').get('admin') as { count: number };
+    const adminExists = sqlite.prepare('SELECT COUNT(*) as count FROM users WHERE role = ?').get('admin') as any;
     
-    if (adminExists.count === 0) {
+    if (!adminExists || adminExists.count === 0) {
       const hashedPassword = bcrypt.hashSync('admin123', 10);
       const adminId = 'admin-' + Date.now();
       
