@@ -100,8 +100,8 @@ export default function RemoteAccessDashboard() {
     },
     onError: () => {
       toast({
-        title: '❌ Xatolik',
-        description: 'So'rov yuborishda xatolik',
+        title: "❌ Xatolik",
+        description: "So'rov yuborishda xatolik",
         variant: 'destructive',
       });
     },
