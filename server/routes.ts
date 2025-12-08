@@ -1172,6 +1172,9 @@ export function registerRoutes(app: express.Application): Server {
     res.json(overview);
   }));
 
+  // ==================== ENHANCED AI DASHBOARD ROUTES ====================
+  app.use("/api/enhanced-ai", requirePartner, enhancedAIDashboardRoutes);
+
   // Error handling middleware
   app.use(handleValidationError);
 
