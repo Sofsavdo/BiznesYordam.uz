@@ -18,13 +18,13 @@ try {
       username TEXT UNIQUE NOT NULL,
       email TEXT UNIQUE,
       password TEXT NOT NULL,
-      firstName TEXT,
-      lastName TEXT,
+      first_name TEXT,
+      last_name TEXT,
       phone TEXT,
       role TEXT NOT NULL DEFAULT 'customer',
-      isActive INTEGER DEFAULT 1,
-      createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-      updatedAt INTEGER DEFAULT (unixepoch())
+      is_active INTEGER DEFAULT 1,
+      created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+      updated_at INTEGER DEFAULT (unixepoch())
     );
     
     CREATE TABLE IF NOT EXISTS partners (
