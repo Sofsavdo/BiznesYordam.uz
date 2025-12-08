@@ -252,6 +252,86 @@ export default function PartnerDashboard() {
               </TabsTrigger>
             </TabsList>
 
+            {/* AI MANAGER TAB - NEW! */}
+            <TabsContent value="ai-manager" className="space-y-6">
+              <Card className="bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 border-2 border-purple-300">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-2xl">
+                    <div className="p-3 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl shadow-lg">
+                      <Zap className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent font-bold">
+                        AI Manager - Cost Optimized
+                      </span>
+                      <p className="text-sm text-muted-foreground font-normal mt-1">
+                        90% arzon | Template-based | Real-time tracking
+                      </p>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+
+              {(partner as any)?.aiEnabled ? (
+                <>
+                  {/* AI Dashboard Component */}
+                  <div className="rounded-xl border-2 border-purple-200 overflow-hidden">
+                    <iframe
+                      src="/enhanced-ai-dashboard"
+                      className="w-full h-[800px] border-none"
+                      title="AI Manager Dashboard"
+                    />
+                  </div>
+                </>
+              ) : (
+                <Card className="border-2 border-orange-300 bg-orange-50">
+                  <CardContent className="p-12 text-center">
+                    <div className="max-w-2xl mx-auto">
+                      <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <AlertTriangle className="w-12 h-12 text-orange-600" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-orange-900">AI Manager Faol Emas</h3>
+                      <p className="text-orange-700 mb-6 text-lg">
+                        AI Manager xizmatidan foydalanish uchun admin tomonidan tasdiq olishingiz kerak.
+                      </p>
+                      <Button
+                        size="lg"
+                        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                        onClick={async () => {
+                          try {
+                            const response = await fetch('/api/partners/ai-toggle', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              credentials: 'include',
+                              body: JSON.stringify({ enabled: true }),
+                            });
+                            const data = await response.json();
+                            if (data.success) {
+                              toast({
+                                title: "✅ So'rov Yuborildi",
+                                description: "AI Manager faollashtirish so'rovingiz adminga yuborildi",
+                                duration: 5000,
+                              });
+                              queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
+                            }
+                          } catch (error) {
+                            toast({
+                              title: "Xatolik",
+                              description: "So'rov yuborishda xatolik",
+                              variant: "destructive",
+                            });
+                          }
+                        }}
+                      >
+                        <Zap className="w-5 h-5 mr-2" />
+                        AI Manager ni Faollashtirish
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </TabsContent>
+
             <TabsContent value="overview" className="space-y-6">
               {/* Partner Tier / Plan Info Card */}
               {partner && (() => {
