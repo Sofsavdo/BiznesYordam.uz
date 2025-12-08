@@ -345,6 +345,42 @@ try {
       console.log('   🔑 Password: admin123');
     }
     
+    // Create or update test partner user
+    const partnerCheck = sqlite.prepare('SELECT id FROM users WHERE username = ?').get('testpartner') as any;
+    
+    if (!partnerCheck) {
+      const hashedPassword = bcrypt.hashSync('partner123', 10);
+      const partnerId = 'partner-' + Date.now();
+      const userId = 'user-' + Date.now();
+      
+      // Create partner user
+      sqlite.prepare(`
+        INSERT INTO users (id, username, email, password, role, created_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `).run(userId, 'testpartner', 'partner@test.uz', hashedPassword, 'partner', Date.now());
+      
+      // Create partner profile
+      sqlite.prepare(`
+        INSERT INTO partners (id, user_id, businessName, phone, approved, pricingTier, aiEnabled, createdAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(partnerId, userId, 'Test Biznes', '+998901234567', 1, 'starter_pro', 1, Date.now());
+      
+      console.log('✅ Test partner user created');
+      console.log('   📧 Email: partner@test.uz');
+      console.log('   👤 Username: testpartner');
+      console.log('   🔑 Password: partner123');
+    } else {
+      // Update existing partner password
+      const hashedPassword = bcrypt.hashSync('partner123', 10);
+      sqlite.prepare(`
+        UPDATE users SET password = ?, updated_at = ? WHERE username = ?
+      `).run(hashedPassword, Date.now(), 'testpartner');
+      
+      console.log('✅ Partner password updated');
+      console.log('   👤 Username: testpartner');
+      console.log('   🔑 Password: partner123');
+    }
+    
     console.log('🎉 Database initialization completed!\n');
   } else {
     console.log('✅ Database tables already exist\n');
