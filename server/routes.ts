@@ -1173,7 +1173,11 @@ export function registerRoutes(app: express.Application): Server {
     res.json(overview);
   }));
 
-  // ==================== ENHANCED AI DASHBOARD ROUTES ====================
+  // ==================== ENHANCED AI ROUTES ====================
+  // New unified AI system (cost-optimized, production-ready)
+  app.use("/api/ai", requirePartner, enhancedAIRoutes);
+  
+  // Legacy route (backward compatibility)
   app.use("/api/enhanced-ai", requirePartner, enhancedAIDashboardRoutes);
 
   // Error handling middleware
