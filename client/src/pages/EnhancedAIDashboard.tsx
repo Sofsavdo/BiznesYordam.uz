@@ -64,7 +64,7 @@ export default function EnhancedAIDashboard() {
   // Create product card mutation
   const createProductMutation = useMutation({
     mutationFn: async (data: any) => {
-      const res = await fetch('/api/enhanced-ai/create-product-card', {
+      const res = await fetch('/api/ai/create-product-card', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
