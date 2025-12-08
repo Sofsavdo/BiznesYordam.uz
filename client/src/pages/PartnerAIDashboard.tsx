@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function PartnerAIDashboard() {
-  // Fetch dashboard data
+  // Fetch dashboard data (faqat bir marta)
   const { data: dashboard, isLoading } = useQuery({
     queryKey: ['ai-dashboard'],
     queryFn: async () => {
@@ -29,10 +29,11 @@ export default function PartnerAIDashboard() {
       if (!res.ok) throw new Error('Failed to fetch dashboard');
       return res.json();
     },
-    refetchInterval: 30000, // Refresh every 30 seconds
+    refetchInterval: false, // Orqa fonda avtomatik yangilanish o'chirildi
+    staleTime: 5 * 60 * 1000, // 5 daqiqa yangi deb hisoblanadi
   });
 
-  // Fetch recent activity
+  // Fetch recent activity (orqa fonda yangilanadi, lekin page yopilmaydi)
   const { data: activity } = useQuery({
     queryKey: ['ai-activity'],
     queryFn: async () => {
@@ -42,7 +43,8 @@ export default function PartnerAIDashboard() {
       if (!res.ok) throw new Error('Failed to fetch activity');
       return res.json();
     },
-    refetchInterval: 10000, // Refresh every 10 seconds
+    refetchInterval: 30000, // Har 30 sekundda yangilanadi (oldingisi 10 sek edi)
+    refetchIntervalInBackground: false, // Background da yangilanmaydi
   });
 
   // Fetch trends
@@ -55,7 +57,8 @@ export default function PartnerAIDashboard() {
       if (!res.ok) throw new Error('Failed to fetch trends');
       return res.json();
     },
-    refetchInterval: 300000, // Refresh every 5 minutes
+    refetchInterval: false, // Avtomatik yangilanish o'chirildi
+    staleTime: 10 * 60 * 1000, // 10 daqiqa
   });
 
   // Fetch inventory alerts
@@ -68,7 +71,8 @@ export default function PartnerAIDashboard() {
       if (!res.ok) throw new Error('Failed to fetch inventory');
       return res.json();
     },
-    refetchInterval: 60000, // Refresh every minute
+    refetchInterval: false, // Avtomatik yangilanish o'chirildi
+    staleTime: 5 * 60 * 1000, // 5 daqiqa
   });
 
   if (isLoading) {
