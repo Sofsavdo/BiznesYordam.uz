@@ -56,43 +56,43 @@ try {
       
       CREATE TABLE IF NOT EXISTS products (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
+        partner_id TEXT NOT NULL REFERENCES partners(id),
         name TEXT NOT NULL,
         sku TEXT UNIQUE,
         description TEXT,
         category TEXT,
         brand TEXT,
         price REAL NOT NULL,
-        costPrice REAL,
-        stockQuantity INTEGER DEFAULT 0,
-        lowStockThreshold INTEGER DEFAULT 10,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        updatedAt INTEGER
+        cost_price REAL,
+        stock_quantity INTEGER DEFAULT 0,
+        low_stock_threshold INTEGER DEFAULT 10,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS orders (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
-        orderNumber TEXT UNIQUE NOT NULL,
-        customerName TEXT NOT NULL,
-        customerEmail TEXT,
-        customerPhone TEXT,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        order_number TEXT UNIQUE NOT NULL,
+        customer_name TEXT NOT NULL,
+        customer_email TEXT,
+        customer_phone TEXT,
         marketplace TEXT,
         status TEXT DEFAULT 'pending',
-        totalAmount REAL NOT NULL,
-        shippingAddress TEXT,
-        trackingNumber TEXT,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        updatedAt INTEGER
+        total_amount REAL NOT NULL,
+        shipping_address TEXT,
+        tracking_number TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS orderItems (
         id TEXT PRIMARY KEY,
-        orderId TEXT NOT NULL REFERENCES orders(id),
-        productId TEXT NOT NULL REFERENCES products(id),
+        order_id TEXT NOT NULL REFERENCES orders(id),
+        product_id TEXT NOT NULL REFERENCES products(id),
         quantity INTEGER NOT NULL,
         price REAL NOT NULL,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS warehouses (
