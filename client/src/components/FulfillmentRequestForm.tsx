@@ -299,7 +299,7 @@ export function FulfillmentRequestForm({ products }: FulfillmentRequestFormProps
               className="bg-blue-600 hover:bg-blue-700"
               data-testid="button-submit"
             >
-              {createRequestMutation.isPending ? 'Yuborilmoqda...' : "So'rov Yuborish"}
+              {createRequestMutation.isPending ? "Yuborilmoqda..." : "So'rov Yuborish"}
             </Button>
           </div>
         </form>
