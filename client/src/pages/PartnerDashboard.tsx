@@ -274,14 +274,31 @@ export default function PartnerDashboard() {
 
               {(partner as any)?.aiEnabled ? (
                 <>
-                  {/* AI Dashboard Component */}
-                  <div className="rounded-xl border-2 border-purple-200 overflow-hidden">
-                    <iframe
-                      src="/enhanced-ai-dashboard"
-                      className="w-full h-[800px] border-none"
-                      title="AI Manager Dashboard"
-                    />
-                  </div>
+                  {/* AI Dashboard Link */}
+                  <Card className="border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50">
+                    <CardContent className="p-12 text-center">
+                      <div className="max-w-2xl mx-auto">
+                        <div className="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                          <Brain className="w-12 h-12 text-purple-600" />
+                        </div>
+                        <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                          AI Manager Dashboard
+                        </h3>
+                        <p className="text-gray-600 mb-8 text-lg">
+                          AI 24/7 sizning biznesingiz uchun ishlayapti. Real-time natijalarni ko'ring.
+                        </p>
+                        <Button
+                          size="lg"
+                          onClick={() => setLocation('/partner-ai-dashboard')}
+                          className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-6 text-lg"
+                        >
+                          <Brain className="w-5 h-5 mr-2" />
+                          AI Dashboard ni Ochish
+                          <ArrowRight className="w-5 h-5 ml-2" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </>
               ) : (
                 <Card className="border-2 border-orange-300 bg-orange-50">
