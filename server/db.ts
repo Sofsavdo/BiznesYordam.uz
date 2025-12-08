@@ -361,9 +361,9 @@ try {
       
       // Create partner profile
       sqlite.prepare(`
-        INSERT INTO partners (id, user_id, businessName, phone, approved, pricingTier, aiEnabled, created_at)
+        INSERT INTO partners (id, user_id, business_name, phone, approved, pricing_tier, ai_enabled, created_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(partner_id, userId, 'Test Biznes', '+998901234567', 1, 'starter_pro', 1, Date.now());
+      `).run(partnerId, userId, 'Test Biznes', '+998901234567', 1, 'starter_pro', 1, Date.now());
       
       console.log('✅ Test partner user created');
       console.log('   📧 Email: partner@test.uz');
