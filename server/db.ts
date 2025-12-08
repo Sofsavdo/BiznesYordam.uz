@@ -257,7 +257,7 @@ try {
       
       CREATE TABLE IF NOT EXISTS audit_logs (
         id TEXT PRIMARY KEY,
-        userId TEXT REFERENCES users(id),
+        user_id TEXT REFERENCES users(id),
         action TEXT NOT NULL,
         entityType TEXT NOT NULL,
         entityId TEXT,
