@@ -31,6 +31,7 @@ import broadcastRoutes from "./routes/broadcastRoutes";
 import aiManagerRoutes from "./routes/aiManagerRoutes";
 import trendingRoutes from "./routes/trendingRoutes";
 import aiDashboardRoutes from "./routes/aiDashboard";
+import enhancedAIDashboardRoutes from "./routes/enhancedAIDashboard";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
