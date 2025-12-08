@@ -445,7 +445,7 @@ export default function RemoteAccessDashboard() {
                 }}
                 disabled={!selectedPartner || requestAccessMutation.isPending}
               >
-                {requestAccessMutation.isPending ? 'Yuborilmoqda...' : 'So'rov Yuborish'}
+                {requestAccessMutation.isPending ? "Yuborilmoqda..." : "So'rov Yuborish"}
               </Button>
             </DialogFooter>
           </DialogContent>
