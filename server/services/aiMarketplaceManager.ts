@@ -1,11 +1,8 @@
-// AI Marketplace Manager - Core Service
-// Handles all AI-powered marketplace operations
+// AI Marketplace Manager - Core Service (LEGACY)
+// ⚠️ DEPRECATED: Use emergentAI.ts and productCardAI.ts instead
+// This file is kept for backward compatibility
 
-import Anthropic from '@anthropic-ai/sdk';
-
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || '',
-});
+import emergentAI from './emergentAI';
 
 // AI Review Response Generator
 export async function generateReviewResponse(
