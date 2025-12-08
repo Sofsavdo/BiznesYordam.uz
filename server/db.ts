@@ -297,6 +297,7 @@ try {
         id TEXT PRIMARY KEY,
         partner_id TEXT NOT NULL REFERENCES partners(id),
         product_id TEXT REFERENCES products(id),
+        account_id TEXT REFERENCES ai_marketplace_accounts(id),
         marketplace TEXT NOT NULL,
         title TEXT NOT NULL,
         description TEXT,
@@ -311,6 +312,18 @@ try {
         created_at INTEGER NOT NULL DEFAULT (unixepoch()),
         updated_at INTEGER,
         published_at INTEGER
+      );
+      
+      CREATE TABLE IF NOT EXISTS ai_marketplace_accounts (
+        id TEXT PRIMARY KEY,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        marketplace TEXT NOT NULL,
+        account_name TEXT NOT NULL,
+        credentials_encrypted TEXT,
+        is_active INTEGER DEFAULT 1,
+        last_synced_at INTEGER,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER
       );
     `);
     
