@@ -275,6 +275,43 @@ try {
         updatedAt INTEGER NOT NULL DEFAULT (unixepoch()),
         updatedBy TEXT REFERENCES users(id)
       );
+      
+      CREATE TABLE IF NOT EXISTS ai_tasks (
+        id TEXT PRIMARY KEY,
+        partnerId TEXT NOT NULL REFERENCES partners(id),
+        taskType TEXT NOT NULL,
+        status TEXT DEFAULT 'pending',
+        priority TEXT DEFAULT 'medium',
+        inputData TEXT,
+        outputData TEXT,
+        errorMessage TEXT,
+        startedAt INTEGER,
+        completedAt INTEGER,
+        estimatedCost REAL,
+        actualCost REAL,
+        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
+        updatedAt INTEGER
+      );
+      
+      CREATE TABLE IF NOT EXISTS ai_product_cards (
+        id TEXT PRIMARY KEY,
+        partnerId TEXT NOT NULL REFERENCES partners(id),
+        productId TEXT REFERENCES products(id),
+        marketplace TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        bulletPoints TEXT,
+        seoKeywords TEXT,
+        imagePrompts TEXT,
+        generatedImages TEXT,
+        status TEXT DEFAULT 'draft',
+        qualityScore INTEGER,
+        aiModel TEXT,
+        generationCost REAL,
+        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
+        updatedAt INTEGER,
+        publishedAt INTEGER
+      );
     `);
     
     console.log('✅ All tables created successfully!');
