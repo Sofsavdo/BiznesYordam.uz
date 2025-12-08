@@ -38,7 +38,7 @@ try {
       
       CREATE TABLE IF NOT EXISTS partners (
         id TEXT PRIMARY KEY,
-        userId TEXT NOT NULL UNIQUE REFERENCES users(id),
+        user_id TEXT NOT NULL UNIQUE REFERENCES users(id),
         businessName TEXT NOT NULL,
         businessAddress TEXT,
         inn TEXT UNIQUE,
