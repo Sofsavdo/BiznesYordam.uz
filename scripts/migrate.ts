@@ -279,9 +279,9 @@ try {
     
     const adminId = 'admin-' + Date.now();
     sqlite.prepare(`
-      INSERT INTO users (id, email, password, role, createdAt)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(adminId, 'admin@biznesyordam.uz', hashedPassword, 'admin', Date.now());
+      INSERT INTO users (id, username, email, password, role, createdAt)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `).run(adminId, 'admin', 'admin@biznesyordam.uz', hashedPassword, 'admin', Date.now());
     
     console.log('✅ Default admin user created (email: admin@biznesyordam.uz, password: admin123)');
   }
