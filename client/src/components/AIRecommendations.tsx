@@ -50,8 +50,8 @@ export function AIRecommendations({ data }: AIRecommendationsProps) {
       priority: 'medium',
       title: 'Tarif Yangilash',
       description: 'Sizning oylik aylanmangiz Business Standard tarif uchun optimal. Yangilash orqali komissiyani 5% kamaytiring.',
-      impact: '+1,800,000 so\'m/yil',
-      action: 'Tarifni ko\'rish',
+      impact: "+1,800,000 so'm/yil",
+      action: "Tarifni ko'rish",
       confidence: 85,
     },
     {
