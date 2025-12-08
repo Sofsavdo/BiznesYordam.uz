@@ -72,7 +72,7 @@ Format (JSON):
   return emergentAI.generateJSON(prompt, 'ProductCard');
 }
 
-// AI Competitor Analysis
+// AI Competitor Analysis (LEGACY - updated to use emergentAI)
 export async function analyzeCompetitor(
   competitorData: {
     productName: string;
@@ -111,14 +111,7 @@ Tahlil qil va JSON formatda ber:
   "priceStrategy": "..."
 }`;
 
-  const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 1500,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = message.content[0].type === 'text' ? message.content[0].text : '{}';
-  return JSON.parse(text);
+  return emergentAI.generateJSON(prompt, 'CompetitorAnalysis');
 }
 
 // AI SEO Optimizer
