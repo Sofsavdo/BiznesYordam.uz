@@ -38,11 +38,11 @@ interface OnboardingStep {
 }
 
 const steps: OnboardingStep[] = [
-  { id: 'business_info', title: 'Biznes Ma\'lumotlari', description: 'Kompaniya haqida', icon: Building, required: true, completed: false },
-  { id: 'marketplace_selection', title: 'Marketplace', description: 'Platformalar tanlash', icon: Globe, required: true, completed: false },
-  { id: 'marketplace_credentials', title: 'Kirish Ma\'lumotlari', description: 'API yoki login/parol', icon: Key, required: true, completed: false },
-  { id: 'test_connection', title: 'Test', description: 'Ulanishni tekshirish', icon: TestTube, required: true, completed: false },
-  { id: 'ai_settings', title: 'AI Sozlamalari', description: 'Avtomatlashtirish', icon: Settings, required: true, completed: false },
+  { id: "business_info", title: "Biznes Ma'lumotlari", description: "Kompaniya haqida", icon: Building, required: true, completed: false },
+  { id: "marketplace_selection", title: "Marketplace", description: "Platformalar tanlash", icon: Globe, required: true, completed: false },
+  { id: "marketplace_credentials", title: "Kirish Ma'lumotlari", description: "API yoki login/parol", icon: Key, required: true, completed: false },
+  { id: "test_connection", title: "Test", description: "Ulanishni tekshirish", icon: TestTube, required: true, completed: false },
+  { id: "ai_settings", title: "AI Sozlamalari", description: "Avtomatlashtirish", icon: Settings, required: true, completed: false },
   { id: 'warehouse_setup', title: 'Ombor', description: 'Sklad sozlash', icon: Warehouse, required: true, completed: false },
   { id: 'initial_products', title: 'Mahsulotlar', description: 'Dastlabki mahsulotlar', icon: Package, required: false, completed: false },
   { id: 'automation_test', title: 'AI Test', description: 'Avtomatlashtirish test', icon: Sparkles, required: true, completed: false },
