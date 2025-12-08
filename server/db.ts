@@ -316,10 +316,11 @@ try {
     
     console.log('✅ All tables created successfully!');
     
-    // Create default admin user
-    const adminExists = sqlite.prepare('SELECT COUNT(*) as count FROM users WHERE role = ?').get('admin') as any;
+    // Create or update default admin user
+    const adminCheck = sqlite.prepare('SELECT id, password FROM users WHERE username = ?').get('admin') as any;
     
-    if (!adminExists || adminExists.count === 0) {
+    if (!adminCheck) {
+      // Create new admin
       const hashedPassword = bcrypt.hashSync('admin123', 10);
       const adminId = 'admin-' + Date.now();
       
@@ -330,6 +331,16 @@ try {
       
       console.log('✅ Default admin user created');
       console.log('   📧 Email: admin@biznesyordam.uz');
+      console.log('   👤 Username: admin');
+      console.log('   🔑 Password: admin123');
+    } else {
+      // Update existing admin password
+      const hashedPassword = bcrypt.hashSync('admin123', 10);
+      sqlite.prepare(`
+        UPDATE users SET password = ?, updated_at = ? WHERE username = ?
+      `).run(hashedPassword, Date.now(), 'admin');
+      
+      console.log('✅ Admin password updated');
       console.log('   👤 Username: admin');
       console.log('   🔑 Password: admin123');
     }
