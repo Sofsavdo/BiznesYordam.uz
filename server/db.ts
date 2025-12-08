@@ -100,171 +100,171 @@ try {
         name TEXT NOT NULL,
         location TEXT NOT NULL,
         capacity INTEGER NOT NULL,
-        currentLoad INTEGER DEFAULT 0,
+        current_load INTEGER DEFAULT 0,
         active INTEGER DEFAULT 1,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS warehouseStock (
         id TEXT PRIMARY KEY,
-        warehouseId TEXT NOT NULL REFERENCES warehouses(id),
-        productId TEXT NOT NULL REFERENCES products(id),
+        warehouse_id TEXT NOT NULL REFERENCES warehouses(id),
+        product_id TEXT NOT NULL REFERENCES products(id),
         quantity INTEGER NOT NULL DEFAULT 0,
         location TEXT,
-        lastUpdated INTEGER NOT NULL DEFAULT (unixepoch())
+        last_updated INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS stockMovements (
         id TEXT PRIMARY KEY,
-        productId TEXT NOT NULL REFERENCES products(id),
-        warehouseId TEXT REFERENCES warehouses(id),
-        movementType TEXT NOT NULL,
+        product_id TEXT NOT NULL REFERENCES products(id),
+        warehouse_id TEXT REFERENCES warehouses(id),
+        movement_type TEXT NOT NULL,
         quantity INTEGER NOT NULL,
         reason TEXT,
-        performedBy TEXT REFERENCES users(id),
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        performed_by TEXT REFERENCES users(id),
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS customers (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
+        partner_id TEXT NOT NULL REFERENCES partners(id),
         name TEXT NOT NULL,
         email TEXT,
         phone TEXT NOT NULL,
         address TEXT,
-        totalOrders INTEGER DEFAULT 0,
-        totalSpent REAL DEFAULT 0,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        lastOrderAt INTEGER
+        total_orders INTEGER DEFAULT 0,
+        total_spent REAL DEFAULT 0,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        last_order_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS stockAlerts (
         id TEXT PRIMARY KEY,
-        productId TEXT NOT NULL REFERENCES products(id),
-        alertType TEXT NOT NULL,
+        product_id TEXT NOT NULL REFERENCES products(id),
+        alert_type TEXT NOT NULL,
         message TEXT NOT NULL,
         resolved INTEGER DEFAULT 0,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        resolvedAt INTEGER
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        resolved_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS inventoryReports (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
-        reportType TEXT NOT NULL,
-        startDate INTEGER NOT NULL,
-        endDate INTEGER NOT NULL,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        report_type TEXT NOT NULL,
+        start_date INTEGER NOT NULL,
+        end_date INTEGER NOT NULL,
         data TEXT NOT NULL,
-        generatedBy TEXT REFERENCES users(id),
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        generated_by TEXT REFERENCES users(id),
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS marketplaceIntegrations (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
+        partner_id TEXT NOT NULL REFERENCES partners(id),
         marketplace TEXT NOT NULL,
-        apiKey TEXT,
-        apiSecret TEXT,
+        api_key TEXT,
+        api_secret TEXT,
         active INTEGER DEFAULT 0,
-        lastSyncAt INTEGER,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        last_sync_at INTEGER,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS fulfillmentRequests (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
+        partner_id TEXT NOT NULL REFERENCES partners(id),
         title TEXT NOT NULL,
         description TEXT,
         status TEXT DEFAULT 'pending',
         priority TEXT DEFAULT 'medium',
-        estimatedCost TEXT,
-        actualCost TEXT,
-        assignedTo TEXT REFERENCES users(id),
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        updatedAt INTEGER,
-        completedAt INTEGER
+        estimated_cost TEXT,
+        actual_cost TEXT,
+        assigned_to TEXT REFERENCES users(id),
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER,
+        completed_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS analytics (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
-        metricType TEXT NOT NULL,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        metric_type TEXT NOT NULL,
         value REAL NOT NULL,
         date INTEGER NOT NULL,
         metadata TEXT,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS profitBreakdown (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
+        partner_id TEXT NOT NULL REFERENCES partners(id),
         orderId TEXT REFERENCES orders(id),
         revenue REAL NOT NULL,
         costs REAL NOT NULL,
-        platformFee REAL NOT NULL,
-        profitShare REAL NOT NULL,
-        netProfit REAL NOT NULL,
+        platform_fee REAL NOT NULL,
+        profit_share REAL NOT NULL,
+        net_profit REAL NOT NULL,
         date INTEGER NOT NULL,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS trendingProducts (
         id TEXT PRIMARY KEY,
         marketplace TEXT NOT NULL,
         category TEXT NOT NULL,
-        productName TEXT NOT NULL,
+        product_name TEXT NOT NULL,
         price REAL,
-        salesCount INTEGER,
+        sales_count INTEGER,
         rating REAL,
-        trendScore INTEGER NOT NULL,
-        imageUrl TEXT,
-        productUrl TEXT,
-        analyzedAt INTEGER NOT NULL DEFAULT (unixepoch())
+        trend_score INTEGER NOT NULL,
+        image_url TEXT,
+        product_url TEXT,
+        analyzed_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS chatRooms (
         id TEXT PRIMARY KEY,
-        partnerId TEXT REFERENCES partners(id),
-        adminId TEXT REFERENCES users(id),
+        partner_id TEXT REFERENCES partners(id),
+        admin_id TEXT REFERENCES users(id),
         status TEXT DEFAULT 'active',
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        lastMessageAt INTEGER
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        last_message_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS enhancedMessages (
         id TEXT PRIMARY KEY,
-        chatRoomId TEXT NOT NULL REFERENCES chatRooms(id),
-        senderId TEXT NOT NULL REFERENCES users(id),
-        senderRole TEXT NOT NULL,
+        chat_room_id TEXT NOT NULL REFERENCES chatRooms(id),
+        sender_id TEXT NOT NULL REFERENCES users(id),
+        sender_role TEXT NOT NULL,
         content TEXT NOT NULL,
-        messageType TEXT DEFAULT 'text',
-        attachmentUrl TEXT,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        readAt INTEGER
+        message_type TEXT DEFAULT 'text',
+        attachment_url TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        read_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS tierUpgradeRequests (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
-        currentTier TEXT NOT NULL,
-        requestedTier TEXT NOT NULL,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        current_tier TEXT NOT NULL,
+        requested_tier TEXT NOT NULL,
         reason TEXT,
         status TEXT DEFAULT 'pending',
-        requestedAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        reviewedAt INTEGER,
-        reviewedBy TEXT REFERENCES users(id)
+        requested_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        reviewed_at INTEGER,
+        reviewed_by TEXT REFERENCES users(id)
       );
       
       CREATE TABLE IF NOT EXISTS audit_logs (
         id TEXT PRIMARY KEY,
         user_id TEXT REFERENCES users(id),
         action TEXT NOT NULL,
-        entityType TEXT NOT NULL,
-        entityId TEXT,
+        entity_type TEXT NOT NULL,
+        entity_id TEXT,
         changes TEXT,
-        ipAddress TEXT,
-        userAgent TEXT,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+        ip_address TEXT,
+        user_agent TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
       CREATE TABLE IF NOT EXISTS systemSettings (
@@ -272,45 +272,45 @@ try {
         key TEXT UNIQUE NOT NULL,
         value TEXT NOT NULL,
         description TEXT,
-        updatedAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        updatedBy TEXT REFERENCES users(id)
+        updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_by TEXT REFERENCES users(id)
       );
       
       CREATE TABLE IF NOT EXISTS ai_tasks (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
-        taskType TEXT NOT NULL,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        task_type TEXT NOT NULL,
         status TEXT DEFAULT 'pending',
         priority TEXT DEFAULT 'medium',
-        inputData TEXT,
-        outputData TEXT,
-        errorMessage TEXT,
-        startedAt INTEGER,
-        completedAt INTEGER,
-        estimatedCost REAL,
-        actualCost REAL,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        updatedAt INTEGER
+        input_data TEXT,
+        output_data TEXT,
+        error_message TEXT,
+        started_at INTEGER,
+        completed_at INTEGER,
+        estimated_cost REAL,
+        actual_cost REAL,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER
       );
       
       CREATE TABLE IF NOT EXISTS ai_product_cards (
         id TEXT PRIMARY KEY,
-        partnerId TEXT NOT NULL REFERENCES partners(id),
-        productId TEXT REFERENCES products(id),
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        product_id TEXT REFERENCES products(id),
         marketplace TEXT NOT NULL,
         title TEXT NOT NULL,
         description TEXT,
-        bulletPoints TEXT,
-        seoKeywords TEXT,
-        imagePrompts TEXT,
-        generatedImages TEXT,
+        bullet_points TEXT,
+        seo_keywords TEXT,
+        image_prompts TEXT,
+        generated_images TEXT,
         status TEXT DEFAULT 'draft',
-        qualityScore INTEGER,
-        aiModel TEXT,
-        generationCost REAL,
-        createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
-        updatedAt INTEGER,
-        publishedAt INTEGER
+        quality_score INTEGER,
+        ai_model TEXT,
+        generation_cost REAL,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER,
+        published_at INTEGER
       );
     `);
     
@@ -322,12 +322,12 @@ try {
     if (!adminCheck) {
       // Create new admin
       const hashedPassword = bcrypt.hashSync('admin123', 10);
-      const adminId = 'admin-' + Date.now();
+      const admin_id = 'admin-' + Date.now();
       
       sqlite.prepare(`
         INSERT INTO users (id, username, email, password, role, created_at)
         VALUES (?, ?, ?, ?, ?, ?)
-      `).run(adminId, 'admin', 'admin@biznesyordam.uz', hashedPassword, 'admin', Date.now());
+      `).run(admin_id, 'admin', 'admin@biznesyordam.uz', hashedPassword, 'admin', Date.now());
       
       console.log('✅ Default admin user created');
       console.log('   📧 Email: admin@biznesyordam.uz');
@@ -350,7 +350,7 @@ try {
     
     if (!partnerCheck) {
       const hashedPassword = bcrypt.hashSync('partner123', 10);
-      const partnerId = 'partner-' + Date.now();
+      const partner_id = 'partner-' + Date.now();
       const userId = 'user-' + Date.now();
       
       // Create partner user
@@ -361,9 +361,9 @@ try {
       
       // Create partner profile
       sqlite.prepare(`
-        INSERT INTO partners (id, user_id, businessName, phone, approved, pricingTier, aiEnabled, createdAt)
+        INSERT INTO partners (id, user_id, businessName, phone, approved, pricingTier, aiEnabled, created_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(partnerId, userId, 'Test Biznes', '+998901234567', 1, 'starter_pro', 1, Date.now());
+      `).run(partner_id, userId, 'Test Biznes', '+998901234567', 1, 'starter_pro', 1, Date.now());
       
       console.log('✅ Test partner user created');
       console.log('   📧 Email: partner@test.uz');
