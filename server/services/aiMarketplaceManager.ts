@@ -4,37 +4,32 @@
 
 import emergentAI from './emergentAI';
 
-// AI Review Response Generator
+// AI Review Response Generator (LEGACY - use productCardAI.generateReviewResponse)
 export async function generateReviewResponse(
   reviewText: string,
   rating: number,
   productName: string,
   language: 'uz' | 'ru' | 'en' = 'uz'
 ): Promise<string> {
-  const sentiment = rating >= 4 ? 'positive' : rating === 3 ? 'neutral' : 'negative';
-  
   const prompt = `Sen professional marketplace manager san. Mijoz sharhiga javob yoz.
 
 Mahsulot: ${productName}
 Sharh: "${reviewText}"
 Reyting: ${rating}/5
-Sentiment: ${sentiment}
 Til: ${language}
 
 Talablar:
 - Professional va do'stona
-- ${sentiment === 'negative' ? 'Muammoni tan ol va yechim taklif qil' : 'Minnatdorchilik bildir'}
+- ${rating < 3 ? 'Muammoni tan ol va yechim taklif qil' : 'Minnatdorchilik bildir'}
 - Qisqa va aniq (2-3 jumla)
 - Emoji ishlatma
 - Faqat javobni yoz, boshqa hech narsa`;
 
-  const message = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 200,
-    messages: [{ role: 'user', content: prompt }],
+  return emergentAI.generateText({
+    prompt,
+    maxTokens: 200,
+    temperature: 0.7,
   });
-
-  return message.content[0].type === 'text' ? message.content[0].text : '';
 }
 
 // AI Product Card Creator
