@@ -308,7 +308,7 @@ export default function PartnerRegistration() {
                   disabled={!formData.agreeToTerms || registrationMutation.isPending}
                   data-testid="button-submit"
                 >
-                  {registrationMutation.isPending ? 'Yuborilmoqda...' : "Ro'yxatdan O'tish"}
+                  {registrationMutation.isPending ? "Yuborilmoqda..." : "Ro'yxatdan O'tish"}
                 </Button>
               </form>
             </CardContent>
