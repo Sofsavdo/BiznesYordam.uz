@@ -92,8 +92,8 @@ export default function RemoteAccessDashboard() {
     },
     onSuccess: (data) => {
       toast({
-        title: '✅ Access so'rovi yuborildi',
-        description: 'Hamkor tasdiqini kutmoqda...',
+        title: "✅ Access so'rovi yuborildi",
+        description: "Hamkor tasdiqini kutmoqda...",
       });
       setShowRequestDialog(false);
       queryClient.invalidateQueries({ queryKey: ['remote-sessions'] });
