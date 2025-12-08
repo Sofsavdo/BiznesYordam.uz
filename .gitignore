@@ -68,4 +68,7 @@ uploads/
 .parcel-cache/
 
 # Runtime
-.replit
+.replit-e 
+# Environment files
+*.env
+*.env.*
