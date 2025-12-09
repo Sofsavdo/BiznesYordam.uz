@@ -12,6 +12,7 @@ from typing import Dict, Any, Optional
 # Configuration
 BASE_URL = "http://localhost:5000"
 ADMIN_CREDENTIALS = {"username": "admin", "password": "BiznesYordam2024!"}
+# Note: testpartner user exists but may not have partner profile
 PARTNER_CREDENTIALS = {"username": "testpartner", "password": "partner123"}
 
 class Colors:
