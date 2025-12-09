@@ -117,7 +117,7 @@ backend:
     status_history:
       - working: false
         agent: "testing"
-        comment: "GET /api/partners/me returns 404 even though partner exists in database. Issue appears to be with session cookie handling in test environment. Manual curl test with proper cookie handling may work. Needs investigation of session middleware and cookie configuration."
+        comment: "GET /api/partners/me returns 404 even though partner exists in database. ROOT CAUSE: Schema mismatch between TypeScript definitions (shared/schema.ts uses PostgreSQL schema with columns like businessCategory, monthlyRevenue, isApproved, etc.) and actual SQLite database (server/db.ts creates simplified schema with business_name, business_address, inn, phone, approved, etc.). Drizzle ORM queries fail because expected columns don't exist in SQLite database. Verified with curl that authentication works but partner lookup fails. Database has partner record with user_id='user-1765236913452' but query using TypeScript schema fails."
 
   - task: "Get Products Endpoint"
     implemented: true
