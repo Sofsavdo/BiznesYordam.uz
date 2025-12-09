@@ -381,9 +381,9 @@ try {
       
       // Create partner profile
       sqlite.prepare(`
-        INSERT INTO partners (id, user_id, business_name, phone, approved, pricing_tier, ai_enabled, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(partnerId, userId, 'Test Biznes', '+998901234567', 1, 'starter_pro', 1, Date.now());
+        INSERT INTO partners (id, user_id, business_name, business_category, phone, approved, pricing_tier, ai_enabled, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(partnerId, userId, 'Test Biznes', 'electronics', '+998901234567', 1, 'starter_pro', 1, Date.now());
       
       console.log('✅ Test partner user created');
       console.log('   📧 Email: partner@test.uz');
