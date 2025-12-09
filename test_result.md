@@ -156,13 +156,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "POST /api/products returns 400 validation error. Schema requires 'partnerId' but endpoint should automatically get partnerId from authenticated session. Schema or endpoint logic needs adjustment."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING. POST /api/products returns 400 'Mahsulot ma'lumotlari noto'g'ri' with validation error for partnerId field. The insertProductSchema in shared/schema.ts (lines 457-462) correctly omits partnerId, but validation is still failing. Similar to Partner Registration issue - schema fix not properly applied."
 
   - task: "Get Orders Endpoint"
     implemented: true
