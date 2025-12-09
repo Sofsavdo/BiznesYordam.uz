@@ -429,6 +429,62 @@ try {
         documentation TEXT,
         created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
+      
+      CREATE TABLE IF NOT EXISTS referrals (
+        id TEXT PRIMARY KEY,
+        referrer_partner_id TEXT NOT NULL REFERENCES partners(id),
+        referred_partner_id TEXT NOT NULL REFERENCES partners(id),
+        promo_code TEXT,
+        contract_type TEXT NOT NULL,
+        status TEXT DEFAULT 'pending',
+        bonus_earned REAL DEFAULT 0,
+        bonus_paid REAL DEFAULT 0,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        activated_at INTEGER,
+        expires_at INTEGER
+      );
+      
+      CREATE TABLE IF NOT EXISTS referral_bonuses (
+        id TEXT PRIMARY KEY,
+        referral_id TEXT NOT NULL REFERENCES referrals(id),
+        referrer_partner_id TEXT NOT NULL REFERENCES partners(id),
+        amount REAL NOT NULL,
+        month_number INTEGER NOT NULL,
+        platform_profit REAL NOT NULL,
+        bonus_rate REAL NOT NULL,
+        tier_multiplier REAL NOT NULL,
+        status TEXT DEFAULT 'pending',
+        paid_at INTEGER,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS referral_withdrawals (
+        id TEXT PRIMARY KEY,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        amount REAL NOT NULL,
+        method TEXT NOT NULL,
+        fee REAL NOT NULL,
+        net_amount REAL NOT NULL,
+        status TEXT DEFAULT 'pending',
+        requested_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        processed_at INTEGER,
+        transaction_id TEXT
+      );
+      
+      CREATE TABLE IF NOT EXISTS partner_contracts (
+        id TEXT PRIMARY KEY,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        contract_type TEXT NOT NULL,
+        pricing_tier TEXT NOT NULL,
+        start_date INTEGER NOT NULL,
+        end_date INTEGER NOT NULL,
+        monthly_fee REAL NOT NULL,
+        commission_rate REAL NOT NULL,
+        discount_percent REAL DEFAULT 0,
+        status TEXT DEFAULT 'active',
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        signed_at INTEGER
+      );
     `);
     
     console.log('✅ All tables created successfully!');
