@@ -66,6 +66,7 @@ try {
         cost_price REAL,
         stock_quantity INTEGER DEFAULT 0,
         low_stock_threshold INTEGER DEFAULT 10,
+        optimized_title TEXT,
         created_at INTEGER NOT NULL DEFAULT (unixepoch()),
         updated_at INTEGER
       );
