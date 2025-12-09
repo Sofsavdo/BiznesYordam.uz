@@ -99,13 +99,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "POST /api/partners/register returns 400 validation error. Schema issue: partnerRegistrationSchema extends insertPartnerSchema which requires 'userId' field, but registration should not require userId as it's created during registration. Schema needs to be fixed to omit userId from registration."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING after claimed fix. POST /api/partners/register returns 400 with error: 'Required' for userId field. The partnerRegistrationSchema in shared/schema.ts (lines 440-454) does NOT include userId, which is correct. However, the validation is still failing. The schema fix was NOT properly applied or there's a caching issue. Actual error: {\"message\":\"Ma'lumotlar noto'g'ri\",\"code\":\"VALIDATION_ERROR\",\"errors\":[{\"code\":\"invalid_type\",\"expected\":\"string\",\"received\":\"undefined\",\"path\":[\"userId\"],\"message\":\"Required\"}]}"
 
   - task: "Database Schema Alignment"
     implemented: false
