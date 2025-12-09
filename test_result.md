@@ -141,13 +141,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "GET /api/products returns 404 'Partner not found'. Dependent on Partner Profile endpoint working correctly. Same session/cookie issue as Partner Profile."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING. GET /api/products returns 404 'Hamkor ma'lumotlari topilmadi'. Root cause: storage.getPartnerByUserId() fails (same issue as Partner Profile endpoint). Cannot retrieve products without valid partner lookup."
 
   - task: "Create Product Endpoint"
     implemented: true
