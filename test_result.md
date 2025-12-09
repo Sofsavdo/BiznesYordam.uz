@@ -216,13 +216,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "medium"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "POST /api/partners/ai-toggle returns 404 'Partner not found'. Dependent on Partner Profile endpoint working correctly. Same session/cookie issue."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING. POST /api/partners/ai-toggle returns 404 'Hamkor topilmadi'. Same root cause - storage.getPartnerByUserId() not working."
 
 frontend:
   - task: "Frontend Testing"
