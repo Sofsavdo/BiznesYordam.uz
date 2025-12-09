@@ -13,7 +13,8 @@ import {
   MessageCircle, Settings, Database, Cloud, Lock, Award,
   Briefcase, TrendingDown, Activity, FileText, Bot, Cpu,
   LineChart, PieChart, ShoppingCart, Box, Warehouse,
-  Map, Layers, GitBranch, Infinity, Gauge
+  Map, Layers, GitBranch, Infinity, Gauge, UserCheck,
+  AlertCircle, RefreshCw, Plus, Image as ImageIcon
 } from 'lucide-react';
 
 export default function Landing() {
