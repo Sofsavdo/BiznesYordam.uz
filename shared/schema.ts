@@ -248,6 +248,70 @@ export const aiMarketplaceAccounts = sqliteTable('ai_marketplace_accounts', {
   updatedAt: integer('updated_at', { mode: 'timestamp' }),
 });
 
+// ==================== REFERRAL SYSTEM ====================
+
+export const referrals = sqliteTable('referrals', {
+  id: text('id').primaryKey(),
+  referrerPartnerId: text('referrer_partner_id').notNull().references(() => partners.id),
+  referredPartnerId: text('referred_partner_id').notNull().references(() => partners.id),
+  promoCode: text('promo_code'),
+  contractType: text('contract_type').notNull(),
+  status: text('status').default('pending'),
+  bonusEarned: real('bonus_earned').default(0),
+  bonusPaid: real('bonus_paid').default(0),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+  activatedAt: integer('activated_at', { mode: 'timestamp' }),
+  expiresAt: integer('expires_at', { mode: 'timestamp' }),
+});
+
+export const referralBonuses = sqliteTable('referral_bonuses', {
+  id: text('id').primaryKey(),
+  referralId: text('referral_id').notNull().references(() => referrals.id),
+  referrerPartnerId: text('referrer_partner_id').notNull().references(() => partners.id),
+  amount: real('amount').notNull(),
+  monthNumber: integer('month_number').notNull(),
+  platformProfit: real('platform_profit').notNull(),
+  bonusRate: real('bonus_rate').notNull(),
+  tierMultiplier: real('tier_multiplier').notNull(),
+  status: text('status').default('pending'),
+  paidAt: integer('paid_at', { mode: 'timestamp' }),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
+export const referralWithdrawals = sqliteTable('referral_withdrawals', {
+  id: text('id').primaryKey(),
+  partnerId: text('partner_id').notNull().references(() => partners.id),
+  amount: real('amount').notNull(),
+  method: text('method').notNull(),
+  fee: real('fee').notNull(),
+  netAmount: real('net_amount').notNull(),
+  status: text('status').default('pending'),
+  requestedAt: integer('requested_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+  processedAt: integer('processed_at', { mode: 'timestamp' }),
+  transactionId: text('transaction_id'),
+});
+
+export const partnerContracts = sqliteTable('partner_contracts', {
+  id: text('id').primaryKey(),
+  partnerId: text('partner_id').notNull().references(() => partners.id),
+  contractType: text('contract_type').notNull(),
+  pricingTier: text('pricing_tier').notNull(),
+  startDate: integer('start_date', { mode: 'timestamp' }).notNull(),
+  endDate: integer('end_date', { mode: 'timestamp' }).notNull(),
+  monthlyFee: real('monthly_fee').notNull(),
+  commissionRate: real('commission_rate').notNull(),
+  discountPercent: real('discount_percent').default(0),
+  status: text('status').default('active'),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+  signedAt: integer('signed_at', { mode: 'timestamp' }),
+});
+
+export type Referral = typeof referrals.$inferSelect;
+export type ReferralBonus = typeof referralBonuses.$inferSelect;
+export type ReferralWithdrawal = typeof referralWithdrawals.$inferSelect;
+export type PartnerContract = typeof partnerContracts.$inferSelect;
+
+
 // ==================== ANALYTICS & REPORTS ====================
 
 export const analytics = sqliteTable('analytics', {
