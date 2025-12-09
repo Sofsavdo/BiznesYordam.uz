@@ -41,15 +41,18 @@ try {
         user_id TEXT NOT NULL UNIQUE REFERENCES users(id),
         business_name TEXT NOT NULL,
         business_address TEXT,
+        business_category TEXT,
         inn TEXT UNIQUE,
         phone TEXT NOT NULL,
         website TEXT,
+        monthly_revenue TEXT,
         approved INTEGER DEFAULT 0,
         pricing_tier TEXT DEFAULT 'starter_pro',
         monthly_fee INTEGER,
         profit_share_percent INTEGER,
         ai_enabled INTEGER DEFAULT 0,
         warehouse_space_kg INTEGER,
+        notes TEXT,
         created_at INTEGER NOT NULL DEFAULT (unixepoch()),
         last_activity_at INTEGER
       );
