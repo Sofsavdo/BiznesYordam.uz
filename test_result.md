@@ -126,13 +126,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "GET /api/partners/me returns 404 even though partner exists in database. ROOT CAUSE: Schema mismatch between TypeScript definitions (shared/schema.ts uses PostgreSQL schema with columns like businessCategory, monthlyRevenue, isApproved, etc.) and actual SQLite database (server/db.ts creates simplified schema with business_name, business_address, inn, phone, approved, etc.). Drizzle ORM queries fail because expected columns don't exist in SQLite database. Verified with curl that authentication works but partner lookup fails. Database has partner record with user_id='user-1765236913452' but query using TypeScript schema fails."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING after claimed fix. GET /api/partners/me returns 404 'Hamkor ma'lumotlari topilmadi'. Verified: testpartner user exists (user-1765251670281) and partner record exists (partner-1765251670281) in database. Authentication works (login successful, session valid). The storage.getPartnerByUserId() function is failing to retrieve the partner even though the data exists. This suggests the Drizzle ORM query is still not working correctly with the SQLite schema."
 
   - task: "Get Products Endpoint"
     implemented: true
