@@ -114,13 +114,16 @@ backend:
     implemented: false
     working: false
     file: "server/db.ts, shared/schema.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "critical"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "CRITICAL: Application has fundamental schema mismatch. TypeScript schema (shared/schema.ts) defines PostgreSQL tables with columns like businessCategory (enum), monthlyRevenue (decimal), isApproved (boolean), profitShareRate, etc. But actual SQLite database (created in server/db.ts) has different columns: business_name, business_address, inn, phone, approved (integer), pricing_tier, monthly_fee, profit_share_percent, etc. This causes Drizzle ORM queries to fail. Solution needed: Either 1) Migrate to PostgreSQL and run proper migrations, 2) Update TypeScript schema to match SQLite structure, or 3) Update SQLite schema creation to match TypeScript definitions."
+      - working: false
+        agent: "testing"
+        comment: "STILL NOT FIXED. Main agent claimed schema was aligned but testing shows multiple failures. The shared/schema.ts now uses SQLite-compatible types (text, integer, real) which is correct. However, storage.getPartnerByUserId() is still failing even though data exists in database. This suggests the Drizzle ORM queries are not working correctly. Possible issues: 1) Column name mismatches (camelCase vs snake_case), 2) Drizzle ORM not properly configured for SQLite, 3) Query logic errors in storage layer. CRITICAL: This blocks ALL partner-related endpoints."
 
   - task: "Partner Profile Endpoint"
     implemented: true
