@@ -186,13 +186,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "medium"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "GET /api/analytics returns 404 'Partner not found'. Dependent on Partner Profile endpoint working correctly. Same session/cookie issue."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING. GET /api/analytics returns 404 'Hamkor ma'lumotlari topilmadi'. Same root cause - storage.getPartnerByUserId() not working."
 
   - task: "AI Manager Get Products"
     implemented: true
