@@ -300,92 +300,77 @@ export function calculatePartnerProfit(
 }
 
 export const AI_MANAGER_PLANS = {
-  ai_local_starter: {
-    id: 'ai_local_starter',
-    segment: 'local',
-    name: 'AI Local Starter',
-    nameUz: 'AI Local Starter',
-    nameRu: 'AI Local Starter',
-    nameEn: 'AI Local Starter',
-    monthlyFee: 299,
+  ai_starter: {
+    id: 'ai_starter',
+    name: 'AI Starter',
+    nameUz: 'AI Starter',
+    monthlyFee: 349,
     currency: 'USD',
-    revenueCommissionRate: 0.015,
-    maxBrands: 1,
-    maxMarketplaces: 2,
-    maxProducts: 1000,
-    features: [
-      '1 brand',
-      '1-2 lokal marketplace',
-      '1000 tagacha mahsulot',
-      'AI listing va narx optimizatsiya',
-      'AI review va messaging yordamchisi',
-      'Asosiy analytics dashboard',
-    ],
+    revenueCommission: 0.015, // 1.5%
+    skuLimit: 100,
+    
+    features: {
+      included: [
+        'AI kartochka yaratish',
+        'Marketplace avtomatik yuklash',
+        'SEO optimizatsiya',
+        'Narx monitoring',
+        'Buyurtma boshqaruvi',
+        'Basic analytics',
+        'Email support'
+      ],
+      restricted: [
+        'Trend Hunter (yopiq)',
+        'Sof foyda analizi (yopiq)',
+        'Advanced analytics (yopiq)',
+        'Marketplace soni: 2 ta max'
+      ]
+    },
+    
+    limits: {
+      sku: 100,
+      marketplaces: 2,
+      trendHunter: false,
+      profitAnalysis: false,
+      advancedAnalytics: false
+    },
+    
+    note: 'AI xarajatlari biz qoplaymiz - qayta to\'lov yo\'q!'
   },
-  ai_local_pro: {
-    id: 'ai_local_pro',
-    segment: 'local',
-    name: 'AI Local Pro',
-    nameUz: 'AI Local Pro',
-    nameRu: 'AI Local Pro',
-    nameEn: 'AI Local Pro',
-    monthlyFee: 699,
+  
+  ai_manager_pro: {
+    id: 'ai_manager_pro',
+    name: 'AI Manager Pro',
+    nameUz: 'AI Manager Pro',
+    monthlyFee: 899,
     currency: 'USD',
-    revenueCommissionRate: 0.015,
-    maxBrands: 3,
-    maxMarketplaces: 3,
-    maxProducts: 5000,
-    features: [
-      '2-3 brand',
-      '2-3 lokal marketplace',
-      '5000 tagacha mahsulot',
-      'Kengaytirilgan AI optimizatsiya',
-      'AI Trend tavsiyalari',
-      'Prioritet support',
-    ],
-  },
-  ai_global_starter: {
-    id: 'ai_global_starter',
-    segment: 'global',
-    name: 'AI Global Starter',
-    nameUz: 'AI Global Starter',
-    nameRu: 'AI Global Starter',
-    nameEn: 'AI Global Starter',
-    monthlyFee: 599,
-    currency: 'USD',
-    revenueCommissionRate: 0.01,
-    maxBrands: 2,
-    maxMarketplaces: 3,
-    maxProducts: 3000,
-    features: [
-      '1-2 brand',
-      '2-3 global marketplace',
-      'AI listing va narx global bozor uchun',
-      'Raqobatchi monitoringi',
-      'Asosiy global analytics',
-    ],
-  },
-  ai_global_scale: {
-    id: 'ai_global_scale',
-    segment: 'global',
-    name: 'AI Global Scale',
-    nameUz: 'AI Global Scale',
-    nameRu: 'AI Global Scale',
-    nameEn: 'AI Global Scale',
-    monthlyFee: 1099,
-    currency: 'USD',
-    revenueCommissionRate: 0.01,
-    maxBrands: 5,
-    maxMarketplaces: 5,
-    maxProducts: 20000,
-    features: [
-      '3+ brand',
-      '4+ global marketplace',
-      'Katta hajm uchun AI strategiya',
-      'Kengaytirilgan analytics va reporting',
-      'Dedicated success manager',
-    ],
-  },
+    revenueCommission: 0.01, // 1%
+    skuLimit: 250,
+    
+    features: {
+      included: [
+        'BARCHA AI Starter features',
+        'Trend Hunter FULL',
+        'Sof foyda analizi',
+        'Advanced analytics',
+        'Cheksiz marketplace',
+        'Priority support',
+        'API access',
+        'Custom integrations'
+      ],
+      note: '250+ SKU - alohida kelishuv va qo\'shimcha xizmat'
+    },
+    
+    limits: {
+      sku: 250,
+      marketplaces: 999,
+      trendHunter: true,
+      profitAnalysis: true,
+      advancedAnalytics: true
+    },
+    
+    note: 'FULL variant - barcha funksiyalar. AI xarajatlari biz qoplaymiz!'
+  }
 };
 
 export function getAIManagerPlan(planCode: string): (typeof AI_MANAGER_PLANS)[keyof typeof AI_MANAGER_PLANS] | null {
