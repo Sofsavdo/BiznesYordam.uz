@@ -332,6 +332,103 @@ try {
         created_at INTEGER NOT NULL DEFAULT (unixepoch()),
         updated_at INTEGER
       );
+      
+      CREATE TABLE IF NOT EXISTS pricing_tiers (
+        id TEXT PRIMARY KEY,
+        tier TEXT UNIQUE NOT NULL,
+        name_uz TEXT NOT NULL,
+        fixed_cost TEXT NOT NULL,
+        commission_min TEXT NOT NULL,
+        commission_max TEXT NOT NULL,
+        min_revenue TEXT NOT NULL,
+        max_revenue TEXT,
+        features TEXT NOT NULL,
+        is_active INTEGER DEFAULT 1,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS spt_costs (
+        id TEXT PRIMARY KEY,
+        service_type TEXT NOT NULL,
+        tier TEXT NOT NULL,
+        cost_per_unit TEXT NOT NULL,
+        description TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS commission_settings (
+        id TEXT PRIMARY KEY,
+        tier TEXT UNIQUE NOT NULL,
+        base_commission TEXT NOT NULL,
+        volume_bonus TEXT,
+        performance_bonus TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS messages (
+        id TEXT PRIMARY KEY,
+        chat_room_id TEXT NOT NULL REFERENCES chatRooms(id),
+        sender_id TEXT NOT NULL REFERENCES users(id),
+        sender_role TEXT NOT NULL,
+        content TEXT NOT NULL,
+        message_type TEXT DEFAULT 'text',
+        attachment_url TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        read_at INTEGER
+      );
+      
+      CREATE TABLE IF NOT EXISTS admin_permissions (
+        user_id TEXT PRIMARY KEY REFERENCES users(id),
+        can_manage_admins INTEGER DEFAULT 0,
+        can_manage_content INTEGER DEFAULT 0,
+        can_manage_chat INTEGER DEFAULT 0,
+        can_view_reports INTEGER DEFAULT 0,
+        can_receive_products INTEGER DEFAULT 0,
+        can_activate_partners INTEGER DEFAULT 0,
+        can_manage_integrations INTEGER DEFAULT 0,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER
+      );
+      
+      CREATE TABLE IF NOT EXISTS notifications (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES users(id),
+        title TEXT NOT NULL,
+        message TEXT NOT NULL,
+        type TEXT DEFAULT 'info',
+        read INTEGER DEFAULT 0,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS excel_imports (
+        id TEXT PRIMARY KEY,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        file_name TEXT NOT NULL,
+        file_size INTEGER,
+        rows_imported INTEGER,
+        status TEXT DEFAULT 'pending',
+        error_log TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS excel_templates (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT,
+        template_url TEXT,
+        category TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
+      
+      CREATE TABLE IF NOT EXISTS marketplace_api_configs (
+        id TEXT PRIMARY KEY,
+        marketplace TEXT UNIQUE NOT NULL,
+        api_endpoint TEXT NOT NULL,
+        auth_type TEXT NOT NULL,
+        rate_limit INTEGER,
+        documentation TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      );
     `);
     
     console.log('✅ All tables created successfully!');
