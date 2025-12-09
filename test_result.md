@@ -251,11 +251,14 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Database Schema Alignment (CRITICAL)"
-    - "Partner Registration Schema Fix"
-    - "AI Manager Products Database Schema"
+    - "Database Schema Alignment (CRITICAL - BLOCKING ALL PARTNER ENDPOINTS)"
+    - "Partner Registration Schema Fix (userId still required)"
+    - "AI Manager Products SQL Query Fix (wrong column names)"
+    - "storage.getPartnerByUserId() Investigation"
   stuck_tasks:
     - "Database Schema Alignment"
+    - "Partner Registration"
+    - "Partner Profile Endpoint"
   test_all: false
   test_priority: "critical_first"
 
