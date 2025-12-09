@@ -201,13 +201,16 @@ backend:
     implemented: true
     working: false
     file: "server/routes/aiManagerRoutes.ts"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
         comment: "GET /api/ai-manager/products returns 500 database error: 'no such column: p.optimized_title'. Database schema is missing the optimized_title column in products table. Migration needed or query needs to be updated."
+      - working: false
+        agent: "testing"
+        comment: "STILL FAILING. GET /api/ai-manager/products returns 500 'no such column: p.optimized_title'. ROOT CAUSE: SQL query in server/controllers/aiManagerController.ts (lines 55-83) queries ai_product_cards table but uses wrong column names: 'optimized_title' (should be 'title'), 'optimized_description' (should be 'description'), 'seo_score' (should be 'quality_score'), 'price' (doesn't exist). The products table HAS optimized_title column, but the query is on ai_product_cards table which doesn't have these columns. Schema mismatch in controller code."
 
   - task: "Partner AI Toggle"
     implemented: true
