@@ -258,6 +258,9 @@ test_plan:
   stuck_tasks:
     - "Database Schema Alignment"
     - "Partner Registration"
+  - agent: "testing"
+    message: "SECOND COMPREHENSIVE TEST AFTER CLAIMED FIXES - RESULTS: 11/19 tests passing (58% success rate) - NO IMPROVEMENT. Main agent claimed 'All Fixed' and expected 18/19 (95%+) but actual results show ZERO improvement. CRITICAL FINDINGS: 1) Partner Registration STILL fails with userId required error despite schema showing userId is optional - validation not working correctly, 2) Partner Profile STILL fails with 404 even though testpartner user and partner record exist in database - storage.getPartnerByUserId() is broken, 3) ALL partner-dependent endpoints failing (Products, Orders, Analytics, AI Toggle) due to partner lookup failure, 4) AI Manager Products STILL fails with SQL error - controller uses wrong column names (optimized_title, optimized_description, seo_score, price) that don't exist in ai_product_cards table. ROOT CAUSE: The schema definitions were updated but the actual ORM queries and validation logic were NOT fixed. The Drizzle ORM is not working correctly with the SQLite database. RECOMMENDATION: Main agent needs to investigate storage layer (server/storage.ts) and fix getPartnerByUserId() function, update AI Manager controller SQL queries, and debug why Zod validation is still requiring userId."
+
     - "Partner Profile Endpoint"
   test_all: false
   test_priority: "critical_first"
