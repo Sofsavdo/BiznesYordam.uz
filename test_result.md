@@ -107,6 +107,18 @@ backend:
         agent: "testing"
         comment: "POST /api/partners/register returns 400 validation error. Schema issue: partnerRegistrationSchema extends insertPartnerSchema which requires 'userId' field, but registration should not require userId as it's created during registration. Schema needs to be fixed to omit userId from registration."
 
+  - task: "Database Schema Alignment"
+    implemented: false
+    working: false
+    file: "server/db.ts, shared/schema.ts"
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Application has fundamental schema mismatch. TypeScript schema (shared/schema.ts) defines PostgreSQL tables with columns like businessCategory (enum), monthlyRevenue (decimal), isApproved (boolean), profitShareRate, etc. But actual SQLite database (created in server/db.ts) has different columns: business_name, business_address, inn, phone, approved (integer), pricing_tier, monthly_fee, profit_share_percent, etc. This causes Drizzle ORM queries to fail. Solution needed: Either 1) Migrate to PostgreSQL and run proper migrations, 2) Update TypeScript schema to match SQLite structure, or 3) Update SQLite schema creation to match TypeScript definitions."
+
   - task: "Partner Profile Endpoint"
     implemented: true
     working: false
