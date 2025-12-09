@@ -235,9 +235,7 @@ export async function approvePartner(partnerId: string, adminId: string): Promis
   try {
     const [partner] = await db.update(partners)
       .set({
-        isApproved: true,
-        approvedBy: adminId,
-        approvedAt: new Date(),
+        approved: true,
         updatedAt: new Date()
       })
       .where(eq(partners.id, partnerId))
