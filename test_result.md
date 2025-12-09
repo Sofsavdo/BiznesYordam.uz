@@ -224,12 +224,13 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Database Schema Alignment (CRITICAL)"
     - "Partner Registration Schema Fix"
-    - "Session Cookie Handling"
     - "AI Manager Products Database Schema"
-  stuck_tasks: []
+  stuck_tasks:
+    - "Database Schema Alignment"
   test_all: false
-  test_priority: "high_first"
+  test_priority: "critical_first"
 
 agent_communication:
   - agent: "testing"
