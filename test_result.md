@@ -181,11 +181,11 @@ backend:
 
   - task: "Get Orders Endpoint"
     implemented: true
-    working: false
+    working: true
     file: "server/routes.ts"
-    stuck_count: 2
+    stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "testing"
@@ -193,6 +193,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "STILL FAILING. GET /api/orders returns 404 'Hamkor ma'lumotlari topilmadi'. Same root cause as other partner endpoints - storage.getPartnerByUserId() not working."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED! GET /api/orders now returns 200 with orders list. The endpoint correctly retrieves orders for authenticated partners."
 
   - task: "Analytics Endpoint"
     implemented: true
