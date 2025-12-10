@@ -92,7 +92,10 @@ export function EnhancedTierBenefits({
   return (
     <div className="space-y-4">
       <div className="text-center p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200">
-        <h3 className="text-lg font-bold text-green-800 mb-2">💰 Moliyaviy Foyda Tahlili</h3>
+        <h3 className="text-lg font-bold text-green-800 mb-2 flex items-center gap-2">
+          <DollarSign className="w-5 h-5" />
+          Moliyaviy Foyda Tahlili
+        </h3>
         <p className="text-sm text-green-700">
           Bu tarifga o'tish orqali siz yiliga <span className="font-bold text-xl">{formatCurrency(yearlySavings)}</span> tejaysiz!
         </p>
