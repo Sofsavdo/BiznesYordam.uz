@@ -208,7 +208,7 @@ export default function PartnerDashboard() {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-10 lg:grid-cols-13">
+            <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
               <TabsTrigger value="overview" className="flex items-center gap-1">
                 <BarChart3 className="w-4 h-4" />
                 <span className="hidden sm:inline">Umumiy</span>
@@ -219,31 +219,15 @@ export default function PartnerDashboard() {
               </TabsTrigger>
               <TabsTrigger value="referral" className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-blue-500 text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-blue-600">
                 <Gift className="w-4 h-4" />
-                <span className="hidden sm:inline">\ud83c\udf81 Referral</span>
+                <span className="hidden sm:inline">Referral</span>
               </TabsTrigger>
               <TabsTrigger value="marketplace" className="flex items-center gap-1">
                 <Globe className="w-4 h-4" />
                 <span className="hidden sm:inline">Marketplace</span>
               </TabsTrigger>
-              <TabsTrigger value="tracker" className="flex items-center gap-1">
-                <Eye className="w-4 h-4" />
-                <span className="hidden sm:inline">Tracking</span>
-              </TabsTrigger>
               <TabsTrigger value="inventory" className="flex items-center gap-1">
                 <Package className="w-4 h-4" />
                 <span className="hidden sm:inline">Ombor</span>
-              </TabsTrigger>
-              <TabsTrigger value="orders" className="flex items-center gap-1">
-                <Truck className="w-4 h-4" />
-                <span className="hidden sm:inline">Buyurtmalar</span>
-              </TabsTrigger>
-              <TabsTrigger value="analytics" className="flex items-center gap-1">
-                <FileSpreadsheet className="w-4 h-4" />
-                <span className="hidden sm:inline">Tahlil</span>
-              </TabsTrigger>
-              <TabsTrigger value="products" className="flex items-center gap-1">
-                <Package className="w-4 h-4" />
-                <span className="hidden sm:inline">Mahsulotlar</span>
               </TabsTrigger>
               <TabsTrigger value="profit" className="flex items-center gap-1">
                 <DollarSign className="w-4 h-4" />
