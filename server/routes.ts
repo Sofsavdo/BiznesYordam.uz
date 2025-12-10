@@ -83,7 +83,48 @@ function requirePartner(req: Request, res: Response, next: NextFunction) {
     });
   }
   
+  // Attach user to req for controllers
+  (req as any).user = req.session.user;
+  
   next();
+}
+
+// Enhanced middleware - attaches partner data
+async function requirePartnerWithData(req: Request, res: Response, next: NextFunction) {
+  if (!req.session?.user) {
+    return res.status(401).json({ 
+      message: "Avtorizatsiya yo'q",
+      code: "UNAUTHORIZED"
+    });
+  }
+  
+  const user = req.session.user;
+  (req as any).user = user;
+  
+  // Get partner data
+  try {
+    const partner = await storage.getPartnerByUserId(user.id);
+    if (!partner) {
+      return res.status(404).json({ 
+        message: "Hamkor ma'lumotlari topilmadi",
+        code: "PARTNER_NOT_FOUND"
+      });
+    }
+    
+    // Attach partner data to req.user
+    (req as any).user.partnerId = partner.id;
+    (req as any).user.pricingTier = partner.pricingTier;
+    (req as any).user.aiEnabled = partner.aiEnabled;
+    (req as any).partner = partner;
+    
+    next();
+  } catch (error) {
+    console.error('Error in requirePartnerWithData:', error);
+    return res.status(500).json({ 
+      message: "Server xatolik",
+      code: "INTERNAL_ERROR"
+    });
+  }
 }
 
 // Enhanced error handling middleware
