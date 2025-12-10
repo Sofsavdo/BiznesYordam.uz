@@ -47,6 +47,10 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
       timestamp: new Date().toISOString()
     });
   }
+  
+  // Attach user to req for controllers
+  (req as any).user = req.session.user;
+  
   next();
 }
 
