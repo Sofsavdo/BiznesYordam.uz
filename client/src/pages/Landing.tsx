@@ -38,7 +38,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant="ghost" onClick={() => setLocation('/investor-pitch')} className="hidden md:flex">
+              <Button variant="ghost" onClick={() => setLocation('/demo')} className="hidden md:flex">
                 <Eye className="w-4 h-4 mr-2" />
                 Demo
               </Button>
@@ -97,7 +97,7 @@ export default function Landing() {
               <Button 
                 size="lg" 
                 variant="outline"
-                onClick={() => setLocation('/investor-pitch')}
+                onClick={() => setLocation('/demo')}
                 className="text-lg px-10 py-8 border-2"
               >
                 <Play className="w-5 h-5 mr-2" />
