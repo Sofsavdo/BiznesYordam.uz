@@ -127,11 +127,11 @@ backend:
 
   - task: "Partner Profile Endpoint"
     implemented: true
-    working: false
+    working: true
     file: "server/routes.ts"
-    stuck_count: 2
+    stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "testing"
@@ -139,6 +139,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "STILL FAILING after claimed fix. GET /api/partners/me returns 404 'Hamkor ma'lumotlari topilmadi'. Verified: testpartner user exists (user-1765251670281) and partner record exists (partner-1765251670281) in database. Authentication works (login successful, session valid). The storage.getPartnerByUserId() function is failing to retrieve the partner even though the data exists. This suggests the Drizzle ORM query is still not working correctly with the SQLite schema."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED! GET /api/partners/me now returns 200 with partner data. The requirePartnerWithData middleware is working correctly. Partner profile includes id, userId, businessName, businessAddress, businessCategory, and other fields. Authentication and partner lookup both functioning properly."
 
   - task: "Get Products Endpoint"
     implemented: true
