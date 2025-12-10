@@ -33,6 +33,7 @@ import trendingRoutes from "./routes/trendingRoutes";
 import aiDashboardRoutes from "./routes/aiDashboard";
 import enhancedAIDashboardRoutes from "./routes/enhancedAIDashboard";
 import enhancedAIRoutes from "./routes/enhancedAI";
+import referralRoutes from "./routes/referralRoutes";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
