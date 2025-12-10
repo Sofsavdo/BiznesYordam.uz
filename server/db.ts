@@ -433,6 +433,20 @@ try {
         created_at INTEGER NOT NULL DEFAULT (unixepoch())
       );
       
+      CREATE TABLE IF NOT EXISTS inventory_items (
+        id TEXT PRIMARY KEY,
+        partner_id TEXT NOT NULL REFERENCES partners(id),
+        product_id TEXT REFERENCES products(id),
+        warehouse_id TEXT REFERENCES warehouses(id),
+        quantity INTEGER NOT NULL DEFAULT 0,
+        location TEXT,
+        batch_number TEXT,
+        expiry_date INTEGER,
+        notes TEXT,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        updated_at INTEGER
+      );
+      
       CREATE TABLE IF NOT EXISTS referrals (
         id TEXT PRIMARY KEY,
         referrer_partner_id TEXT NOT NULL REFERENCES partners(id),
