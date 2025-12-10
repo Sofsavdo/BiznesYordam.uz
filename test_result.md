@@ -163,11 +163,11 @@ backend:
 
   - task: "Create Product Endpoint"
     implemented: true
-    working: false
+    working: true
     file: "server/routes.ts"
-    stuck_count: 2
+    stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "testing"
@@ -175,6 +175,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "STILL FAILING. POST /api/products returns 400 'Mahsulot ma'lumotlari noto'g'ri' with validation error for partnerId field. The insertProductSchema in shared/schema.ts (lines 457-462) correctly omits partnerId, but validation is still failing. Similar to Partner Registration issue - schema fix not properly applied."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED! POST /api/products now returns 201 with created product. The endpoint correctly gets partnerId from authenticated session via requirePartnerWithData middleware. Product creation working properly. Note: barcode and weight columns were added to database during testing."
 
   - task: "Get Orders Endpoint"
     implemented: true
