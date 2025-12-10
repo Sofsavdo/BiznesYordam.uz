@@ -108,6 +108,48 @@ export function ReferralDashboard() {
         </Card>
       )}
 
+      {/* Referral Status Breakdown */}
+      <Card className="border-2 border-blue-200">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            Referral Holati
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <span className="font-medium">Aktiv va to'lov qilgan</span>
+            </div>
+            <span className="font-black text-green-600">{stats?.activeReferrals || 0}</span>
+          </div>
+          
+          <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+            <div className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-yellow-600" />
+              <span className="font-medium">Ro'yxatdan o'tgan, to'lov kutilmoqda</span>
+            </div>
+            <span className="font-black text-yellow-600">{stats?.registeredNotPaid || 0}</span>
+          </div>
+          
+          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="flex items-center gap-2">
+              <Share2 className="w-5 h-5 text-gray-600" />
+              <span className="font-medium">Taklif qilingan, aktivatsiya yo'q</span>
+            </div>
+            <span className="font-black text-gray-600">{stats?.invitedNotActivated || 0}</span>
+          </div>
+          
+          <div className="pt-3 border-t">
+            <p className="text-xs text-gray-500 italic">
+              💡 Bonus faqat hamkor 1+ oy to'lov qilgandan keyin hisoblanadi
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+
       <Card className="border-2">
         <CardHeader>
           <CardTitle>Promo Kod</CardTitle>
