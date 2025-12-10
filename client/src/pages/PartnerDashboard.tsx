@@ -32,11 +32,14 @@ import { apiRequest } from '@/lib/queryClient';
 import { useQueryClient } from '@tanstack/react-query';
 import { NEW_PRICING_TIERS, AI_MANAGER_PLANS } from '../../../NEW_PRICING_CONFIG';
 import { ChatSystem } from '@/components/ChatSystem';
+import { ReferralDashboard } from '@/components/ReferralDashboard';
+import { ViralShareButton } from '@/components/ViralShareButton';
+import { AchievementSystem } from '@/components/AchievementSystem';
 import {
   Package, TrendingUp, Settings, Crown, BarChart3, DollarSign,
   Target, Zap, CheckCircle, Clock, AlertTriangle, User, Building, CreditCard,
   Globe, Truck, Star, ArrowRight, Plus, Eye, Edit, Trash2, Download, Upload, RefreshCw,
-  FileSpreadsheet, TrendingDown, MessageCircle, Brain
+  FileSpreadsheet, TrendingDown, MessageCircle, Brain, Gift
 } from 'lucide-react';
 
 interface Product { id: string; name: string; category: string; description: string; price: string; costPrice: string; sku: string; barcode: string; weight: string; isActive: boolean; createdAt: string; }
