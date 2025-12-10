@@ -140,13 +140,16 @@ class ComprehensiveAPITester:
             "/api/products"
         )
         
+        import time
+        timestamp = int(time.time())
+        
         product_data = {
             "name": "Test Product After Fix",
             "category": "electronics",
             "price": 199.99,
             "description": "Test product after middleware fix",
             "costPrice": 100.00,
-            "sku": "TEST-FIX-001"
+            "sku": f"TEST-FIX-{timestamp}"
         }
         
         self.test_endpoint(
