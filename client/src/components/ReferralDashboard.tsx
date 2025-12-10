@@ -17,7 +17,15 @@ export function ReferralDashboard() {
     queryKey: ['referral-stats'],
     queryFn: async () => {
       const res = await fetch('/api/referrals/stats', { credentials: 'include' });
-      if (!res.ok) return { tier: 'bronze', totalReferrals: 0, totalEarned: 0, available: 0 };
+      if (!res.ok) return { 
+        tier: 'bronze', 
+        totalReferrals: 0, 
+        totalEarned: 0, 
+        available: 0,
+        invitedNotActivated: 0, // Taklif qilingan lekin aktivatsiya qilinmagan
+        registeredNotPaid: 0, // Ro'yxatdan o'tgan lekin to'lov qilmagan
+        activeReferrals: 0 // Aktiv va to'lov qilgan
+      };
       return res.json();
     },
   });
