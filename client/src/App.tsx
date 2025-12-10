@@ -19,6 +19,7 @@ import OnboardingWizard from "@/pages/OnboardingWizard";
 import AdminPanel from "@/pages/AdminPanel";
 import PartnerRegistration from "@/pages/PartnerRegistration";
 import InvestorPitch from "@/pages/InvestorPitch";
+import PlatformDemo from "@/pages/PlatformDemo";
 import NotFound from "@/pages/not-found";
 
 function Router() {
