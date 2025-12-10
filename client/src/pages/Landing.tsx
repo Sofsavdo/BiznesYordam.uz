@@ -45,12 +45,29 @@ export default function Landing() {
               <Button variant="outline" onClick={() => setLocation('/partner-registration')}>
                 Ro'yxatdan o'tish
               </Button>
-              <Button 
-                onClick={() => setLocation('/admin-login')}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-              >
-                Kirish
-              </Button>
+              <div className="relative group">
+                <Button 
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
+                  Kirish
+                </Button>
+                <div className="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50">
+                  <button
+                    onClick={() => setLocation('/')}
+                    className="block w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors"
+                  >
+                    <div className="font-semibold">Hamkor Kirish</div>
+                    <div className="text-xs text-gray-500">Partner Dashboard</div>
+                  </button>
+                  <button
+                    onClick={() => setLocation('/admin-login')}
+                    className="block w-full text-left px-4 py-3 hover:bg-purple-50 transition-colors border-t"
+                  >
+                    <div className="font-semibold">Admin Kirish</div>
+                    <div className="text-xs text-gray-500">Admin Panel</div>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
