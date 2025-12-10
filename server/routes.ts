@@ -948,6 +948,9 @@ export function registerRoutes(app: express.Application): Server {
   // Referral System Routes
   app.use("/api/referrals", requireAuth, referralRoutes);
 
+  // Chat System Routes
+  app.use("/api/chat", requirePartnerWithData, chatRoutes);
+
   // ==================== INVENTORY MANAGEMENT ROUTES ====================
 
   // Warehouse routes
