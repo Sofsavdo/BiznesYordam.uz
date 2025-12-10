@@ -12,7 +12,7 @@ import {
   Crown, Clock, Users, DollarSign, Rocket, Play, Eye,
   MessageCircle, AlertCircle, Bot, Image as ImageIcon,
   LineChart, PieChart, ShoppingCart, Box, Warehouse,
-  Infinity, Gauge, UserCheck, Lock, Award, Plus, X
+  Infinity, Gauge, UserCheck, Lock, Award, Plus, X, FileText
 } from 'lucide-react';
 
 export default function Landing() {
