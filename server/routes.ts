@@ -371,8 +371,9 @@ export function registerRoutes(app: express.Application): Server {
       const partner = await storage.createPartner({
         userId: user.id,
         businessName: validatedData.businessName,
-        businessCategory: validatedData.businessCategory,
-        monthlyRevenue: validatedData.monthlyRevenue,
+        businessCategory: validatedData.businessCategory || 'general',
+        monthlyRevenue: validatedData.monthlyRevenue || '0',
+        phone: validatedData.phone, // CRITICAL: phone required!
         notes: validatedData.notes || undefined
       });
 
