@@ -65,7 +65,7 @@ router.post('/messages', asyncHandler(async (req: Request, res: Response) => {
   }
 
   if (!content || content.trim().length === 0) {
-    return res.status(400).json({ message: 'Xabar bo\\'sh bo\\'lishi mumkin emas' });
+    return res.status(400).json({ message: "Xabar bo'sh bo'lishi mumkin emas" });
   }
 
   const message = {
