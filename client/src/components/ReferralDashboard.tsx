@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
-import { Gift, Copy, Share2, TrendingUp, DollarSign, Users } from 'lucide-react';
+import { Gift, Copy, Share2, TrendingUp, DollarSign, Users, CheckCircle, Clock } from 'lucide-react';
 
 export function ReferralDashboard() {
   const { toast } = useToast();
