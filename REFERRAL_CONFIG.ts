@@ -138,28 +138,14 @@ export const REFERRAL_CONFIG = {
 
 // HELPER FUNCTIONS
 
-export function calculateReferralBonus(
+// REFERRAL BONUS CALCULATION RULES
+// CRITICAL: Bonus faqat referred partner 1+ oy to'lov qilgandan keyin hisoblanadi!\n\nexport function calculateReferralBonus(
   platformProfit: number,
   contractType: '1_month' | '3_month' | '6_month',
   referrerTier: 'bronze' | 'silver' | 'gold',
-  monthNumber: number
-): number {
-  const contract = REFERRAL_CONFIG.contractBonuses[contractType];
-  const tier = REFERRAL_CONFIG.tiers[referrerTier];
-  
-  let baseRate = contract.rate;
-  
-  // For 1-month, use schedule
-  if (contractType === '1_month' && contract.schedule) {
-    const scheduleItem = contract.schedule.find(s => s.month === monthNumber);
-    baseRate = scheduleItem?.rate || 0;
-  }
-  
-  const baseBonus = platformProfit * baseRate;
-  const multipliedBonus = baseBonus * tier.multiplier;
-  
-  return multipliedBonus;
-}
+  monthNumber: number,
+  referredPartnerPaidMonths: number // YANGI: Necha oy to'lov qilgan
+): number {\n  // CRITICAL CHECK: Faqat 1+ oy to'lov qilgan bo'lsa bonus\n  if (referredPartnerPaidMonths < 1) {\n    return 0; // Hali to'lov qilmagan - bonus yo'q!\n  }\n  \n  const contract = REFERRAL_CONFIG.contractBonuses[contractType];\n  const tier = REFERRAL_CONFIG.tiers[referrerTier];\n  \n  let baseRate = contract.rate;\n  \n  // For 1-month, use schedule\n  if (contractType === '1_month' && contract.schedule) {\n    const scheduleItem = contract.schedule.find(s => s.month === monthNumber);\n    baseRate = scheduleItem?.rate || 0;\n  }\n  \n  const baseBonus = platformProfit * baseRate;\n  const multipliedBonus = baseBonus * tier.multiplier;\n  \n  return multipliedBonus;\n}
 
 export function getReferrerTier(totalReferrals: number): 'bronze' | 'silver' | 'gold' {
   if (totalReferrals >= 16) return 'gold';
