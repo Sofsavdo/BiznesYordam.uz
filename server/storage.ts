@@ -191,10 +191,19 @@ export async function createPartner(partnerData: {
 
 export async function getPartnerByUserId(userId: string): Promise<Partner | null> {
   try {
-    const [partner] = await db.select().from(partners).where(eq(partners.userId, userId));
+    console.log('🔍 Getting partner by userId:', userId);
+    const result = await db.select().from(partners).where(eq(partners.userId, userId));
+    console.log('📊 Query result:', result);
+    const partner = result[0];
+    if (partner) {
+      console.log('✅ Partner found:', partner.id, partner.businessName);
+    } else {
+      console.log('❌ No partner found for userId:', userId);
+    }
     return partner || null;
   } catch (error: any) {
-    console.error('Error getting partner by user ID:', error);
+    console.error('❌ ERROR getting partner by user ID:', error);
+    console.error('Error details:', error.message, error.stack);
     return null;
   }
 }
