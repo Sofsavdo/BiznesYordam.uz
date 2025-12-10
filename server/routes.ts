@@ -899,6 +899,9 @@ export function registerRoutes(app: express.Application): Server {
   // Trending Products Analytics routes
   app.use("/api/trending", requireAuth, trendingRoutes);
 
+  // Referral System Routes
+  app.use("/api/referrals", requireAuth, referralRoutes);
+
   // ==================== INVENTORY MANAGEMENT ROUTES ====================
 
   // Warehouse routes
