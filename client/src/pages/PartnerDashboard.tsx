@@ -208,7 +208,7 @@ export default function PartnerDashboard() {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-10 lg:grid-cols-12">
+            <TabsList className="grid w-full grid-cols-10 lg:grid-cols-13">
               <TabsTrigger value="overview" className="flex items-center gap-1">
                 <BarChart3 className="w-4 h-4" />
                 <span className="hidden sm:inline">Umumiy</span>
@@ -216,6 +216,10 @@ export default function PartnerDashboard() {
               <TabsTrigger value="ai-manager" className="flex items-center gap-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-blue-600">
                 <Zap className="w-4 h-4" />
                 <span className="hidden sm:inline">AI Manager</span>
+              </TabsTrigger>
+              <TabsTrigger value="referral" className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-blue-500 text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-blue-600">
+                <Gift className="w-4 h-4" />
+                <span className="hidden sm:inline">\ud83c\udf81 Referral</span>
               </TabsTrigger>
               <TabsTrigger value="marketplace" className="flex items-center gap-1">
                 <Globe className="w-4 h-4" />
