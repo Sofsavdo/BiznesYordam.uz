@@ -37,6 +37,7 @@ function Router() {
       <Route path="/remote-access" component={RemoteAccessDashboard} />
       <Route path="/admin-panel" component={AdminPanel} />
       <Route path="/investor-pitch" component={InvestorPitch} />
+      <Route path="/demo" component={PlatformDemo} />
       <Route component={NotFound} />
     </Switch>
   );
