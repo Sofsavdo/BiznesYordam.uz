@@ -143,9 +143,9 @@ class ComprehensiveAPITester:
         product_data = {
             "name": "Test Product After Fix",
             "category": "electronics",
-            "price": "199.99",
+            "price": 199.99,
             "description": "Test product after middleware fix",
-            "costPrice": "100.00",
+            "costPrice": 100.00,
             "sku": "TEST-FIX-001",
             "barcode": "1234567890123",
             "weight": "2.5"
