@@ -408,7 +408,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Partner routes
-  app.get("/api/partners/me", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/partners/me", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     console.log('🔍 GET /api/partners/me - User ID:', req.session?.user?.id);
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     console.log('📦 Partner found:', partner ? 'Yes' : 'No');
@@ -422,7 +422,7 @@ export function registerRoutes(app: express.Application): Server {
     res.json(partner);
   }));
 
-  app.put("/api/partners/me", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.put("/api/partners/me", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -445,7 +445,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Product routes
-  app.get("/api/products", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/products", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -458,7 +458,7 @@ export function registerRoutes(app: express.Application): Server {
     res.json(products);
   }));
 
-  app.post("/api/products", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.post("/api/products", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     try {
       const validatedData = insertProductSchema.parse(req.body);
       
@@ -504,7 +504,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Fulfillment request routes
-  app.get("/api/fulfillment-requests", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/fulfillment-requests", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     if (req.session!.user!.role === 'admin') {
       const requests = await storage.getAllFulfillmentRequests();
       res.json(requests);
@@ -522,7 +522,7 @@ export function registerRoutes(app: express.Application): Server {
     }
   }));
 
-  app.post("/api/fulfillment-requests", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.post("/api/fulfillment-requests", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     try {
       const validatedData = insertFulfillmentRequestSchema.parse(req.body);
       
@@ -657,7 +657,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Analytics routes
-  app.get("/api/analytics", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/analytics", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -671,7 +671,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Profit breakdown routes
-  app.get("/api/profit-breakdown", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/profit-breakdown", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -690,7 +690,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Trending products routes
-  app.get("/api/trending-products/:category/:market/:minScore", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/trending-products/:category/:market/:minScore", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const { category, market, minScore } = req.params;
     
     // Check tier access for trending products
@@ -759,7 +759,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Tier upgrade requests
-  app.post("/api/tier-upgrade-requests", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.post("/api/tier-upgrade-requests", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -859,7 +859,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // AI Services Toggle - Partner Request & Admin Approval
-  app.post("/api/partners/ai-toggle", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.post("/api/partners/ai-toggle", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ message: "Hamkor topilmadi", code: "PARTNER_NOT_FOUND" });
@@ -927,10 +927,10 @@ export function registerRoutes(app: express.Application): Server {
   app.use("/api/marketplace-integration", requireAuth, marketplaceIntegrationRoutes);
 
   // Subscription & Add-ons routes
-  app.use("/api/subscriptions", requirePartner, subscriptionRoutes);
+  app.use("/api/subscriptions", requirePartnerWithData, subscriptionRoutes);
 
   // Forecast & Business Intelligence routes
-  app.use("/api/forecast", requirePartner, forecastRoutes);
+  app.use("/api/forecast", requirePartnerWithData, forecastRoutes);
 
   // Broadcast & Notifications routes
   app.use("/api/broadcast", requireAuth, broadcastRoutes);
@@ -1061,7 +1061,7 @@ export function registerRoutes(app: express.Application): Server {
     }
   }));
 
-  app.post("/api/orders", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.post("/api/orders", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -1163,7 +1163,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Stock alerts routes
-  app.get("/api/stock-alerts", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/stock-alerts", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -1192,7 +1192,7 @@ export function registerRoutes(app: express.Application): Server {
   }));
 
   // Inventory statistics
-  app.get("/api/inventory/stats", requirePartner, asyncHandler(async (req: Request, res: Response) => {
+  app.get("/api/inventory/stats", requirePartnerWithData, asyncHandler(async (req: Request, res: Response) => {
     const partner = await storage.getPartnerByUserId(req.session!.user!.id);
     if (!partner) {
       return res.status(404).json({ 
@@ -1224,10 +1224,10 @@ export function registerRoutes(app: express.Application): Server {
 
   // ==================== ENHANCED AI ROUTES ====================
   // New unified AI system (cost-optimized, production-ready)
-  app.use("/api/ai", requirePartner, enhancedAIRoutes);
+  app.use("/api/ai", requirePartnerWithData, enhancedAIRoutes);
   
   // Legacy route (backward compatibility)
-  app.use("/api/enhanced-ai", requirePartner, enhancedAIDashboardRoutes);
+  app.use("/api/enhanced-ai", requirePartnerWithData, enhancedAIDashboardRoutes);
 
   // Error handling middleware
   app.use(handleValidationError);
