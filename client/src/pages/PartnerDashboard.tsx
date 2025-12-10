@@ -486,29 +486,97 @@ export default function PartnerDashboard() {
               </div>
             </TabsContent>
 
-            {/* Marketplace Integration Tab */}
-            <TabsContent value="marketplace">
-              <MarketplaceIntegrationManager isPartnerView={true} />
+            {/* Marketplace Tab with Sub-tabs */}
+            <TabsContent value="marketplace" className="space-y-6">
+              <Card className="border-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Globe className="w-6 h-6 text-blue-600" />
+                    Marketplace Boshqaruvi
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="integrations" className="space-y-4">
+                    <TabsList className="grid w-full grid-cols-4">
+                      <TabsTrigger value="integrations">Integratsiyalar</TabsTrigger>
+                      <TabsTrigger value="tracking">Kuzatish</TabsTrigger>
+                      <TabsTrigger value="orders">Buyurtmalar</TabsTrigger>
+                      <TabsTrigger value="analytics">Tahlil</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="integrations">
+                      <MarketplaceIntegrationManager isPartnerView={true} />
+                    </TabsContent>
+                    
+                    <TabsContent value="tracking">
+                      <InventoryTracker />
+                    </TabsContent>
+                    
+                    <TabsContent value="orders">
+                      <OrderManagement />
+                    </TabsContent>
+                    
+                    <TabsContent value="analytics">
+                      <ComprehensiveAnalytics data={analytics} />
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
             </TabsContent>
 
-            {/* YANGI: Inventory Tracker Tab */}
-            <TabsContent value="tracker">
-              <InventoryTracker />
-            </TabsContent>
-
-            {/* Inventory (Ombor) Tab */}
-            <TabsContent value="inventory">
-              <InventoryManagement />
-            </TabsContent>
-
-            {/* Orders (Buyurtmalar) Tab */}
-            <TabsContent value="orders">
-              <OrderManagement />
-            </TabsContent>
-
-            {/* Analytics (Tahlil) Tab */}
-            <TabsContent value="analytics">
-              <ComprehensiveAnalytics data={analytics} />
+            {/* Inventory (Ombor) Tab with Sub-tabs */}
+            <TabsContent value="inventory" className="space-y-6">
+              <Card className="border-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Package className="w-6 h-6 text-purple-600" />
+                    Ombor Boshqaruvi
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="stock" className="space-y-4">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="stock">Stock Boshqaruvi</TabsTrigger>
+                      <TabsTrigger value="products">Mahsulotlar</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="stock">
+                      <InventoryManagement />
+                    </TabsContent>
+                    
+                    <TabsContent value="products">
+                      {/* Products content here */}
+                      <div className="space-y-4">
+                        {products.slice(0, 10).map((product) => (
+                          <Card key={product.id} className="shadow-sm hover:shadow-md transition-shadow">
+                            <CardContent className="p-4">
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1">
+                                  <h4 className="font-semibold text-lg">{product.name}</h4>
+                                  <div className="grid grid-cols-3 gap-4 mt-2 text-sm">
+                                    <div>
+                                      <p className="text-gray-600">SKU</p>
+                                      <p className="font-medium">{product.sku}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-600">Kategoriya</p>
+                                      <p className="font-medium">{product.category}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-600">Narx</p>
+                                      <p className="font-medium text-green-600">{formatCurrency(parseFloat(product.price))}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* Products (Mahsulotlar) Tab */}
