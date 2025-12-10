@@ -918,7 +918,7 @@ export function registerRoutes(app: express.Application): Server {
   // ==================== NEW MODULE ROUTES ====================
 
   // Inventory Tracking routes
-  app.use("/api/inventory", requirePartner, inventoryRoutes);
+  app.use("/api/inventory", requirePartnerWithData, inventoryRoutes);
 
   // Investor routes
   app.use("/api/investor", requireAuth, investorRoutes);
