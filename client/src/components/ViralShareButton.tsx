@@ -49,7 +49,10 @@ export function ViralShareButton({ data }: { data: ShareData }) {
           <div className="space-y-4">
             <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border-2 border-green-200">
               <p className="text-sm font-medium text-gray-700 mb-2">Sizning natijangiz:</p>
-              <p className="text-lg font-bold text-gray-900">💰 {data.earnings}M so'm daromad</p>
+              <p className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <DollarSign className="w-5 h-5 text-green-600" />
+                {data.earnings}M so'm daromad
+              </p>
               <p className="text-lg font-bold text-green-600">📈 {data.growthPercent}% o'sish</p>
             </div>
 
