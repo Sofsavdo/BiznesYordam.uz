@@ -146,9 +146,7 @@ class ComprehensiveAPITester:
             "price": 199.99,
             "description": "Test product after middleware fix",
             "costPrice": 100.00,
-            "sku": "TEST-FIX-001",
-            "barcode": "1234567890123",
-            "weight": "2.5"
+            "sku": "TEST-FIX-001"
         }
         
         self.test_endpoint(
