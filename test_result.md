@@ -245,6 +245,102 @@ backend:
         agent: "testing"
         comment: "STILL FAILING. POST /api/partners/ai-toggle returns 404 'Hamkor topilmadi'. Same root cause - storage.getPartnerByUserId() not working."
 
+  - task: "Chat System Endpoints"
+    implemented: true
+    working: true
+    file: "server/routes/chatRoutes.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ ALL CHAT ENDPOINTS WORKING! GET /api/chat/room returns 200 with chat room data, GET /api/chat/messages returns 200 with messages array, POST /api/chat/messages returns 201 with created message. Chat system fully functional with requirePartnerWithData middleware."
+
+  - task: "Inventory Stats Endpoint"
+    implemented: true
+    working: true
+    file: "server/routes.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING! GET /api/inventory/stats returns 200 with inventory statistics including totalProducts, totalStock, totalValue, inStockProducts, and lowStockProducts. Middleware working correctly."
+
+  - task: "Inventory Items Endpoint"
+    implemented: true
+    working: false
+    file: "server/controllers/inventoryController.ts"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "GET /api/inventory/items returns 500 'no such table: inventory_items'. The inventory_items table doesn't exist in the database. This is a database schema issue - the table needs to be created via migration. Not a critical endpoint for core partner functionality."
+
+  - task: "Referral Stats Endpoint"
+    implemented: true
+    working: true
+    file: "server/routes/referralRoutes.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING! GET /api/referrals/stats returns 200 with referral statistics including tier, tierName, tierIcon, totalReferrals, activeReferrals, and other metrics. Middleware working correctly."
+
+  - task: "Fulfillment Requests Endpoint"
+    implemented: true
+    working: true
+    file: "server/routes.ts"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING! GET /api/fulfillment-requests returns 200 with fulfillment requests array. Middleware working correctly."
+
+  - task: "Profit Breakdown Endpoint"
+    implemented: true
+    working: true
+    file: "server/routes.ts"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING! GET /api/profit-breakdown returns 200 with profit breakdown data. Middleware working correctly."
+
+  - task: "Stock Alerts Endpoint"
+    implemented: true
+    working: true
+    file: "server/routes.ts"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING! GET /api/stock-alerts returns 200 with stock alerts array. Middleware working correctly."
+
+  - task: "Subscriptions Current Endpoint"
+    implemented: true
+    working: true
+    file: "server/routes/subscriptionRoutes.ts"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING! GET /api/subscriptions/current returns 200 with current subscription data. Middleware working correctly."
+
 frontend:
   - task: "Frontend Testing"
     implemented: true
