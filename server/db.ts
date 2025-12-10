@@ -62,14 +62,17 @@ try {
         partner_id TEXT NOT NULL REFERENCES partners(id),
         name TEXT NOT NULL,
         sku TEXT UNIQUE,
+        barcode TEXT,
         description TEXT,
         category TEXT,
         brand TEXT,
         price REAL NOT NULL,
         cost_price REAL,
+        weight TEXT,
         stock_quantity INTEGER DEFAULT 0,
         low_stock_threshold INTEGER DEFAULT 10,
         optimized_title TEXT,
+        is_active INTEGER DEFAULT 1,
         created_at INTEGER NOT NULL DEFAULT (unixepoch()),
         updated_at INTEGER
       );
