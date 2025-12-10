@@ -356,6 +356,30 @@ export default function PartnerDashboard() {
               )}
             </TabsContent>
 
+            {/* REFERRAL TAB - NEW! */}
+            <TabsContent value="referral" className="space-y-6">
+              <ReferralDashboard />
+              <AchievementSystem />
+              
+              {/* Viral Share Section */}
+              <Card className="border-2 border-green-300 bg-gradient-to-br from-green-50 to-blue-50">
+                <CardContent className="p-8 text-center">
+                  <h3 className="text-2xl font-bold mb-4">\ud83d\udcb0 Muvaffaqiyatingizni Ulashing!</h3>
+                  <p className="text-gray-600 mb-6">
+                    Har bir ulashish - yangi hamkor - sizga $14-21/oy bonus!
+                  </p>
+                  <ViralShareButton 
+                    data={{
+                      earnings: 24,
+                      growthPercent: 180,
+                      partnerName: user?.username || 'partner'
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+
             <TabsContent value="overview" className="space-y-6">
               {/* Partner Tier / Plan Info Card */}
               {partner && (() => {
