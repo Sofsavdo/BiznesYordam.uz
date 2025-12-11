@@ -88,7 +88,7 @@ export function LoginForm({ onSuccess, isAdmin = false }: LoginFormProps) {
             <AlertDescription className="text-sm text-green-800">
               <strong>Admin Hisob:</strong><br />
               Username: <code className="bg-green-100 px-2 py-1 rounded">admin</code><br />
-              Parol: <code className="bg-green-100 px-2 py-1 rounded">Admin2024!</code>
+              Parol: <code className="bg-green-100 px-2 py-1 rounded">admin123</code>
             </AlertDescription>
           </Alert>
         )}
