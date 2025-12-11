@@ -12,12 +12,13 @@ import {
   Crown, Clock, Users, DollarSign, Rocket, Play, Eye,
   MessageCircle, AlertCircle, Bot, Image as ImageIcon,
   LineChart, PieChart, ShoppingCart, Box, Warehouse,
-  Infinity, Gauge, UserCheck, Lock, Award, Plus, X, FileText
+  Infinity, Gauge, UserCheck, Lock, Award, Plus, X, FileText, ChevronDown
 } from 'lucide-react';
 
 export default function Landing() {
   const [, setLocation] = useLocation();
   const [selectedModel, setSelectedModel] = useState<'saas' | 'fulfillment'>('fulfillment');
+  const [showLoginMenu, setShowLoginMenu] = useState(false);
 
   return (
     <div className="min-h-screen">
