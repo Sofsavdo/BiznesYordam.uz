@@ -458,9 +458,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Inventory Items Endpoint (missing database table)"
-    - "AI Manager endpoints (admin-only, expected 403 for partners)"
-  stuck_tasks: []
+    - "Partner Login (CRITICAL - 401 authentication failure)"
+    - "Admin Login (CRITICAL - 401 authentication failure)"
+    - "Partner Dashboard (blocked by login)"
+    - "Admin Panel (blocked by login)"
+  stuck_tasks:
+    - "Authentication system broken on production"
   test_all: false
   test_priority: "critical_first"
 
