@@ -21,10 +21,9 @@ RUN npm prune --production
 
 # Set environment
 ENV NODE_ENV=production
-ENV PORT=5000
 
-# Expose port
-EXPOSE 5000
+# Railway will set PORT dynamically
+# EXPOSE will be set by Railway
 
 # Start application
 CMD ["npm", "start"]
