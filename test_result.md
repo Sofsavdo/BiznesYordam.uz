@@ -342,7 +342,103 @@ backend:
         comment: "✅ WORKING! GET /api/subscriptions/current returns 200 with current subscription data. Middleware working correctly."
 
 frontend:
-  - task: "Frontend Testing"
+  - task: "Landing Page"
+    implemented: true
+    working: true
+    file: "/app/client/src/pages/Landing.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Landing page fully functional. Logo visible, Kirish dropdown works with Hamkor/Admin options, Registration button navigates correctly, Demo button works, Model selector visible. All navigation elements working properly."
+
+  - task: "Partner Login"
+    implemented: true
+    working: false
+    file: "/app/client/src/pages/Login.tsx, /app/client/src/components/LoginForm.tsx"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL: Partner login FAILING on production. Login form is accessible and properly implemented with data-testid attributes. However, when attempting to login with credentials shown in UI (testpartner/Partner2024!), the backend returns 401 error with message 'Username yoki parol noto'g'ri' (Username or password incorrect). API endpoint /api/auth/login is returning 401. Either: 1) Test credentials in UI are incorrect/outdated, 2) Backend authentication is broken on production, 3) Database doesn't have these users, or 4) Password hashing mismatch between frontend and backend."
+
+  - task: "Admin Login"
+    implemented: true
+    working: false
+    file: "/app/client/src/pages/AdminLogin.tsx, /app/client/src/components/LoginForm.tsx"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL: Admin login FAILING on production. Login form is accessible and properly implemented. When attempting to login with credentials shown in UI (admin/Admin2024!), the backend returns 401 error with message 'Username yoki parol noto'g'ri'. API endpoint /api/auth/login is returning 401. Same root cause as partner login - authentication is broken on production."
+
+  - task: "Partner Registration"
+    implemented: true
+    working: true
+    file: "/app/client/src/pages/PartnerRegistration.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Registration page loads correctly. Form has 8 input fields (6 text/email/tel, 1 password, 1 checkbox) and submit button. All form elements present. Cannot test submission without fixing backend registration endpoint first."
+
+  - task: "Demo Page"
+    implemented: true
+    working: true
+    file: "/app/client/src/pages/PlatformDemo.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Demo page fully functional. Shows dashboard preview with real-time stats (24.7M revenue, 8.9M profit, 247 SKUs, 3 marketplaces), AI Manager section with tasks, and Trend Hunter with bestseller products. All 6 demo indicators present (Dashboard, Demo, Platform, Stats, AI Manager, Trend)."
+
+  - task: "Partner Dashboard"
+    implemented: true
+    working: "NA"
+    file: "/app/client/src/pages/PartnerDashboard.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "⚠️ CANNOT TEST: Partner dashboard requires successful authentication. Since partner login is broken (401 errors), cannot access dashboard to test tabs (Overview, AI Manager, Referral, Marketplace, Ombor, Foyda, Trendlar, Support). Must fix authentication first."
+
+  - task: "Admin Panel"
+    implemented: true
+    working: "NA"
+    file: "/app/client/src/pages/AdminPanel.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "⚠️ CANNOT TEST: Admin panel requires successful admin authentication. Since admin login is broken (401 errors), cannot access admin panel to test tabs (Overview, AI Manager, Marketplace, Analytics, Partners, Requests, Tiers, Trends, Reports, Settings, Support). Must fix authentication first."
+
+  - task: "Referral System"
+    implemented: true
+    working: "NA"
+    file: "/app/client/src/pages/PartnerDashboard.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "⚠️ CANNOT TEST: Referral system is part of partner dashboard which requires authentication. Cannot test promo code generation, stats, tier display, or achievements without successful login."
+
+  - task: "Chat System"
     implemented: true
     working: "NA"
     file: "N/A"
@@ -352,7 +448,7 @@ frontend:
     status_history:
       - working: "NA"
         agent: "testing"
-        comment: "Frontend testing not performed as per testing agent scope - backend only"
+        comment: "⚠️ NOT TESTED: Chat system uses WebSocket and cannot be fully tested due to system limitations. Requires manual verification. Also requires authentication to access."
 
 metadata:
   created_by: "testing_agent"
