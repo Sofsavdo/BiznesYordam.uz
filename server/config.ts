@@ -17,11 +17,11 @@ const envSchema = z.object({
   HOST: z.string().default('0.0.0.0'),
   
   // Session
-  // Development uchun xavfsiz uzun default, productionda albatta override qilinishi kerak
+  // Development uchun default, production da Railway Variables orqali set qiling
   SESSION_SECRET: z
     .string()
     .min(32, 'SESSION_SECRET must be at least 32 characters')
-    .default('dev-session-secret-CHANGE-ME-1234567890'),
+    .default('sellercloudx-default-session-secret-key-production-2024'),
   
   // CORS
   FRONTEND_ORIGIN: z.string().optional(),
