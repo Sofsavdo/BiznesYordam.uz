@@ -420,7 +420,7 @@ export default function AdminPanel() {
 
           {/* Main Content */}
           <Tabs value={selectedTab} onValueChange={setSelectedTab} defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-11">
+            <TabsList className="grid w-full grid-cols-9">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Umumiy
@@ -440,21 +440,13 @@ export default function AdminPanel() {
                 <Users className="w-4 h-4" />
                 Hamkorlar
               </TabsTrigger>
-              <TabsTrigger value="requests" className="flex items-center gap-2">
-                <Package className="w-4 h-4" />
-                So'rovlar
-              </TabsTrigger>
-              <TabsTrigger value="tiers" className="flex items-center gap-2">
-                <Crown className="w-4 h-4" />
-                Tariflar
-              </TabsTrigger>
               <TabsTrigger value="trends" className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
                 Trendlar
               </TabsTrigger>
-              <TabsTrigger value="reports" className="flex items-center gap-2">
-                <Download className="w-4 h-4" />
-                Hisobotlar
+              <TabsTrigger value="remote" className="flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                Remote Access
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="w-4 h-4" />
@@ -712,9 +704,46 @@ export default function AdminPanel() {
               <AdminMarketplaceIntegration />
             </TabsContent>
 
-            {/* Partners Tab - YANGI MUKAMMAL */}
+            {/* Partners Tab - YANGI MUKAMMAL with Mini Menu */}
             <TabsContent value="partners" className="space-y-6">
-              <AdminPartnersManagement />
+              <Tabs defaultValue="list" className="space-y-4">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="list">
+                    <Users className="w-4 h-4 mr-2" />
+                    Hamkorlar Ro'yxati
+                  </TabsTrigger>
+                  <TabsTrigger value="tiers">
+                    <Crown className="w-4 h-4 mr-2" />
+                    Tariflar
+                  </TabsTrigger>
+                  <TabsTrigger value="requests">
+                    <Package className="w-4 h-4 mr-2" />
+                    So'rovlar
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="list">
+                  <AdminPartnersManagement />
+                </TabsContent>
+
+                <TabsContent value="tiers">
+                  {/* Tiers content will be moved here */}
+                  <div className="text-center py-8">
+                    <Crown className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
+                    <h3 className="text-xl font-bold mb-2">Tariflar Bo'limi</h3>
+                    <p className="text-muted-foreground">Tariflar boshqaruvi bu yerda</p>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="requests">
+                  {/* Requests content will be moved here */}
+                  <div className="text-center py-8">
+                    <Package className="w-12 h-12 mx-auto mb-4 text-blue-500" />
+                    <h3 className="text-xl font-bold mb-2">So'rovlar Bo'limi</h3>
+                    <p className="text-muted-foreground">Fulfillment so'rovlari bu yerda</p>
+                  </div>
+                </TabsContent>
+              </Tabs>
             </TabsContent>
 
             {/* Fulfillment Requests Tab */}
@@ -965,56 +994,69 @@ export default function AdminPanel() {
               </Card>
             </TabsContent>
 
-            {/* Reports Tab */}
-            <TabsContent value="reports" className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card className="shadow-elegant">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Download className="w-5 h-5" />
-                      Ma'lumotlarni Eksport Qilish
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold mb-2">Hamkorlar Hisoboti</h3>
-                      <DataExportButton 
-                        data={partners} 
-                        filename="hamkorlar-hisoboti"
-                        type="partners"
-                      />
+            {/* Remote Access Tab - NEW */}
+            <TabsContent value="remote" className="space-y-6">
+              <Card className="shadow-elegant border-2 border-blue-300">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50">
+                  <CardTitle className="flex items-center gap-2 text-2xl">
+                    <Shield className="w-6 h-6 text-blue-600" />
+                    Remote Access - Masofadan Boshqarish
+                  </CardTitle>
+                  <p className="text-muted-foreground">
+                    Hamkorlarning kompyuterlariga xavfsiz ulanish
+                  </p>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold flex items-center gap-2">
+                        <Target className="w-5 h-5 text-green-600" />
+                        AnyDesk Ulanish
+                      </h3>
+                      <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <p className="text-sm text-gray-700 mb-3">
+                          Hamkorning AnyDesk ID'sini kiriting:
+                        </p>
+                        <Input 
+                          placeholder="123 456 789" 
+                          className="mb-3"
+                        />
+                        <Button className="w-full bg-green-600 hover:bg-green-700">
+                          <Shield className="w-4 h-4 mr-2" />
+                          Ulanish
+                        </Button>
+                      </div>
+                      <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <h4 className="font-semibold mb-2">Faol Ulanishlar</h4>
+                        <p className="text-sm text-gray-600">Hozirda faol ulanish yo'q</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">So'rovlar Hisoboti</h3>
-                      <DataExportButton 
-                        data={fulfillmentRequests} 
-                        filename="sorovlar-hisoboti"
-                        type="requests"
-                      />
+                    
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold flex items-center gap-2">
+                        <Users className="w-5 h-5 text-purple-600" />
+                        Hamkorlar Ro'yxati
+                      </h3>
+                      <div className="space-y-2 max-h-96 overflow-y-auto">
+                        {partners.slice(0, 5).map((partner) => (
+                          <div key={partner.id} className="p-3 bg-white rounded-lg border hover:border-blue-300 transition-colors">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="font-semibold">{partner.businessName}</p>
+                                <p className="text-xs text-gray-500">{partner.userData?.email}</p>
+                              </div>
+                              <Button size="sm" variant="outline">
+                                <Shield className="w-4 h-4 mr-1" />
+                                Ulanish
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">Tarif So'rovlari Hisoboti</h3>
-                      <DataExportButton 
-                        data={tierUpgradeRequests} 
-                        filename="tarif-sorovlari"
-                        type="tier-requests"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="shadow-elegant">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Clock className="w-5 h-5" />
-                      Rejalashtirilgan Hisobotlar
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ScheduledReports />
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* Settings Tab */}

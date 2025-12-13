@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Language = 'uz' | 'ru';
+export type Language = 'uz' | 'ru' | 'en';
 
 interface LanguageContextType {
   language: Language;
@@ -182,13 +182,100 @@ const translationsRu = {
   'tier.netProfit': 'От вашей чистой прибыли'
 };
 
+// English translations
+const translationsEn = {
+  // Navigation
+  'nav.home': 'Home',
+  'nav.services': 'Services',
+  'nav.calculator': 'Calculator',
+  'nav.pricing': 'Pricing',
+  'nav.login': 'Login',
+  'nav.register': 'Register',
+  'nav.dashboard': 'Dashboard',
+  'nav.admin': 'Admin',
+  'nav.logout': 'Logout',
+  'nav.hello': 'Hello',
+
+  // Landing Page
+  'hero.title': 'Marketplace Fulfillment Platform',
+  'hero.subtitle': 'We simplify selling on Uzum, Wildberries, Yandex Market and other marketplaces. We receive, prepare, deliver and manage all processes.',
+  'hero.features.title': 'Premium Features',
+  'hero.button.partner': 'Become a Partner',
+  'hero.button.register': 'Register',
+
+  // Pricing
+  'pricing.title': 'Pricing Plans',
+  'pricing.subtitle': 'Choose a professional solution for your business',
+  'pricing.tier.starter': 'Starter Pro',
+  'pricing.tier.business': 'Business Standard',
+  'pricing.tier.professional': 'Professional Plus',
+  'pricing.tier.enterprise': 'Enterprise Elite',
+  'pricing.monthly': 'Monthly payment',
+  'pricing.commission': 'commission',
+  'pricing.custom': 'By agreement',
+  'pricing.choose': 'Choose',
+  'pricing.recommended': 'Recommended',
+
+  // Calculator
+  'calc.title': 'Fulfillment Calculator',
+  'calc.subtitle': 'Professional calculation of logistics and fulfillment costs',
+
+  // Common
+  'common.monthly': 'per month',
+  'common.som': 'UZS',
+  'common.secure': '100% Secure',
+  'common.partners': '500+ Partners',
+  
+  // Features
+  'features.title': 'SellerCloudX Platform Features',
+  'features.subtitle': 'The most powerful set of tools for professional partners',
+  
+  // Buttons
+  'hero.button.telegram': 'Telegram Channel',
+
+  // Dashboard
+  'dashboard.analytics': 'Analytics',
+  'dashboard.requests': 'Requests',
+  'dashboard.products': 'Products',
+  'dashboard.logout': 'Logout',
+
+  // Forms
+  'form.firstName': 'First Name',
+  'form.lastName': 'Last Name',
+  'form.email': 'Email',
+  'form.phone': 'Phone',
+  'form.password': 'Password',
+  'form.submit': 'Submit',
+  'form.login': 'Login',
+  'form.register': 'Register',
+
+  // Currency
+  'currency.som': 'UZS',
+  'currency.profit': 'Profit',
+  'currency.price': 'Price',
+  'currency.cost': 'Purchase price',
+  'currency.sale': 'Sale price',
+  
+  // Tier Info
+  'tier.payment': 'Payment Structure',
+  'tier.monthly': 'Monthly Subscription',
+  'tier.profitShare': 'Profit Share',
+  'tier.services': 'Services',
+  'tier.revenue': 'Recommended turnover',
+  'tier.upgrade': 'Upgrade to higher tier',
+  'tier.noProfit': 'If no profit, pay only subscription!',
+  'tier.fromProfit': 'from profit',
+  'tier.fixed': 'Fixed monthly payment',
+  'tier.netProfit': 'From your net profit'
+};
+
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Get saved language from localStorage or default to 'uz'
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('language');
-    return (saved === 'uz' || saved === 'ru') ? saved : 'uz';
+    return (saved === 'uz' || saved === 'ru' || saved === 'en') ? saved : 'uz';
   });
 
   // Save to localStorage when language changes
@@ -201,7 +288,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   const t = (key: string): string => {
-    const translations = language === 'uz' ? translationsUz : translationsRu;
+    const translations = language === 'uz' ? translationsUz : language === 'ru' ? translationsRu : translationsEn;
     return translations[key as keyof typeof translations] || key;
   };
 
