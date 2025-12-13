@@ -3,7 +3,15 @@
 
 import express, { Request, Response } from 'express';
 import { autonomousProductManager } from '../services/autonomousProductManager';
-import { marketplaceManager } from '../marketplace/manager';
+// Lazy load marketplace manager to avoid circular dependencies
+let marketplaceManager: any = null;
+async function getMarketplaceManager() {
+  if (!marketplaceManager) {
+    const module = await import('../marketplace/manager');
+    marketplaceManager = module.marketplaceManager;
+  }
+  return marketplaceManager;
+}
 
 const router = express.Router();
 
@@ -234,7 +242,8 @@ router.get('/marketplace-stats', async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const stats = await marketplaceManager.getCombinedStats(partnerId);
+    const manager = await getMarketplaceManager();
+    const stats = await manager.getCombinedStats(partnerId);
 
     res.json({
       success: true,

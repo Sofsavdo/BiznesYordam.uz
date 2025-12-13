@@ -31,7 +31,7 @@
     "seed": "cross-env NODE_ENV=development tsx server/seedData.ts",
     "deploy": "npm run build && npm start",
     "build:client": "npx vite build --config vite.config.ts",
-    "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist --keep-names --target=node20",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "test": "cross-env NODE_ENV=test vitest run --dir server/__tests__ --reporter=verbose",

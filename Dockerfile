@@ -7,23 +7,26 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production=false
+# Install ALL dependencies (including dev) for build
+RUN npm ci
 
 # Copy application code
 COPY . .
 
-# Build application
+# Build application (needs dev dependencies)
 RUN npm run build
 
-# Remove dev dependencies
-RUN npm prune --production
+# Verify build output
+RUN ls -la dist/ && ls -la dist/public/
+
+# DON'T prune - keep all dependencies for production
+# Some "dev" dependencies are needed at runtime
 
 # Set environment
 ENV NODE_ENV=production
 
 # Railway will set PORT dynamically
-# EXPOSE will be set by Railway
+EXPOSE 5000
 
 # Start application
 CMD ["npm", "start"]

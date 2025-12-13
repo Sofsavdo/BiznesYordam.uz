@@ -1,4 +1,5 @@
-import { MarketplaceIntegration, MarketplaceCredentials, MarketplaceProduct, MarketplaceOrder, MarketplaceStats } from './index';
+import type { MarketplaceCredentials, MarketplaceProduct, MarketplaceOrder, MarketplaceStats } from './index';
+import { MarketplaceIntegration } from './index';
 
 /**
  * Wildberries API Integration
