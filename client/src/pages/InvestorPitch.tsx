@@ -38,7 +38,7 @@ export default function InvestorPitch() {
             </div>
             
             <h1 className="text-8xl font-black text-white mb-6">
-              Biznes<span className="text-blue-400">Yordam</span>
+              Seller<span className="text-blue-400">Cloud</span><span className="text-green-400">X</span>
             </h1>
             
             <p className="text-4xl text-blue-300 font-bold mb-4">
@@ -543,6 +543,248 @@ export default function InvestorPitch() {
         </div>
       ),
     },
+
+    // SLIDE 8: RAQOBAT
+    {
+      id: 'competition',
+      content: (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-orange-900 via-slate-900 to-red-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-7xl font-black text-orange-400 mb-4">Raqobat</h2>
+              <p className="text-3xl text-gray-300">Biz 2-in-1: Fulfillment + AI SaaS</p>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-lg">
+                <thead>
+                  <tr className="border-b-2 border-white/20">
+                    <th className="text-left p-4 text-white"></th>
+                    <th className="text-center p-4 text-red-400">Oddiy Fulfillment</th>
+                    <th className="text-center p-4 text-red-400">Oddiy SaaS</th>
+                    <th className="text-center p-4 text-green-400">SellerCloudX</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-300">
+                  <tr className="border-b border-white/10">
+                    <td className="p-4 font-semibold text-white">Xizmat</td>
+                    <td className="p-4 text-center">Faqat ombor</td>
+                    <td className="p-4 text-center">Faqat dastur</td>
+                    <td className="p-4 text-center text-green-400 font-bold">Fulfillment + AI SaaS</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-4 font-semibold text-white">Xarajat</td>
+                    <td className="p-4 text-center text-red-400">35-57M so'm/oy</td>
+                    <td className="p-4 text-center">$99-299/oy</td>
+                    <td className="p-4 text-center text-green-400 font-bold">3-8M so'm/oy (70% tejash!)</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-4 font-semibold text-white">Model</td>
+                    <td className="p-4 text-center">Yuqori xarajat</td>
+                    <td className="p-4 text-center">Xalqaro narxlar</td>
+                    <td className="p-4 text-center text-green-400 font-bold">Profit-share (past risk)</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-4 font-semibold text-white">AI</td>
+                    <td className="p-4 text-center text-red-400">Yo'q</td>
+                    <td className="p-4 text-center text-red-400">Yo'q</td>
+                    <td className="p-4 text-center text-green-400 font-bold">24/7 AI Manager</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="p-4 font-semibold text-white">Marketplace</td>
+                    <td className="p-4 text-center">-</td>
+                    <td className="p-4 text-center text-red-400">Integratsiya muammo</td>
+                    <td className="p-4 text-center text-green-400 font-bold">4 marketplace parallel</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 font-semibold text-white">Lokal</td>
+                    <td className="p-4 text-center text-red-400">Yo'q</td>
+                    <td className="p-4 text-center text-red-400">Yo'q</td>
+                    <td className="p-4 text-center text-green-400 font-bold">O'zbek va Markaziy Osiyo</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // SLIDE 9: TRACTION
+    {
+      id: 'traction',
+      content: (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-slate-900 to-pink-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-7xl font-black text-purple-400 mb-4">Traction</h2>
+              <p className="text-3xl text-gray-300">Platform 100% tayyor, mijozlar bilan muzokaralar</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-8">
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Platform Tayyor</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-xl">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    <span className="text-lg text-white">To'liq ishlab chiqilgan</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-xl">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    <span className="text-lg text-white">API integratsiyalar tayyor</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-xl">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    <span className="text-lg text-white">AI engine ishlab chiqilgan</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-xl">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    <span className="text-lg text-white">Backend va frontend tayyor</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-xl">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    <span className="text-lg text-white">Ishga tushirishga tayyor</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Mijozlar</h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-blue-500/10 rounded-xl">
+                    <div className="text-2xl font-bold text-blue-400 mb-2">Pilot Mijozlar</div>
+                    <p className="text-lg text-gray-300">Muzokaralar jarayonida</p>
+                  </div>
+                  <div className="p-4 bg-purple-500/10 rounded-xl">
+                    <div className="text-2xl font-bold text-purple-400 mb-2">2+ LOI</div>
+                    <p className="text-lg text-gray-300">Letter of Intent imzolangan</p>
+                  </div>
+                  <div className="p-4 bg-green-500/10 rounded-xl">
+                    <div className="text-2xl font-bold text-green-400 mb-2">Birinchi 3 oy</div>
+                    <p className="text-lg text-gray-300">10+ hamkor maqsadi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-6 text-center">
+              <p className="text-3xl font-black text-white">
+                Biz g'oya bosqichida emasmiz — biz ishga tayyor mahsulotmiz!
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // SLIDE 10: ROADMAP
+    {
+      id: 'roadmap',
+      content: (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-green-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-7xl font-black text-blue-400 mb-4">Roadmap</h2>
+              <p className="text-3xl text-gray-300">O'zbekiston → Regional kengayish</p>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-blue-600/20 to-blue-800/20 backdrop-blur-lg rounded-3xl p-6 border border-blue-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-blue-400">Q1-Q2</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">2025: Launch (O'zbekiston)</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">10-15</div>
+                        <div>Premium fulfillment</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">100-200</div>
+                        <div>SaaS mijoz</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">Break-even</div>
+                        <div>3-4 oy</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-purple-600/20 to-purple-800/20 backdrop-blur-lg rounded-3xl p-6 border border-purple-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-purple-400">Q3-Q4</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">2025: Scale (O'zbekiston)</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">20-30</div>
+                        <div>Premium hamkor</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">300-400</div>
+                        <div>SaaS mijoz</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">Jamoa</div>
+                        <div>12-15 kishi</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-green-600/20 to-green-800/20 backdrop-blur-lg rounded-3xl p-6 border border-green-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-green-400">2026</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">Regional Expansion (RU/KZ)</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">Faqat SaaS</div>
+                        <div>Premium yo'q</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">800-1,600</div>
+                        <div>SaaS (RU+KZ)</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">Lokal</div>
+                        <div>Partnyorlar</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 backdrop-blur-lg rounded-3xl p-6 border border-yellow-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-yellow-400">2027</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">Full Regional (AZ/TR/KG)</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">2,500-4,500</div>
+                        <div>Jami SaaS</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">45-60</div>
+                        <div>Premium (UZ)</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">Series A</div>
+                        <div>Tayyor</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
   ];
 
   const nextSlide = () => {
@@ -579,7 +821,7 @@ export default function InvestorPitch() {
               <Lock className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-black text-white mb-2">
-              BiznesYordam
+              SellerCloudX
             </h1>
             <div className="inline-block px-4 py-1 bg-green-500/20 border border-green-500/50 rounded-full text-sm font-bold text-green-400 mb-4">
               MAXFIY INVESTOR TAQDIMOTI
