@@ -3,6 +3,7 @@
 
 import { storage } from '../storage';
 import { aiManagerService } from './aiManagerService';
+import { openaiService } from './openaiService';
 import { nanoid } from 'nanoid';
 
 export interface MinimalProductInput {
@@ -107,72 +108,129 @@ class AutonomousAIManager {
 
   // Step 1: Analyze product using AI
   private async analyzeProduct(input: MinimalProductInput): Promise<any> {
-    // Use existing AI Manager service
-    const analysis = {
-      category: this.detectCategory(input.name, input.description),
-      marketSuitability: {
-        wildberries: 90,
-        uzum: 85,
-        ozon: 88
-      },
-      riskLevel: 'low',
-      confidence: 92,
-      keywords: this.extractKeywords(input.name, input.description)
-    };
-
-    return analysis;
+    // Use real GPT-4 if available, fallback to simple detection
+    if (openaiService.isEnabled()) {
+      console.log('🤖 Using GPT-4 for product analysis');
+      const analysis = await openaiService.analyzeProduct(
+        input.name,
+        input.description,
+        input.image
+      );
+      return analysis;
+    } else {
+      console.log('⚠️  Using fallback product analysis');
+      const analysis = {
+        category: this.detectCategory(input.name, input.description),
+        subcategory: 'General',
+        marketSuitability: {
+          wildberries: 90,
+          uzum: 85,
+          ozon: 88,
+          trendyol: 80
+        },
+        riskLevel: 'low',
+        confidence: 75,
+        keywords: this.extractKeywords(input.name, input.description),
+        targetAudience: 'General consumers',
+        suggestedPrice: {
+          min: input.costPrice * 1.5,
+          optimal: input.costPrice * 2,
+          max: input.costPrice * 2.5
+        }
+      };
+      return analysis;
+    }
   }
 
   // Step 2: Generate optimized listing
   private async generateListing(input: MinimalProductInput, analysis: any): Promise<any> {
-    // Generate SEO-optimized title
-    const title = this.generateSEOTitle(input.name, analysis.keywords);
-    
-    // Generate professional description
-    const description = this.generateDescription(input.description, analysis.keywords);
+    // Use real GPT-4 if available
+    if (openaiService.isEnabled()) {
+      console.log('🤖 Using GPT-4 for SEO listing generation');
+      const seoResult = await openaiService.generateSEOListing(
+        input.name,
+        input.description,
+        analysis.category,
+        analysis.keywords,
+        'wildberries' // Default marketplace, can be dynamic
+      );
+      
+      return {
+        title: seoResult.title,
+        description: seoResult.description,
+        bulletPoints: seoResult.bulletPoints,
+        category: analysis.category,
+        keywords: seoResult.keywords
+      };
+    } else {
+      console.log('⚠️  Using fallback listing generation');
+      // Generate SEO-optimized title
+      const title = this.generateSEOTitle(input.name, analysis.keywords);
+      
+      // Generate professional description
+      const description = this.generateDescription(input.description, analysis.keywords);
 
-    return {
-      title,
-      description,
-      category: analysis.category,
-      keywords: analysis.keywords
-    };
+      return {
+        title,
+        description,
+        category: analysis.category,
+        keywords: analysis.keywords
+      };
+    }
   }
 
   // Step 3: Validate listing
   private async validateListing(listing: any): Promise<ValidationResult> {
-    const errors: string[] = [];
-    const corrections: string[] = [];
+    // Use real GPT-4 if available
+    if (openaiService.isEnabled()) {
+      console.log('🤖 Using GPT-4 for listing validation');
+      const validation = await openaiService.validateListing(
+        listing.title,
+        listing.description,
+        'wildberries'
+      );
+      
+      return {
+        passed: validation.valid,
+        errors: validation.errors,
+        corrections: validation.suggestions,
+        confidence: validation.valid ? 95 : 70
+      };
+    } else {
+      console.log('⚠️  Using fallback validation');
+      const errors: string[] = [];
+      const corrections: string[] = [];
 
-    // Check title length
-    if (listing.title.length < 10) {
-      errors.push('Title too short (minimum 10 characters)');
-    }
-    if (listing.title.length > 200) {
-      errors.push('Title too long (maximum 200 characters)');
-      corrections.push('Truncate title to 200 characters');
-    }
-
-    // Check for prohibited words
-    const prohibitedWords = ['best', 'guaranteed', '100%', 'free shipping', 'cheapest'];
-    prohibitedWords.forEach(word => {
-      if (listing.title.toLowerCase().includes(word)) {
-        errors.push(`Prohibited word detected: "${word}"`);
-        corrections.push(`Remove or replace "${word}"`);
+      // Check title length
+      if (listing.title.length < 10) {
+        errors.push('Title too short (minimum 10 characters)');
       }
-    });
+      if (listing.title.length > 200) {
+        errors.push('Title too long (maximum 200 characters)');
+        corrections.push('Truncate title to 200 characters');
+      }
 
-    // Check description
-    if (listing.description.length < 50) {
-      errors.push('Description too short (minimum 50 characters)');
+      // Check for prohibited words
+      const prohibitedWords = ['best', 'guaranteed', '100%', 'free shipping', 'cheapest'];
+      prohibitedWords.forEach(word => {
+        if (listing.title.toLowerCase().includes(word)) {
+          errors.push(`Prohibited word detected: "${word}"`);
+          corrections.push(`Remove or replace "${word}"`);
+        }
+      });
+
+      // Check description
+      if (listing.description.length < 50) {
+        errors.push('Description too short (minimum 50 characters)');
+      }
+
+      return {
+        passed: errors.length === 0,
+        errors,
+        corrections,
+        confidence: errors.length === 0 ? 95 : 70
+      };
     }
-
-    return {
-      passed: errors.length === 0,
-      errors,
-      corrections,
-      confidence: errors.length === 0 ? 95 : 70
-    };
   }
 
   // Step 4: Auto-correct errors
