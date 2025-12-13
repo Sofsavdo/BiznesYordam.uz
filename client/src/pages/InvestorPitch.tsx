@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, ArrowRight, X, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, AlertCircle, Lock, Eye, EyeOff } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { ArrowLeft, ArrowRight, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, Lock, Eye, EyeOff, Brain, Clock, Shield, Sparkles, Crown, Star, Play, ChevronRight, TrendingDown } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 export default function InvestorPitch() {
@@ -25,21 +26,47 @@ export default function InvestorPitch() {
     }
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'Escape') setLocation('/');
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [isAuthenticated, currentSlide]);
+
   // Password protection screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center p-4">
-        <div className="max-w-md w-full">
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -inset-[10px] opacity-50">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+            <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+          </div>
+        </div>
+
+        <div className="max-w-md w-full relative z-10">
+          <Card className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20">
             <div className="text-center mb-8">
-              <div className="inline-block p-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mb-4">
-                <Lock className="w-8 h-8 text-white" />
+              <div className="inline-block p-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl mb-4 shadow-lg">
+                <Lock className="w-10 h-10 text-white" />
               </div>
-              <h2 className="text-3xl font-bold text-white mb-2">
-                Investor Pitch
-              </h2>
-              <p className="text-gray-300">
-                Maxfiy ma'lumot - Parol talab qilinadi
+              <h1 className="text-4xl font-black text-white mb-2 tracking-tight">
+                SellerCloud<span className="text-yellow-400">X</span>
+              </h1>
+              <div className="inline-block px-4 py-1 bg-gradient-to-r from-green-400 to-blue-500 rounded-full text-xs font-bold text-white mb-4">
+                CONFIDENTIAL INVESTOR DECK
+              </div>
+              <p className="text-gray-300 text-sm">
+                Secure access required • For investors only
               </p>
             </div>
 
@@ -49,51 +76,71 @@ export default function InvestorPitch() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Parolni kiriting..."
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 pr-12"
+                  placeholder="Enter password..."
+                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 pr-12 h-12 rounded-xl"
                   autoFocus
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
 
               {error && (
-                <div className="p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm">
+                <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-200 text-sm flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
                   {error}
                 </div>
               )}
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold py-6"
+                className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
               >
                 <Lock className="w-5 h-5 mr-2" />
-                Kirish
+                Access Pitch Deck
               </Button>
 
               <Button
                 type="button"
                 onClick={() => setLocation('/')}
                 variant="ghost"
-                className="w-full text-gray-300 hover:text-white"
+                className="w-full text-gray-300 hover:text-white hover:bg-white/10 rounded-xl"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Bosh sahifaga qaytish
+                Back to Home
               </Button>
             </form>
 
-            <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-              <p className="text-xs text-blue-200 text-center">
-                🔒 Bu taqdimot faqat investorlar uchun mo'ljallangan. Parolni olish uchun admin bilan bog'laning.
+            <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+              <p className="text-xs text-blue-200 text-center leading-relaxed">
+                🔒 This presentation contains confidential information. 
+                By accessing, you agree to maintain confidentiality.
               </p>
             </div>
-          </div>
+          </Card>
         </div>
+
+        <style>{`
+          @keyframes blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -50px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(50px, 50px) scale(1.05); }
+          }
+          .animate-blob {
+            animation: blob 7s infinite;
+          }
+          .animation-delay-2000 {
+            animation-delay: 2s;
+          }
+          .animation-delay-4000 {
+            animation-delay: 4s;
+          }
+        `}</style>
       </div>
     );
   }
