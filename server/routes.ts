@@ -35,6 +35,7 @@ import enhancedAIDashboardRoutes from "./routes/enhancedAIDashboard";
 import enhancedAIRoutes from "./routes/enhancedAI";
 import referralRoutes from "./routes/referralRoutes";
 import chatRoutes from "./routes/chatRoutes";
+import advancedFeaturesRoutes from "./routes/advancedFeatures";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
@@ -1254,6 +1255,10 @@ export function registerRoutes(app: express.Application): Server {
   
   // Legacy route (backward compatibility)
   app.use("/api/enhanced-ai", requirePartnerWithData, enhancedAIDashboardRoutes);
+
+  // ==================== ADVANCED FEATURES ====================
+  // Order Rule Engine, Inventory Forecasting, Advanced Reporting
+  app.use("/api/advanced", requirePartnerWithData, advancedFeaturesRoutes);
 
   // Error handling middleware
   app.use(handleValidationError);
