@@ -171,64 +171,97 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  log("🚀 Starting BiznesYordam Fulfillment Platform...");
-
-  // ✅ Real database setup
-  log("✅ Real database connection initialized");
-
-  // Run database migrations first
   try {
-    await runMigrations();
+    log("🚀 Starting BiznesYordam Fulfillment Platform...");
+
+    // ✅ Real database setup
+    log("✅ Real database connection initialized");
+
+    // Run database migrations first
+    try {
+      await runMigrations();
+    } catch (error) {
+      console.error('❌ Failed to run migrations:', error);
+      console.log('⚠️  Continuing without migrations - database may not be initialized');
+    }
+
+    // Initialize admin user (production-safe)
+    try {
+      await initializeAdmin();
+    } catch (error) {
+      console.error('❌ Failed to initialize admin:', error);
+      console.log('⚠️  Continuing without admin initialization');
+    }
+
+    const server = await registerRoutes(app);
+
+    // Initialize WebSocket server
+    try {
+      const wsManager = initializeWebSocket(server);
+      (global as any).wsManager = wsManager;
+    } catch (error) {
+      console.error('WebSocket initialization failed:', error);
+      console.log('⚠️  Continuing without WebSocket support');
+    }
+
+    // Initialize AI task queue (SQLite-based background processor)
+    try {
+      initializeAIQueue();
+    } catch (error) {
+      console.error('AI queue initialization failed:', error);
+      console.log('⚠️  Continuing without AI queue');
+    }
+
+    // ✅ Vite faqat developmentda ishlaydi
+    const nodeEnv = process.env.NODE_ENV || 'development';
+    log(`🔧 Environment: ${nodeEnv}`);
+    
+    if (nodeEnv === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+
+    // 404 handler
+    app.use(notFound);
+
+    // Error handler
+    if (process.env.SENTRY_DSN) {
+      app.use(Sentry.Handlers.errorHandler());
+    }
+    app.use(errorHandler);
+
+    // ✅ PORT - Railway/Render'dan oladi
+    const port = parseInt(process.env.PORT || "5000", 10);
+    
+    // Windows'da ENOTSUP xatosini oldini olish uchun oddiy listen
+    server.listen(port, "0.0.0.0", () => {
+      log(`✅ Server running on port ${port}`);
+      log(`🌐 Server URL: http://0.0.0.0:${port}`);
+    });
+
   } catch (error) {
-    console.error('❌ Failed to run migrations:', error);
-    console.log('⚠️  Continuing without migrations - database may not be initialized');
+    console.error('❌ Fatal error during server startup:', error);
+    logger.error('Server startup failed', { error });
+    process.exit(1);
   }
-
-  // Initialize admin user (production-safe)
-  await initializeAdmin();
-
-  const server = await registerRoutes(app);
-
-  // Initialize WebSocket server
-  try {
-    const wsManager = initializeWebSocket(server);
-    (global as any).wsManager = wsManager;
-  } catch (error) {
-    console.error('WebSocket initialization failed:', error);
-    console.log('⚠️  Continuing without WebSocket support');
-  }
-
-  // Initialize AI task queue (SQLite-based background processor)
-  try {
-    initializeAIQueue();
-  } catch (error) {
-    console.error('AI queue initialization failed:', error);
-  }
-
-  // ✅ Vite faqat developmentda ishlaydi
-  const nodeEnv = process.env.NODE_ENV || 'development';
-  log(`🔧 Environment: ${nodeEnv}`);
-  
-  if (nodeEnv === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
-
-  // 404 handler
-  app.use(notFound);
-
-  // Error handler
-  if (process.env.SENTRY_DSN) {
-    app.use(Sentry.Handlers.errorHandler());
-  }
-  app.use(errorHandler);
-
-    // ✅ PORT - Render'dan oladi
-  const port = parseInt(process.env.PORT || "5000", 10);
-  
-  // Windows'da ENOTSUP xatosini oldini olish uchun oddiy listen
-  server.listen(port, "0.0.0.0", () => {
-    log(`✅ Server running on port ${port}`);
-  });
 })();
+
+// Global error handlers
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  logger.error('Uncaught Exception', { error });
+  // Don't exit in production, just log
+  if (process.env.NODE_ENV !== 'production') {
+    process.exit(1);
+  }
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+  logger.error('Unhandled Rejection', { reason, promise });
+  // Don't exit in production, just log
+  if (process.env.NODE_ENV !== 'production') {
+    process.exit(1);
+  }
+});

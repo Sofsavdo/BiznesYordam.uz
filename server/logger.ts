@@ -49,26 +49,35 @@ transports.push(
   })
 );
 
-// In production, also log to files
+// In production, also log to files (if writable)
 if (process.env.NODE_ENV === 'production') {
-  // Create logs directory if it doesn't exist
-  const logsDir = path.join(process.cwd(), 'logs');
-  
-  transports.push(
-    // Error logs
-    new winston.transports.File({
-      filename: path.join(logsDir, 'error.log'),
-      level: 'error',
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
-    }),
-    // Combined logs
-    new winston.transports.File({
-      filename: path.join(logsDir, 'combined.log'),
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
-    })
-  );
+  try {
+    const fs = require('fs');
+    const logsDir = path.join(process.cwd(), 'logs');
+    
+    // Try to create logs directory
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir, { recursive: true });
+    }
+    
+    transports.push(
+      // Error logs
+      new winston.transports.File({
+        filename: path.join(logsDir, 'error.log'),
+        level: 'error',
+        maxsize: 5242880, // 5MB
+        maxFiles: 5,
+      }),
+      // Combined logs
+      new winston.transports.File({
+        filename: path.join(logsDir, 'combined.log'),
+        maxsize: 5242880, // 5MB
+        maxFiles: 5,
+      })
+    );
+  } catch (error) {
+    console.warn('⚠️  Could not create file transports, logging to console only');
+  }
 }
 
 // Create the logger
@@ -113,12 +122,12 @@ export const logHttp = (message: string, meta?: any) => {
   logger.http(message, meta);
 };
 
-// Log unhandled rejections
-process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
-  logError('Unhandled Rejection', reason, {
-    promise: promise.toString(),
-  });
-});
+// Log unhandled rejections (removed - handled in index.ts)
+// process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
+//   logError('Unhandled Rejection', reason, {
+//     promise: promise.toString(),
+//   });
+// });
 
 // Log uncaught exceptions
 process.on('uncaughtException', (error: Error) => {

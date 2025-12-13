@@ -27,11 +27,27 @@ class AIOrchestrator {
   }
 
   private logStatus() {
-    console.log('\n🤖 AI Orchestrator Status:');
-    console.log(`  Text AI: ${this.config.textAI.toUpperCase()}`);
-    console.log(`  Image Analysis: ${this.config.imageAnalysisAI.toUpperCase()}`);
-    console.log(`  Claude Status: ${claudeService.getStatus().model}`);
-    console.log(`  OpenAI Status: ${openaiService.getStatus().model}\n`);
+    try {
+      console.log('\n🤖 AI Orchestrator Status:');
+      console.log(`  Text AI: ${this.config.textAI.toUpperCase()}`);
+      console.log(`  Image Analysis: ${this.config.imageAnalysisAI.toUpperCase()}`);
+      
+      try {
+        const claudeStatus = claudeService.getStatus();
+        console.log(`  Claude Status: ${claudeStatus.model}`);
+      } catch (e) {
+        console.log(`  Claude Status: error`);
+      }
+      
+      try {
+        const openaiStatus = openaiService.getStatus();
+        console.log(`  OpenAI Status: ${openaiStatus.model}\n`);
+      } catch (e) {
+        console.log(`  OpenAI Status: error\n`);
+      }
+    } catch (error) {
+      console.error('Error logging AI orchestrator status:', error);
+    }
   }
 
   // ==================== PRODUCT ANALYSIS ====================
