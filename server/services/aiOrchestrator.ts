@@ -3,6 +3,7 @@
 
 import { claudeService } from './claudeService';
 import { openaiService } from './openaiService';
+import { imageAIService } from './imageAIService';
 
 export type AIProvider = 'claude' | 'openai' | 'fallback';
 
@@ -211,6 +212,34 @@ class AIOrchestrator {
     return (count / 1000) * costPer1000;
   }
 
+  // ==================== IMAGE GENERATION ====================
+
+  async generateProductImage(
+    prompt: string,
+    type: 'product_photo' | 'infographic' | 'lifestyle' | 'banner',
+    options?: any
+  ) {
+    console.log(`🎨 Generating ${type} image...`);
+    return await imageAIService.generateProductImage({
+      prompt,
+      type,
+      ...options
+    });
+  }
+
+  async enhanceImage(imageUrl: string, options: any) {
+    console.log('✨ Enhancing image...');
+    return await imageAIService.enhanceImage(imageUrl, options);
+  }
+
+  async generateMarketplaceImages(
+    productName: string,
+    marketplace: 'wildberries' | 'uzum' | 'ozon' | 'trendyol'
+  ) {
+    console.log(`🏪 Generating complete image set for ${marketplace}...`);
+    return await imageAIService.generateMarketplaceImages(productName, marketplace);
+  }
+
   // ==================== STATUS & CONFIG ====================
 
   getStatus() {
@@ -218,7 +247,8 @@ class AIOrchestrator {
       config: this.config,
       providers: {
         claude: claudeService.getStatus(),
-        openai: openaiService.getStatus()
+        openai: openaiService.getStatus(),
+        imageAI: imageAIService.getStatus()
       },
       recommendations: {
         textAI: 'Claude 3.5 Sonnet (faster, cheaper)',
