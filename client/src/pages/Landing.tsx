@@ -645,15 +645,51 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="w-6 h-6" />
-            <span className="text-xl font-bold">SellerCloudX</span>
+      <footer className="py-16 px-4 bg-gradient-to-b from-gray-900 to-black text-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Investor Pitch Section */}
+          <div className="mb-12 p-8 bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-2xl border border-purple-500/20">
+            <div className="text-center space-y-4">
+              <div className="inline-block px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full text-sm font-bold mb-2">
+                🚀 INVESTORLAR UCHUN
+              </div>
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Platform Pitch Presentation
+              </h3>
+              <p className="text-gray-300 max-w-2xl mx-auto">
+                SellerCloudX platformasining to'liq taqdimoti, moliyaviy prognozlar va investitsiya imkoniyatlari
+              </p>
+              <Button
+                onClick={() => setLocation('/investor-pitch')}
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-6 text-lg rounded-xl shadow-2xl hover:shadow-yellow-500/50 transition-all duration-300 transform hover:scale-105"
+              >
+                <Target className="w-6 h-6 mr-2" />
+                Investor Pitch Ko'rish
+              </Button>
+            </div>
           </div>
-          <p className="text-gray-400 text-sm">
-            © 2024 SellerCloudX. O'zbekiston #1 AI Marketplace Automation Platform.
-          </p>
+
+          {/* Footer Content */}
+          <div className="text-center space-y-6">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Sparkles className="w-8 h-8 text-blue-400" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                SellerCloudX
+              </span>
+            </div>
+            <div className="flex items-center justify-center gap-8 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Biz haqimizda</a>
+              <a href="#" className="hover:text-white transition-colors">Xizmatlar</a>
+              <a href="#" className="hover:text-white transition-colors">Narxlar</a>
+              <a href="#" className="hover:text-white transition-colors">Aloqa</a>
+            </div>
+            <p className="text-gray-500 text-sm">
+              © 2024 SellerCloudX. O'zbekiston #1 AI Marketplace Automation Platform.
+            </p>
+            <p className="text-gray-600 text-xs">
+              Barcha huquqlar himoyalangan. Made with ❤️ in Uzbekistan
+            </p>
+          </div>
         </div>
       </footer>
     </div>

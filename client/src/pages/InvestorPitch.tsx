@@ -1,11 +1,102 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, X, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, AlertCircle } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ArrowLeft, ArrowRight, X, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, AlertCircle, Lock, Eye, EyeOff } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 export default function InvestorPitch() {
   const [, setLocation] = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+
+  const CORRECT_PASSWORD = 'Medik9298';
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === CORRECT_PASSWORD) {
+      setIsAuthenticated(true);
+      setError('');
+    } else {
+      setError('Noto\'g\'ri parol! Iltimos, qaytadan urinib ko\'ring.');
+      setPassword('');
+    }
+  };
+
+  // Password protection screen
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+            <div className="text-center mb-8">
+              <div className="inline-block p-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mb-4">
+                <Lock className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-2">
+                Investor Pitch
+              </h2>
+              <p className="text-gray-300">
+                Maxfiy ma'lumot - Parol talab qilinadi
+              </p>
+            </div>
+
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div className="relative">
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Parolni kiriting..."
+                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 pr-12"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+
+              {error && (
+                <div className="p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm">
+                  {error}
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold py-6"
+              >
+                <Lock className="w-5 h-5 mr-2" />
+                Kirish
+              </Button>
+
+              <Button
+                type="button"
+                onClick={() => setLocation('/')}
+                variant="ghost"
+                className="w-full text-gray-300 hover:text-white"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Bosh sahifaga qaytish
+              </Button>
+            </form>
+
+            <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+              <p className="text-xs text-blue-200 text-center">
+                🔒 Bu taqdimot faqat investorlar uchun mo'ljallangan. Parolni olish uchun admin bilan bog'laning.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Simple PPT export - just print current view
   const exportToPPT = () => {
