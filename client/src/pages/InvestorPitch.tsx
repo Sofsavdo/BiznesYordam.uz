@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight, Lock, Eye, EyeOff, CheckCircle, TrendingUp, DollarSign, Users, Zap, Target, BarChart3, Rocket, AlertCircle, Package, Brain, Clock, X, Warehouse, ShoppingCart, TrendingDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Lock, Eye, EyeOff, CheckCircle, TrendingUp, DollarSign, Users, Zap, Target, BarChart3, Rocket, AlertCircle, Package, Brain, Clock, X, Warehouse, ShoppingCart, TrendingDown, Globe } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 export default function RealInvestorPitch() {
