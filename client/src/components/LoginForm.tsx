@@ -79,26 +79,6 @@ export function LoginForm({ onSuccess, isAdmin = false }: LoginFormProps) {
         </p>
       </CardHeader>
       <CardContent>
-        {/* Test Credentials Info */}
-        {!isAdmin && (
-          <Alert className="mb-4 bg-blue-50 border-blue-200">
-            <AlertDescription className="text-sm text-blue-800">
-              <strong>Test Hisob:</strong><br />
-              Username: <code className="bg-blue-100 px-2 py-1 rounded">testpartner</code><br />
-              Parol: <code className="bg-blue-100 px-2 py-1 rounded">partner123</code>
-            </AlertDescription>
-          </Alert>
-        )}
-        {isAdmin && (
-          <Alert className="mb-4 bg-green-50 border-green-200">
-            <AlertDescription className="text-sm text-green-800">
-              <strong>Admin Hisob:</strong><br />
-              Username: <code className="bg-green-100 px-2 py-1 rounded">admin</code><br />
-              Parol: <code className="bg-green-100 px-2 py-1 rounded">admin123</code>
-            </AlertDescription>
-          </Alert>
-        )}
-        
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <Alert variant="destructive">
@@ -166,13 +146,7 @@ export function LoginForm({ onSuccess, isAdmin = false }: LoginFormProps) {
           </div>
         )}
 
-        {isAdmin && (
-          <div className="text-center mt-6">
-            <p className="text-slate-600 text-sm">
-              Default: admin / SellerCloudX2024!
-            </p>
-          </div>
-        )}
+
       </CardContent>
     </Card>
   );

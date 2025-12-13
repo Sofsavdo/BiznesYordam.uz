@@ -59,7 +59,7 @@ export default function Landing() {
                     <button
                       onClick={() => {
                         setShowLoginMenu(false);
-                        setLocation('/');
+                        setLocation('/login');
                       }}
                       className="block w-full text-left px-5 py-4 hover:bg-blue-50 transition-colors rounded-t-lg"
                     >

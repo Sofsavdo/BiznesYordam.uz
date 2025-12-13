@@ -27,7 +27,7 @@ interface Partner {
   phone: string;
   address: string;
   pricingTier: string;
-  isApproved: boolean;
+  approved: boolean; // Changed from isApproved to match backend
   isActive: boolean;
   joinedAt: string;
   totalRevenue?: number;
@@ -157,8 +157,8 @@ export function AdminPartnersManagement() {
 
   const stats = {
     total: partners.length,
-    approved: partners.filter(p => p.isApproved).length,
-    pending: partners.filter(p => !p.isApproved).length,
+    approved: partners.filter(p => p.approved).length,
+    pending: partners.filter(p => !p.approved).length,
     active: partners.filter(p => p.isActive).length,
     blocked: partners.filter(p => !p.isActive).length
   };
@@ -224,7 +224,7 @@ export function AdminPartnersManagement() {
                     <div>
                       <h3 className="text-xl font-bold flex items-center gap-2">
                         {p.businessName}
-                        {!p.isApproved && <Badge variant="secondary">Kutilmoqda</Badge>}
+                        {!p.approved && <Badge variant="secondary">Kutilmoqda</Badge>}
                         {!p.isActive && <Badge variant="destructive">Bloklangan</Badge>}
                       </h3>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
@@ -284,7 +284,7 @@ export function AdminPartnersManagement() {
                     <MessageSquare className="w-4 h-4 mr-2" />
                     Xabar
                   </Button>
-                  {!p.isApproved && (
+                  {!p.approved && (
                     <Button 
                       onClick={() => approveMutation.mutate(p.id)} 
                       size="sm" 
@@ -344,8 +344,8 @@ export function AdminPartnersManagement() {
                 </div>
                 <div>
                   <Label className="text-gray-500">Status</Label>
-                  <Badge variant={selectedPartner.isApproved ? "default" : "secondary"}>
-                    {selectedPartner.isApproved ? 'Tasdiqlangan' : 'Kutilmoqda'}
+                  <Badge variant={selectedPartner.approved ? "default" : "secondary"}>
+                    {selectedPartner.approved ? 'Tasdiqlangan' : 'Kutilmoqda'}
                   </Badge>
                 </div>
                 <div>
