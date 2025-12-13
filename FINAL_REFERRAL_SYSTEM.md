@@ -36,26 +36,26 @@
 
 ### Bonus Jadval
 
-| Taklif Qilingan Obuna | Referrer Bonus | Referred Chegirma |
-|------------------------|----------------|-------------------|
-| **1 Oy** | ❌ 0% | 3% |
-| **3 Oy** | ✅ 10% | 5% |
-| **6 Oy** | ✅ 15% | 8% |
-| **12 Oy** | ✅ 25% | 10% |
+| Taklif Qilingan Obuna | Referred Chegirma | Referrer Bonus |
+|------------------------|-------------------|----------------|
+| **1 Oy** | 0% | 3% |
+| **3 Oy** | 10% | 5% |
+| **6 Oy** | 20% | 8% |
+| **12 Oy** | 30% | 10% |
 
 ### Tushuntirish
 
 **Referred (Yangi Hamkor):**
-- 1 oy: 3% chegirma
-- 3 oy: 5% chegirma
-- 6 oy: 8% chegirma
-- 12 oy: 10% chegirma
+- 1 oy: 0% chegirma (to'liq narx)
+- 3 oy: 10% chegirma (obuna chegirmasi)
+- 6 oy: 20% chegirma (obuna chegirmasi)
+- 12 oy: 30% chegirma (obuna chegirmasi)
 
 **Referrer (Taklif Etuvchi):**
-- 1 oy: Bonus yo'q
-- 3 oy: 10% bonus (bir marta)
-- 6 oy: 15% bonus (bir marta)
-- 12 oy: 25% bonus (bir marta)
+- 1 oy: 3% bonus (bir marta)
+- 3 oy: 5% bonus (bir marta)
+- 6 oy: 8% bonus (bir marta)
+- 12 oy: 10% bonus (bir marta)
 
 ---
 
@@ -65,37 +65,37 @@
 
 | Obuna | Base Narx | Referred Chegirma | Referred To'laydi | Referrer Bonus |
 |-------|-----------|-------------------|-------------------|----------------|
-| 1 oy | 3,000,000 | 3% | 2,910,000 | ❌ 0 |
-| 3 oy | 9,000,000 | 5% | 8,550,000 | 855,000 |
-| 6 oy | 18,000,000 | 8% | 16,560,000 | 2,484,000 |
-| 12 oy | 36,000,000 | 10% | 32,400,000 | 8,100,000 |
+| 1 oy | 3,000,000 | 0% | 3,000,000 | 90,000 (3%) |
+| 3 oy | 9,000,000 | 10% | 8,100,000 | 405,000 (5%) |
+| 6 oy | 18,000,000 | 20% | 14,400,000 | 1,152,000 (8%) |
+| 12 oy | 36,000,000 | 30% | 25,200,000 | 2,520,000 (10%) |
 
 ### Business Standard (8M/oy)
 
 | Obuna | Base Narx | Referred Chegirma | Referred To'laydi | Referrer Bonus |
 |-------|-----------|-------------------|-------------------|----------------|
-| 1 oy | 8,000,000 | 3% | 7,760,000 | ❌ 0 |
-| 3 oy | 24,000,000 | 5% | 22,800,000 | 2,280,000 |
-| 6 oy | 48,000,000 | 8% | 44,160,000 | 6,624,000 |
-| 12 oy | 96,000,000 | 10% | 86,400,000 | 21,600,000 |
+| 1 oy | 8,000,000 | 0% | 8,000,000 | 240,000 (3%) |
+| 3 oy | 24,000,000 | 10% | 21,600,000 | 1,080,000 (5%) |
+| 6 oy | 48,000,000 | 20% | 38,400,000 | 3,072,000 (8%) |
+| 12 oy | 96,000,000 | 30% | 67,200,000 | 6,720,000 (10%) |
 
 ### Professional Plus (18M/oy)
 
 | Obuna | Base Narx | Referred Chegirma | Referred To'laydi | Referrer Bonus |
 |-------|-----------|-------------------|-------------------|----------------|
-| 1 oy | 18,000,000 | 3% | 17,460,000 | ❌ 0 |
-| 3 oy | 54,000,000 | 5% | 51,300,000 | 5,130,000 |
-| 6 oy | 108,000,000 | 8% | 99,360,000 | 14,904,000 |
-| 12 oy | 216,000,000 | 10% | 194,400,000 | 48,600,000 |
+| 1 oy | 18,000,000 | 0% | 18,000,000 | 540,000 (3%) |
+| 3 oy | 54,000,000 | 10% | 48,600,000 | 2,430,000 (5%) |
+| 6 oy | 108,000,000 | 20% | 86,400,000 | 6,912,000 (8%) |
+| 12 oy | 216,000,000 | 30% | 151,200,000 | 15,120,000 (10%) |
 
 ### Enterprise Elite (25M/oy)
 
 | Obuna | Base Narx | Referred Chegirma | Referred To'laydi | Referrer Bonus |
 |-------|-----------|-------------------|-------------------|----------------|
-| 1 oy | 25,000,000 | 3% | 24,250,000 | ❌ 0 |
-| 3 oy | 75,000,000 | 5% | 71,250,000 | 7,125,000 |
-| 6 oy | 150,000,000 | 8% | 138,000,000 | 20,700,000 |
-| 12 oy | 300,000,000 | 10% | 270,000,000 | 67,500,000 |
+| 1 oy | 25,000,000 | 0% | 25,000,000 | 750,000 (3%) |
+| 3 oy | 75,000,000 | 10% | 67,500,000 | 3,375,000 (5%) |
+| 6 oy | 150,000,000 | 20% | 120,000,000 | 9,600,000 (8%) |
+| 12 oy | 300,000,000 | 30% | 210,000,000 | 21,000,000 (10%) |
 
 ---
 
@@ -112,16 +112,16 @@
 ```
 Do'st to'lovi:
 Base: 8,000,000 × 3 = 24,000,000
-Referred chegirma (5%): -1,200,000
-JAMI: 22,800,000 so'm
+Obuna chegirma (10%): -2,400,000
+JAMI: 21,600,000 so'm
 
 Aziz aka bonusi:
-22,800,000 × 10% = 2,280,000 so'm (bir marta)
+21,600,000 × 5% = 1,080,000 so'm (bir marta)
 ```
 
 **Natija:**
-- Do'st tejaydi: 1,200,000 so'm (5%)
-- Aziz aka oladi: 2,280,000 so'm (bir marta)
+- Do'st tejaydi: 2,400,000 so'm (10%)
+- Aziz aka oladi: 1,080,000 so'm (bir marta)
 
 ### Misol 2: 6 Oylik Professional Plus
 
@@ -134,16 +134,16 @@ Aziz aka bonusi:
 ```
 Hamkor to'lovi:
 Base: 18,000,000 × 6 = 108,000,000
-Referred chegirma (8%): -8,640,000
-JAMI: 99,360,000 so'm
+Obuna chegirma (20%): -21,600,000
+JAMI: 86,400,000 so'm
 
 Nodira opa bonusi:
-99,360,000 × 15% = 14,904,000 so'm (bir marta)
+86,400,000 × 8% = 6,912,000 so'm (bir marta)
 ```
 
 **Natija:**
-- Hamkor tejaydi: 8,640,000 so'm (8%)
-- Nodira opa oladi: 14,904,000 so'm (bir marta)
+- Hamkor tejaydi: 21,600,000 so'm (20%)
+- Nodira opa oladi: 6,912,000 so'm (bir marta)
 
 ### Misol 3: 12 Oylik Enterprise Elite
 
@@ -156,16 +156,16 @@ Nodira opa bonusi:
 ```
 Kompaniya to'lovi:
 Base: 25,000,000 × 12 = 300,000,000
-Referred chegirma (10%): -30,000,000
-JAMI: 270,000,000 so'm
+Obuna chegirma (30%): -90,000,000
+JAMI: 210,000,000 so'm
 
 Jahongir aka bonusi:
-270,000,000 × 25% = 67,500,000 so'm (bir marta)
+210,000,000 × 10% = 21,000,000 so'm (bir marta)
 ```
 
 **Natija:**
-- Kompaniya tejaydi: 30,000,000 so'm (10%)
-- Jahongir aka oladi: 67,500,000 so'm (bir marta)
+- Kompaniya tejaydi: 90,000,000 so'm (30%)
+- Jahongir aka oladi: 21,000,000 so'm (bir marta)
 
 ---
 
@@ -361,22 +361,22 @@ Margin: 83%
 ### 2. Referrer Bonus
 
 ```
-❌ 1 oy taklif → 0% bonus
-✅ 3 oy taklif → 10% bonus (bir marta)
-✅ 6 oy taklif → 15% bonus (bir marta)
-✅ 12 oy taklif → 25% bonus (bir marta)
+✅ 1 oy taklif → 3% bonus (bir marta)
+✅ 3 oy taklif → 5% bonus (bir marta)
+✅ 6 oy taklif → 8% bonus (bir marta)
+✅ 12 oy taklif → 10% bonus (bir marta)
 ```
 
 ### 3. Referred Chegirma
 
 ```
-✅ 1 oy → 3% chegirma
-✅ 3 oy → 5% chegirma
-✅ 6 oy → 8% chegirma
-✅ 12 oy → 10% chegirma
+❌ 1 oy → 0% (to'liq narx)
+✅ 3 oy → 10% (obuna chegirmasi)
+✅ 6 oy → 20% (obuna chegirmasi)
+✅ 12 oy → 30% (obuna chegirmasi)
 ```
 
-**Eslatma:** Bu chegirmalar referral orqali kelgan hamkorlar uchun maxsus.
+**Eslatma:** Bu standart obuna chegirmalari, barcha hamkorlar uchun.
 
 ### 4. To'lov
 
