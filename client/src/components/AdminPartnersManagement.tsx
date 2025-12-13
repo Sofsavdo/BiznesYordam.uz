@@ -64,6 +64,7 @@ export function AdminPartnersManagement() {
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [showBulkMessageModal, setShowBulkMessageModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [messageSubject, setMessageSubject] = useState('');
   const [messageBody, setMessageBody] = useState('');
   const { toast } = useToast();
@@ -79,23 +80,47 @@ export function AdminPartnersManagement() {
 
   const approveMutation = useMutation({
     mutationFn: async (partnerId: string) => {
-      const response = await apiRequest('POST', `/api/admin/partners/${partnerId}/approve`);
+      console.log('🔄 Approving partner:', partnerId);
+      const response = await apiRequest('PUT', `/api/admin/partners/${partnerId}/approve`);
       return response.json();
     },
     onSuccess: () => {
-      toast({ title: "Tasdiqlandi!" });
+      toast({ 
+        title: "✅ Tasdiqlandi!",
+        description: "Hamkor muvaffaqiyatli tasdiqlandi"
+      });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/partners'] });
+    },
+    onError: (error: Error) => {
+      console.error('❌ Approve error:', error);
+      toast({ 
+        title: "❌ Xatolik",
+        description: error.message,
+        variant: "destructive"
+      });
     }
   });
 
   const blockMutation = useMutation({
     mutationFn: async (partnerId: string) => {
-      const response = await apiRequest('POST', `/api/admin/partners/${partnerId}/block`);
+      console.log('🔄 Blocking partner:', partnerId);
+      const response = await apiRequest('PUT', `/api/admin/partners/${partnerId}/block`);
       return response.json();
     },
     onSuccess: () => {
-      toast({ title: "Bloklandi" });
+      toast({ 
+        title: "🚫 Bloklandi",
+        description: "Hamkor bloklandi"
+      });
       queryClient.invalidateQueries({ queryKey: ['/api/admin/partners'] });
+    },
+    onError: (error: Error) => {
+      console.error('❌ Block error:', error);
+      toast({ 
+        title: "❌ Xatolik",
+        description: error.message,
+        variant: "destructive"
+      });
     }
   });
 
@@ -243,19 +268,41 @@ export function AdminPartnersManagement() {
                 </div>
 
                 <div className="lg:col-span-3 flex flex-col gap-2">
-                  <Button onClick={() => { setSelectedPartner(p); setShowMessageModal(true); }} variant="outline" size="sm">
+                  <Button 
+                    onClick={() => { setSelectedPartner(p); setShowDetailsModal(true); }} 
+                    variant="outline" 
+                    size="sm"
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Ko'rish
+                  </Button>
+                  <Button 
+                    onClick={() => { setSelectedPartner(p); setShowMessageModal(true); }} 
+                    variant="outline" 
+                    size="sm"
+                  >
                     <MessageSquare className="w-4 h-4 mr-2" />
                     Xabar
                   </Button>
                   {!p.isApproved && (
-                    <Button onClick={() => approveMutation.mutate(p.id)} size="sm" className="bg-green-600">
+                    <Button 
+                      onClick={() => approveMutation.mutate(p.id)} 
+                      size="sm" 
+                      className="bg-green-600 hover:bg-green-700"
+                      disabled={approveMutation.isPending}
+                    >
                       <CheckCircle className="w-4 h-4 mr-2" />
-                      Tasdiqlash
+                      {approveMutation.isPending ? 'Tasdiqlanmoqda...' : 'Tasdiqlash'}
                     </Button>
                   )}
-                  <Button onClick={() => blockMutation.mutate(p.id)} variant="destructive" size="sm">
+                  <Button 
+                    onClick={() => blockMutation.mutate(p.id)} 
+                    variant="destructive" 
+                    size="sm"
+                    disabled={blockMutation.isPending}
+                  >
                     <Ban className="w-4 h-4 mr-2" />
-                    {p.isActive ? 'Bloklash' : 'Faollashtirish'}
+                    {blockMutation.isPending ? 'Jarayonda...' : (p.isActive ? 'Bloklash' : 'Faollashtirish')}
                   </Button>
                 </div>
               </div>
@@ -263,6 +310,87 @@ export function AdminPartnersManagement() {
           </Card>
         ))}
       </div>
+
+      {/* Partner Details Modal */}
+      <Dialog open={showDetailsModal} onOpenChange={setShowDetailsModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">
+              {selectedPartner?.businessName}
+            </DialogTitle>
+          </DialogHeader>
+          {selectedPartner && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-gray-500">Egasi</Label>
+                  <p className="font-medium">{selectedPartner.ownerName}</p>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Email</Label>
+                  <p className="font-medium">{selectedPartner.email}</p>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Telefon</Label>
+                  <p className="font-medium">{selectedPartner.phone}</p>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Manzil</Label>
+                  <p className="font-medium">{selectedPartner.address || 'Kiritilmagan'}</p>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Tarif</Label>
+                  <p className="font-medium">{TIER_NAMES[selectedPartner.pricingTier] || selectedPartner.pricingTier}</p>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Status</Label>
+                  <Badge variant={selectedPartner.isApproved ? "default" : "secondary"}>
+                    {selectedPartner.isApproved ? 'Tasdiqlangan' : 'Kutilmoqda'}
+                  </Badge>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Qo'shilgan sana</Label>
+                  <p className="font-medium">{new Date(selectedPartner.joinedAt).toLocaleDateString('uz-UZ')}</p>
+                </div>
+                <div>
+                  <Label className="text-gray-500">Plan turi</Label>
+                  <p className="font-medium">{getPlanTypeLabel(selectedPartner.planType)}</p>
+                </div>
+              </div>
+              
+              {selectedPartner.planType === 'remote_ai_saas' && selectedPartner.aiPlanCode && (
+                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                  <Label className="text-purple-700 font-semibold">AI Manager Plan</Label>
+                  <p className="text-purple-900 font-medium">{getAIPlanInfo(selectedPartner)}</p>
+                </div>
+              )}
+
+              <div className="grid grid-cols-4 gap-4 pt-4 border-t">
+                <div className="text-center">
+                  <Package className="w-6 h-6 mx-auto mb-1 text-blue-600" />
+                  <p className="text-2xl font-bold">{selectedPartner.totalProducts || 0}</p>
+                  <p className="text-xs text-gray-500">Mahsulotlar</p>
+                </div>
+                <div className="text-center">
+                  <ShoppingCart className="w-6 h-6 mx-auto mb-1 text-green-600" />
+                  <p className="text-2xl font-bold">{selectedPartner.totalOrders || 0}</p>
+                  <p className="text-xs text-gray-500">Buyurtmalar</p>
+                </div>
+                <div className="text-center">
+                  <DollarSign className="w-6 h-6 mx-auto mb-1 text-yellow-600" />
+                  <p className="text-2xl font-bold">{formatCurrency(selectedPartner.totalRevenue || 0)}</p>
+                  <p className="text-xs text-gray-500">Daromad</p>
+                </div>
+                <div className="text-center">
+                  <TrendingUp className="w-6 h-6 mx-auto mb-1 text-purple-600" />
+                  <p className="text-2xl font-bold">{formatCurrency(selectedPartner.commissionPaid || 0)}</p>
+                  <p className="text-xs text-gray-500">Komissiya</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Message Modal */}
       <Dialog open={showMessageModal} onOpenChange={setShowMessageModal}>

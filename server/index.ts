@@ -94,6 +94,20 @@ app.use(
         return;
       }
       
+      // Allow all Railway.app domains (*.railway.app)
+      if (origin && origin.includes('.railway.app')) {
+        console.log("✅ CORS: Railway domain allowed:", origin);
+        callback(null, true);
+        return;
+      }
+      
+      // Allow sellercloudx.com domains
+      if (origin && origin.includes('sellercloudx.com')) {
+        console.log("✅ CORS: SellerCloudX domain allowed:", origin);
+        callback(null, true);
+        return;
+      }
+      
       // Allow all known origins
       if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
         console.log("✅ CORS: Known origin allowed:", origin);

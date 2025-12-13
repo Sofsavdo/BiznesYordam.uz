@@ -754,6 +754,27 @@ export function registerRoutes(app: express.Application): Server {
     res.json(partner);
   }));
 
+  app.put("/api/admin/partners/:id/block", requireAdmin, asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    
+    const partner = await storage.updatePartner(id, { approved: false });
+    if (!partner) {
+      return res.status(404).json({ 
+        message: "Hamkor topilmadi",
+        code: "PARTNER_NOT_FOUND"
+      });
+    }
+
+    await storage.createAuditLog({
+      userId: req.session!.user!.id,
+      action: 'PARTNER_BLOCKED',
+      entityType: 'partner',
+      entityId: id
+    });
+
+    res.json(partner);
+  }));
+
   // Pricing tiers
   app.get("/api/pricing-tiers", asyncHandler(async (req: Request, res: Response) => {
     const tiers = await storage.getAllPricingTiers();

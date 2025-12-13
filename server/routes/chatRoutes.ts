@@ -2,7 +2,7 @@
 import express, { Request, Response } from 'express';
 import { asyncHandler } from '../errorHandler';
 import { storage } from '../storage';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
 const router = express.Router();
 

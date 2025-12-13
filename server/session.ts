@@ -8,16 +8,18 @@ const PgSession = connectPgSimple(session);
 
 export function getSessionConfig() {
   const isProd = process.env.NODE_ENV === "production";
+  const databaseUrl = process.env.DATABASE_URL || '';
+  const isPostgres = databaseUrl.startsWith('postgres://') || databaseUrl.startsWith('postgresql://');
   
   let store;
   
-  if (isProd && process.env.DATABASE_URL) {
-    // Use PostgreSQL session store in production
+  if (isProd && isPostgres) {
+    // Use PostgreSQL session store in production with PostgreSQL
     console.log('✅ Using PostgreSQL session store');
     
     const pool = new pg.Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: process.env.DATABASE_URL.includes('localhost') ? false : {
+      connectionString: databaseUrl,
+      ssl: databaseUrl.includes('localhost') ? false : {
         rejectUnauthorized: false
       }
     });
@@ -25,12 +27,13 @@ export function getSessionConfig() {
     store = new PgSession({
       pool,
       tableName: 'session',
-      createTableIfMissing: false, // Don't auto-create, use migration instead
+      createTableIfMissing: true, // Auto-create for Railway
       pruneSessionInterval: 60 * 15 // Prune expired sessions every 15 minutes
     });
   } else {
-    // Use MemoryStore for development
-    console.log('⚠️  Using MemoryStore (development only)');
+    // Use MemoryStore for development or SQLite production
+    const storeType = isProd ? 'MemoryStore (SQLite production)' : 'MemoryStore (development)';
+    console.log(`⚠️  Using ${storeType}`);
     store = new MemoryStoreSession({
       checkPeriod: 86400000,
       ttl: 7 * 24 * 60 * 60 * 1000,
@@ -45,22 +48,23 @@ export function getSessionConfig() {
     saveUninitialized: false,
     name: 'connect.sid',
     cookie: {
-      secure: false, // Must be false for Render (proxy handles HTTPS)
+      secure: isProd ? true : false, // true in production (Railway has HTTPS)
       httpOnly: true,
-      sameSite: "lax" as const,
+      sameSite: isProd ? "none" as const : "lax" as const, // "none" for cross-origin in production
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/',
       domain: undefined
     },
     rolling: true,
-    proxy: true
+    proxy: true // Trust Railway proxy
   } as session.SessionOptions;
 
   console.log('🔧 Session config:', {
     name: sessionConfig.name,
-    storeType: isProd && process.env.DATABASE_URL ? 'PostgreSQL' : 'Memory',
+    storeType: isPostgres ? 'PostgreSQL' : 'Memory',
     cookie: sessionConfig.cookie,
-    proxy: sessionConfig.proxy
+    proxy: sessionConfig.proxy,
+    environment: isProd ? 'production' : 'development'
   });
 
   return sessionConfig;
