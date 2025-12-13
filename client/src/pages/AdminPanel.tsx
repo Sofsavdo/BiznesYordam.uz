@@ -727,20 +727,201 @@ export default function AdminPanel() {
                 </TabsContent>
 
                 <TabsContent value="tiers">
-                  {/* Tiers content will be moved here */}
-                  <div className="text-center py-8">
-                    <Crown className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
-                    <h3 className="text-xl font-bold mb-2">Tariflar Bo'limi</h3>
-                    <p className="text-muted-foreground">Tariflar boshqaruvi bu yerda</p>
+                  {/* Tier Upgrade Requests */}
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold">Tarif Yangilash So'rovlari</h3>
+                        <p className="text-muted-foreground">Hamkorlardan kelgan tarif yangilash so'rovlari</p>
+                      </div>
+                      <Badge variant="secondary">
+                        {tierUpgradeRequests.length} ta so'rov
+                      </Badge>
+                    </div>
+                    <div className="grid gap-4">
+                      {tierUpgradeRequests.length === 0 ? (
+                        <Card>
+                          <CardContent className="p-8 text-center">
+                            <Crown className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                            <p className="text-muted-foreground">Hozircha tarif yangilash so'rovlari yo'q</p>
+                          </CardContent>
+                        </Card>
+                      ) : (
+                        tierUpgradeRequests.map((request) => (
+                          <Card key={request.id} className="shadow-elegant hover-lift">
+                            <CardContent className="p-6">
+                              <div className="flex items-start justify-between mb-4">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-3 mb-3">
+                                    <Crown className="w-6 h-6 text-primary" />
+                                    <div>
+                                      <h4 className="text-lg font-semibold">
+                                        {getTierName(request.currentTier)} → {getTierName(request.requestedTier)}
+                                      </h4>
+                                      <p className="text-sm text-muted-foreground">
+                                        {new Date(request.requestedAt).toLocaleDateString('uz-UZ')}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  {request.reason && (
+                                    <div className="mb-4 p-3 bg-muted/30 rounded-lg">
+                                      <p className="text-sm text-muted-foreground mb-1">Sabab:</p>
+                                      <p className="text-sm">{request.reason}</p>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {getStatusBadge(request.status)}
+                                </div>
+                              </div>
+                              {request.status === 'pending' && (
+                                <div className="space-y-4">
+                                  <Textarea
+                                    placeholder="Admin izohi..."
+                                    className="min-h-[80px]"
+                                    id={`admin-notes-${request.id}`}
+                                  />
+                                  <div className="flex gap-2">
+                                    <Button
+                                      onClick={() => {
+                                        const textarea = document.getElementById(`admin-notes-${request.id}`) as HTMLTextAreaElement;
+                                        updateTierRequestMutation.mutate({
+                                          id: request.id,
+                                          status: 'approved',
+                                          adminNotes: textarea?.value || ''
+                                        });
+                                      }}
+                                      disabled={updateTierRequestMutation.isPending}
+                                      className="bg-green-600 hover:bg-green-700"
+                                      size="sm"
+                                    >
+                                      <CheckCircle className="w-4 h-4 mr-2" />
+                                      Tasdiqlash
+                                    </Button>
+                                    <Button
+                                      onClick={() => {
+                                        const textarea = document.getElementById(`admin-notes-${request.id}`) as HTMLTextAreaElement;
+                                        updateTierRequestMutation.mutate({
+                                          id: request.id,
+                                          status: 'rejected',
+                                          adminNotes: textarea?.value || ''
+                                        });
+                                      }}
+                                      disabled={updateTierRequestMutation.isPending}
+                                      variant="destructive"
+                                      size="sm"
+                                    >
+                                      <XCircle className="w-4 h-4 mr-2" />
+                                      Rad etish
+                                    </Button>
+                                  </div>
+                                </div>
+                              )}
+                              {request.adminNotes && (
+                                <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                  <p className="text-sm text-blue-600 font-medium mb-1">Admin izohi:</p>
+                                  <p className="text-sm text-blue-800">{request.adminNotes}</p>
+                                </div>
+                              )}
+                            </CardContent>
+                          </Card>
+                        ))
+                      )}
+                    </div>
                   </div>
                 </TabsContent>
 
                 <TabsContent value="requests">
-                  {/* Requests content will be moved here */}
-                  <div className="text-center py-8">
-                    <Package className="w-12 h-12 mx-auto mb-4 text-blue-500" />
-                    <h3 className="text-xl font-bold mb-2">So'rovlar Bo'limi</h3>
-                    <p className="text-muted-foreground">Fulfillment so'rovlari bu yerda</p>
+                  {/* Fulfillment Requests */}
+                  <div className="space-y-6">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                      <div>
+                        <h3 className="text-xl font-bold">Fulfillment So'rovlari</h3>
+                        <p className="text-muted-foreground">Hamkorlardan kelgan so'rovlarni boshqarish</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Input
+                          placeholder="So'rov qidirish..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="w-64"
+                        />
+                        <select
+                          value={filterStatus}
+                          onChange={(e) => setFilterStatus(e.target.value)}
+                          className="px-3 py-2 border rounded-md"
+                        >
+                          <option value="all">Barchasi</option>
+                          <option value="pending">Kutilmoqda</option>
+                          <option value="in_progress">Jarayonda</option>
+                          <option value="completed">Bajarildi</option>
+                          <option value="rejected">Rad etildi</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="grid gap-4">
+                      {fulfillmentRequests.length === 0 ? (
+                        <Card>
+                          <CardContent className="p-8 text-center">
+                            <Package className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                            <p className="text-muted-foreground">Hozircha so'rovlar yo'q</p>
+                          </CardContent>
+                        </Card>
+                      ) : (
+                        fulfillmentRequests
+                          .filter(req => {
+                            const matchesSearch = req.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                                req.description.toLowerCase().includes(searchTerm.toLowerCase());
+                            const matchesStatus = filterStatus === 'all' || req.status === filterStatus;
+                            return matchesSearch && matchesStatus;
+                          })
+                          .map((request) => (
+                            <Card key={request.id} className="shadow-elegant hover-lift">
+                              <CardContent className="p-6">
+                                <div className="flex items-start justify-between mb-4">
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-3 mb-2">
+                                      <Package className="w-5 h-5 text-primary" />
+                                      <h4 className="text-lg font-semibold">{request.title}</h4>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground mb-3">{request.description}</p>
+                                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                      <span>Turi: {request.requestType}</span>
+                                      <span>Muhimlik: {request.priority || 'medium'}</span>
+                                      <span>{new Date(request.createdAt).toLocaleDateString('uz-UZ')}</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    {getStatusBadge(request.status)}
+                                  </div>
+                                </div>
+                                {request.status === 'pending' && (
+                                  <div className="flex gap-2 mt-4">
+                                    <Button
+                                      onClick={() => acceptRequestMutation.mutate(request.id)}
+                                      disabled={acceptRequestMutation.isPending}
+                                      className="bg-green-600 hover:bg-green-700"
+                                      size="sm"
+                                    >
+                                      <CheckCircle className="w-4 h-4 mr-2" />
+                                      Qabul qilish
+                                    </Button>
+                                    <Button
+                                      onClick={() => rejectRequestMutation.mutate(request.id)}
+                                      disabled={rejectRequestMutation.isPending}
+                                      variant="destructive"
+                                      size="sm"
+                                    >
+                                      <XCircle className="w-4 h-4 mr-2" />
+                                      Rad etish
+                                    </Button>
+                                  </div>
+                                )}
+                              </CardContent>
+                            </Card>
+                          ))
+                      )}
+                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
