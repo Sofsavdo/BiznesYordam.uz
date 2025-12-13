@@ -2,7 +2,7 @@
 // Similar to AnyDesk/TeamViewer but integrated into SellerCloudX
 
 import { db } from '../db';
-import { remoteAccessSessions } from '@db/schema';
+import { remoteAccessSessions } from '@shared/schema';
 import { eq, and } from 'drizzle-orm';
 import crypto from 'crypto';
 
