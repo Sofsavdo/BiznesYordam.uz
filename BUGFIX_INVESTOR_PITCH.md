@@ -20,7 +20,17 @@ ReferenceError: AlertCircle is not defined
 - `AlertCircle` icon ishlatilgan lekin import qilinmagan
 - Lucide-react import ro'yxatida yo'q edi
 
-**2. Auth Xatoliklari (401)**
+**2. X is not defined**
+```
+ReferenceError: X is not defined
+  at InvestorPitch.tsx:1274
+```
+
+**Sabab:**
+- `X` icon (close button) ishlatilgan lekin import qilinmagan
+- Lucide-react import ro'yxatida yo'q edi
+
+**3. Auth Xatoliklari (401)**
 ```
 api/auth/me:1 Failed to load resource: the server responded with a status of 401
 ```
@@ -30,7 +40,7 @@ api/auth/me:1 Failed to load resource: the server responded with a status of 401
 - InvestorPitch public sahifa, auth kerak emas
 - Bu normal xatti-harakat, pitch ishlashiga ta'sir qilmaydi
 
-**3. Browser Extension Xatoliklari**
+**4. Browser Extension Xatoliklari**
 ```
 Uncaught (in promise) Error: A listener indicated an asynchronous response...
 ```
@@ -44,7 +54,7 @@ Uncaught (in promise) Error: A listener indicated an asynchronous response...
 
 ## ✅ Yechim
 
-### 1. AlertCircle Import Qo'shildi
+### 1. AlertCircle va X Iconlari Import Qo'shildi
 
 **Fayl:** `client/src/pages/InvestorPitch.tsx`
 
@@ -61,11 +71,12 @@ import { ArrowLeft, ArrowRight, Download, Rocket, TrendingUp,
   DollarSign, Target, Zap, Package, Users, BarChart3, Globe, 
   Award, CheckCircle, Lock, Eye, EyeOff, Brain, Clock, Shield, 
   Sparkles, Crown, Star, Play, ChevronRight, TrendingDown, 
-  AlertCircle } from 'lucide-react';
+  AlertCircle, X } from 'lucide-react';
 ```
 
 **Natija:**
 - ✅ AlertCircle endi import qilingan
+- ✅ X (close icon) endi import qilingan
 - ✅ Barcha iconlar mavjud
 - ✅ Pitch sahifasi to'g'ri ishlaydi
 
@@ -134,27 +145,26 @@ npm run build
 
 ## 📊 Commit Ma'lumotlari
 
-**Commit Hash:** c002e49
+**Commit 1:** c002e49 - AlertCircle import
+**Commit 2:** bec6cfe - X icon import
 
-**Commit Message:**
+**Commit Messages:**
 ```
-Fix InvestorPitch: Add missing AlertCircle import
+1. Fix InvestorPitch: Add missing AlertCircle import
+   - Add AlertCircle to lucide-react imports
+   - Fixes 'AlertCircle is not defined' error
 
-🐛 Bug Fix:
-- Add AlertCircle to lucide-react imports
-- Fixes 'AlertCircle is not defined' error
-- Pitch deck now displays correctly
-
-✅ Tested:
-- Build successful
-- No import errors
-- All icons available
+2. Fix InvestorPitch: Add missing X icon import
+   - Add X icon to lucide-react imports
+   - Fixes 'X is not defined' error
+   - Close button now works correctly
 ```
 
 **O'zgarishlar:**
-- 1 fayl o'zgartirildi
-- 1 qator qo'shildi
-- 1 qator o'chirildi
+- 1 fayl o'zgartirildi (2 marta)
+- AlertCircle qo'shildi
+- X icon qo'shildi
+- Barcha iconlar import qilindi
 
 ---
 
