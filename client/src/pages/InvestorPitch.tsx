@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, Lock, Eye, EyeOff, Brain, Clock, Shield, Sparkles, Crown, Star, Play, ChevronRight, TrendingDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, Rocket, TrendingUp, DollarSign, Target, Zap, Package, Users, BarChart3, Globe, Award, CheckCircle, Lock, Eye, EyeOff, Brain, Clock, Shield, Sparkles, Crown, Star, Play, ChevronRight, TrendingDown, AlertCircle } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 export default function InvestorPitch() {
