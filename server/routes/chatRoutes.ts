@@ -69,11 +69,11 @@ router.post('/messages', asyncHandler(async (req: Request, res: Response) => {
   }
 
   const message = {
-    id: `msg-${uuidv4()}`,
+    id: `msg-${nanoid()}`,
     chatRoomId: `chat-${partner.id}`,
     senderId: user.id,
     senderRole: user.role,
-    senderName: `${user.firstName} ${user.lastName}`,
+    senderName: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username,
     content,
     createdAt: new Date().toISOString(),
     readAt: null

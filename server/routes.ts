@@ -39,6 +39,7 @@ import adminAdvancedFeaturesRoutes from "./routes/adminAdvancedFeatures";
 import partnerAdvancedFeaturesRoutes from "./routes/partnerAdvancedFeatures";
 import autonomousAIRoutes from "./routes/autonomousAI";
 import aiServicesRoutes from "./routes/aiServices";
+import autonomousManagerRoutes from "./routes/autonomousManager";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
@@ -1278,6 +1279,11 @@ export function registerRoutes(app: express.Application): Server {
   // Real AI Integration: Claude 3.5 Sonnet, GPT-4 Vision, Flux.1, Ideogram
   // Product analysis, SEO generation, image generation, remote access
   app.use("/api/ai-services", requireAuth, aiServicesRoutes);
+
+  // ==================== AUTONOMOUS MANAGER ====================
+  // ZERO HUMAN INTERVENTION - Fully automated product management
+  // Auto-sync from marketplaces, auto-generate cards, auto-publish
+  app.use("/api/autonomous", requirePartnerWithData, autonomousManagerRoutes);
 
   // Error handling middleware
   app.use(handleValidationError);

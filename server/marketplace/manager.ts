@@ -1,9 +1,11 @@
 import { MarketplaceIntegration, MarketplaceCredentials } from './index';
 import { UzumIntegration } from './uzum';
 import { WildberriesIntegration } from './wildberries';
+import { OzonIntegration } from './ozon';
+import { TrendyolIntegration } from './trendyol';
 import { logger } from '../logger';
 
-export type MarketplaceName = 'uzum' | 'wildberries' | 'yandex' | 'ozon';
+export type MarketplaceName = 'uzum' | 'wildberries' | 'ozon' | 'trendyol';
 
 export class MarketplaceManager {
   private integrations: Map<string, MarketplaceIntegration> = new Map();
@@ -28,14 +30,12 @@ export class MarketplaceManager {
         case 'wildberries':
           integration = new WildberriesIntegration(credentials);
           break;
-        case 'yandex':
-          // TODO: Implement Yandex integration
-          logger.warn('Yandex integration not yet implemented');
-          return false;
         case 'ozon':
-          // TODO: Implement Ozon integration
-          logger.warn('Ozon integration not yet implemented');
-          return false;
+          integration = new OzonIntegration(credentials);
+          break;
+        case 'trendyol':
+          integration = new TrendyolIntegration(credentials);
+          break;
         default:
           logger.error(`Unknown marketplace: ${marketplace}`);
           return false;
