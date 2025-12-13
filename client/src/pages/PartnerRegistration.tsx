@@ -1,7 +1,7 @@
 // SIMPLE PARTNER REGISTRATION - SellerCloudX
 // Fast onboarding - Admin activates later
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,11 +10,12 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
-import { Rocket, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
+import { Rocket, ArrowRight, CheckCircle, Sparkles, Gift, Home } from 'lucide-react';
 
 export default function PartnerRegistration() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const [promoCode, setPromoCode] = useState<string>('');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,8 +24,23 @@ export default function PartnerRegistration() {
     username: '',
     password: '',
     businessName: '',
-    agreeToTerms: false
+    agreeToTerms: false,
+    referralCode: ''
   });
+
+  // Extract promo code from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      setPromoCode(ref);
+      setFormData(prev => ({ ...prev, referralCode: ref }));
+      toast({
+        title: "🎁 Promo kod qo'llandi!",
+        description: `Kod: ${ref} - Ro'yxatdan o'tganingizda $5 chegirma olasiz!`,
+      });
+    }
+  }, [toast]);
 
   const registrationMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -79,16 +95,38 @@ export default function PartnerRegistration() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-50 flex items-center justify-center p-4">
+      {/* Back to Home Button */}
+      <Button
+        onClick={() => setLocation('/')}
+        variant="ghost"
+        className="absolute top-4 left-4 flex items-center gap-2 hover:bg-white/50"
+      >
+        <Home className="w-5 h-5" />
+        Bosh sahifa
+      </Button>
+
       <Card className="max-w-2xl w-full shadow-2xl border-2 border-purple-300">
         <CardHeader className="text-center pb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/20 flex items-center justify-center">
             <Sparkles className="w-9 h-9 text-white" />
           </div>
           <CardTitle className="text-3xl font-black">SellerCloudX ga Qo'shiling!</CardTitle>
-          <p className="text-white/90 mt-2">2 daqiqada ro'yxatdan o'ting - Admin tasdiqlab platformaga kirish beradi</p>
+          <p className="text-white/90 mt-2">2 daqiqida ro'yxatdan o'ting - Admin tasdiqlab platformaga kirish beradi</p>
         </CardHeader>
         
         <CardContent className="p-8">
+          {promoCode && (
+            <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border-2 border-green-300 animate-pulse">
+              <div className="flex items-center gap-3">
+                <Gift className="w-6 h-6 text-green-600" />
+                <div>
+                  <p className="font-bold text-green-800">Promo kod faol!</p>
+                  <p className="text-sm text-green-700">Kod: <span className="font-mono font-bold">{promoCode}</span> - $5 chegirma olasiz!</p>
+                </div>
+              </div>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Info */}
             <div className="space-y-4">
@@ -214,14 +252,23 @@ export default function PartnerRegistration() {
             </Button>
           </form>
           
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-3">
             <p className="text-sm text-gray-600">
               Allaqachon akkauntingiz bormi?{' '}
               <button
-                onClick={() => setLocation('/')}
+                onClick={() => setLocation('/login')}
                 className="text-blue-600 font-semibold hover:underline"
               >
                 Kirish
+              </button>
+            </p>
+            <p className="text-xs text-gray-500">
+              yoki{' '}
+              <button
+                onClick={() => setLocation('/')}
+                className="text-purple-600 font-semibold hover:underline"
+              >
+                Bosh sahifaga qaytish
               </button>
             </p>
           </div>

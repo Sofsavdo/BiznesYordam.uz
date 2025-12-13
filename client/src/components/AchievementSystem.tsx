@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Trophy, Target, Zap, Crown, Star, Gift } from 'lucide-react';
+import { Trophy, Target, Zap, Crown, Star, Gift, CheckCircle } from 'lucide-react';
 
 interface Achievement {
   id: string;
@@ -17,42 +17,51 @@ interface Achievement {
 }
 
 export function AchievementSystem() {
-  const { data: achievements = [] } = useQuery<Achievement[]>({
+  const { data: achievements = [], isLoading } = useQuery<Achievement[]>({
     queryKey: ['achievements'],
     queryFn: async () => {
-      // Mock data - implement backend later
-      return [
-        {
-          id: 'first_sale',
-          title: 'First Sale',
-          description: 'Birinchi sotuvingiz',
-          icon: '🎯',
-          reward: 50,
-          progress: 0,
-          total: 1,
-          unlocked: false
-        },
-        {
-          id: 'speed_demon',
-          title: 'Speed Demon',
-          description: '24 soatda 10 mahsulot yuklash',
-          icon: '⚡',
-          reward: 100,
-          progress: 3,
-          total: 10,
-          unlocked: false
-        },
-        {
-          id: 'trendsetter',
-          title: 'Trendsetter',
-          description: '3 ta bestseller topish',
-          icon: '🔥',
-          reward: 200,
-          progress: 1,
-          total: 3,
-          unlocked: false
+      try {
+        const res = await fetch('/api/achievements', { credentials: 'include' });
+        if (!res.ok) {
+          // Fallback to default achievements if API not ready
+          return [
+            {
+              id: 'first_sale',
+              title: 'First Sale',
+              description: 'Birinchi sotuvingiz',
+              icon: '🎯',
+              reward: 50,
+              progress: 0,
+              total: 1,
+              unlocked: false
+            },
+            {
+              id: 'speed_demon',
+              title: 'Speed Demon',
+              description: '24 soatda 10 mahsulot yuklash',
+              icon: '⚡',
+              reward: 100,
+              progress: 0,
+              total: 10,
+              unlocked: false
+            },
+            {
+              id: 'trendsetter',
+              title: 'Trendsetter',
+              description: '3 ta bestseller topish',
+              icon: '🔥',
+              reward: 200,
+              progress: 0,
+              total: 3,
+              unlocked: false
+            }
+          ];
         }
-      ];
+        return res.json();
+      } catch (error) {
+        console.error('Achievement fetch error:', error);
+        return [];
+      }
     },
   });
 
@@ -60,6 +69,31 @@ export function AchievementSystem() {
   const totalRewards = achievements
     .filter(a => a.unlocked)
     .reduce((sum, a) => sum + a.reward, 0);
+
+  if (isLoading) {
+    return (
+      <Card className="border-2 border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (achievements.length === 0) {
+    return (
+      <Card className="border-2 border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50">
+        <CardContent className="p-6">
+          <div className="text-center py-8">
+            <Trophy className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+            <p className="text-gray-600">Hozircha achievement yo'q</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="border-2 border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50">

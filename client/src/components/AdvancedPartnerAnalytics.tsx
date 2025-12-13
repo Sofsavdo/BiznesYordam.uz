@@ -1,6 +1,7 @@
 // ADVANCED PARTNER ANALYTICS - Admin Panel
 // Detailed breakdown of profit sources per partner
 
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -139,7 +140,47 @@ const generatePartnerData = () => {
 };
 
 export function AdvancedPartnerAnalytics() {
-  const partnersData = generatePartnerData();
+  const { data: partnersData = [], isLoading } = useQuery({
+    queryKey: ['admin-partner-analytics'],
+    queryFn: async () => {
+      try {
+        const res = await fetch('/api/admin/partner-analytics', { credentials: 'include' });
+        if (!res.ok) {
+          // Fallback to generated data if API not ready
+          return generatePartnerData();
+        }
+        return res.json();
+      } catch (error) {
+        console.error('Partner analytics fetch error:', error);
+        return generatePartnerData();
+      }
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardContent className="p-6">
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (partnersData.length === 0) {
+    return (
+      <Card>
+        <CardContent className="p-6">
+          <div className="text-center py-8">
+            <Users className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+            <p className="text-gray-600">Hozircha hamkor ma'lumotlari yo'q</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   // Calculate totals
   const totals = partnersData.reduce((acc, partner) => ({

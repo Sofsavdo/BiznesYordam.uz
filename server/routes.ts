@@ -9,7 +9,7 @@ import { getSessionConfig } from "./session";
 import { asyncHandler } from "./errorHandler";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
-import { partners } from "@shared/schema";
+import { partners, referrals } from "@shared/schema";
 
 import { 
   loginSchema, 
@@ -382,12 +382,46 @@ export function registerRoutes(app: express.Application): Server {
         notes: validatedData.notes || undefined
       });
 
+      // Handle referral code if provided
+      const referralCode = (req.body as any).referralCode;
+      if (referralCode) {
+        try {
+          // Find referrer by searching referrals table for matching promo code
+          const existingReferral = await db.select()
+            .from(referrals)
+            .where(eq(referrals.promoCode, referralCode))
+            .limit(1);
+
+          if (existingReferral.length > 0) {
+            const referrerId = existingReferral[0].referrerPartnerId;
+            
+            // Create referral record for new partner
+            await db.insert(referrals).values({
+              id: `ref_${Date.now()}`,
+              referrerPartnerId: referrerId,
+              referredPartnerId: partner.id,
+              promoCode: referralCode,
+              contractType: 'starter_pro',
+              status: 'registered',
+              createdAt: new Date()
+            });
+
+            console.log('✅ Referral created:', referralCode, '→', partner.id);
+          } else {
+            console.log('⚠️ Promo code not found:', referralCode);
+          }
+        } catch (refError) {
+          console.error('⚠️ Referral creation failed:', refError);
+          // Don't fail registration if referral fails
+        }
+      }
+
       await storage.createAuditLog({
         userId: user.id,
         action: 'PARTNER_REGISTERED',
         entityType: 'partner',
         entityId: partner.id,
-        payload: { businessName: validatedData.businessName }
+        payload: { businessName: validatedData.businessName, referralCode }
       });
 
       res.status(201).json({
