@@ -35,7 +35,8 @@ import enhancedAIDashboardRoutes from "./routes/enhancedAIDashboard";
 import enhancedAIRoutes from "./routes/enhancedAI";
 import referralRoutes from "./routes/referralRoutes";
 import chatRoutes from "./routes/chatRoutes";
-import advancedFeaturesRoutes from "./routes/advancedFeatures";
+import adminAdvancedFeaturesRoutes from "./routes/adminAdvancedFeatures";
+import partnerAdvancedFeaturesRoutes from "./routes/partnerAdvancedFeatures";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
@@ -1256,9 +1257,15 @@ export function registerRoutes(app: express.Application): Server {
   // Legacy route (backward compatibility)
   app.use("/api/enhanced-ai", requirePartnerWithData, enhancedAIDashboardRoutes);
 
-  // ==================== ADVANCED FEATURES ====================
-  // Order Rule Engine, Inventory Forecasting, Advanced Reporting
-  app.use("/api/advanced", requirePartnerWithData, advancedFeaturesRoutes);
+  // ==================== ADMIN ADVANCED FEATURES ====================
+  // Order Rule Engine, Warehouse Management (Local Full-Service only)
+  // For internal operations - partners don't see these
+  app.use("/api/admin/advanced", requireAdmin, adminAdvancedFeaturesRoutes);
+
+  // ==================== PARTNER ADVANCED FEATURES ====================
+  // Inventory Forecasting, Advanced Reporting (Both Local & SaaS)
+  // Partners use these features
+  app.use("/api/partner/advanced", requirePartnerWithData, partnerAdvancedFeaturesRoutes);
 
   // Error handling middleware
   app.use(handleValidationError);

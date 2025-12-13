@@ -1,58 +1,15 @@
-// Advanced Features Routes - Order Rules, Forecasting, Reporting
+// Partner Advanced Features Routes - For Partner Dashboard
+// Inventory Forecasting, Advanced Reporting (Both Local & SaaS models)
+
 import express, { Request, Response } from 'express';
 import { asyncHandler } from '../errorHandler';
-import { orderRuleEngine } from '../services/orderRuleEngine';
 import { inventoryForecasting } from '../services/inventoryForecasting';
 import { advancedReporting } from '../services/advancedReporting';
 
 const router = express.Router();
 
-// ==================== ORDER RULE ENGINE ====================
-
-// Get all rules
-router.get('/order-rules', asyncHandler(async (req: Request, res: Response) => {
-  const rules = orderRuleEngine.getRules();
-  res.json(rules);
-}));
-
-// Add custom rule
-router.post('/order-rules', asyncHandler(async (req: Request, res: Response) => {
-  const rule = req.body;
-  orderRuleEngine.addRule(rule);
-  res.status(201).json({ message: 'Rule added successfully', rule });
-}));
-
-// Update rule
-router.put('/order-rules/:id', asyncHandler(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const updates = req.body;
-  orderRuleEngine.updateRule(id, updates);
-  res.json({ message: 'Rule updated successfully' });
-}));
-
-// Delete rule
-router.delete('/order-rules/:id', asyncHandler(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  orderRuleEngine.deleteRule(id);
-  res.json({ message: 'Rule deleted successfully' });
-}));
-
-// Toggle rule
-router.patch('/order-rules/:id/toggle', asyncHandler(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { enabled } = req.body;
-  orderRuleEngine.toggleRule(id, enabled);
-  res.json({ message: 'Rule toggled successfully' });
-}));
-
-// Process order through rule engine (for testing)
-router.post('/order-rules/process', asyncHandler(async (req: Request, res: Response) => {
-  const order = req.body;
-  const result = await orderRuleEngine.processOrder(order);
-  res.json(result);
-}));
-
 // ==================== INVENTORY FORECASTING ====================
+// Available for both Local Full-Service and Remote AI SaaS
 
 // Forecast single product
 router.get('/inventory-forecast/:productId', asyncHandler(async (req: Request, res: Response) => {
@@ -68,7 +25,6 @@ router.get('/inventory-forecast/:productId', asyncHandler(async (req: Request, r
 
 // Forecast all products for partner
 router.get('/inventory-forecast', asyncHandler(async (req: Request, res: Response) => {
-  const user = (req as any).user;
   const partner = (req as any).partner;
   
   if (!partner) {
@@ -104,10 +60,19 @@ router.get('/inventory-forecast/overstocked', asyncHandler(async (req: Request, 
 }));
 
 // ==================== ADVANCED REPORTING ====================
+// Available for both Local Full-Service and Remote AI SaaS
 
 // Generate sales report
 router.post('/reports/sales', asyncHandler(async (req: Request, res: Response) => {
+  const partner = (req as any).partner;
   const config = req.body;
+  
+  // Add partner filter
+  if (!config.filters) {
+    config.filters = {};
+  }
+  config.filters.partnerId = partner.id;
+  
   const report = await advancedReporting.generateSalesReport(config);
   res.json(report);
 }));
