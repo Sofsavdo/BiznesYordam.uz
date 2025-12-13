@@ -38,6 +38,7 @@ import chatRoutes from "./routes/chatRoutes";
 import adminAdvancedFeaturesRoutes from "./routes/adminAdvancedFeatures";
 import partnerAdvancedFeaturesRoutes from "./routes/partnerAdvancedFeatures";
 import autonomousAIRoutes from "./routes/autonomousAI";
+import aiServicesRoutes from "./routes/aiServices";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
@@ -1272,6 +1273,11 @@ export function registerRoutes(app: express.Application): Server {
   // Zero-Command AI - Partner provides minimal input, AI does everything
   // Revolutionary feature: No manual listing creation needed
   app.use("/api/autonomous-ai", requirePartnerWithData, autonomousAIRoutes);
+
+  // ==================== AI SERVICES ====================
+  // Real AI Integration: Claude 3.5 Sonnet, GPT-4 Vision, Flux.1, Ideogram
+  // Product analysis, SEO generation, image generation, remote access
+  app.use("/api/ai-services", requireAuth, aiServicesRoutes);
 
   // Error handling middleware
   app.use(handleValidationError);
