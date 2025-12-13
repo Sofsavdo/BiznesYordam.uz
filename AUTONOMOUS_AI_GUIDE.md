@@ -58,6 +58,10 @@ const credentials = {
   trendyol: {
     apiKey: "trendyol_api_key",
     sellerId: "supplier_id"
+  },
+  yandex: {
+    apiKey: "yandex_oauth_token",
+    campaignId: "campaign_id"
   }
 };
 ```
@@ -73,7 +77,7 @@ POST /api/autonomous/start
 **Request Body:**
 ```json
 {
-  "enabledMarketplaces": ["wildberries", "uzum", "ozon", "trendyol"],
+  "enabledMarketplaces": ["wildberries", "uzum", "ozon", "trendyol", "yandex"],
   "autoSync": true,
   "autoGenerateCards": true,
   "autoPublish": false,

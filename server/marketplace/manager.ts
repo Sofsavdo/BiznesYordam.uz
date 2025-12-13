@@ -3,9 +3,10 @@ import { UzumIntegration } from './uzum';
 import { WildberriesIntegration } from './wildberries';
 import { OzonIntegration } from './ozon';
 import { TrendyolIntegration } from './trendyol';
+import { YandexIntegration } from './yandex';
 import { logger } from '../logger';
 
-export type MarketplaceName = 'uzum' | 'wildberries' | 'ozon' | 'trendyol';
+export type MarketplaceName = 'uzum' | 'wildberries' | 'ozon' | 'trendyol' | 'yandex';
 
 export class MarketplaceManager {
   private integrations: Map<string, MarketplaceIntegration> = new Map();
@@ -35,6 +36,9 @@ export class MarketplaceManager {
           break;
         case 'trendyol':
           integration = new TrendyolIntegration(credentials);
+          break;
+        case 'yandex':
+          integration = new YandexIntegration(credentials);
           break;
         default:
           logger.error(`Unknown marketplace: ${marketplace}`);

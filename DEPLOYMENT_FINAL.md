@@ -5,7 +5,7 @@
 **Status:** ✅ PRODUCTION READY
 
 **Tugallangan Xususiyatlar:**
-- ✅ 4 ta marketplace integratsiya (Wildberries, Uzum, Ozon, Trendyol)
+- ✅ 5 ta marketplace integratsiya (Wildberries, Uzum, Ozon, Trendyol, Yandex Market)
 - ✅ AI xizmatlar (Claude 3.5 Sonnet, GPT-4 Vision, Flux.1, Ideogram)
 - ✅ Avtomatik mahsulot boshqaruvi (ZERO HUMAN INTERVENTION)
 - ✅ Remote access yordam tizimi
@@ -207,6 +207,19 @@ npm start
 2. "Entegrasyonlar" → "API" ga o'ting
 3. API credentials yarating
 4. Supplier ID va API Key nusxalang
+
+### Yandex Market
+
+1. https://partner.market.yandex.ru/ ga kiring
+2. "Настройки" → "API" ga o'ting
+3. OAuth token yarating
+4. Campaign ID va OAuth token nusxalang
+
+**OAuth Token Olish:**
+- Yandex OAuth: https://oauth.yandex.ru/
+- Application yarating
+- market:partner-api scope tanlang
+- Token oling
 
 ---
 
