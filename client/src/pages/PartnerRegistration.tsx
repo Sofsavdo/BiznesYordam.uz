@@ -52,7 +52,9 @@ export default function PartnerRegistration() {
         title: "✅ Muvaffaqiyatli!",
         description: "Admin tez orada tasdiqlab, platformaga kirish beradi.",
       });
-      setTimeout(() => setLocation('/'), 2000);
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
     },
     onError: (error: Error) => {
       toast({

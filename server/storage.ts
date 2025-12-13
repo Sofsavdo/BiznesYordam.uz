@@ -164,27 +164,26 @@ export async function createPartner(partnerData: {
   businessCategory: string;
   monthlyRevenue?: string;
   pricingTier?: string;
+  phone: string;
   notes?: string;
 }): Promise<Partner> {
   try {
     const [partner] = await db.insert(partners).values({
       id: nanoid(),
       userId: partnerData.userId,
-      businessName: partnerData.businessName,
+      businessName: partnerData.businessName || 'Yangi Biznes',
       businessCategory: partnerData.businessCategory as any,
       monthlyRevenue: partnerData.monthlyRevenue,
       pricingTier: partnerData.pricingTier || 'starter_pro',
-      commissionRate: '0.25', // YANGI: 25% savdodan (Starter Pro)
-      planType: 'local_full_service',
-      aiPlanCode: null,
-      isApproved: false,
+      phone: partnerData.phone,
+      approved: false,
       createdAt: new Date(),
-      updatedAt: new Date(),
       notes: partnerData.notes
     }).returning();
     
     return partner;
   } catch (error: any) {
+    console.error('❌ Create partner error:', error);
     throw new StorageError(`Hamkor yaratishda xatolik: ${error.message}`, 'CREATE_PARTNER_ERROR');
   }
 }

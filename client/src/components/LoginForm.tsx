@@ -28,17 +28,23 @@ export function LoginForm({ onSuccess, isAdmin = false }: LoginFormProps) {
     setError('');
 
     try {
+      console.log('🔐 Login attempt:', formData.username);
       const result = await login(formData.username, formData.password);
+      console.log('✅ Login result:', result);
+      
       if (result?.user?.role === 'admin') {
+        console.log('👤 Redirecting to admin panel');
         window.location.href = '/admin-panel';
       } else if (result?.user?.role === 'partner') {
+        console.log('👤 Redirecting to partner dashboard');
         window.location.href = '/partner-dashboard';
       } else {
+        console.log('👤 Calling onSuccess callback');
         onSuccess?.();
       }
     } catch (error: any) {
+      console.error('❌ Login error:', error);
       setError(error.message || 'Kirish jarayonida xatolik yuz berdi');
-    } finally {
       setIsLoading(false);
     }
   };
