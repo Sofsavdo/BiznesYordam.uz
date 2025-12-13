@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight, Lock, Eye, EyeOff, Shield, CheckCircle, TrendingUp, DollarSign, Users, Zap, Target, BarChart3, Rocket, AlertCircle, Package, Globe, Award, Brain, Clock, X, TrendingDown, Layers, ShoppingCart, Warehouse } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Lock, Eye, EyeOff, CheckCircle, TrendingUp, DollarSign, Users, Zap, Target, BarChart3, Rocket, AlertCircle, Package, Brain, Clock, X, Warehouse, ShoppingCart, TrendingDown } from 'lucide-react';
 import { useLocation } from 'wouter';
 
-export default function FinalInvestorPitch() {
+export default function RealInvestorPitch() {
   const [, setLocation] = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -31,47 +31,43 @@ export default function FinalInvestorPitch() {
     {
       id: 'title',
       content: (
-        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-blue-900 p-12">
-          <div className="text-center max-w-6xl">
-            {/* Badge */}
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-purple-900 pb-24">
+          <div className="text-center max-w-5xl px-8">
             <div className="inline-block px-6 py-2 bg-green-500/20 border border-green-500/50 rounded-full mb-8">
-              <span className="text-green-400 font-bold text-xl">💰 INVESTITSIYA: $500K-$1M</span>
+              <span className="text-green-400 font-bold text-xl">💰 SEED ROUND: $250K-$300K</span>
             </div>
             
-            {/* Logo va Nom */}
             <h1 className="text-8xl font-black text-white mb-6">
-              Seller<span className="text-blue-400">Cloud</span><span className="text-green-400">X</span>
+              Biznes<span className="text-blue-400">Yordam</span>
             </h1>
             
-            {/* Tagline */}
-            <p className="text-4xl text-blue-300 font-bold mb-12">
-              Marketplace Sellerlar uchun AI Platforma
+            <p className="text-4xl text-blue-300 font-bold mb-8">
+              AI Fulfillment Operator
             </p>
             
-            {/* 3 ta Asosiy Metrika */}
-            <div className="grid grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
-                <div className="text-6xl font-black text-green-400 mb-3">$84M</div>
-                <div className="text-xl text-gray-300">ARR (3-yil)</div>
+            <p className="text-2xl text-gray-300 mb-12">
+              O'zbekistondagi marketplace sellerlar uchun<br />
+              AI bilan boshqariladigan ombor va marketplace operatsiyalari
+            </p>
+            
+            <div className="grid grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <div className="text-5xl font-black text-green-400 mb-2">100%</div>
+                <div className="text-lg text-gray-300">Platform Tayyor</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
-                <div className="text-6xl font-black text-blue-400 mb-3">20K+</div>
-                <div className="text-xl text-gray-300">Mijozlar</div>
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <div className="text-5xl font-black text-blue-400 mb-2">20-30</div>
+                <div className="text-lg text-gray-300">Sifatli Hamkor</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
-                <div className="text-6xl font-black text-purple-400 mb-3">100%</div>
-                <div className="text-xl text-gray-300">Tayyor</div>
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <div className="text-5xl font-black text-purple-400 mb-2">6-9 oy</div>
+                <div className="text-lg text-gray-300">Breakeven</div>
               </div>
             </div>
             
-            {/* Status */}
-            <div className="mt-12 flex justify-center gap-4">
-              <div className="px-6 py-3 bg-green-500/20 border border-green-500/50 rounded-full">
-                <span className="text-green-400 font-semibold text-lg">✓ Production Ready</span>
-              </div>
-              <div className="px-6 py-3 bg-blue-500/20 border border-blue-500/50 rounded-full">
-                <span className="text-blue-400 font-semibold text-lg">✓ 41,842 Qator Kod</span>
-              </div>
+            <div className="text-xl text-gray-400">
+              [Ism Familiya] – Founder & CEO<br />
+              Tel / Telegram / Email
             </div>
           </div>
         </div>
@@ -82,42 +78,44 @@ export default function FinalInvestorPitch() {
     {
       id: 'problem',
       content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-red-900 via-slate-900 to-red-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
-            {/* Sarlavha */}
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-red-900 via-slate-900 to-red-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
             <div className="text-center mb-12">
               <h2 className="text-7xl font-black text-red-400 mb-4">Muammo</h2>
-              <p className="text-3xl text-gray-300">50,000+ seller O'zbekistonda kurashmoqda</p>
+              <p className="text-3xl text-gray-300">Marketpleysda sotish oson. Foydali ishlash qiyin.</p>
             </div>
             
-            {/* 3 ta Asosiy Muammo */}
-            <div className="grid grid-cols-3 gap-8">
-              <div className="bg-red-500/10 border-2 border-red-500 rounded-3xl p-8 text-center">
-                <Clock className="w-20 h-20 text-red-400 mx-auto mb-6" />
-                <div className="text-5xl font-black text-white mb-4">16 soat</div>
-                <div className="text-2xl text-gray-300">Kunlik qo'lda ish</div>
-                <div className="text-lg text-gray-400 mt-4">Listing, narx, buyurtma - hammasi qo'lda</div>
+            <div className="grid grid-cols-2 gap-8 mb-8">
+              <div className="bg-red-500/10 border-2 border-red-500 rounded-3xl p-8">
+                <AlertCircle className="w-16 h-16 text-red-400 mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-4">Operatsion Ovora</h3>
+                <p className="text-xl text-gray-300">
+                  Sellerlar ombor, logistika, qaytishlar, soliq, reklama bilan ovora – 
+                  strategiyaga vaqt qolmaydi
+                </p>
               </div>
               
-              <div className="bg-red-500/10 border-2 border-red-500 rounded-3xl p-8 text-center">
-                <DollarSign className="w-20 h-20 text-red-400 mx-auto mb-6" />
-                <div className="text-5xl font-black text-white mb-4">Yuqori</div>
-                <div className="text-2xl text-gray-300">HR va inventar xarajati</div>
-                <div className="text-lg text-gray-400 mt-4">Xodimlar, ombor, logistika - qimmat</div>
-              </div>
-              
-              <div className="bg-red-500/10 border-2 border-red-500 rounded-3xl p-8 text-center">
-                <AlertCircle className="w-20 h-20 text-red-400 mx-auto mb-6" />
-                <div className="text-5xl font-black text-white mb-4">Yuqori</div>
-                <div className="text-2xl text-gray-300">Risk va xatolar</div>
-                <div className="text-lg text-gray-400 mt-4">Noto'g'ri qaror, yo'qotilgan foyda</div>
+              <div className="bg-red-500/10 border-2 border-red-500 rounded-3xl p-8">
+                <Users className="w-16 h-16 text-red-400 mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-4">Kadrlar Muammosi</h3>
+                <p className="text-xl text-gray-300">
+                  Yaxshi marketplace menejerlar kam va qimmat. 
+                  Har bir marketplace uchun alohida mutaxassis kerak
+                </p>
               </div>
             </div>
             
-            {/* Natija */}
-            <div className="mt-12 bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 text-center">
-              <p className="text-3xl font-bold text-white">
-                ❌ Savdo o'sadi, lekin foyda kamayadi • ❌ Vaqt yo'qotiladi • ❌ Raqobatda yutqaziladi
+            <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 text-center">
+              <h3 className="text-4xl font-black text-white mb-4">NATIJA:</h3>
+              <div className="grid grid-cols-2 gap-6 text-2xl text-white">
+                <div>❌ GMV o'sadi, sof foyda tushadi</div>
+                <div>❌ Raqamsiz boshqaruv</div>
+              </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <p className="text-2xl text-gray-300 italic">
+                "Muammo – katta savdo emas, sog'lom unit-ekonomikaga erishish"
               </p>
             </div>
           </div>
@@ -125,125 +123,65 @@ export default function FinalInvestorPitch() {
       ),
     },
 
-    // SLIDE 3: YECHIM - SaaS AI Manager
+    // SLIDE 3: YECHIM
     {
       id: 'solution',
       content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-green-900 via-slate-900 to-green-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
-            {/* Sarlavha */}
-            <div className="text-center mb-12">
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-slate-900 to-blue-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-10">
               <h2 className="text-7xl font-black text-green-400 mb-4">Yechim</h2>
-              <p className="text-3xl text-gray-300">AI bilan 70% avtomatlashtirish</p>
+              <p className="text-3xl text-gray-300">AI bilan boshqariladigan fulfillment operator</p>
             </div>
             
-            {/* Asosiy Taklif */}
-            <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-lg rounded-3xl p-10 border border-green-500/30 mb-10 text-center">
-              <h3 className="text-5xl font-black text-white mb-4">
-                SaaS AI Manager Platform
-              </h3>
+            <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-lg rounded-3xl p-8 border border-green-500/30 mb-8 text-center">
+              <p className="text-3xl font-bold text-white mb-4">
+                Biz sellerlar uchun ombor + fulfillment + marketplace operatsiyalar + analytics'ni 
+                to'liq o'z zimmamizga olamiz
+              </p>
               <p className="text-2xl text-gray-300">
-                Risksiz • Kam xarajat • Tez boshlash • Global scalable
+                Seller faqat mahsulot va kapitalga fokus qiladi
               </p>
             </div>
             
-            {/* 4 ta Asosiy Xususiyat */}
-            <div className="grid grid-cols-4 gap-6">
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
+            <div className="grid grid-cols-3 gap-6">
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
                 <Brain className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <div className="text-2xl font-bold text-white mb-2">AI Avtomatlashtirish</div>
-                <div className="text-lg text-gray-400">Listing, narx, SEO</div>
+                <h3 className="text-2xl font-bold text-white mb-3 text-center">AI Manager</h3>
+                <ul className="text-lg text-gray-300 space-y-2">
+                  <li>• Mahsulot kartalari</li>
+                  <li>• Narxlar va kontent</li>
+                  <li>• Analytics va tasklar</li>
+                  <li>• Avtomatik tavsiyalar</li>
+                </ul>
               </div>
               
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
-                <Zap className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-                <div className="text-2xl font-bold text-white mb-2">Tez Boshlash</div>
-                <div className="text-lg text-gray-400">1 kun ichida</div>
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <Warehouse className="w-16 h-16 text-purple-400 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-white mb-3 text-center">Fulfillment</h3>
+                <ul className="text-lg text-gray-300 space-y-2">
+                  <li>• Qabul va saqlash</li>
+                  <li>• Yig'ish va qadoqlash</li>
+                  <li>• Jo'natish</li>
+                  <li>• Qaytishlar boshqaruvi</li>
+                </ul>
               </div>
               
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
-                <DollarSign className="w-16 h-16 text-green-400 mx-auto mb-4" />
-                <div className="text-2xl font-bold text-white mb-2">Kam Xarajat</div>
-                <div className="text-lg text-gray-400">HR va inventar yo'q</div>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
-                <Globe className="w-16 h-16 text-purple-400 mx-auto mb-4" />
-                <div className="text-2xl font-bold text-white mb-2">Global</div>
-                <div className="text-lg text-gray-400">Istalgan joydan</div>
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <BarChart3 className="w-16 h-16 text-green-400 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-white mb-3 text-center">Partner Kabinet</h3>
+                <ul className="text-lg text-gray-300 space-y-2">
+                  <li>• Savdo va foyda</li>
+                  <li>• ROI kalkulyatori</li>
+                  <li>• Barcha xarajatlar</li>
+                  <li>• Real-time monitoring</li>
+                </ul>
               </div>
             </div>
             
-            {/* Natija */}
-            <div className="mt-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl p-8 text-center">
-              <p className="text-3xl font-bold text-white">
-                ✓ 14 soat/kun tejash • ✓ 40% foyda oshirish • ✓ Risksiz o'sish
-              </p>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-
-    // SLIDE 4: QANDAY ISHLAYDI
-    {
-      id: 'how-it-works',
-      content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-purple-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
-            {/* Sarlavha */}
-            <div className="text-center mb-12">
-              <h2 className="text-7xl font-black text-blue-400 mb-4">Qanday Ishlaydi?</h2>
-              <p className="text-3xl text-gray-300">4 ta oddiy qadam</p>
-            </div>
-            
-            {/* 4 Qadam */}
-            <div className="grid grid-cols-4 gap-6">
-              <div className="relative">
-                <div className="bg-blue-500/20 border-2 border-blue-500 rounded-3xl p-8 text-center">
-                  <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-3xl font-black text-white mx-auto mb-6">1</div>
-                  <ShoppingCart className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-white mb-3">Ro'yxatdan o'ting</div>
-                  <div className="text-lg text-gray-400">1 daqiqa ichida</div>
-                </div>
-                {/* Arrow */}
-                <div className="absolute top-1/2 -right-3 transform -translate-y-1/2 text-blue-400 text-4xl">→</div>
-              </div>
-              
-              <div className="relative">
-                <div className="bg-purple-500/20 border-2 border-purple-500 rounded-3xl p-8 text-center">
-                  <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-3xl font-black text-white mx-auto mb-6">2</div>
-                  <Layers className="w-16 h-16 text-purple-400 mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-white mb-3">Marketplace ulang</div>
-                  <div className="text-lg text-gray-400">1-klik integratsiya</div>
-                </div>
-                <div className="absolute top-1/2 -right-3 transform -translate-y-1/2 text-purple-400 text-4xl">→</div>
-              </div>
-              
-              <div className="relative">
-                <div className="bg-green-500/20 border-2 border-green-500 rounded-3xl p-8 text-center">
-                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-3xl font-black text-white mx-auto mb-6">3</div>
-                  <Brain className="w-16 h-16 text-green-400 mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-white mb-3">AI ishga tushadi</div>
-                  <div className="text-lg text-gray-400">Avtomatik boshqarish</div>
-                </div>
-                <div className="absolute top-1/2 -right-3 transform -translate-y-1/2 text-green-400 text-4xl">→</div>
-              </div>
-              
-              <div>
-                <div className="bg-yellow-500/20 border-2 border-yellow-500 rounded-3xl p-8 text-center">
-                  <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-3xl font-black text-white mx-auto mb-6">4</div>
-                  <TrendingUp className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-                  <div className="text-2xl font-bold text-white mb-3">Foyda oling</div>
-                  <div className="text-lg text-gray-400">O'sish va kuzatish</div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Qo'shimcha Ma'lumot */}
-            <div className="mt-12 bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 text-center">
+            <div className="mt-8 bg-green-500/20 rounded-2xl p-6 border border-green-500/50 text-center">
               <p className="text-2xl text-white font-semibold">
-                ⚡ 1 kun ichida ishga tushiring • 🤖 AI hammani boshqaradi • 📈 Real-time natijalar
+                💡 Biz seller uchun AI bilan ishlaydigan "operations jamoa"miz
               </p>
             </div>
           </div>
@@ -251,351 +189,136 @@ export default function FinalInvestorPitch() {
       ),
     },
 
-    // SLIDE 5: PLATFORM DEMO (Skrinshotlar)
+    // SLIDE 4: MAHSULOT
     {
-      id: 'platform',
+      id: 'product',
       content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-purple-900 via-slate-900 to-blue-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
-            {/* Sarlavha */}
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-slate-900 to-blue-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
             <div className="text-center mb-8">
-              <h2 className="text-7xl font-black text-purple-400 mb-4">Platform Demo</h2>
-              <p className="text-3xl text-gray-300">100% tayyor, ishlab turgan platforma</p>
+              <h2 className="text-7xl font-black text-purple-400 mb-4">Ishlayotgan Platforma</h2>
+              <p className="text-3xl text-gray-300">100% tayyor, 41,842 qator kod</p>
             </div>
             
-            {/* Platform Metrikalari */}
-            <div className="grid grid-cols-4 gap-4 mb-8">
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 text-center border border-white/20">
-                <div className="text-4xl font-black text-blue-400">41,842</div>
-                <div className="text-sm text-gray-400">Qator Kod</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 text-center border border-white/20">
-                <div className="text-4xl font-black text-purple-400">37</div>
-                <div className="text-sm text-gray-400">Database Jadval</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 text-center border border-white/20">
-                <div className="text-4xl font-black text-green-400">50+</div>
-                <div className="text-sm text-gray-400">API Endpoint</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 text-center border border-white/20">
-                <div className="text-4xl font-black text-yellow-400">5</div>
-                <div className="text-sm text-gray-400">Marketplace</div>
-              </div>
-            </div>
-            
-            {/* Screenshot Placeholder */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-lg rounded-3xl p-6 border border-blue-500/30">
-                <div className="bg-slate-800 rounded-2xl p-4 mb-4 h-48 flex items-center justify-center">
+            <div className="grid grid-cols-3 gap-6">
+              <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-lg rounded-3xl p-6 border border-blue-500/30">
+                <div className="bg-slate-800 rounded-2xl p-6 mb-4 h-40 flex items-center justify-center">
                   <div className="text-center">
                     <BarChart3 className="w-16 h-16 text-blue-400 mx-auto mb-2" />
                     <div className="text-xl text-white font-bold">Partner Dashboard</div>
-                    <div className="text-sm text-gray-400">Real-time statistika</div>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>Barcha marketplace bitta joyda</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>Real-time savdo va foyda</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>AI tavsiyalar va trendlar</span>
-                  </div>
-                </div>
+                <p className="text-lg text-gray-300 text-center">GMV, sof foyda, ROI, fulfillment xarajatlari</p>
               </div>
               
-              <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-lg rounded-3xl p-6 border border-purple-500/30">
-                <div className="bg-slate-800 rounded-2xl p-4 mb-4 h-48 flex items-center justify-center">
+              <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-lg rounded-3xl p-6 border border-purple-500/30">
+                <div className="bg-slate-800 rounded-2xl p-6 mb-4 h-40 flex items-center justify-center">
                   <div className="text-center">
-                    <Brain className="w-16 h-16 text-purple-400 mx-auto mb-2" />
-                    <div className="text-xl text-white font-bold">AI Manager</div>
-                    <div className="text-sm text-gray-400">Avtomatik optimizatsiya</div>
+                    <DollarSign className="w-16 h-16 text-purple-400 mx-auto mb-2" />
+                    <div className="text-xl text-white font-bold">Fulfillment Kalkulyatori</div>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>Avtomatik narx optimizatsiya</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>SEO va kontent yaratish</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>Trend tahlili va prognoz</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-
-    // SLIDE 6: TARIFLAR - SaaS (ASOSIY)
-    {
-      id: 'pricing-saas',
-      content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-green-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
-            {/* Sarlavha */}
-            <div className="text-center mb-8">
-              <h2 className="text-7xl font-black text-blue-400 mb-4">SaaS Tariflar</h2>
-              <p className="text-3xl text-gray-300">Minglab seller uchun • Asosiy biznes model</p>
-            </div>
-            
-            {/* 2 ta Tarif */}
-            <div className="grid grid-cols-2 gap-8">
-              {/* AI Starter */}
-              <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-lg rounded-3xl p-8 border-2 border-blue-500">
-                <div className="text-center mb-6">
-                  <div className="inline-block px-4 py-1 bg-blue-500/30 rounded-full text-sm font-bold text-blue-300 mb-4">
-                    YANGI SELLERLAR UCHUN
-                  </div>
-                  <h3 className="text-4xl font-black text-white mb-2">AI Starter</h3>
-                  <div className="text-6xl font-black text-blue-400 mb-2">$349</div>
-                  <div className="text-xl text-gray-400">oyiga + 1.5% savdo</div>
-                </div>
-                
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">100 SKU (mahsulot)</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">2 ta marketplace</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">AI listing va SEO</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">Narx monitoring</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">Basic analytics</span>
-                  </div>
-                </div>
-                
-                <div className="bg-blue-500/20 rounded-2xl p-4 text-center">
-                  <div className="text-sm text-blue-300 font-semibold">Ideal: Yangi biznes, offline→online</div>
-                </div>
+                <p className="text-lg text-gray-300 text-center">To'liq P&L, barcha xarajatlar</p>
               </div>
               
-              {/* AI Manager Pro */}
-              <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-lg rounded-3xl p-8 border-2 border-purple-500 relative">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full">
-                  <span className="text-sm font-black text-white">⭐ MASHHUR</span>
-                </div>
-                
-                <div className="text-center mb-6">
-                  <div className="inline-block px-4 py-1 bg-purple-500/30 rounded-full text-sm font-bold text-purple-300 mb-4">
-                    O'SUVCHI BIZNES UCHUN
-                  </div>
-                  <h3 className="text-4xl font-black text-white mb-2">AI Manager Pro</h3>
-                  <div className="text-6xl font-black text-purple-400 mb-2">$899</div>
-                  <div className="text-xl text-gray-400">oyiga + 1% savdo</div>
-                </div>
-                
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">250 SKU (mahsulot)</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">Cheksiz marketplace</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">FULL AI + Trend Hunter</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">Sof foyda tahlili</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
-                    <span className="text-lg text-gray-300">Priority support</span>
+              <div className="bg-gradient-to-br from-green-600/20 to-green-800/20 backdrop-blur-lg rounded-3xl p-6 border border-green-500/30">
+                <div className="bg-slate-800 rounded-2xl p-6 mb-4 h-40 flex items-center justify-center">
+                  <div className="text-center">
+                    <Brain className="w-16 h-16 text-green-400 mx-auto mb-2" />
+                    <div className="text-xl text-white font-bold">AI Manager Monitor</div>
                   </div>
                 </div>
-                
-                <div className="bg-purple-500/20 rounded-2xl p-4 text-center">
-                  <div className="text-sm text-purple-300 font-semibold">Ideal: Mavjud seller, o'sish istagi</div>
-                </div>
+                <p className="text-lg text-gray-300 text-center">Real vaqtda AI monitoring</p>
               </div>
             </div>
             
-            {/* Qo'shimcha */}
-            <div className="mt-8 bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 text-center">
-              <p className="text-2xl text-white font-semibold">
-                🌍 Global scalable • 💰 Kam xarajat • 🚀 Tez boshlash • ✅ Risksiz
-              </p>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-
-    // SLIDE 7: TARIFLAR - Fulfillment (QO'SHIMCHA)
-    {
-      id: 'pricing-fulfillment',
-      content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-orange-900 via-slate-900 to-red-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
-            {/* Sarlavha */}
-            <div className="text-center mb-6">
-              <h2 className="text-6xl font-black text-orange-400 mb-3">Fulfillment Tariflar</h2>
-              <p className="text-2xl text-gray-300">30-50 ta o'suvchi hamkor uchun • Premium xizmat</p>
-            </div>
-            
-            {/* 4 ta Tarif (Kichikroq) */}
-            <div className="grid grid-cols-4 gap-4">
-              <div className="bg-blue-500/10 border border-blue-500 rounded-2xl p-4">
-                <div className="text-center mb-3">
-                  <h3 className="text-xl font-bold text-white mb-1">Starter Pro</h3>
-                  <div className="text-3xl font-black text-blue-400">3M</div>
-                  <div className="text-sm text-gray-400">so'm/oy</div>
-                  <div className="text-lg text-orange-400 font-bold mt-1">+50% foyda</div>
-                </div>
-                <div className="space-y-1 text-xs text-gray-300">
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>1 marketplace</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>100 SKU</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>AI Manager BEPUL</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Fulfillment to'liq</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-purple-500/10 border border-purple-500 rounded-2xl p-4">
-                <div className="text-center mb-3">
-                  <h3 className="text-xl font-bold text-white mb-1">Business</h3>
-                  <div className="text-3xl font-black text-purple-400">8M</div>
-                  <div className="text-sm text-gray-400">so'm/oy</div>
-                  <div className="text-lg text-orange-400 font-bold mt-1">+25% foyda</div>
-                </div>
-                <div className="space-y-1 text-xs text-gray-300">
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>2 marketplace</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>500 SKU</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>AI + Trend Hunter</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Premium fulfillment</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-green-500/10 border border-green-500 rounded-2xl p-4">
-                <div className="text-center mb-3">
-                  <h3 className="text-xl font-bold text-white mb-1">Professional</h3>
-                  <div className="text-3xl font-black text-green-400">18M</div>
-                  <div className="text-sm text-gray-400">so'm/oy</div>
-                  <div className="text-lg text-orange-400 font-bold mt-1">+15% foyda</div>
-                </div>
-                <div className="space-y-1 text-xs text-gray-300">
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>4 marketplace</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>2000 SKU</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Custom AI</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Dedicated manager</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-500/10 border border-yellow-500 rounded-2xl p-4">
-                <div className="text-center mb-3">
-                  <h3 className="text-xl font-bold text-white mb-1">Enterprise</h3>
-                  <div className="text-3xl font-black text-yellow-400">25M</div>
-                  <div className="text-sm text-gray-400">so'm/oy</div>
-                  <div className="text-lg text-orange-400 font-bold mt-1">+10% foyda</div>
-                </div>
-                <div className="space-y-1 text-xs text-gray-300">
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Barcha marketplace</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Cheksiz SKU</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>Enterprise AI</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span>VIP xizmat</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Fulfillment Xizmatlari */}
-            <div className="mt-6 bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
-              <h3 className="text-2xl font-bold text-white mb-4 text-center">Fulfillment Xizmatlari</h3>
+            <div className="mt-8 bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">Texnik Baza</h3>
               <div className="grid grid-cols-4 gap-4 text-center">
                 <div>
-                  <Warehouse className="w-10 h-10 text-blue-400 mx-auto mb-2" />
-                  <div className="text-sm text-gray-300">Qabul va saqlash</div>
+                  <div className="text-3xl font-black text-blue-400 mb-1">React</div>
+                  <div className="text-sm text-gray-400">Frontend</div>
                 </div>
                 <div>
-                  <Package className="w-10 h-10 text-purple-400 mx-auto mb-2" />
-                  <div className="text-sm text-gray-300">Qadoqlash</div>
+                  <div className="text-3xl font-black text-green-400 mb-1">Node.js</div>
+                  <div className="text-sm text-gray-400">Backend</div>
                 </div>
                 <div>
-                  <CheckCircle className="w-10 h-10 text-green-400 mx-auto mb-2" />
-                  <div className="text-sm text-gray-300">Sifat nazorati</div>
+                  <div className="text-3xl font-black text-purple-400 mb-1">PostgreSQL</div>
+                  <div className="text-sm text-gray-400">Database</div>
                 </div>
                 <div>
-                  <Rocket className="w-10 h-10 text-yellow-400 mx-auto mb-2" />
-                  <div className="text-sm text-gray-300">Marketplace'ga yetkazish</div>
+                  <div className="text-3xl font-black text-yellow-400 mb-1">AI</div>
+                  <div className="text-sm text-gray-400">OpenAI/Claude</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // SLIDE 5: TARIFLAR
+    {
+      id: 'pricing',
+      content: (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-slate-900 to-blue-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-7xl font-black text-green-400 mb-4">Biznes Modeli</h2>
+              <p className="text-3xl text-gray-300">Abonent + Foydadan Ulush</p>
+            </div>
+            
+            <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="bg-blue-500/10 border-2 border-blue-500 rounded-2xl p-4 text-center">
+                <h3 className="text-xl font-bold text-white mb-2">Starter Pro</h3>
+                <div className="text-4xl font-black text-blue-400 mb-1">3M</div>
+                <div className="text-sm text-gray-400 mb-2">so'm/oy</div>
+                <div className="text-2xl font-bold text-orange-400">+50%</div>
+                <div className="text-xs text-gray-400">sof foydadan</div>
+              </div>
+              
+              <div className="bg-purple-500/10 border-2 border-purple-500 rounded-2xl p-4 text-center">
+                <h3 className="text-xl font-bold text-white mb-2">Business</h3>
+                <div className="text-4xl font-black text-purple-400 mb-1">8M</div>
+                <div className="text-sm text-gray-400 mb-2">so'm/oy</div>
+                <div className="text-2xl font-bold text-orange-400">+25%</div>
+                <div className="text-xs text-gray-400">sof foydadan</div>
+              </div>
+              
+              <div className="bg-green-500/10 border-2 border-green-500 rounded-2xl p-4 text-center">
+                <h3 className="text-xl font-bold text-white mb-2">Professional</h3>
+                <div className="text-4xl font-black text-green-400 mb-1">18M</div>
+                <div className="text-sm text-gray-400 mb-2">so'm/oy</div>
+                <div className="text-2xl font-bold text-orange-400">+15%</div>
+                <div className="text-xs text-gray-400">sof foydadan</div>
+              </div>
+              
+              <div className="bg-yellow-500/10 border-2 border-yellow-500 rounded-2xl p-4 text-center">
+                <h3 className="text-xl font-bold text-white mb-2">Enterprise</h3>
+                <div className="text-4xl font-black text-yellow-400 mb-1">25M</div>
+                <div className="text-sm text-gray-400 mb-2">so'm/oy</div>
+                <div className="text-2xl font-bold text-orange-400">+10%</div>
+                <div className="text-xs text-gray-400">sof foydadan</div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-lg rounded-3xl p-8 border border-green-500/30 mb-6">
+              <div className="grid grid-cols-2 gap-8 text-center">
+                <div>
+                  <div className="text-5xl font-black text-white mb-2">~6%</div>
+                  <div className="text-xl text-gray-300">GMV monetizatsiya</div>
+                </div>
+                <div>
+                  <div className="text-5xl font-black text-white mb-2">20-30</div>
+                  <div className="text-xl text-gray-300">Sifatli hamkorlar</div>
                 </div>
               </div>
             </div>
             
-            {/* Qo'shimcha */}
-            <div className="mt-4 bg-orange-500/20 rounded-2xl p-4 border border-orange-500/50 text-center">
-              <p className="text-lg text-white font-semibold">
-                🏢 To'liq xizmat • 🤖 AI Manager BEPUL • 📦 Premium fulfillment • 👨‍💼 Dedicated support
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 text-center">
+              <p className="text-2xl text-white font-semibold italic">
+                "Biz minglab mayda sellerlar emas, sifatli va o'sish potentsialiga ega hamkorlar bilan ishlaymiz"
               </p>
             </div>
           </div>
@@ -603,189 +326,210 @@ export default function FinalInvestorPitch() {
       ),
     },
 
-    // SLIDE 8: BOZOR
+    // SLIDE 6: OPERATSION MODEL
     {
-      id: 'market',
+      id: 'operations',
       content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-green-900 via-slate-900 to-blue-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-orange-900 via-slate-900 to-red-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
             <div className="text-center mb-8">
-              <h2 className="text-7xl font-black text-green-400 mb-4">Bozor Imkoniyati</h2>
-              <p className="text-3xl text-gray-300">O'zbekiston → Global kengayish</p>
+              <h2 className="text-7xl font-black text-orange-400 mb-4">Operatsion Model</h2>
+              <p className="text-3xl text-gray-300">Lean: ombor qurmaymiz, ijaradan boshlaymiz</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-8 mb-8">
-              <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-lg rounded-3xl p-8 border border-blue-500/30">
-                <h3 className="text-3xl font-bold text-white mb-6 text-center">O'zbekiston (Boshlang'ich)</h3>
+            <div className="grid grid-cols-2 gap-8 mb-6">
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Ombor</h3>
                 <div className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-blue-400 mb-2">50,000+</div>
-                    <div className="text-xl text-gray-300">Faol seller</div>
+                  <div className="flex justify-between items-center text-xl">
+                    <span className="text-gray-300">Hajm:</span>
+                    <span className="text-white font-bold">500 m²</span>
                   </div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-green-400 mb-2">$2B+</div>
-                    <div className="text-xl text-gray-300">E-commerce bozor</div>
+                  <div className="flex justify-between items-center text-xl">
+                    <span className="text-gray-300">Narx:</span>
+                    <span className="text-white font-bold">50K so'm/m²</span>
                   </div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-purple-400 mb-2">40%</div>
-                    <div className="text-xl text-gray-300">Yillik o'sish</div>
+                  <div className="flex justify-between items-center text-xl border-t border-white/20 pt-4">
+                    <span className="text-gray-300">Oylik:</span>
+                    <span className="text-green-400 font-bold text-2xl">25M so'm</span>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-lg rounded-3xl p-8 border border-purple-500/30">
-                <h3 className="text-3xl font-bold text-white mb-6 text-center">Global (Kengayish)</h3>
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-purple-400 mb-2">100M+</div>
-                    <div className="text-xl text-gray-300">Global seller</div>
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Jamoa</h3>
+                <div className="space-y-3 text-lg text-gray-300">
+                  <div className="flex justify-between">
+                    <span>3 ta omborchi</span>
+                    <span className="text-white font-semibold">~15M so'm</span>
                   </div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-green-400 mb-2">$5T+</div>
-                    <div className="text-xl text-gray-300">Global e-commerce</div>
+                  <div className="flex justify-between">
+                    <span>1-2 ta haydovchi</span>
+                    <span className="text-white font-semibold">~5-10M so'm</span>
                   </div>
-                  <div className="text-center">
-                    <div className="text-5xl font-black text-yellow-400 mb-2">∞</div>
-                    <div className="text-xl text-gray-300">SaaS scalable</div>
+                  <div className="flex justify-between">
+                    <span>Direktor</span>
+                    <span className="text-white font-semibold">$1,000</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Menejerlar</span>
+                    <span className="text-white font-semibold">~$1,000</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>IT & AI</span>
+                    <span className="text-white font-semibold">~$1,000</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
-              <h3 className="text-2xl font-bold text-white mb-4 text-center">5 ta Marketplace</h3>
-              <div className="grid grid-cols-5 gap-4">
-                <div className="text-center">
-                  <div className="bg-blue-500/20 rounded-2xl p-4 mb-2">
-                    <ShoppingCart className="w-12 h-12 text-blue-400 mx-auto" />
-                  </div>
-                  <div className="text-sm text-white font-semibold">Uzum</div>
-                </div>
-                <div className="text-center">
-                  <div className="bg-purple-500/20 rounded-2xl p-4 mb-2">
-                    <ShoppingCart className="w-12 h-12 text-purple-400 mx-auto" />
-                  </div>
-                  <div className="text-sm text-white font-semibold">Wildberries</div>
-                </div>
-                <div className="text-center">
-                  <div className="bg-green-500/20 rounded-2xl p-4 mb-2">
-                    <ShoppingCart className="w-12 h-12 text-green-400 mx-auto" />
-                  </div>
-                  <div className="text-sm text-white font-semibold">Yandex</div>
-                </div>
-                <div className="text-center">
-                  <div className="bg-yellow-500/20 rounded-2xl p-4 mb-2">
-                    <ShoppingCart className="w-12 h-12 text-yellow-400 mx-auto" />
-                  </div>
-                  <div className="text-sm text-white font-semibold">Ozon</div>
-                </div>
-                <div className="text-center">
-                  <div className="bg-red-500/20 rounded-2xl p-4 mb-2">
-                    <ShoppingCart className="w-12 h-12 text-red-400 mx-auto" />
-                  </div>
-                  <div className="text-sm text-white font-semibold">AliExpress</div>
-                </div>
-              </div>
+            <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-8 text-center">
+              <h3 className="text-3xl font-bold text-white mb-4">Umumiy Oylik Xarajat</h3>
+              <div className="text-7xl font-black text-white mb-2">$8-9.5K</div>
+              <p className="text-xl text-orange-100">Lean variant: infrani qurmaymiz, faqat ijaraga olamiz</p>
             </div>
           </div>
         </div>
       ),
     },
 
-    // SLIDE 9: MOLIYAVIY PROYEKSIYA
+    // SLIDE 7: UNIT ECONOMICS
     {
-      id: 'financials',
+      id: 'unit-economics',
       content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-yellow-900 via-slate-900 to-green-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-yellow-900 via-slate-900 to-green-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
             <div className="text-center mb-8">
-              <h2 className="text-7xl font-black text-yellow-400 mb-4">3 Yillik Proyeksiya</h2>
-              <p className="text-3xl text-gray-300">SaaS fokus • $4M → $84M ARR</p>
+              <h2 className="text-7xl font-black text-yellow-400 mb-4">Unit Economics</h2>
+              <p className="text-3xl text-gray-300">Breakeven: nechta hamkor bilan nolga chiqamiz?</p>
             </div>
             
             <div className="grid grid-cols-3 gap-6 mb-8">
-              <div className="bg-blue-500/10 border-2 border-blue-500 rounded-3xl p-6">
-                <div className="text-center">
-                  <div className="text-sm text-blue-400 font-bold mb-2">YIL 1 (2025)</div>
-                  <div className="text-5xl font-black text-white mb-4">$4.4M</div>
-                  <div className="space-y-2 text-sm text-gray-300">
-                    <div className="flex justify-between">
-                      <span>SaaS:</span>
-                      <span className="text-white font-bold">1,000 × $349</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Fulfillment:</span>
-                      <span className="text-white font-bold">30 hamkor</span>
-                    </div>
-                    <div className="flex justify-between border-t border-white/20 pt-2">
-                      <span>ARR:</span>
-                      <span className="text-green-400 font-bold">$4.4M</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-blue-500/10 border-2 border-blue-500 rounded-3xl p-6 text-center">
+                <div className="text-sm text-blue-400 font-bold mb-2">MONETIZATSIYA</div>
+                <div className="text-6xl font-black text-white mb-2">~6%</div>
+                <div className="text-xl text-gray-300">GMV</div>
+                <div className="text-sm text-gray-400 mt-4">3% fixed + 3% foyda</div>
               </div>
               
-              <div className="bg-purple-500/10 border-2 border-purple-500 rounded-3xl p-6">
-                <div className="text-center">
-                  <div className="text-sm text-purple-400 font-bold mb-2">YIL 2 (2026)</div>
-                  <div className="text-5xl font-black text-white mb-4">$21.4M</div>
-                  <div className="space-y-2 text-sm text-gray-300">
-                    <div className="flex justify-between">
-                      <span>SaaS:</span>
-                      <span className="text-white font-bold">5,000 × $349</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Fulfillment:</span>
-                      <span className="text-white font-bold">50 hamkor</span>
-                    </div>
-                    <div className="flex justify-between border-t border-white/20 pt-2">
-                      <span>ARR:</span>
-                      <span className="text-green-400 font-bold">$21.4M</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-purple-500/10 border-2 border-purple-500 rounded-3xl p-6 text-center">
+                <div className="text-sm text-purple-400 font-bold mb-2">FIXED COST</div>
+                <div className="text-6xl font-black text-white mb-2">$9K</div>
+                <div className="text-xl text-gray-300">oyiga</div>
+                <div className="text-sm text-gray-400 mt-4">Ombor + Jamoa + IT</div>
               </div>
               
-              <div className="bg-green-500/10 border-2 border-green-500 rounded-3xl p-6">
-                <div className="text-center">
-                  <div className="text-sm text-green-400 font-bold mb-2">YIL 3 (2027)</div>
-                  <div className="text-5xl font-black text-white mb-4">$84.1M</div>
-                  <div className="space-y-2 text-sm text-gray-300">
-                    <div className="flex justify-between">
-                      <span>SaaS:</span>
-                      <span className="text-white font-bold">20,000 × $349</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Fulfillment:</span>
-                      <span className="text-white font-bold">50 hamkor</span>
-                    </div>
-                    <div className="flex justify-between border-t border-white/20 pt-2">
-                      <span>ARR:</span>
-                      <span className="text-green-400 font-bold">$84.1M</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-green-500/10 border-2 border-green-500 rounded-3xl p-6 text-center">
+                <div className="text-sm text-green-400 font-bold mb-2">KERAKLI GMV</div>
+                <div className="text-6xl font-black text-white mb-2">$300K</div>
+                <div className="text-xl text-gray-300">oyiga</div>
+                <div className="text-sm text-gray-400 mt-4">~4 mlrd so'm</div>
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl p-8 text-center">
-              <h3 className="text-3xl font-bold text-white mb-4">Asosiy Ko'rsatkichlar</h3>
-              <div className="grid grid-cols-4 gap-6">
-                <div>
-                  <div className="text-4xl font-black text-white mb-2">90%</div>
-                  <div className="text-sm text-green-100">SaaS fokus</div>
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl p-8">
+              <h3 className="text-3xl font-bold text-white mb-6 text-center">Breakeven Hisob</h3>
+              <div className="grid grid-cols-2 gap-8">
+                <div className="text-center">
+                  <div className="text-5xl font-black text-white mb-2">13-16</div>
+                  <div className="text-2xl text-green-100">hamkor</div>
+                  <div className="text-lg text-green-200 mt-2">Breakeven nuqta</div>
                 </div>
-                <div>
-                  <div className="text-4xl font-black text-white mb-2">85%</div>
-                  <div className="text-sm text-green-100">Gross margin</div>
+                <div className="text-center">
+                  <div className="text-5xl font-black text-white mb-2">20+</div>
+                  <div className="text-2xl text-green-100">hamkor</div>
+                  <div className="text-lg text-green-200 mt-2">Barqaror foyda</div>
                 </div>
-                <div>
-                  <div className="text-4xl font-black text-white mb-2">$349</div>
-                  <div className="text-sm text-green-100">ARPU (oylik)</div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-white/20 text-center">
+                <p className="text-xl text-white">
+                  Agar bitta hamkorning o'rtacha GMVi 250-300M so'm/oy bo'lsa
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // SLIDE 8: 3 YILLIK REJA
+    {
+      id: 'roadmap',
+      content: (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-purple-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-7xl font-black text-blue-400 mb-4">3 Yillik Yo'l Xaritasi</h2>
+              <p className="text-3xl text-gray-300">O'zbekiston → Qozog'iston → Rossiya</p>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-blue-600/20 to-blue-800/20 backdrop-blur-lg rounded-3xl p-8 border border-blue-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-blue-400">1</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">Year 1: O'zbekiston</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">15-20</div>
+                        <div>sifatli hamkor</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">4-5 mlrd</div>
+                        <div>so'm GMV/oy</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">Breakeven</div>
+                        <div>kichik foyda</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-4xl font-black text-white mb-2">20K</div>
-                  <div className="text-sm text-green-100">Mijozlar (Y3)</div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-purple-600/20 to-purple-800/20 backdrop-blur-lg rounded-3xl p-8 border border-purple-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-purple-400">2</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">Year 2: O'zbekiston + Qozog'iston</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">40-50</div>
+                        <div>hamkor (UZ+KZ)</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">Model</div>
+                        <div>ishlayapti</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">P&L</div>
+                        <div>ijobiy</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-green-600/20 to-green-800/20 backdrop-blur-lg rounded-3xl p-8 border border-green-500/30">
+                <div className="flex items-center gap-6">
+                  <div className="text-6xl font-black text-green-400">3</div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold text-white mb-3">Year 3: UZ + KZ + RU</h3>
+                    <div className="grid grid-cols-3 gap-4 text-lg text-gray-300">
+                      <div>
+                        <div className="text-2xl font-bold text-white">70-90</div>
+                        <div>hamkor (3 mamlakat)</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">$40-60M</div>
+                        <div>GMV/yil</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">$0.5-0.7M</div>
+                        <div>EBITDA</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -794,118 +538,153 @@ export default function FinalInvestorPitch() {
       ),
     },
 
-    // SLIDE 10: INVESTITSIYA TAKLIFI
+    // SLIDE 9: NEGA BIZ
+    {
+      id: 'why-us',
+      content: (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-slate-900 to-pink-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
+            <div className="text-center mb-10">
+              <h2 className="text-7xl font-black text-purple-400 mb-4">Nega Aynan Biz?</h2>
+              <p className="text-3xl text-gray-300">Bizning ustunliklar</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <CheckCircle className="w-16 h-16 text-green-400 mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-4">Mahsulot Tayyor</h3>
+                <p className="text-xl text-gray-300">
+                  Ishlayotgan front-end va back-end, Fulfillment kalkulyatori, 
+                  ROI kalkulyatori, AI Manager, monitoring
+                </p>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <Brain className="w-16 h-16 text-blue-400 mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-4">AI-First Operatsiya</h3>
+                <p className="text-xl text-gray-300">
+                  Har bir marketplace menejer o'rniga – AI + 1-2 kuchli operator. 
+                  Xarajat kamayadi, sifat oshadi
+                </p>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <Target className="w-16 h-16 text-purple-400 mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-4">Sifatli Hamkorlar Fokus</h3>
+                <p className="text-xl text-gray-300">
+                  O'zbekistonda faqat 20-30 ta sifatli hamkor, 
+                  chuqur hamkorlik va "profit sharing" modeli
+                </p>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <Globe className="w-16 h-16 text-green-400 mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-4">Region Tushunchasi</h3>
+                <p className="text-xl text-gray-300">
+                  O'zbekiston bozoridan boshlaymiz, keyin KZ va RU ga 
+                  ko'chirish strategiyasi aniq
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // SLIDE 10: INVESTITSIYA
     {
       id: 'investment',
       content: (
-        <div className="h-screen flex flex-col justify-center bg-gradient-to-br from-purple-900 via-slate-900 to-blue-900 p-12">
-          <div className="max-w-6xl mx-auto w-full">
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-slate-900 to-blue-900 pb-24">
+          <div className="max-w-6xl px-8 w-full">
             <div className="text-center mb-8">
-              <h2 className="text-8xl font-black mb-4">
+              <h2 className="text-7xl font-black mb-4">
                 <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
-                  Investitsiya Taklifi
+                  Investitsiya So'rovi
                 </span>
               </h2>
-              <p className="text-3xl text-gray-300">O'zbekiston e-commerce'ni o'zgartiring</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-2 gap-8 mb-6">
               <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 backdrop-blur-lg rounded-3xl p-8 border border-yellow-500/30">
                 <h3 className="text-3xl font-bold text-white mb-6 text-center">Seed Round</h3>
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center p-4 bg-white/10 rounded-2xl">
-                    <span className="text-xl text-gray-300">Miqdor</span>
-                    <span className="text-4xl font-black text-yellow-400">$500K-$1M</span>
+                  <div className="text-center">
+                    <div className="text-6xl font-black text-yellow-400 mb-2">$250K-$300K</div>
+                    <div className="text-xl text-gray-300">So'ralayotgan investitsiya</div>
                   </div>
-                  <div className="flex justify-between items-center p-4 bg-white/10 rounded-2xl">
-                    <span className="text-xl text-gray-300">Valuation</span>
-                    <span className="text-2xl font-bold text-white">$5M pre-money</span>
-                  </div>
-                  <div className="flex justify-between items-center p-4 bg-white/10 rounded-2xl">
-                    <span className="text-xl text-gray-300">Equity</span>
-                    <span className="text-2xl font-bold text-white">10-20%</span>
+                  <div className="text-center pt-4 border-t border-white/20">
+                    <div className="text-4xl font-black text-white mb-2">~10%</div>
+                    <div className="text-xl text-gray-300">Equity</div>
+                    <div className="text-sm text-gray-400 mt-2">Post-money: $2.5-3.0M</div>
                   </div>
                 </div>
               </div>
               
               <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
-                <h3 className="text-3xl font-bold text-white mb-6 text-center">Foydalanish</h3>
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Use of Funds (18 oy)</h3>
                 <div className="space-y-3">
                   <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-lg text-gray-300">Marketing (SaaS)</span>
+                    <div className="flex justify-between mb-2 text-lg">
+                      <span className="text-gray-300">Ombor + Jihozlash</span>
                       <span className="text-white font-bold">40%</span>
                     </div>
                     <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-green-400 w-[40%]"></div>
+                      <div className="h-full bg-orange-400 w-[40%]"></div>
                     </div>
                   </div>
                   <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-lg text-gray-300">Mahsulot</span>
-                      <span className="text-white font-bold">30%</span>
+                    <div className="flex justify-between mb-2 text-lg">
+                      <span className="text-gray-300">Jamoa (18 oy)</span>
+                      <span className="text-white font-bold">35%</span>
                     </div>
                     <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-400 w-[30%]"></div>
+                      <div className="h-full bg-blue-400 w-[35%]"></div>
                     </div>
                   </div>
                   <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-lg text-gray-300">Jamoa</span>
-                      <span className="text-white font-bold">20%</span>
+                    <div className="flex justify-between mb-2 text-lg">
+                      <span className="text-gray-300">Marketing</span>
+                      <span className="text-white font-bold">15%</span>
                     </div>
                     <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-purple-400 w-[20%]"></div>
+                      <div className="h-full bg-green-400 w-[15%]"></div>
                     </div>
                   </div>
                   <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-lg text-gray-300">Operatsiya</span>
+                    <div className="flex justify-between mb-2 text-lg">
+                      <span className="text-gray-300">Operatsion</span>
                       <span className="text-white font-bold">10%</span>
                     </div>
                     <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-yellow-400 w-[10%]"></div>
+                      <div className="h-full bg-purple-400 w-[10%]"></div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="grid grid-cols-2 gap-8">
-              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
-                <h3 className="text-2xl font-bold text-white mb-4 text-center">Milestone'lar</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Target className="w-8 h-8 text-blue-400" />
-                    <div>
-                      <div className="text-lg font-bold text-white">6 oy</div>
-                      <div className="text-sm text-gray-400">1,000 SaaS, break-even</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Target className="w-8 h-8 text-purple-400" />
-                    <div>
-                      <div className="text-lg font-bold text-white">12 oy</div>
-                      <div className="text-sm text-gray-400">3,000 SaaS, Series A tayyor</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Target className="w-8 h-8 text-green-400" />
-                    <div>
-                      <div className="text-lg font-bold text-white">24 oy</div>
-                      <div className="text-sm text-gray-400">10,000 SaaS, global kengayish</div>
-                    </div>
-                  </div>
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl p-8">
+              <h3 className="text-3xl font-bold text-white mb-4 text-center">Maqsad</h3>
+              <div className="grid grid-cols-3 gap-6 text-center text-white">
+                <div>
+                  <div className="text-4xl font-black mb-2">6-9 oy</div>
+                  <div className="text-lg">Breakeven</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-black mb-2">13-16</div>
+                  <div className="text-lg">Hamkor (nol nuqta)</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-black mb-2">20-30</div>
+                  <div className="text-lg">Hamkor (barqaror foyda)</div>
                 </div>
               </div>
-              
-              <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-3xl p-6 flex flex-col justify-center">
-                <h3 className="text-3xl font-bold text-white mb-4 text-center">ROI Proyeksiyasi</h3>
-                <div className="text-center">
-                  <div className="text-7xl font-black text-white mb-2">16,800%</div>
-                  <div className="text-2xl text-green-100 mb-4">3 yilda</div>
-                  <div className="text-lg text-white/80">$500K → $84M (10% equity)</div>
-                </div>
+              <div className="mt-6 pt-6 border-t border-white/20 text-center">
+                <p className="text-xl text-white italic">
+                  "Biz O'zbekistonda ishlaydigan, AI bilan boshqariladigan fulfillment modelini qurib, 
+                  keyin uni butun mintaqaga – Qozog'iston va Rossiyaga skeyllamoqchimiz"
+                </p>
               </div>
             </div>
           </div>
@@ -914,7 +693,6 @@ export default function FinalInvestorPitch() {
     },
   ];
 
-  // Navigation
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
       setCurrentSlide(currentSlide + 1);
@@ -940,7 +718,6 @@ export default function FinalInvestorPitch() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [isAuthenticated, currentSlide]);
 
-  // Password Screen
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
@@ -950,7 +727,7 @@ export default function FinalInvestorPitch() {
               <Lock className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-black text-white mb-2">
-              SellerCloud<span className="text-blue-400">X</span>
+              BiznesYordam
             </h1>
             <div className="inline-block px-4 py-1 bg-green-500/20 border border-green-500/50 rounded-full text-sm font-bold text-green-400 mb-4">
               MAXFIY INVESTOR TAQDIMOTI
@@ -1006,55 +783,59 @@ export default function FinalInvestorPitch() {
     );
   }
 
-  // Main Pitch
   return (
-    <div className="relative">
+    <div className="relative bg-slate-900">
       {/* Current Slide */}
       {slides[currentSlide].content}
 
-      {/* Navigation */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/50 backdrop-blur-lg rounded-full px-6 py-3 border border-white/20">
-        <Button
-          onClick={prevSlide}
-          disabled={currentSlide === 0}
-          variant="ghost"
-          size="sm"
-          className="text-white hover:bg-white/20 disabled:opacity-30"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </Button>
-        
-        <div className="flex items-center gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentSlide ? 'bg-white w-8' : 'bg-white/30'
-              }`}
-            />
-          ))}
-        </div>
-        
-        <Button
-          onClick={nextSlide}
-          disabled={currentSlide === slides.length - 1}
-          variant="ghost"
-          size="sm"
-          className="text-white hover:bg-white/20 disabled:opacity-30"
-        >
-          <ArrowRight className="w-5 h-5" />
-        </Button>
-        
-        <div className="ml-4 text-sm text-white">
-          {currentSlide + 1} / {slides.length}
+      {/* Navigation - FIXED BOTTOM, KONTENT USTIGA TUSHMASIN */}
+      <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-lg border-t border-white/10 py-4">
+        <div className="max-w-4xl mx-auto flex items-center justify-between px-8">
+          <Button
+            onClick={prevSlide}
+            disabled={currentSlide === 0}
+            variant="ghost"
+            size="sm"
+            className="text-white hover:bg-white/20 disabled:opacity-30"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Oldingi
+          </Button>
+          
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentSlide ? 'bg-white w-8' : 'bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="text-sm text-white font-semibold ml-4">
+              {currentSlide + 1} / {slides.length}
+            </div>
+          </div>
+          
+          <Button
+            onClick={nextSlide}
+            disabled={currentSlide === slides.length - 1}
+            variant="ghost"
+            size="sm"
+            className="text-white hover:bg-white/20 disabled:opacity-30"
+          >
+            Keyingi
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
         </div>
       </div>
 
-      {/* Exit */}
+      {/* Exit Button */}
       <button
         onClick={() => setLocation('/')}
-        className="fixed top-8 right-8 bg-black/50 backdrop-blur-lg rounded-full p-3 border border-white/20 hover:bg-black/70"
+        className="fixed top-8 right-8 bg-black/50 backdrop-blur-lg rounded-full p-3 border border-white/20 hover:bg-black/70 z-50"
       >
         <X className="w-6 h-6 text-white" />
       </button>
