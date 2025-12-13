@@ -37,6 +37,7 @@ import referralRoutes from "./routes/referralRoutes";
 import chatRoutes from "./routes/chatRoutes";
 import adminAdvancedFeaturesRoutes from "./routes/adminAdvancedFeatures";
 import partnerAdvancedFeaturesRoutes from "./routes/partnerAdvancedFeatures";
+import autonomousAIRoutes from "./routes/autonomousAI";
 import fulfillmentAIIntegration from "./services/fulfillmentAIIntegration";
 import appConfig from "./config";
 import { uploadLimiter } from "./middleware/rateLimiter";
@@ -1266,6 +1267,11 @@ export function registerRoutes(app: express.Application): Server {
   // Inventory Forecasting, Advanced Reporting (Both Local & SaaS)
   // Partners use these features
   app.use("/api/partner/advanced", requirePartnerWithData, partnerAdvancedFeaturesRoutes);
+
+  // ==================== AUTONOMOUS AI MANAGER ====================
+  // Zero-Command AI - Partner provides minimal input, AI does everything
+  // Revolutionary feature: No manual listing creation needed
+  app.use("/api/autonomous-ai", requirePartnerWithData, autonomousAIRoutes);
 
   // Error handling middleware
   app.use(handleValidationError);

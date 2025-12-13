@@ -41,9 +41,12 @@ class AdvancedReporting {
   async generateSalesReport(config: ReportConfig): Promise<ReportData> {
     const { dateRange, filters } = config;
 
-    // TODO: Implement real database query
-    // For now, generate mock data
-    const orders: any[] = [];
+    // Get orders in date range
+    const orders = await storage.getOrdersByDateRange(
+      dateRange.start,
+      dateRange.end,
+      filters
+    );
 
     // Calculate summary metrics
     const totalOrders = orders.length;

@@ -46,17 +46,33 @@ class InventoryForecasting {
   // Get historical sales data
   private async getHistoricalSales(productId: string, days: number): Promise<number[]> {
     try {
-      // TODO: Implement real database query
-      // For now, generate mock data for demonstration
-      const salesArray: number[] = [];
-      const baselineSales = Math.floor(Math.random() * 10) + 5; // 5-15 units per day
+      // Get orders from last N days
+      const orders = await storage.getOrdersByProduct(productId, days);
       
-      for (let i = 0; i < days; i++) {
-        // Add some randomness and trend
-        const trend = i * 0.1; // Slight upward trend
-        const randomness = (Math.random() - 0.5) * 4; // ±2 units
-        const sales = Math.max(0, Math.round(baselineSales + trend + randomness));
-        salesArray.push(sales);
+      // Group by day and sum quantities
+      const dailySales: { [key: string]: number } = {};
+      
+      orders.forEach(order => {
+        const date = new Date(order.createdAt).toISOString().split('T')[0];
+        const items = order.items as any[];
+        if (items) {
+          items.forEach(item => {
+            if (item.productId === productId) {
+              dailySales[date] = (dailySales[date] || 0) + (item.quantity || 0);
+            }
+          });
+        }
+      });
+
+      // Convert to array (fill missing days with 0)
+      const salesArray: number[] = [];
+      const today = new Date();
+      
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        salesArray.push(dailySales[dateStr] || 0);
       }
 
       return salesArray;

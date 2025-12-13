@@ -1319,6 +1319,77 @@ export async function getInventoryStats(partnerId: string): Promise<any> {
 }
 
 // Export storage object for compatibility
+// Helper functions for advanced features
+export async function getProductById(productId: string): Promise<any> {
+  try {
+    const [product] = await db.select().from(products).where(eq(products.id, productId)).limit(1);
+    return product || null;
+  } catch (error: any) {
+    console.error('Error getting product by ID:', error);
+    return null;
+  }
+}
+
+export async function getOrdersByProduct(productId: string, days: number): Promise<any[]> {
+  try {
+    const daysAgo = new Date();
+    daysAgo.setDate(daysAgo.getDate() - days);
+    
+    // Get orders that contain this product
+    const ordersList = await db.select()
+      .from(orders)
+      .where(gte(orders.createdAt, daysAgo));
+    
+    // Filter orders that have this product in items
+    const filteredOrders = ordersList.filter(order => {
+      const items = order.items as any[];
+      return items && items.some(item => item.productId === productId);
+    });
+    
+    return filteredOrders;
+  } catch (error: any) {
+    console.error('Error getting orders by product:', error);
+    return [];
+  }
+}
+
+export async function getOrdersByDateRange(
+  startDate: Date,
+  endDate: Date,
+  filters?: any
+): Promise<any[]> {
+  try {
+    let query = db.select().from(orders)
+      .where(and(
+        gte(orders.createdAt, startDate),
+        lte(orders.createdAt, endDate)
+      ));
+    
+    if (filters?.partnerId) {
+      query = query.where(eq(orders.partnerId, filters.partnerId));
+    }
+    
+    const ordersList = await query;
+    return ordersList;
+  } catch (error: any) {
+    console.error('Error getting orders by date range:', error);
+    return [];
+  }
+}
+
+export async function updateOrder(orderId: string, updates: any): Promise<any> {
+  try {
+    const [order] = await db.update(orders)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(orders.id, orderId))
+      .returning();
+    return order;
+  } catch (error: any) {
+    console.error('Error updating order:', error);
+    throw new StorageError(`Order yangilashda xatolik: ${error.message}`, 'UPDATE_ORDER_ERROR');
+  }
+}
+
 export const storage = {
   createUser,
   getUserByUsername,
@@ -1333,6 +1404,7 @@ export const storage = {
   approvePartner,
   createProduct,
   getProductsByPartnerId,
+  getProductById,
   createFulfillmentRequest,
   getFulfillmentRequestsByPartnerId,
   getAllFulfillmentRequests,
@@ -1370,5 +1442,9 @@ export const storage = {
   createStockAlert,
   getStockAlertsByPartnerId,
   resolveStockAlert,
-  getInventoryStats
+  getInventoryStats,
+  // Advanced features
+  getOrdersByProduct,
+  getOrdersByDateRange,
+  updateOrder
 };
