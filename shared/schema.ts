@@ -560,6 +560,14 @@ export const loginSchema = z.object({
   message: "Username yoki email talab qilinadi",
 });
 
+// ==================== ALIASES FOR COMPATIBILITY ====================
+
+// Alias for referralBonuses (used as referralEarnings in routes)
+export const referralEarnings = referralBonuses;
+
+// Alias for referralWithdrawals (used as withdrawals in routes)
+export const withdrawals = referralWithdrawals;
+
 // ==================== TYPE EXPORTS ====================
 
 export type User = typeof users.$inferSelect;
@@ -572,3 +580,6 @@ export type Order = typeof orders.$inferSelect;
 export type Analytics = typeof analytics.$inferSelect;
 export type AITask = typeof aiTasks.$inferSelect;
 export type AIProductCard = typeof aiProductCards.$inferSelect;
+export type Referral = typeof referrals.$inferSelect;
+export type ReferralEarning = typeof referralEarnings.$inferSelect;
+export type Withdrawal = typeof withdrawals.$inferSelect;
