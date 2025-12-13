@@ -89,9 +89,30 @@ export function serveStatic(app: Express) {
     } catch (e) {
       log(`   Error reading directory: ${e}`);
     }
-    throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`,
-    );
+    
+    // Don't throw error, serve a fallback page instead
+    log(`⚠️  Serving fallback page instead of crashing`);
+    app.get('*', (req, res) => {
+      res.status(503).send(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>SellerCloudX - Building...</title>
+            <style>
+              body { font-family: Arial; text-align: center; padding: 50px; }
+              h1 { color: #333; }
+              p { color: #666; }
+            </style>
+          </head>
+          <body>
+            <h1>🚀 SellerCloudX</h1>
+            <p>Platform is building... Please wait a moment and refresh.</p>
+            <p>If this persists, please contact support.</p>
+          </body>
+        </html>
+      `);
+    });
+    return;
   }
 
   log(`📁 Serving static files from: ${distPath}`);

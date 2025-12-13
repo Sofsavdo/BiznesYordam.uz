@@ -181,7 +181,14 @@ export function registerRoutes(app: express.Application): Server {
     next();
   });
 
-  // Health check endpoint
+  // Health check endpoints
+  app.get("/health", (req, res) => {
+    res.status(200).json({ 
+      status: 'ok', 
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime()
+    });
+  });
   app.get("/api/health", healthCheck);
 
   // Debug endpoints (remove after fixing)
