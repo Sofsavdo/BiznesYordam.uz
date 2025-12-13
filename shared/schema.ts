@@ -248,6 +248,22 @@ export const aiMarketplaceAccounts = sqliteTable('ai_marketplace_accounts', {
   updatedAt: integer('updated_at', { mode: 'timestamp' }),
 });
 
+// ==================== REMOTE ACCESS ====================
+
+export const remoteAccessSessions = sqliteTable('remote_access_sessions', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  partnerId: integer('partner_id').notNull(),
+  adminId: integer('admin_id'),
+  sessionCode: text('session_code').notNull().unique(),
+  status: text('status').notNull().default('pending'), // pending, active, ended
+  purpose: text('purpose').notNull(),
+  requestedBy: text('requested_by').notNull(),
+  startedAt: integer('started_at', { mode: 'timestamp' }),
+  endedAt: integer('ended_at', { mode: 'timestamp' }),
+  endedBy: text('ended_by'), // admin, partner
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
 // ==================== REFERRAL SYSTEM ====================
 
 export const referrals = sqliteTable('referrals', {

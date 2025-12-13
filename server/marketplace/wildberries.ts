@@ -1,16 +1,34 @@
 import { MarketplaceIntegration, MarketplaceCredentials, MarketplaceProduct, MarketplaceOrder, MarketplaceStats } from './index';
 
+/**
+ * Wildberries API Integration
+ * Official API: https://openapi.wildberries.ru/
+ * 
+ * Required credentials:
+ * - apiKey: Standard or Statistics API token from seller cabinet
+ * - supplierId: Seller ID (optional, auto-detected)
+ */
 export class WildberriesIntegration extends MarketplaceIntegration {
+  private readonly baseUrl = 'https://suppliers-api.wildberries.ru';
+  private readonly contentUrl = 'https://content-api.wildberries.ru';
+  private readonly statisticsUrl = 'https://statistics-api.wildberries.ru';
+
   constructor(credentials: MarketplaceCredentials) {
     super('Wildberries', credentials);
   }
 
   async testConnection(): Promise<boolean> {
     try {
-      this.log('Testing connection...');
-      const apiUrl = this.credentials.apiUrl || 'https://suppliers-api.wildberries.ru/api/v2';
-      const response = await this.makeRequest(`${apiUrl}/supplier`);
-      this.log('Connection successful', { supplierId: response.supplierId });
+      this.log('Testing Wildberries API connection...');
+      
+      // Test with supplier info endpoint
+      const response = await this.makeRequest(`${this.baseUrl}/api/v3/supplier`);
+      
+      this.log('Connection successful', { 
+        supplierId: response.id || response.supplierId,
+        name: response.name 
+      });
+      
       return true;
     } catch (error) {
       this.logError('Connection test failed', error);
@@ -20,17 +38,33 @@ export class WildberriesIntegration extends MarketplaceIntegration {
 
   async getProducts(): Promise<MarketplaceProduct[]> {
     try {
-      this.log('Fetching products...');
-      const apiUrl = this.credentials.apiUrl || 'https://suppliers-api.wildberries.ru/api/v2';
-      const response = await this.makeRequest(`${apiUrl}/goods`);
+      this.log('Fetching products from Wildberries...');
       
-      const products: MarketplaceProduct[] = response.data.map((p: any) => ({
-        id: p.nmId.toString(),
-        name: p.name,
-        price: parseFloat(p.price),
-        stock: p.quantity || 0,
-        sku: p.vendorCode,
-        status: p.isVisible ? 'active' : 'inactive',
+      // Get list of cards (products) - Content API v2
+      const response = await this.makeRequest(
+        `${this.contentUrl}/content/v2/get/cards/list`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            settings: {
+              cursor: {
+                limit: 1000
+              },
+              filter: {
+                withPhoto: -1 // All products
+              }
+            }
+          })
+        }
+      );
+      
+      const products: MarketplaceProduct[] = (response.cards || []).map((card: any) => ({
+        id: card.nmID?.toString() || card.nmId?.toString(),
+        name: card.object || card.title || 'Unknown',
+        price: card.sizes?.[0]?.price || 0,
+        stock: this.calculateTotalStock(card.sizes),
+        sku: card.vendorCode || card.nmID?.toString(),
+        status: card.uploadID ? 'active' : 'inactive',
       }));
 
       this.log(`Fetched ${products.length} products`);
@@ -41,27 +75,36 @@ export class WildberriesIntegration extends MarketplaceIntegration {
     }
   }
 
+  private calculateTotalStock(sizes: any[]): number {
+    if (!sizes || !Array.isArray(sizes)) return 0;
+    return sizes.reduce((total, size) => {
+      const stocks = size.stocks || [];
+      const sizeStock = stocks.reduce((sum: number, stock: any) => sum + (stock.qty || 0), 0);
+      return total + sizeStock;
+    }, 0);
+  }
+
   async getOrders(startDate?: Date, endDate?: Date): Promise<MarketplaceOrder[]> {
     try {
-      this.log('Fetching orders...', { startDate, endDate });
-      const apiUrl = this.credentials.apiUrl || 'https://suppliers-api.wildberries.ru/api/v2';
+      this.log('Fetching orders from Wildberries...', { startDate, endDate });
       
-      const params = new URLSearchParams();
-      if (startDate) params.append('dateFrom', startDate.toISOString().split('T')[0]);
-      if (endDate) params.append('dateTo', endDate.toISOString().split('T')[0]);
-
-      const response = await this.makeRequest(`${apiUrl}/orders?${params.toString()}`);
+      // Use Marketplace API v3 for orders (FBS)
+      const dateFrom = startDate ? startDate.toISOString() : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
       
-      const orders: MarketplaceOrder[] = response.orders.map((o: any) => ({
-        id: o.gNumber,
-        orderNumber: o.gNumber,
-        date: new Date(o.date),
-        status: o.status,
-        total: parseFloat(o.totalPrice),
+      const response = await this.makeRequest(
+        `${this.baseUrl}/api/v3/orders?dateFrom=${dateFrom}&flag=0`
+      );
+      
+      const orders: MarketplaceOrder[] = (response.orders || []).map((o: any) => ({
+        id: o.id?.toString() || o.orderId?.toString(),
+        orderNumber: o.rid || o.id?.toString(),
+        date: new Date(o.createdAt || o.date),
+        status: this.mapOrderStatus(o.wbStatus || o.status),
+        total: o.convertedPrice || o.totalPrice || 0,
         items: [{
-          productId: o.nmId.toString(),
+          productId: o.nmId?.toString() || o.article,
           quantity: 1,
-          price: parseFloat(o.totalPrice),
+          price: o.convertedPrice || o.totalPrice || 0,
         }],
       }));
 
@@ -73,17 +116,46 @@ export class WildberriesIntegration extends MarketplaceIntegration {
     }
   }
 
+  private mapOrderStatus(wbStatus: number | string): string {
+    const statusMap: Record<number, string> = {
+      0: 'new',
+      1: 'confirmed',
+      2: 'assembled',
+      3: 'shipped',
+      4: 'delivered',
+      5: 'cancelled'
+    };
+    
+    if (typeof wbStatus === 'number') {
+      return statusMap[wbStatus] || 'unknown';
+    }
+    return wbStatus?.toString().toLowerCase() || 'unknown';
+  }
+
   async getStats(): Promise<MarketplaceStats> {
     try {
-      this.log('Fetching stats...');
-      const apiUrl = this.credentials.apiUrl || 'https://suppliers-api.wildberries.ru/api/v2';
-      const response = await this.makeRequest(`${apiUrl}/statistics`);
+      this.log('Fetching statistics from Wildberries...');
+      
+      // Get sales statistics from Statistics API
+      const dateFrom = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+      
+      const response = await this.makeRequest(
+        `${this.statisticsUrl}/api/v1/supplier/sales?dateFrom=${dateFrom}`
+      );
+      
+      const sales = response || [];
+      const totalRevenue = sales.reduce((sum: number, sale: any) => 
+        sum + (sale.finishedPrice || sale.priceWithDisc || 0), 0
+      );
+      
+      // Get products count
+      const products = await this.getProducts();
       
       const stats: MarketplaceStats = {
-        totalOrders: response.ordersCount || 0,
-        totalRevenue: parseFloat(response.revenue || '0'),
-        totalProducts: response.goodsCount || 0,
-        activeProducts: response.activeGoodsCount || 0,
+        totalOrders: sales.length,
+        totalRevenue: totalRevenue,
+        totalProducts: products.length,
+        activeProducts: products.filter(p => p.status === 'active').length,
       };
 
       this.log('Stats fetched', stats);
@@ -101,12 +173,19 @@ export class WildberriesIntegration extends MarketplaceIntegration {
 
   async syncProduct(productId: string, data: Partial<MarketplaceProduct>): Promise<boolean> {
     try {
-      this.log('Syncing product...', { productId, data });
-      const apiUrl = this.credentials.apiUrl || 'https://suppliers-api.wildberries.ru/api/v2';
+      this.log('Syncing product to Wildberries...', { productId, data });
       
-      await this.makeRequest(`${apiUrl}/goods/${productId}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
+      // Update card using Content API v2
+      const updateData: any = {
+        nmID: parseInt(productId)
+      };
+      
+      if (data.name) updateData.object = data.name;
+      if (data.price) updateData.sizes = [{ price: data.price }];
+      
+      await this.makeRequest(`${this.contentUrl}/content/v2/cards/update`, {
+        method: 'POST',
+        body: JSON.stringify([updateData]),
       });
 
       this.log('Product synced successfully', { productId });
@@ -119,16 +198,16 @@ export class WildberriesIntegration extends MarketplaceIntegration {
 
   async updateStock(productId: string, stock: number): Promise<boolean> {
     try {
-      this.log('Updating stock...', { productId, stock });
-      const apiUrl = this.credentials.apiUrl || 'https://suppliers-api.wildberries.ru/api/v2';
+      this.log('Updating stock on Wildberries...', { productId, stock });
       
-      await this.makeRequest(`${apiUrl}/stocks`, {
+      // Update stocks using Marketplace API v3
+      await this.makeRequest(`${this.baseUrl}/api/v3/stocks/${productId}`, {
         method: 'PUT',
         body: JSON.stringify({
           stocks: [{
-            nmId: parseInt(productId),
-            quantity: stock,
-          }],
+            sku: productId,
+            amount: stock
+          }]
         }),
       });
 
@@ -137,6 +216,46 @@ export class WildberriesIntegration extends MarketplaceIntegration {
     } catch (error) {
       this.logError('Failed to update stock', error);
       return false;
+    }
+  }
+
+  /**
+   * Update product price
+   */
+  async updatePrice(productId: string, price: number): Promise<boolean> {
+    try {
+      this.log('Updating price on Wildberries...', { productId, price });
+      
+      await this.makeRequest(`${this.baseUrl}/public/api/v1/prices`, {
+        method: 'POST',
+        body: JSON.stringify([{
+          nmId: parseInt(productId),
+          price: price
+        }]),
+      });
+
+      this.log('Price updated successfully', { productId, price });
+      return true;
+    } catch (error) {
+      this.logError('Failed to update price', error);
+      return false;
+    }
+  }
+
+  /**
+   * Get warehouse list
+   */
+  async getWarehouses(): Promise<any[]> {
+    try {
+      this.log('Fetching warehouses...');
+      
+      const response = await this.makeRequest(`${this.baseUrl}/api/v3/warehouses`);
+      
+      this.log(`Fetched ${response.length} warehouses`);
+      return response || [];
+    } catch (error) {
+      this.logError('Failed to fetch warehouses', error);
+      return [];
     }
   }
 }

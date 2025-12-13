@@ -91,3 +91,4 @@ export { UzumIntegration } from './uzum';
 export { WildberriesIntegration } from './wildberries';
 export { YandexIntegration } from './yandex';
 export { OzonIntegration } from './ozon';
+export { TrendyolIntegration } from './trendyol';
